@@ -1,0 +1,16 @@
+generated: '2026-10-13'
+method: searched
+source: https://github.com/UpCloudLtd/upcloud-cli
+name: upctl
+description: UpCloud command line client (upctl), first-party, written in Go.
+repo: https://github.com/UpCloudLtd/upcloud-cli
+version: v3.37.0
+install:
+- method: homebrew
+  repo: https://github.com/UpCloudLtd/homebrew-tap
+- method: github-releases
+  url: https://github.com/UpCloudLtd/upcloud-cli/releases
+- method: github-action
+  url: https://github.com/UpCloudLtd/upcloud-cli-action
+commands:
+- k8s

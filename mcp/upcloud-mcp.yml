@@ -1,0 +1,215 @@
+generated: '2026-10-13'
+method: derived
+generator: derive-mcp-candidate.py
+source:
+- openapi/upcloud-openapi.yml
+status: candidate
+deployment:
+  mode: none
+  auth: unknown
+  verified: probed
+note: 'No MCP server was found. The pre-flight posted tools/list to /mcp on api.upcloud.com, upcloud.com, calc.upcloud.com, demo.upcloud.com;
+  verdict opaque (https://api.upcloud.com/mcp answered 401: the edge authenticates before it routes, which proves nothing either way). Candidate
+  tools below are derived from the 487 operation(s) in the provider''s own OpenAPI (40 listed); they describe what a server WOULD expose, not
+  one that exists.'
+tools:
+- name: account_details
+  operationId: accountDetails
+  method: GET
+  path: /1.3/account
+  description: Account details
+- name: get_monthly_detailed_billing_summary
+  operationId: getMonthlyDetailedBillingSummary
+  method: GET
+  path: /1.3/account/billing/summary/{year}-{month}
+  description: Get monthly billing summary with resource details
+- name: get_monthly_billing_summary
+  operationId: getMonthlyBillingSummary
+  method: GET
+  path: /1.3/account/billing_summary/{year}-{month}
+  description: Get monthly billing summary
+- name: get_current_network_usage
+  operationId: getCurrentNetworkUsage
+  method: GET
+  path: /1.3/account/current_network_usage
+  description: Get current network usage
+- name: list_accounts
+  operationId: listAccounts
+  method: GET
+  path: /1.3/account/list
+  description: List accounts
+- name: create_mslmasigning_link
+  operationId: createMSLMASigningLink
+  method: POST
+  path: /1.3/account/ms_lma
+  description: Create Microsoft LMA signing link
+- name: get_account_network_top_usage
+  operationId: getAccountNetworkTopUsage
+  method: GET
+  path: /1.3/account/network_top_usage
+  description: Get top network usage
+- name: get_account_network_usage
+  operationId: getAccountNetworkUsage
+  method: GET
+  path: /1.3/account/network_usage
+  description: Get network transfer statistics
+- name: get_account_resource_usage
+  operationId: getAccountResourceUsage
+  method: GET
+  path: /1.3/account/resource-usage
+  description: Get resource usage
+- name: get_monthly_resource_billing_summary
+  operationId: getMonthlyResourceBillingSummary
+  method: GET
+  path: /1.3/account/resource_billing_summary/{resource_id}/{year}-{month}
+  description: Get monthly resource billing summary
+- name: get_account_resource_network_usage
+  operationId: getAccountResourceNetworkUsage
+  method: GET
+  path: /1.3/account/resource_network_usage
+  description: Get resource transfer statistics
+- name: create_subaccount
+  operationId: createSubaccount
+  method: POST
+  path: /1.3/account/sub
+  description: Create subaccount
+- name: delete_subaccount
+  operationId: deleteSubaccount
+  method: DELETE
+  path: /1.3/account/sub/{username}
+  description: Delete subaccount
+- name: list_kubernetes_clusters
+  operationId: listKubernetesClusters
+  method: GET
+  path: /1.3/kubernetes
+  description: List clusters
+- name: create_kubernetes_cluster
+  operationId: createKubernetesCluster
+  method: POST
+  path: /1.3/kubernetes
+  description: Create cluster
+- name: get_kubernetes_cluster
+  operationId: getKubernetesCluster
+  method: GET
+  path: /1.3/kubernetes/{uuid}
+  description: Get cluster details
+- name: delete_kubernetes_cluster
+  operationId: deleteKubernetesCluster
+  method: DELETE
+  path: /1.3/kubernetes/{uuid}
+  description: Delete cluster
+- name: modify_kubernetes_cluster
+  operationId: modifyKubernetesCluster
+  method: PATCH
+  path: /1.3/kubernetes/{uuid}
+  description: Modify cluster
+- name: get_kubernetes_cluster_kubeconfig
+  operationId: getKubernetesClusterKubeconfig
+  method: GET
+  path: /1.3/kubernetes/{uuid}/kubeconfig
+  description: Get kubeconfig
+- name: get_kubernetes_cluster_available_upgrades
+  operationId: getKubernetesClusterAvailableUpgrades
+  method: GET
+  path: /1.3/kubernetes/{uuid}/available-upgrades
+  description: Get available upgrades
+- name: upgrade_kubernetes_cluster
+  operationId: upgradeKubernetesCluster
+  method: POST
+  path: /1.3/kubernetes/{uuid}/available-upgrades
+  description: Upgrade cluster
+- name: list_kubernetes_cluster_node_groups
+  operationId: listKubernetesClusterNodeGroups
+  method: GET
+  path: /1.3/kubernetes/{uuid}/node-groups
+  description: List node groups
+- name: create_kubernetes_cluster_node_group
+  operationId: createKubernetesClusterNodeGroup
+  method: POST
+  path: /1.3/kubernetes/{uuid}/node-groups
+  description: Create node group
+- name: get_kubernetes_cluster_node_group
+  operationId: getKubernetesClusterNodeGroup
+  method: GET
+  path: /1.3/kubernetes/{uuid}/node-groups/{name}
+  description: Get node group details
+- name: delete_kubernetes_cluster_node_group
+  operationId: deleteKubernetesClusterNodeGroup
+  method: DELETE
+  path: /1.3/kubernetes/{uuid}/node-groups/{name}
+  description: Delete node group
+- name: modify_kubernetes_cluster_node_group
+  operationId: modifyKubernetesClusterNodeGroup
+  method: PATCH
+  path: /1.3/kubernetes/{uuid}/node-groups/{name}
+  description: Modify node group
+- name: delete_kubernetes_cluster_node_group_node
+  operationId: deleteKubernetesClusterNodeGroupNode
+  method: DELETE
+  path: /1.3/kubernetes/{uuid}/node-groups/{name}/{node-name}
+  description: Delete node group node
+- name: list_kubernetes_plans
+  operationId: listKubernetesPlans
+  method: GET
+  path: /1.3/kubernetes/plans
+  description: List plans
+- name: list_kubernetes_versions
+  operationId: listKubernetesVersions
+  method: GET
+  path: /1.3/kubernetes/versions
+  description: List versions
+- name: list_cluster_authentication
+  operationId: listClusterAuthentication
+  method: GET
+  path: /1.3/kubernetes/{uuid}/authentication
+  description: List cluster authentication entries
+- name: set_cluster_authentication
+  operationId: setClusterAuthentication
+  method: PUT
+  path: /1.3/kubernetes/{uuid}/authentication
+  description: Replace the full cluster authentication configuration
+- name: create_cluster_authentication
+  operationId: createClusterAuthentication
+  method: POST
+  path: /1.3/kubernetes/{uuid}/authentication
+  description: Create a cluster authentication entry
+- name: import_cluster_authentication
+  operationId: importClusterAuthentication
+  method: PUT
+  path: /1.3/kubernetes/{uuid}/authentication/import
+  description: Import a full cluster authentication configuration
+- name: get_cluster_authentication
+  operationId: getClusterAuthentication
+  method: GET
+  path: /1.3/kubernetes/{uuid}/authentication/{name}
+  description: Get a cluster authentication entry
+- name: update_cluster_authentication
+  operationId: updateClusterAuthentication
+  method: PUT
+  path: /1.3/kubernetes/{uuid}/authentication/{name}
+  description: Update a cluster authentication entry
+- name: delete_cluster_authentication
+  operationId: deleteClusterAuthentication
+  method: DELETE
+  path: /1.3/kubernetes/{uuid}/authentication/{name}
+  description: Delete a cluster authentication entry
+- name: get_kubernetes_cluster_oidckubeconfig
+  operationId: getKubernetesClusterOIDCKubeconfig
+  method: GET
+  path: /1.3/kubernetes/{uuid}/authentication/{name}/kubeconfig
+  description: Get OIDC kubeconfig
+- name: list_currencies
+  operationId: listCurrencies
+  method: GET
+  path: /1.3/currency
+  description: List currencies
+- name: get_available_passthrough_devices
+  operationId: getAvailablePassthroughDevices
+  method: GET
+  path: /1.3/device/availability
+  description: Get available passthrough devices
+- name: list_events
+  operationId: listEvents
+  method: GET
+  path: /1.3/events/{server_uuid}/{offset},{count}
+  description: List events

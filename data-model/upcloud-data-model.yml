@@ -1,0 +1,2347 @@
+generated: '2026-10-13'
+method: derived
+generator: derive-data-model.py
+source:
+- openapi/upcloud-openapi.yml
+notation: has_one = property $ref; has_many = array of $ref; belongs_to = <entity>_id field
+summary:
+  entities: 400
+  entities_in_spec: 542
+  relationships: 277
+entities:
+- name: LogicalDatabaseCreate
+  fields: 3
+  description: Schema for creating a logical database.
+- name: LogicalDatabaseResponse
+  fields: 3
+  description: Schema for a logical database response.
+- name: account
+  fields: 1
+  description: Response schema containing account details.
+- name: accountBillingSummary
+  fields: 2
+  description: Monthly billing totals grouped by resource type and subtype.
+- name: accountBillingSummaryResponse
+  fields: 1
+  description: Response containing a monthly billing summary.
+- name: accountCreateMsLmaSigningLinkResponse
+  fields: 1
+  description: Response schema for Microsoft LMA signing link creation.
+- name: accountCreditsBreakdown
+  fields: 3
+  description: Detailed breakdown of account credits.
+- name: accountCurrentNetworkUsage
+  fields: 1
+  description: Current Fair Transfer Policy usage for an account.
+- name: accountDetails
+  fields: 5
+  description: Detailed account information and limits.
+- name: accountError
+  fields: 1
+  description: A general error response indicating that the request could not be fulfilled due to a technical issue.
+- name: accountLabel
+  fields: 2
+  description: A key/value pair to label and categorize resources
+- name: accountNetworkUsage
+  fields: 1
+  description: Account network usage and Fair Transfer Policy quota statistics.
+- name: accountResourceBillingSummaryResponse
+  fields: 1
+  description: Response containing the monthly billing summary for a resource.
+- name: accountResourceLimits
+  fields: 31
+  description: Per-resource quota limits for an account.
+- name: accountResourceNetworkUsage
+  fields: 1
+  description: Network usage statistics grouped by resource.
+- name: accountResourceUsage
+  fields: 0
+  description: Current account resource usage keyed by resource limit name.
+- name: accountTokensCreateTokenRequest
+  fields: 6
+- name: accountTokensGetTokenResponse
+  fields: 8
+  description: A token.
+- name: accountTokensProblem
+  fields: 6
+  description: JSON Problem Details for HTTP APIs
+- name: accountTokensProblem400
+  fields: 6
+  description: JSON Problem Details for HTTP APIs
+- name: accountTokensProblem401
+  fields: 6
+  description: JSON Problem Details for HTTP APIs
+- name: accountTokensProblem403
+  fields: 6
+  description: JSON Problem Details for HTTP APIs
+- name: accountTokensProblem404
+  fields: 6
+  description: JSON Problem Details for HTTP APIs
+- name: accountTokensProblem409
+  fields: 6
+  description: JSON Problem Details for HTTP APIs
+- name: accountTokensToken
+  fields: 8
+  description: A token.
+- name: accounts
+  fields: 1
+  description: Main account and subaccounts accessible to the authenticated account.
+- name: addIpAddressRequest
+  fields: 1
+  description: Schema for adding an IP address to a server
+- name: attachStorageRequest
+  fields: 1
+  description: Request schema for attaching this storage resource to a Cloud Server.
+- name: attachStorageResponse
+  fields: 1
+  description: Response containing the attached storage resource and its Cloud Server attachment.
+- name: auditLogsAuditLog
+  fields: 13
+  description: A single audit log event
+- name: auditLogsErrorResponse
+  fields: 6
+  description: JSON Problem Details for HTTP APIs
+- name: auditLogsFilterOptionsResponse
+  fields: 3
+  description: Available filter options for audit logs
+- name: auditLogsResponse
+  fields: 1
+  description: Response schema for a list of audit logs
+- name: bulkPatchIpAddressesRequestV1.3
+  fields: 1
+  description: Request schema for bulk patching IP addresses
+- name: cloneStorageRequest
+  fields: 1
+  description: Request schema for cloning a block storage resource.
+- name: createFirewallRuleset
+  fields: 6
+  description: Create firewall ruleset
+- name: createNetworkRequest
+  fields: 1
+  description: Request schema for creating a network
+- name: createServer
+  fields: 1
+  description: Cloud Server creation parameters
+- name: createServerResponse
+  fields: 1
+  description: Newly created Cloud Server and optional one-time login credentials
+- name: createStorageBackupRequest
+  fields: 1
+  description: Request schema for creating an on-demand block storage backup.
+- name: createStorageBackupResponse
+  fields: 1
+  description: Response containing the on-demand backup being created.
+- name: createStorageImportRequest
+  fields: 1
+  description: Request schema for creating a storage import task.
+- name: createStorageRequest
+  fields: 1
+  description: Request schema for creating block storage.
+- name: createStorageResponse
+  fields: 1
+  description: Response containing the created block storage resource.
+- name: createStorageTemplateRequest
+  fields: 1
+  description: Request schema for creating a template from a block storage resource.
+- name: createStorageTemplateResponse
+  fields: 1
+  description: Response containing the private template being created.
+- name: createSubaccountRequest
+  fields: 1
+  description: Request for creating a subaccount.
+- name: currencyCurrencies
+  fields: 1
+  description: Response schema for listing supported currencies and exchange rates.
+- name: currencyError
+  fields: 1
+  description: A general error response indicating that the request could not be fulfilled due to a technical issue.
+- name: databaseAccessControlSettingsResponse
+  fields: 2
+  description: Response schema for access control settings of a cluster.
+- name: databaseAccountCaResponse
+  fields: 1
+  description: Response schema for account CA
+- name: databaseAclResponse
+  fields: 4
+  description: Response schema for an Access Control List (ACL) entry.
+- name: databaseAvailableServiceTypesResponse
+  fields: 0
+  description: Response map schema for available service types
+- name: databaseBackupConfigOpenSearchResponse
+  fields: 5
+  description: OpenSearch specific backup configuration response
+- name: databaseBackupConfigResponse
+  fields: 3
+  description: General backup configuration schema
+- name: databaseBackupResponse
+  fields: 3
+  description: Schema for a backup response.
+- name: databaseConnectionPoolCreate
+  fields: 5
+  description: Schema for creating a connection pool.
+- name: databaseConnectionPoolModify
+  fields: 4
+  description: Schema for modifying a connection pool.
+- name: databaseConnectionPoolResponse
+  fields: 6
+  description: Schema for a connection pool response.
+- name: databaseCurrentSessionsResponse
+  fields: 4
+  description: Schema for representing current sessions for various services
+- name: databaseDependencyResponse
+  fields: 1
+  description: a dependency definition
+- name: databaseErrorResponse
+  fields: 1
+  description: Schema for error responses from the API.
+- name: databaseIndexResponse
+  fields: 9
+  description: Schema representing the details of an index.
+- name: databaseIntegrationEndpointCreate
+  fields: 3
+  description: Schema for creating an integration endpoint.
+- name: databaseIntegrationEndpointModify
+  fields: 1
+  description: Schema for modifying an integration endpoint.
+- name: databaseIntegrationEndpointResponse
+  fields: 4
+  description: Schema for an integration endpoint response.
+- name: databaseIntegrationNodeStateResponse
+  fields: 4
+  description: Schema for representing the state of an integration node
+- name: databaseLabelCreate
+  fields: 2
+  description: Schema for creating a label with a key and value.
+- name: databaseLabelInformationResponse
+  fields: 2
+  description: Schema representing a label with a key and value.
+- name: databaseLabelModify
+  fields: 2
+  description: Schema for modifying a label with a key and/or value.
+- name: databaseLabelResponse
+  fields: 2
+  description: Schema for deleting a label with a key and value.
+- name: databaseLogEntryResponse
+  fields: 4
+  description: Schema representing a log entry from an UpCloud service.
+- name: databaseLogListResponse
+  fields: 3
+  description: Schema representing a paginated list of log entries from UpCloud services.
+- name: databaseMaintenancePendingUpdatesResponse
+  fields: 4
+  description: Response schema for pending maintenance updates.
+- name: databaseMaintenanceWindowResponse
+  fields: 3
+  description: Schema for a maintenance window response.
+- name: databaseMetricsColumnHeaderResponse
+  fields: 2
+  description: Schema for a metrics column header response.
+- name: databaseMetricsDataResponse
+  fields: 2
+  description: Schema for metrics data response.
+- name: databaseMetricsItemResponse
+  fields: 2
+  description: Schema for a single metrics item response.
+- name: databaseMetricsResponse
+  fields: 0
+  description: Schema for metrics response.
+- name: databaseMigrationStatusDetailsResponse
+  fields: 4
+  description: Schema for migration status details response.
+- name: databaseMysqlCurrentSessionResponse
+  fields: 8
+  description: Schema for the current session of a MySQL service.
+- name: databaseNetworkCreate
+  fields: 4
+  description: Schema for creating a network.
+- name: databaseNetworkInformationDetailsResponse
+  fields: 6
+  description: Schema for network information response details
+- name: databaseNodeProgressUpdateResponse
+  fields: 6
+  description: Schema for node progress update response.
+- name: databaseNodeStateResponse
+  fields: 4
+  description: Schema for the state of a node in a service.
+- name: databaseOpenSearchAccessControlResponse
+  fields: 1
+  description: Schema for OpenSearch access control response.
+- name: databaseOpenSearchAccessControlRuleResponse
+  fields: 2
+  description: Schema for OpenSearch access control rule response.
+- name: databaseOpenSearchSecurityPluginStatusResponse
+  fields: 3
+  description: OpenSearch security plugin status response
+- name: databasePeeringStatusResponse
+  fields: 5
+  description: Schema for peering status response.
+- name: databasePgAccessControlResponse
+  fields: 1
+  description: Schema for PostgreSQL access control response.
+- name: databasePgCurrentSessionResponse
+  fields: 21
+  description: Schema for PostgreSQL current session response.
+- name: databasePlanComponentsResponse
+  fields: 3
+  description: Structured breakdown of a service plan into compute, storage and backups components. Sizes are expressed
+    in GB to match plan naming; the classic MB/MiB fields on the plan object are unchanged.
+- name: databasePlansResponse
+  fields: 1
+  description: Lists available componentised database plans.
+- name: databaseProjectAlertResponse
+  fields: 6
+  description: Schema for a project alert response
+- name: databasePropertySchemaResponse
+  fields: 21
+  description: Schema definition for a single property
+- name: databaseQueryStatisticsMysqlResponse
+  fields: 35
+  description: Schema for MySQL query statistics response.
+- name: databaseQueryStatisticsPgResponse
+  fields: 22
+  description: Schema for PostgreSQL query statistics response.
+- name: databaseQueryStatisticsResponse
+  fields: 2
+  description: Schema for query statistics response.
+- name: databaseRedisAccessControlResponse
+  fields: 4
+  description: Schema for Redis access control response.
+- name: databaseRedisValkeyCurrentSessionResponse
+  fields: 17
+  description: Schema for Redis Valkey current session response.
+- name: databaseServiceAclModify
+  fields: 2
+  description: Schema for modifying service access control settings.
+- name: databaseServiceAlertResponse
+  fields: 4
+  description: Schema for a service alert
+- name: databaseServiceCloneMysql
+  fields: 17
+  description: Schema for cloning a MySQL service
+- name: databaseServiceCloneOpenAPI
+  fields: 6
+  description: Schema for cloning a service — OpenAPI version.
+- name: databaseServiceCloneOpensearch
+  fields: 17
+  description: Schema for cloning an OpenSearch service
+- name: databaseServiceClonePg
+  fields: 17
+  description: Schema for cloning a PostgreSQL service.
+- name: databaseServiceCloneRedis
+  fields: 16
+  description: Schema for cloning a Redis service.
+- name: databaseServiceCloneValkey
+  fields: 16
+  description: Schema for cloning a service with valkey.
+- name: databaseServiceComponentResponse
+  fields: 6
+  description: Schema for a service component response.
+- name: databaseServiceCreateOpenAPI
+  fields: 17
+  description: Schema for creating a service — OpenAPI version.
+- name: databaseServiceInformationResponse
+  fields: 30
+  description: Schema for service information response.
+- name: databaseServiceIntegrationCreate
+  fields: 3
+  description: Schema for creating a service integration.
+- name: databaseServiceIntegrationModify
+  fields: 1
+  description: Schema for modifying a service integration.
+- name: databaseServiceIntegrationResponse
+  fields: 10
+  description: Schema for a service integration response.
+- name: databaseServiceMigrationStatusResponse
+  fields: 6
+  description: Response schema for service migration status
+- name: databaseServiceModifyOpenAPI
+  fields: 15
+  description: Schema for modifying a service — OpenAPI version.
+- name: databaseServiceNetworkDetailsResponse
+  fields: 4
+  description: Schema for service network details response
+- name: databaseServicePlanResponse
+  fields: 13
+  description: Schema definition for a service plan
+- name: databaseServicePropertiesMysql
+  fields: 68
+  description: mysql properties
+- name: databaseServicePropertiesOpensearch
+  fields: 81
+  description: opensearch properties
+- name: databaseServicePropertiesPg
+  fields: 84
+  description: pg properties
+- name: databaseServicePropertiesRedis
+  fields: 20
+  description: redis properties
+- name: databaseServicePropertiesValkey
+  fields: 25
+  description: valkey properties
+- name: databaseServiceSecurityEnable
+  fields: 1
+  description: Schema for enabling security on a service instance
+- name: databaseServiceSecurityModify
+  fields: 2
+  description: Schema for modifying service security settings
+- name: databaseServiceStatusResponse
+  fields: 1
+  description: Schema for representing the status of a service instance.
+- name: databaseServiceTaskBaseResponse
+  fields: 10
+  description: Schema for representing a service task response
+- name: databaseServiceTaskCreate
+  fields: 5
+  description: Schema for creating a service task with various operations such as dataset import and migration checks.
+- name: databaseServiceTaskDetailsResponse
+  fields: 0
+  description: Response schema for retrieving detailed information about a specific service task, including result
+    codes and success status.
+- name: databaseServiceTaskResponse
+  fields: 0
+  description: Response schema for retrieving information about a service task, including the operation type.
+- name: databaseServiceTypeModify
+  fields: 1
+  description: Schema for modifying the service type
+- name: databaseServiceTypeResponse
+  fields: 6
+  description: Response schema for available service types
+- name: databaseServiceUpgrade
+  fields: 1
+  description: Schema for upgrading the service version
+- name: databaseServiceUserAclModify
+  fields: 4
+  description: Schema for modifying user access control lists (ACL) for various services
+- name: databaseServiceUserCreate
+  fields: 7
+  description: Schema for creating a service user with access control settings
+- name: databaseServiceUserModify
+  fields: 2
+  description: Schema for modifying a service user
+- name: databaseUpCloudApiResponse
+  fields: 2
+  description: Schema for UpCloud API error responses.
+- name: databaseUserResponse
+  fields: 8
+  description: Schema for a user response.
+- name: databaseValkeyAccessControlResponse
+  fields: 4
+  description: Schema for Valkey user access control response
+- name: databaseZoneInfoResponse
+  fields: 1
+  description: Schema for representing a Zone
+- name: detachStorageResponse
+  fields: 1
+  description: Response containing the detached storage resource.
+- name: deviceError
+  fields: 1
+  description: A general error response indicating that the request could not be fulfilled due to a technical issue.
+- name: devices
+  fields: 0
+  description: Zone device availability
+- name: events
+  fields: 1
+  description: Server event type
+- name: eventsError
+  fields: 1
+  description: A general error response indicating that the request could not be fulfilled due to a technical issue.
+- name: fileStorageAclCreate
+  fields: 3
+  description: Schema for creating an ACL entry.
+- name: fileStorageAclDetailResponse
+  fields: 3
+  description: Schema for the detailed response of an ACL.
+- name: fileStorageAclModify
+  fields: 3
+  description: Schema for modifying an existing ACL.
+- name: fileStorageErrorResponse
+  fields: 5
+  description: Schema for error responses from the API.
+- name: fileStorageLabelCreate
+  fields: 2
+  description: Schema for creating a new label.
+- name: fileStorageLabelDetails
+  fields: 2
+  description: Schema for label details including key-value pairs.
+- name: fileStorageLabelModify
+  fields: 2
+  description: Schema for modifying an existing label.
+- name: fileStorageNetworkCreate
+  fields: 4
+  description: Schema for creating a network.
+- name: fileStorageNetworkDetailResponse
+  fields: 4
+  description: Schema for the detailed response of a network.
+- name: fileStorageNetworkModify
+  fields: 4
+  description: Schema for modifying an existing network.
+- name: fileStorageServiceCreate
+  fields: 8
+  description: Schema for creating a new service.
+- name: fileStorageServiceDetailResponse
+  fields: 13
+  description: Schema for the detailed response of a service.
+- name: fileStorageServiceModify
+  fields: 5
+  description: Schema for modifying an existing service.
+- name: fileStorageServiceReplace
+  fields: 5
+  description: Schema for replacing an existing service with a new configuration.
+- name: fileStorageShareCreate
+  fields: 3
+  description: Schema for creating a new share with access control lists (ACLs).
+- name: fileStorageShareDetailResponse
+  fields: 3
+  description: Schema for the detailed response of a share.
+- name: fileStorageShareModify
+  fields: 2
+  description: Schema for modifying an existing share.
+- name: firewallRulesetCreateLabel
+  fields: 2
+  description: UpCloud firewall ruleset Label
+- name: firewallRulesetDetailResponse
+  fields: 11
+  description: Response schema for firewall ruleset details, including UUID, name, description, stateful, enabled,
+    labels and serverUUID.
+- name: firewallRulesetErrorLegacyResponse
+  fields: 1
+  description: Schema for legacy error responses from API.
+- name: firewallRulesetErrorResponse
+  fields: 5
+  description: Schema for error responses from the API.
+- name: firewallRulesetFirewallMultipleRuleCreate
+  fields: 1
+- name: firewallRulesetFirewallRuleCreate
+  fields: 18
+- name: firewallRulesetFirewallRuleListResponse
+  fields: 1
+  description: Response schema for a list of firewall ruleset rules.
+- name: firewallRulesetFirewallRuleModify
+  fields: 18
+- name: firewallRulesetLabelDetailResponse
+  fields: 2
+  description: Schema for label details including key-value pairs.
+- name: firewallRulesetLabelModify
+  fields: 2
+  description: Schema for modifying a label with a key-value pair.
+- name: firewallRulesetModify
+  fields: 5
+  description: Modify firewall ruleset
+- name: firewallRulesetRelatedServers
+  fields: 1
+  description: Accessible Cloud Servers related to a private firewall ruleset and their private ruleset relationships.
+- name: firewallRulesetRuleDetailResponse
+  fields: 19
+  description: Response schema for firewall ruleset rule details.
+- name: firewallRulesetServerFirewallDetailResponse
+  fields: 1
+  description: Server firewall detail response.
+- name: firewallRulesetServerFirewallRule
+  fields: 16
+  description: Server firewall rule
+- name: firewallRulesetServerFirewallRuleCreate
+  fields: 1
+- name: firewallRulesetServerFirewallRuleDetail
+  fields: 1
+  description: Server firewall rule detail
+- name: firewallRulesetServerFirewallRules
+  fields: 1
+  description: Server firewall rules.
+- name: firewallRulesetServerMultipleFirewallRulesCreate
+  fields: 1
+  description: Creates multiple server firewall rules.
+- name: gatewayAddress
+  fields: 1
+- name: gatewayAddressCreateRequest
+  fields: 2
+  description: Gateway address
+- name: gatewayAddressDetailsResponse
+  fields: 3
+  description: Response schema for gateway address details.
+- name: gatewayAddressModifyRequest
+  fields: 1
+  description: Gateway service address modify request
+- name: gatewayAuthenticationDetailsResponse
+  fields: 1
+  description: Response schema for authentication details.
+- name: gatewayConnectionCreateRequest
+  fields: 6
+  description: Network gateway VPN connection
+- name: gatewayConnectionDetailsResponse
+  fields: 8
+  description: Response schema for gateway connection details.
+- name: gatewayConnectionModifyRequest
+  fields: 6
+  description: Network gateway VPN connection
+- name: gatewayConnectionRouteDetailsResponse
+  fields: 3
+  description: Response schema for gateway connection route details.
+- name: gatewayConnectionRouteRequest
+  fields: 3
+  description: Network gateway VPN connection route
+- name: gatewayErrorResponse
+  fields: 5
+  description: Schema for error responses from the API.
+- name: gatewayIpsecDetailsResponse
+  fields: 12
+  description: Response schema for IPsec configuration details.
+- name: gatewayIpsecIkeSaMetricsDetailsResponse
+  fields: 18
+  description: Response schema for IPsec IKE SA metrics details.
+- name: gatewayIpsecMetricsDetailsResponse
+  fields: 1
+  description: Response schema for IPsec IKE SA metrics details.
+- name: gatewayLabelCreateRequest
+  fields: 2
+  description: Gateway label
+- name: gatewayLabelDetailsResponse
+  fields: 2
+  description: Gateway label
+- name: gatewayLabelModifyRequest
+  fields: 2
+  description: Gateway label
+- name: gatewayLocalPeerAddressDetailsResponse
+  fields: 1
+  description: Response schema for local peer address details.
+- name: gatewayMetricsDetailsResponse
+  fields: 6
+  description: Response schema for gateway metrics details.
+- name: gatewayPlanDetailsResponse
+  fields: 7
+  description: Response schema for gateway plan details.
+- name: gatewayRemotePeerAddressDetailsResponse
+  fields: 1
+  description: Response schema for remote peer address details.
+- name: gatewayRouterCreateRequest
+  fields: 1
+  description: Network gateway router
+- name: gatewayRouterDetailsResponse
+  fields: 3
+  description: Response schema for gateway router details.
+- name: gatewayServiceCreateRequest
+  fields: 10
+  description: Gateway service
+- name: gatewayServiceDetailsResponse
+  fields: 14
+  description: Gateway service
+- name: gatewayServiceLogSessionCreateRequest
+  fields: 1
+  description: Request to create a new log session for a service.
+- name: gatewayServiceLogSessionCreateResponse
+  fields: 1
+  description: Response schema for service log session creation.
+- name: gatewayServiceLogSessionDetailsResponse
+  fields: 2
+  description: Response schema for details of a service log session.
+- name: gatewayServiceMetricsResponse
+  fields: 2
+  description: Response schema for service metrics.
+- name: gatewayServiceModifyRequest
+  fields: 7
+  description: Request to modify a gateway service
+- name: gatewayServiceReplaceRequest
+  fields: 6
+  description: Request to replace a gateway service
+- name: gatewayTunnelCreateRequest
+  fields: 7
+  description: Network gateway VPN connection tunnel
+- name: gatewayTunnelDetailsResponse
+  fields: 12
+  description: Response schema for gateway tunnel details.
+- name: gatewayTunnelInternalIpDetailsResponse
+  fields: 2
+  description: Response schema for gateway tunnel internal IP details.
+- name: gatewayTunnelModifyRequest
+  fields: 7
+  description: Request to modify a VPN tunnel
+- name: getServerList
+  fields: 1
+  description: Schema for the Cloud Server list response.
+- name: ipAddressDetails
+  fields: 12
+  description: Details of an IP address
+- name: ipAddressError
+  fields: 1
+  description: A general error response indicating that the request could not be fulfilled due to a technical issue.
+- name: ipAddressRequest
+  fields: 1
+  description: Request schema for IP address operations
+- name: ipAddressResponse
+  fields: 1
+  description: Request schema for IP address operations
+- name: ipAddressesResponse
+  fields: 1
+  description: Request schema for IP address operations
+- name: kubernetesAccepted
+  fields: 1
+  description: Message
+- name: kubernetesAuthenticationIssuerConfig
+  fields: 9
+- name: kubernetesClaimMappings
+  fields: 4
+  description: Rules for mapping token claims to Kubernetes user attributes.
+- name: kubernetesClaimOrExpression
+  fields: 2
+  description: Maps a user attribute from either a JWT claim or a CEL expression. Claim and expression are mutually
+    exclusive.
+- name: kubernetesClaimValidationRule
+  fields: 4
+  description: CEL expression used to validate a token claim.
+- name: kubernetesCluster
+  fields: 14
+  description: Kubernetes cluster
+- name: kubernetesClusterAvailableUpgrades
+  fields: 1
+- name: kubernetesClusterAvailableUpgradesPost
+  fields: 2
+- name: kubernetesClusterKubeconfig
+  fields: 1
+  description: Kubernetes cluster kubeconfig
+- name: kubernetesClusterPatch
+  fields: 3
+- name: kubernetesClusterUpgradeStrategy
+  fields: 1
+  description: upgrade strategy for node group upgrades
+- name: kubernetesDefaultStorageEncryption
+  fields: 0
+- name: kubernetesError
+  fields: 5
+  description: Response error
+- name: kubernetesExtraMapping
+  fields: 2
+  description: Maps a token claim to an extra user attribute using a CEL expression.
+- name: kubernetesKubeletArg
+  fields: 2
+  description: Kubelet argument presented as key-value pair
+- name: kubernetesLabel
+  fields: 2
+  description: Label for identifying node groups, presented as key-value pair
+- name: kubernetesNode
+  fields: 4
+  description: Kubernetes cluster node
+- name: kubernetesNodeGroup
+  fields: 16
+  description: Node group for a Kubernetes cluster
+- name: kubernetesNodeGroupCloudNativePlan
+  fields: 2
+  description: Node group cloud native plan properties
+- name: kubernetesNodeGroupCustomPlan
+  fields: 4
+  description: Node group custom plan properties
+- name: kubernetesNodeGroupDetails
+  fields: 1
+  description: Kubernetes cluster node
+- name: kubernetesNodeGroupGPUPlan
+  fields: 2
+  description: Node group GPU plan properties
+- name: kubernetesNodeGroupPatch
+  fields: 1
+- name: kubernetesNodeUpdates
+  fields: 3
+  description: Enable periodic package updates on node
+- name: kubernetesPlan
+  fields: 2
+  description: Plan to assign to a node group
+- name: kubernetesPrefixedClaimOrExpression
+  fields: 3
+  description: Maps a user attribute from either a JWT claim (optionally prefixed) or a CEL expression. Claim and
+    expression are mutually exclusive.
+- name: kubernetesTaint
+  fields: 3
+  description: Kubernetes taint to assign to nodes in a group
+- name: kubernetesUserValidationRule
+  fields: 2
+  description: CEL expression applied to the final authenticated user.
+- name: kubernetesVersion
+  fields: 2
+  description: Kubernetes version
+- name: loadBalancerActionHttpRedirectResponse
+  fields: 2
+  description: Defines an HTTP redirection action used to redirect incoming requests to a specified URL with a given
+    HTTP status code. Used when the action type is 'http_redirect'.
+- name: loadBalancerActionHttpReturnCreate
+  fields: 3
+  description: Forwarding rule HTTP Return action
+- name: loadBalancerActionHttpReturnResponse
+  fields: 3
+  description: Defines a custom HTTP response returned to the client when a rule matches. Used when the action type
+    is 'http_return'.
+- name: loadBalancerActionHttpRewritePathCreate
+  fields: 2
+  description: Rewrite HTTP request path using regex pattern
+- name: loadBalancerActionHttpRewritePathResponse
+  fields: 2
+  description: Defines an action that rewrites the HTTP request path using a regex pattern.
+- name: loadBalancerActionHttpRewriteUriCreate
+  fields: 2
+  description: Rewrite HTTP request URI using regex pattern
+- name: loadBalancerActionHttpRewriteUriResponse
+  fields: 2
+  description: Defines an action that rewrites the HTTP request URI using a regex pattern.
+- name: loadBalancerActionResponse
+  fields: 10
+  description: Represents a rule action that defines how matched traffic should be processed or modified within
+    the load balancer. Each action type includes a corresponding configuration object.
+- name: loadBalancerActionSetForwardedHeaders
+  fields: 0
+  description: Forwarding rule Set forwarded headers
+- name: loadBalancerActionSetForwardedHeadersResponse
+  fields: 0
+  description: Defines an action that automatically adds standard X-Forwarded-* headers (such as X-Forwarded-For
+    and X-Forwarded-Proto) to requests before forwarding them to the backend. Used when the action type is
+- name: loadBalancerActionSetHeaderCreate
+  fields: 2
+  description: Forwarding rule HTTP set header action
+- name: loadBalancerActionSetHeaderResponse
+  fields: 2
+  description: Defines an action that adds or modifies an HTTP header in a request or response. Used when the action
+    type is 'set_request_header' or 'set_response_header'.
+- name: loadBalancerActionTcpRejectCreate
+  fields: 0
+  description: Forwarding rule TCP reject action
+- name: loadBalancerActionTcpRejectResponse
+  fields: 0
+  description: Defines a TCP rejection action that immediately closes incoming connections when a rule matches.
+    Used when the action type is 'tcp_reject'.
+- name: loadBalancerActionUseBackendCreate
+  fields: 1
+  description: Forwarding rule use backend action
+- name: loadBalancerActionUseBackendResponse
+  fields: 1
+  description: Defines the backend target to which the request should be routed when the rule matches. Used when
+    the action type is 'use_backend'.
+- name: loadBalancerAvgTimeMetricsResponse
+  fields: 4
+  description: Represents average timing statistics for backend performance, including connection establishment,
+    queuing, server response, and total transaction times, all measured in milliseconds.
+- name: loadBalancerBackend
+  fields: 7
+  description: Represents a backend configuration in the load balancer service, containing backend members, resolver
+    settings, TLS configurations, and backend-specific properties such as timeouts and health checks.
+- name: loadBalancerBackendCreate
+  fields: 5
+  description: Load Balancer Backend
+- name: loadBalancerBackendMetricsResponse
+  fields: 8
+  description: Represents collected performance, availability, and traffic statistics for a load balancer backend,
+    including member activity, response times, and aggregated server metrics.
+- name: loadBalancerBackendMetricsSeries
+  fields: 22
+  description: Aggregated performance, availability, and traffic statistics for a load balancer backend, including
+    member metrics and average timing metrics.
+- name: loadBalancerBackendModify
+  fields: 5
+  description: Load Balancer Backend
+- name: loadBalancerBackendPropertiesCreate
+  fields: 17
+  description: Backend Properties
+- name: loadBalancerBackendPropertiesResponse
+  fields: 18
+  description: Properties of a backend configuration.
+- name: loadBalancerCertificateBundle
+  fields: 15
+  description: Represents a certificate bundle used in a load balancer TLS configuration. A bundle may be manually
+    uploaded, dynamically issued via ACME, or represent an authority certificate. It includes certificat
+- name: loadBalancerCertificateBundleAuthorityModify
+  fields: 3
+  description: Load Balancer certificate bundle dynamic type
+- name: loadBalancerCertificateBundleCreate
+  fields: 9
+  description: Load Balancer certificate bundle
+- name: loadBalancerCertificateBundleDynamicModify
+  fields: 4
+  description: Load Balancer certificate bundle dynamic type
+- name: loadBalancerCertificateBundleManualModify
+  fields: 5
+  description: Load Balancer certificate bundle manual type
+- name: loadBalancerChallengeProblemResponse
+  fields: 2
+  description: Represents a problem encountered during ACME challenge validation for a specific hostname. Includes
+    detailed error information following the Problem Details (RFC7807) format.
+- name: loadBalancerCommonMetricsResponse
+  fields: 12
+  description: Represents general traffic and session statistics collected for a load balancer frontend or backend,
+    including request and response byte counts, HTTP status distribution, and session activity metrics.
+- name: loadBalancerDnsChallengeDomainResponse
+  fields: 1
+  description: Response schema for DNS challenge domain information.
+- name: loadBalancerEmbeddedBackendResponse
+  fields: 2
+  description: Represents a minimal embedded reference to a backend within the load balancer service, including
+    its name and associated TLS configurations.
+- name: loadBalancerEmbeddedFrontendResponse
+  fields: 2
+  description: Represents a minimal embedded reference to a frontend within a load balancer service, including its
+    name and any associated TLS configurations.
+- name: loadBalancerEmbeddedServiceResponse
+  fields: 5
+  description: Represents a minimal embedded reference to a load balancer service, including its UUID, name, and
+    lists of associated frontends and backends.
+- name: loadBalancerErrorResponse
+  fields: 1
+  description: Schema for error responses from the API.
+- name: loadBalancerFrontend
+  fields: 10
+  description: Represents a frontend configuration in the load balancer service, defining how client connections
+    are received, the listening port and protocol, TLS settings, routing rules, and default backend associ
+- name: loadBalancerFrontendCreate
+  fields: 8
+  description: Load Balancer Frontend
+- name: loadBalancerFrontendMetricsResponse
+  fields: 8
+  description: Represents aggregated performance and traffic metrics for a load balancer frontend, including connection
+    statistics, HTTP response counts, and per-second request rates. Combines general metrics, reque
+- name: loadBalancerFrontendMetricsSeries
+  fields: 19
+  description: Aggregated time-series metrics for load balancer frontends, representing cumulative statistics between
+    a start and end timestamp across one or more frontend instances.
+- name: loadBalancerFrontendModify
+  fields: 8
+  description: Load Balancer Frontend
+- name: loadBalancerFrontendNetworkCreate
+  fields: 1
+  description: Load Balancer Network
+- name: loadBalancerFrontendPropertiesCreate
+  fields: 3
+  description: Frontend Properties
+- name: loadBalancerFrontendPropertiesResponse
+  fields: 4
+  description: Defines configurable properties for a frontend, such as client timeout settings, protocol options,
+    and linkage to its parent frontend resource.
+- name: loadBalancerIpAddress
+  fields: 4
+  description: Represents an IP address associated with a network interface of the load balancer service, including
+    addressing details and provisioning information.
+- name: loadBalancerIpAddressCreate
+  fields: 2
+  description: IP address object
+- name: loadBalancerLabelCreate
+  fields: 2
+  description: Load Balancer Label
+- name: loadBalancerLabelModify
+  fields: 2
+  description: Load Balancer Label
+- name: loadBalancerLabelResponse
+  fields: 2
+  description: Represents a key-value label associated with the load balancer service
+- name: loadBalancerMatchBackendResponse
+  fields: 0
+  description: Defines a backend health matcher used to compare the number of healthy (up) members in a specific
+    backend against a threshold value. Used when the matcher type is 'num_members_up'.
+- name: loadBalancerMatchIntResponse
+  fields: 4
+  description: Defines integer matching criteria for requests or responses.
+- name: loadBalancerMatchIpResponse
+  fields: 1
+  description: Defines a match condition based on the source IP address or subnet. Used when the matcher type is
+    'src_ip'.
+- name: loadBalancerMatchStringResponse
+  fields: 3
+  description: Defines a string-based match condition, used for matching values such as paths, headers, URLs, or
+    hostnames.
+- name: loadBalancerMatchStringWithArgResponse
+  fields: 0
+  description: Extends MatchString with an additional 'name' parameter, used for matchers that require a key-value
+    pair (e.g., matching headers, cookies, or URL parameters).
+- name: loadBalancerMatcherResponse
+  fields: 17
+  description: Defines a matcher used to evaluate specific conditions in requests or responses.
+- name: loadBalancerMember
+  fields: 10
+  description: Represents a single backend member (server node) participating in a load balancer backend configuration.
+- name: loadBalancerMemberMetricsResponse
+  fields: 11
+  description: Represents detailed performance and health metrics for an individual backend member (server) within
+    a load balancer. Includes operational status, health check results, and aggregated traffic and timin
+- name: loadBalancerMetrics
+  fields: 2
+  description: Represents a snapshot of load balancer metrics collected by the monitoring agent, including frontend
+    and backend statistics for a given service at a specific timestamp.
+- name: loadBalancerNetwork
+  fields: 7
+  description: Represent a network from where traffic is consumed and routed.
+- name: loadBalancerNetworkCreate
+  fields: 4
+  description: Load Balancer Network.
+- name: loadBalancerProblemInvalidParamResponse
+  fields: 2
+  description: Provides detailed information about a specific invalid parameter that caused a request to fail validation,
+    as an extension of RFC7807 Problem Details.
+- name: loadBalancerProblemResponse
+  fields: 6
+  description: Represents an error object following the Problem Details specification (RFC7807). Provides machine-readable
+    and human-readable information about an error that occurred while processing a request.
+- name: loadBalancerResolver
+  fields: 9
+  description: Represents a DNS resolver configuration for a load balancer service, defining the nameservers, retry
+    behavior, and caching rules used to resolve backend hostnames.
+- name: loadBalancerResolverCreate
+  fields: 7
+  description: Load Balancer Resolver
+- name: loadBalancerRule
+  fields: 7
+  description: Represents a load balancer rule that defines how incoming traffic is matched and processed by a frontend,
+    including priority, matching conditions, and actions to perform.
+- name: loadBalancerService
+  fields: 18
+  description: Represents a load balancer service instance that groups together frontends, backends, and related
+    agents. It defines the service plan, network configuration, and operational state across all nodes.
+- name: loadBalancerServiceCreate
+  fields: 13
+  description: Load Balancer Service
+- name: loadBalancerServiceModify
+  fields: 10
+  description: Load Balancer Service
+- name: loadBalancerServiceReplace
+  fields: 10
+  description: Load Balancer Service.
+- name: loadBalancerTlsConfig
+  fields: 4
+  description: Represents a TLS configuration for a frontend or backend, defining the certificate bundle and associated
+    identifiers within the load balancer service.
+- name: modifyStorageResponse
+  fields: 2
+  description: Response schema for block storage modification operations.
+- name: network
+  fields: 1
+  description: Response schema containing a single network.
+- name: networkDetails
+  fields: 13
+  description: Detailed network resource attributes.
+- name: networkLabel
+  fields: 2
+  description: A key/value pair to label and categorize resources
+- name: networkLabels
+  fields: 1
+  description: Collection of key/value labels for a resource.
+- name: objectStorage2AccessKeyDetailResponse
+  fields: 5
+  description: Response schema for access key details.
+- name: objectStorage2CustomDomainCreate
+  fields: 3
+  description: Schema for creating a custom domain.
+- name: objectStorage2CustomDomainDetailResponse
+  fields: 3
+  description: Response schema for custom domain details.
+- name: objectStorage2EndpointResponse
+  fields: 5
+  description: Response schema for endpoint details.
+- name: objectStorage2LabelCreate
+  fields: 2
+  description: Schema for creating a label with a key-value pair.
+- name: objectStorage2LabelDetailResponse
+  fields: 2
+  description: Schema for label details including key-value pairs.
+- name: objectStorage2NetworkCreate
+  fields: 4
+  description: Schema for creating a network with optional private UUID, name, type, and family.
+- name: objectStorage2NetworkDetailResponse
+  fields: 4
+  description: Schema for network details including family, name, type, and UUID.
+- name: objectStorage2PolicyAttachmentResponse
+  fields: 2
+  description: Schema representing a policy attachment response.
+- name: objectStorage2PropertiesCreate
+  fields: 1
+  description: Schema for creating properties with an optional access control origin override.
+- name: objectStorage2RoleCreate
+  fields: 6
+  description: Schema for creating a new role.
+- name: objectStorage2RoleResponse
+  fields: 10
+  description: Response schema for detailed information about a specific role.
+- name: objectStorage2RoleTag
+  fields: 2
+  description: Schema for tagging roles with key-value pairs.
+- name: objectStorage2ServiceCreate
+  fields: 8
+  description: Schema for creating a service, including name, region, status, networks, domains, labels, and properties.
+- name: objectStorage2ServiceDetailResponse
+  fields: 16
+  description: Response schema for service details, including UUID, name, and endpoints.
+- name: objectStorage2ServiceModify
+  fields: 8
+  description: Schema for modifying a service, including name, status, networks, domains, labels, and properties.
+- name: objectStorage2ServiceReplace
+  fields: 8
+  description: Schema for replacing a service, including name, status, networks, domains, labels, and properties.
+- name: objectStorage2StaticWebsiteConfig
+  fields: 9
+  description: Static website hosting configuration for a specific domain.
+- name: objectStorage2StaticWebsiteConfigCreate
+  fields: 7
+  description: Request body for creating a static website configuration. If domain is omitted, the primary static
+    website domain is used.
+- name: objectStorage2StaticWebsiteConfigModify
+  fields: 6
+  description: Request body for updating a static website configuration
+- name: objectStorage2StaticWebsiteErrorPage
+  fields: 3
+  description: Custom error page configuration for specific HTTP status codes or ranges
+- name: objectStorage2TagResponse
+  fields: 2
+  description: Schema for a key-value pair tag.
+- name: objectStorage2UserDetailResponse
+  fields: 7
+  description: Response schema for user details.
+- name: partnerError400
+  fields: 1
+  description: 400 Bad Request errors for partner account creation.
+- name: partnerError400AddressInvalid
+  fields: 2
+  description: The attribute address has an invalid value.
+- name: partnerError400CityInvalid
+  fields: 2
+  description: The attribute city has an invalid value.
+- name: partnerError400CompanyInvalid
+  fields: 2
+  description: The attribute company has an invalid value.
+- name: partnerError400CountryInvalid
+  fields: 2
+  description: The attribute country has an invalid value.
+- name: partnerError400CountryMissing
+  fields: 2
+  description: The attribute country is missing from the request.
+- name: partnerError400EmailInvalid
+  fields: 2
+  description: The attribute email has an invalid value.
+- name: partnerError400EmailMissing
+  fields: 2
+  description: The attribute email is missing from the request.
+- name: partnerError400FirstNameInvalid
+  fields: 2
+  description: The attribute first_name has an invalid value.
+- name: partnerError400FirstNameMissing
+  fields: 2
+  description: The attribute first_name is missing from the request.
+- name: partnerError400LastNameInvalid
+  fields: 2
+  description: The attribute last_name has an invalid value.
+- name: partnerError400LastNameMissing
+  fields: 2
+  description: The attribute last_name is missing from the request.
+- name: partnerError400PasswordInvalid
+  fields: 2
+  description: The attribute password has an invalid value.
+- name: partnerError400PasswordMissing
+  fields: 2
+  description: The attribute password is missing from the request.
+- name: partnerError400PhoneInvalid
+  fields: 2
+  description: The attribute phone has an invalid value.
+- name: partnerError400PhoneMissing
+  fields: 2
+  description: The attribute phone is missing from the request.
+- name: partnerError400PostalCodeInvalid
+  fields: 2
+  description: The attribute postal_code has an invalid value.
+- name: partnerError400PostalCodeMissing
+  fields: 2
+  description: The attribute postal_code is missing from the request.
+- name: permission
+  fields: 1
+  description: A single permission object.
+- name: permissionDocument
+  fields: 4
+  description: Permission document defining access rights for a sub-account to a specific resource.
+- name: resizeStorageResponse
+  fields: 1
+  description: Response containing the backup created before resizing the block storage partition and filesystem.
+- name: router
+  fields: 1
+  description: Schema for a single router
+- name: routerDetails
+  fields: 7
+  description: Router describes a virtual router that can route between SDN networks
+- name: routerLabel
+  fields: 2
+  description: A key/value pair to label and categorize resources
+- name: routerRouteNexthop
+  fields: 4
+  description: Static route with nexthop information.
+- name: server
+  fields: 1
+  description: Cloud Server object returned in responses
+- name: serverCreateFirewallRule
+  fields: 1
+  description: Parameters for creating a firewall rule.
+- name: serverDetails
+  fields: 40
+  description: Detailed public information about a Cloud Server
+- name: serverFirewallRule
+  fields: 1
+  description: A firewall rule with its position in the Cloud Server's rule chain.
+- name: serverFirewallRuleRequirements
+  fields: 0
+- name: serverFirewallRuleResponseItem
+  fields: 15
+  description: A firewall rule with its position in the Cloud Server's rule chain.
+- name: serverGroup
+  fields: 1
+  description: A single server group
+- name: serverGroupAntiAffinityStatus
+  fields: 2
+  description: Status of anti-affinity policy
+- name: serverGroupDetails
+  fields: 6
+  description: Details of a server group
+- name: serverInterface
+  fields: 7
+  description: Network interface attached to a Cloud Server
+- name: serverInterfaceIpAddress
+  fields: 5
+  description: Network interface IP address
+- name: serverInterfaceResponse
+  fields: 1
+  description: Network interface response
+- name: serverIpAddressInterfaceResponse
+  fields: 1
+  description: IP address response for a network interface
+- name: serverIpAddresses
+  fields: 1
+  description: IP addresses assigned to the Cloud Server
+- name: serverLabel
+  fields: 2
+  description: A key/value pair to label and categorize resources
+- name: serverLabels
+  fields: 1
+  description: Cloud Server labels
+- name: serverNetworking
+  fields: 1
+  description: Network interfaces configured for the Cloud Server
+- name: serverNetworkingResponse
+  fields: 1
+  description: Cloud Server networking response
+- name: serverStorageDevicesResponse
+  fields: 1
+  description: Storage devices attached to a Cloud Server
+- name: storage
+  fields: 1
+  description: Response schema containing a single storage resource.
+- name: storageBackupRule
+  fields: 3
+  description: Schedule for automatic block storage backups.
+- name: storageDetails
+  fields: 19
+  description: Detailed information about a storage resource.
+- name: storageImport
+  fields: 15
+  description: Details and progress of a storage import task.
+- name: storageImportResponse
+  fields: 1
+  description: Response containing a storage import task.
+- name: storageLabel
+  fields: 2
+  description: A key/value pair to label and categorize resources
+- name: storageListItem
+  fields: 16
+  description: Storage resource summary returned by public list operations.
+relationships:
+- from: account
+  to: accountDetails
+  type: has_one
+  via: account
+- from: accountDetails
+  to: accountResourceLimits
+  type: has_one
+  via: resource_limits
+- from: accountDetails
+  to: accountCreditsBreakdown
+  type: has_one
+  via: credits_breakdown
+- from: accountBillingSummaryResponse
+  to: accountBillingSummary
+  type: has_one
+  via: billing
+- from: kubernetesCluster
+  to: kubernetesDefaultStorageEncryption
+  type: has_one
+  via: storage_encryption
+- from: kubernetesClusterAvailableUpgradesPost
+  to: kubernetesClusterUpgradeStrategy
+  type: has_one
+  via: strategy
+- from: kubernetesNodeGroup
+  to: kubernetesNodeGroupCustomPlan
+  type: has_one
+  via: custom_plan
+- from: kubernetesNodeGroup
+  to: kubernetesNodeGroupCloudNativePlan
+  type: has_one
+  via: cloud_native_plan
+- from: kubernetesNodeGroup
+  to: kubernetesNodeGroupGPUPlan
+  type: has_one
+  via: gpu_plan
+- from: kubernetesNodeGroup
+  to: kubernetesNodeUpdates
+  type: has_one
+  via: node_updates
+- from: kubernetesNodeGroupDetails
+  to: kubernetesNode
+  type: has_many
+  via: nodes
+- from: kubernetesAuthenticationIssuerConfig
+  to: kubernetesClaimMappings
+  type: has_one
+  via: claim_mappings
+- from: kubernetesAuthenticationIssuerConfig
+  to: kubernetesClaimValidationRule
+  type: has_many
+  via: claim_validation_rules
+- from: kubernetesAuthenticationIssuerConfig
+  to: kubernetesUserValidationRule
+  type: has_many
+  via: user_validation_rules
+- from: kubernetesClaimMappings
+  to: kubernetesPrefixedClaimOrExpression
+  type: has_one
+  via: username
+- from: kubernetesClaimMappings
+  to: kubernetesPrefixedClaimOrExpression
+  type: has_one
+  via: groups
+- from: kubernetesClaimMappings
+  to: kubernetesClaimOrExpression
+  type: has_one
+  via: uid
+- from: kubernetesClaimMappings
+  to: kubernetesExtraMapping
+  type: has_many
+  via: extra
+- from: ipAddressDetails
+  to: account
+  type: belongs_to
+  via: account_id
+- from: ipAddressRequest
+  to: ipAddressDetails
+  type: has_many
+  via: ip_addresses
+- from: ipAddressResponse
+  to: ipAddressDetails
+  type: has_one
+  via: ip_address
+- from: network
+  to: networkDetails
+  type: has_one
+  via: network
+- from: networkLabels
+  to: networkLabel
+  type: has_many
+  via: label
+- from: auditLogsResponse
+  to: auditLogsAuditLog
+  type: has_many
+  via: audit_logs
+- from: partnerError400
+  to: partnerError400AddressInvalid
+  type: has_one
+  via: error
+- from: partnerError400
+  to: partnerError400CityInvalid
+  type: has_one
+  via: error
+- from: partnerError400
+  to: partnerError400CompanyInvalid
+  type: has_one
+  via: error
+- from: partnerError400
+  to: partnerError400CountryInvalid
+  type: has_one
+  via: error
+- from: partnerError400
+  to: partnerError400CountryMissing
+  type: has_one
+  via: error
+- from: partnerError400
+  to: partnerError400EmailInvalid
+  type: has_one
+  via: error
+- from: partnerError400
+  to: partnerError400EmailMissing
+  type: has_one
+  via: error
+- from: partnerError400
+  to: partnerError400FirstNameInvalid
+  type: has_one
+  via: error
+- from: partnerError400
+  to: partnerError400FirstNameMissing
+  type: has_one
+  via: error
+- from: partnerError400
+  to: partnerError400LastNameInvalid
+  type: has_one
+  via: error
+- from: partnerError400
+  to: partnerError400LastNameMissing
+  type: has_one
+  via: error
+- from: partnerError400
+  to: partnerError400PasswordInvalid
+  type: has_one
+  via: error
+- from: partnerError400
+  to: partnerError400PasswordMissing
+  type: has_one
+  via: error
+- from: partnerError400
+  to: partnerError400PhoneInvalid
+  type: has_one
+  via: error
+- from: partnerError400
+  to: partnerError400PhoneMissing
+  type: has_one
+  via: error
+- from: partnerError400
+  to: partnerError400PostalCodeInvalid
+  type: has_one
+  via: error
+- from: partnerError400
+  to: partnerError400PostalCodeMissing
+  type: has_one
+  via: error
+- from: permission
+  to: permissionDocument
+  type: has_one
+  via: permission
+- from: routerDetails
+  to: routerLabel
+  type: has_many
+  via: labels
+- from: routerDetails
+  to: routerRouteNexthop
+  type: has_many
+  via: static_routes
+- from: router
+  to: routerDetails
+  type: has_one
+  via: router
+- from: serverGroupDetails
+  to: serverGroupAntiAffinityStatus
+  type: has_many
+  via: anti_affinity_status
+- from: serverGroup
+  to: serverGroupDetails
+  type: has_one
+  via: server_group
+- from: createServerResponse
+  to: serverDetails
+  type: has_one
+  via: server
+- from: serverDetails
+  to: serverIpAddresses
+  type: has_one
+  via: ip_addresses
+- from: serverDetails
+  to: serverLabels
+  type: has_one
+  via: labels
+- from: serverDetails
+  to: serverNetworking
+  type: has_one
+  via: networking
+- from: serverDetails
+  to: serverStorageDevicesResponse
+  type: has_one
+  via: storage_devices
+- from: server
+  to: serverDetails
+  type: has_one
+  via: server
+- from: serverLabels
+  to: serverLabel
+  type: has_many
+  via: label
+- from: serverCreateFirewallRule
+  to: serverFirewallRuleRequirements
+  type: has_one
+  via: firewall_rule
+- from: serverFirewallRule
+  to: serverFirewallRuleResponseItem
+  type: has_one
+  via: firewall_rule
+- from: serverNetworkingResponse
+  to: serverNetworking
+  type: has_one
+  via: networking
+- from: serverInterfaceResponse
+  to: serverInterface
+  type: has_one
+  via: interface
+- from: serverIpAddressInterfaceResponse
+  to: serverInterfaceIpAddress
+  type: has_one
+  via: ip_address
+- from: storageListItem
+  to: storageLabel
+  type: has_many
+  via: labels
+- from: createStorageResponse
+  to: storageDetails
+  type: has_one
+  via: storage
+- from: storageDetails
+  to: storageLabel
+  type: has_many
+  via: labels
+- from: storageDetails
+  to: storageBackupRule
+  type: has_one
+  via: backup_rule
+- from: storage
+  to: storageDetails
+  type: has_one
+  via: storage
+- from: modifyStorageResponse
+  to: storageDetails
+  type: has_one
+  via: storage
+- from: modifyStorageResponse
+  to: storageDetails
+  type: has_one
+  via: resize_backup
+- from: attachStorageResponse
+  to: storageDetails
+  type: has_one
+  via: storage
+- from: createStorageBackupResponse
+  to: storageDetails
+  type: has_one
+  via: storage
+- from: detachStorageResponse
+  to: storageDetails
+  type: has_one
+  via: storage
+- from: storageImportResponse
+  to: storageImport
+  type: has_one
+  via: storage_import
+- from: resizeStorageResponse
+  to: storageDetails
+  type: has_one
+  via: resize_backup
+- from: createStorageTemplateResponse
+  to: storageDetails
+  type: has_one
+  via: storage
+- from: objectStorage2ServiceCreate
+  to: objectStorage2NetworkCreate
+  type: has_many
+  via: networks
+- from: objectStorage2ServiceCreate
+  to: objectStorage2CustomDomainCreate
+  type: has_many
+  via: custom_domains
+- from: objectStorage2ServiceCreate
+  to: objectStorage2LabelCreate
+  type: has_many
+  via: labels
+- from: objectStorage2ServiceCreate
+  to: objectStorage2PropertiesCreate
+  type: has_one
+  via: properties
+- from: objectStorage2ServiceReplace
+  to: objectStorage2NetworkCreate
+  type: has_many
+  via: networks
+- from: objectStorage2ServiceReplace
+  to: objectStorage2CustomDomainCreate
+  type: has_many
+  via: custom_domains
+- from: objectStorage2ServiceReplace
+  to: objectStorage2LabelCreate
+  type: has_many
+  via: labels
+- from: objectStorage2ServiceReplace
+  to: objectStorage2PropertiesCreate
+  type: has_one
+  via: properties
+- from: objectStorage2StaticWebsiteConfigCreate
+  to: objectStorage2StaticWebsiteErrorPage
+  type: has_many
+  via: error_pages
+- from: objectStorage2ServiceModify
+  to: objectStorage2PropertiesCreate
+  type: has_one
+  via: properties
+- from: objectStorage2StaticWebsiteConfigModify
+  to: objectStorage2StaticWebsiteErrorPage
+  type: has_many
+  via: error_pages
+- from: objectStorage2RoleCreate
+  to: objectStorage2RoleTag
+  type: has_many
+  via: tags
+- from: objectStorage2ServiceDetailResponse
+  to: objectStorage2NetworkDetailResponse
+  type: has_many
+  via: networks
+- from: objectStorage2ServiceDetailResponse
+  to: objectStorage2LabelDetailResponse
+  type: has_many
+  via: labels
+- from: objectStorage2ServiceDetailResponse
+  to: objectStorage2UserDetailResponse
+  type: has_many
+  via: users
+- from: objectStorage2ServiceDetailResponse
+  to: objectStorage2EndpointResponse
+  type: has_many
+  via: endpoints
+- from: objectStorage2ServiceDetailResponse
+  to: objectStorage2CustomDomainDetailResponse
+  type: has_many
+  via: custom_domains
+- from: objectStorage2ServiceDetailResponse
+  to: objectStorage2StaticWebsiteConfig
+  type: has_many
+  via: static_websites
+- from: objectStorage2UserDetailResponse
+  to: objectStorage2AccessKeyDetailResponse
+  type: has_many
+  via: access_keys
+- from: objectStorage2UserDetailResponse
+  to: objectStorage2PolicyAttachmentResponse
+  type: has_many
+  via: policies
+- from: objectStorage2UserDetailResponse
+  to: objectStorage2TagResponse
+  type: has_many
+  via: tags
+- from: objectStorage2StaticWebsiteConfig
+  to: objectStorage2StaticWebsiteErrorPage
+  type: has_many
+  via: error_pages
+- from: objectStorage2RoleResponse
+  to: objectStorage2PolicyAttachmentResponse
+  type: has_many
+  via: policies
+- from: objectStorage2RoleResponse
+  to: objectStorage2TagResponse
+  type: has_many
+  via: tags
+- from: fileStorageServiceCreate
+  to: fileStorageNetworkCreate
+  type: has_many
+  via: networks
+- from: fileStorageServiceCreate
+  to: fileStorageShareCreate
+  type: has_many
+  via: shares
+- from: fileStorageServiceCreate
+  to: fileStorageLabelCreate
+  type: has_many
+  via: labels
+- from: fileStorageShareCreate
+  to: fileStorageAclCreate
+  type: has_many
+  via: acl
+- from: fileStorageServiceReplace
+  to: fileStorageNetworkCreate
+  type: has_many
+  via: networks
+- from: fileStorageServiceReplace
+  to: fileStorageLabelCreate
+  type: has_many
+  via: labels
+- from: fileStorageShareModify
+  to: fileStorageAclCreate
+  type: has_many
+  via: acl
+- from: fileStorageServiceDetailResponse
+  to: fileStorageNetworkDetailResponse
+  type: has_many
+  via: networks
+- from: fileStorageServiceDetailResponse
+  to: fileStorageShareDetailResponse
+  type: has_many
+  via: shares
+- from: fileStorageServiceDetailResponse
+  to: fileStorageLabelDetails
+  type: has_many
+  via: labels
+- from: databaseServiceCreateOpenAPI
+  to: databaseLabelCreate
+  type: has_many
+  via: labels
+- from: databaseServiceCreateOpenAPI
+  to: databaseServicePropertiesMysql
+  type: has_one
+  via: properties
+- from: databaseServiceCreateOpenAPI
+  to: databaseServicePropertiesPg
+  type: has_one
+  via: properties
+- from: databaseServiceCreateOpenAPI
+  to: databaseServicePropertiesRedis
+  type: has_one
+  via: properties
+- from: databaseServiceCreateOpenAPI
+  to: databaseServicePropertiesOpensearch
+  type: has_one
+  via: properties
+- from: databaseServiceCreateOpenAPI
+  to: databaseServicePropertiesValkey
+  type: has_one
+  via: properties
+- from: databaseServiceModifyOpenAPI
+  to: databaseLabelCreate
+  type: has_many
+  via: labels
+- from: databaseServiceModifyOpenAPI
+  to: databaseServicePropertiesMysql
+  type: has_one
+  via: properties
+- from: databaseServiceModifyOpenAPI
+  to: databaseServicePropertiesPg
+  type: has_one
+  via: properties
+- from: databaseServiceModifyOpenAPI
+  to: databaseServicePropertiesRedis
+  type: has_one
+  via: properties
+- from: databaseServiceModifyOpenAPI
+  to: databaseServicePropertiesOpensearch
+  type: has_one
+  via: properties
+- from: databaseServiceModifyOpenAPI
+  to: databaseServicePropertiesValkey
+  type: has_one
+  via: properties
+- from: databaseServiceCloneMysql
+  to: databaseNetworkCreate
+  type: has_many
+  via: networks
+- from: databaseServiceCloneMysql
+  to: databaseLabelCreate
+  type: has_many
+  via: labels
+- from: databaseServiceCloneMysql
+  to: databaseServicePropertiesMysql
+  type: has_one
+  via: properties
+- from: databaseServiceClonePg
+  to: databaseNetworkCreate
+  type: has_many
+  via: networks
+- from: databaseServiceClonePg
+  to: databaseLabelCreate
+  type: has_many
+  via: labels
+- from: databaseServiceClonePg
+  to: databaseServicePropertiesPg
+  type: has_one
+  via: properties
+- from: databaseServiceCloneRedis
+  to: databaseNetworkCreate
+  type: has_many
+  via: networks
+- from: databaseServiceCloneRedis
+  to: databaseLabelCreate
+  type: has_many
+  via: labels
+- from: databaseServiceCloneRedis
+  to: databaseServicePropertiesRedis
+  type: has_one
+  via: properties
+- from: databaseServiceCloneOpensearch
+  to: databaseNetworkCreate
+  type: has_many
+  via: networks
+- from: databaseServiceCloneOpensearch
+  to: databaseLabelCreate
+  type: has_many
+  via: labels
+- from: databaseServiceCloneOpensearch
+  to: databaseServicePropertiesOpensearch
+  type: has_one
+  via: properties
+- from: databaseServiceCloneValkey
+  to: databaseNetworkCreate
+  type: has_many
+  via: networks
+- from: databaseServiceCloneValkey
+  to: databaseLabelCreate
+  type: has_many
+  via: labels
+- from: databaseServiceCloneValkey
+  to: databaseServicePropertiesValkey
+  type: has_one
+  via: properties
+- from: databaseServiceTypeResponse
+  to: databaseServicePlanResponse
+  type: has_many
+  via: service_plans
+- from: databaseServicePlanResponse
+  to: databaseBackupConfigResponse
+  type: has_one
+  via: backup_config
+- from: databaseServicePlanResponse
+  to: databaseBackupConfigResponse
+  type: has_one
+  via: backup_config_pg
+- from: databaseServicePlanResponse
+  to: databaseBackupConfigResponse
+  type: has_one
+  via: backup_config_mysql
+- from: databaseServicePlanResponse
+  to: databaseBackupConfigResponse
+  type: has_one
+  via: backup_config_redis
+- from: databaseServicePlanResponse
+  to: databaseBackupConfigResponse
+  type: has_one
+  via: backup_config_valkey
+- from: databaseServicePlanResponse
+  to: databaseBackupConfigOpenSearchResponse
+  type: has_one
+  via: backup_config_opensearch
+- from: databaseServicePlanResponse
+  to: databasePlanComponentsResponse
+  type: has_one
+  via: components
+- from: databaseServiceInformationResponse
+  to: databasePlanComponentsResponse
+  type: has_one
+  via: plan_components
+- from: databaseServiceInformationResponse
+  to: databaseMaintenanceWindowResponse
+  type: has_one
+  via: maintenance
+- from: databaseServiceInformationResponse
+  to: databaseNetworkInformationDetailsResponse
+  type: has_many
+  via: networks
+- from: databaseServiceInformationResponse
+  to: databaseNodeStateResponse
+  type: has_many
+  via: node_states
+- from: databaseServiceInformationResponse
+  to: databaseLabelInformationResponse
+  type: has_many
+  via: labels
+- from: databaseServiceInformationResponse
+  to: databaseBackupResponse
+  type: has_many
+  via: backups
+- from: databaseServiceInformationResponse
+  to: databaseServiceComponentResponse
+  type: has_many
+  via: components
+- from: databaseServiceInformationResponse
+  to: databaseConnectionPoolResponse
+  type: has_many
+  via: connection_pools
+- from: databaseServiceInformationResponse
+  to: databaseUserResponse
+  type: has_many
+  via: users
+- from: databaseServiceInformationResponse
+  to: databaseAclResponse
+  type: has_many
+  via: acls
+- from: databaseServiceInformationResponse
+  to: databaseServiceIntegrationResponse
+  type: has_many
+  via: service_integrations
+- from: databaseMaintenanceWindowResponse
+  to: databaseMaintenancePendingUpdatesResponse
+  type: has_many
+  via: pending_updates
+- from: databaseUserResponse
+  to: databasePgAccessControlResponse
+  type: has_one
+  via: pg_access_control
+- from: databaseUserResponse
+  to: databaseRedisAccessControlResponse
+  type: has_one
+  via: redis_access_control
+- from: databaseUserResponse
+  to: databaseValkeyAccessControlResponse
+  type: has_one
+  via: valkey_access_control
+- from: databaseUserResponse
+  to: databaseOpenSearchAccessControlResponse
+  type: has_one
+  via: opensearch_access_control
+- from: databaseOpenSearchAccessControlResponse
+  to: databaseOpenSearchAccessControlRuleResponse
+  type: has_many
+  via: rules
+- from: databaseServiceIntegrationResponse
+  to: databaseIntegrationNodeStateResponse
+  type: has_many
+  via: node_states
+- from: databaseMetricsItemResponse
+  to: databaseMetricsDataResponse
+  type: has_one
+  via: data
+- from: databaseMetricsDataResponse
+  to: databaseMetricsColumnHeaderResponse
+  type: has_many
+  via: cols
+- from: databaseServiceMigrationStatusResponse
+  to: databaseMigrationStatusDetailsResponse
+  type: has_many
+  via: databases
+- from: databaseQueryStatisticsResponse
+  to: databaseQueryStatisticsMysqlResponse
+  type: has_many
+  via: mysql
+- from: databaseQueryStatisticsResponse
+  to: databaseQueryStatisticsPgResponse
+  type: has_many
+  via: pg
+- from: databaseLogListResponse
+  to: databaseLogEntryResponse
+  type: has_many
+  via: logs
+- from: databaseServiceNetworkDetailsResponse
+  to: databasePeeringStatusResponse
+  type: has_many
+  via: network_peerings
+- from: databaseCurrentSessionsResponse
+  to: databasePgCurrentSessionResponse
+  type: has_many
+  via: pg
+- from: databaseCurrentSessionsResponse
+  to: databaseMysqlCurrentSessionResponse
+  type: has_many
+  via: mysql
+- from: databaseCurrentSessionsResponse
+  to: databaseRedisValkeyCurrentSessionResponse
+  type: has_many
+  via: redis
+- from: databaseCurrentSessionsResponse
+  to: databaseRedisValkeyCurrentSessionResponse
+  type: has_many
+  via: valkey
+- from: gatewayServiceCreateRequest
+  to: gatewayRouterCreateRequest
+  type: has_many
+  via: routers
+- from: gatewayServiceCreateRequest
+  to: gatewayAddressCreateRequest
+  type: has_many
+  via: addresses
+- from: gatewayServiceCreateRequest
+  to: gatewayConnectionCreateRequest
+  type: has_many
+  via: connections
+- from: gatewayServiceCreateRequest
+  to: gatewayLabelCreateRequest
+  type: has_many
+  via: labels
+- from: gatewayConnectionCreateRequest
+  to: gatewayConnectionRouteRequest
+  type: has_many
+  via: local_routes
+- from: gatewayConnectionCreateRequest
+  to: gatewayConnectionRouteRequest
+  type: has_many
+  via: remote_routes
+- from: gatewayConnectionCreateRequest
+  to: gatewayTunnelCreateRequest
+  type: has_many
+  via: tunnels
+- from: gatewayServiceReplaceRequest
+  to: gatewayLabelCreateRequest
+  type: has_many
+  via: labels
+- from: gatewayServiceModifyRequest
+  to: gatewayConnectionModifyRequest
+  type: has_many
+  via: connections
+- from: gatewayServiceModifyRequest
+  to: gatewayLabelCreateRequest
+  type: has_many
+  via: labels
+- from: gatewayConnectionModifyRequest
+  to: gatewayConnectionRouteRequest
+  type: has_many
+  via: local_routes
+- from: gatewayConnectionModifyRequest
+  to: gatewayConnectionRouteRequest
+  type: has_many
+  via: remote_routes
+- from: gatewayConnectionModifyRequest
+  to: gatewayTunnelModifyRequest
+  type: has_many
+  via: tunnels
+- from: gatewayServiceDetailsResponse
+  to: gatewayRouterDetailsResponse
+  type: has_one
+  via: routers
+- from: gatewayServiceDetailsResponse
+  to: gatewayAddressDetailsResponse
+  type: has_many
+  via: addresses
+- from: gatewayServiceDetailsResponse
+  to: gatewayConnectionDetailsResponse
+  type: has_many
+  via: connections
+- from: gatewayServiceDetailsResponse
+  to: gatewayLabelDetailsResponse
+  type: has_many
+  via: labels
+- from: gatewayConnectionDetailsResponse
+  to: gatewayConnectionRouteDetailsResponse
+  type: has_many
+  via: local_routes
+- from: gatewayConnectionDetailsResponse
+  to: gatewayConnectionRouteDetailsResponse
+  type: has_many
+  via: remote_routes
+- from: gatewayConnectionDetailsResponse
+  to: gatewayTunnelDetailsResponse
+  type: has_many
+  via: tunnels
+- from: gatewayTunnelDetailsResponse
+  to: gatewayLocalPeerAddressDetailsResponse
+  type: has_one
+  via: local_address
+- from: gatewayTunnelDetailsResponse
+  to: gatewayRemotePeerAddressDetailsResponse
+  type: has_one
+  via: remote_address
+- from: gatewayTunnelDetailsResponse
+  to: gatewayIpsecDetailsResponse
+  type: has_one
+  via: ipsec
+- from: gatewayTunnelDetailsResponse
+  to: gatewayTunnelInternalIpDetailsResponse
+  type: has_one
+  via: tunnel_internal_ip
+- from: gatewayIpsecDetailsResponse
+  to: gatewayAuthenticationDetailsResponse
+  type: has_one
+  via: authentication
+- from: gatewayTunnelInternalIpDetailsResponse
+  to: gatewayAddress
+  type: has_one
+  via: ip
+- from: gatewayServiceMetricsResponse
+  to: gatewayMetricsDetailsResponse
+  type: has_many
+  via: gateways
+- from: gatewayServiceMetricsResponse
+  to: gatewayIpsecMetricsDetailsResponse
+  type: has_one
+  via: ipsec_metrics
+- from: gatewayServiceLogSessionCreateResponse
+  to: gatewayServiceLogSessionDetailsResponse
+  type: has_many
+  via: sessions
+- from: loadBalancerServiceCreate
+  to: loadBalancerFrontendCreate
+  type: has_many
+  via: frontends
+- from: loadBalancerServiceCreate
+  to: loadBalancerBackendCreate
+  type: has_many
+  via: backends
+- from: loadBalancerServiceCreate
+  to: loadBalancerResolverCreate
+  type: has_many
+  via: resolvers
+- from: loadBalancerServiceCreate
+  to: loadBalancerNetworkCreate
+  type: has_many
+  via: networks
+- from: loadBalancerServiceCreate
+  to: loadBalancerLabelCreate
+  type: has_many
+  via: labels
+- from: loadBalancerServiceCreate
+  to: loadBalancerIpAddressCreate
+  type: has_many
+  via: ip_addresses
+- from: loadBalancerFrontendCreate
+  to: loadBalancerFrontendNetworkCreate
+  type: has_many
+  via: networks
+- from: loadBalancerFrontendCreate
+  to: loadBalancerFrontendPropertiesCreate
+  type: has_one
+  via: properties
+- from: loadBalancerBackendCreate
+  to: loadBalancerBackendPropertiesCreate
+  type: has_one
+  via: properties
+- from: loadBalancerServiceReplace
+  to: loadBalancerFrontendCreate
+  type: has_many
+  via: frontends
+- from: loadBalancerServiceReplace
+  to: loadBalancerBackendCreate
+  type: has_many
+  via: backends
+- from: loadBalancerServiceReplace
+  to: loadBalancerResolverCreate
+  type: has_many
+  via: resolvers
+- from: loadBalancerServiceReplace
+  to: loadBalancerLabelCreate
+  type: has_many
+  via: labels
+- from: loadBalancerServiceReplace
+  to: loadBalancerIpAddressCreate
+  type: has_many
+  via: ip_addresses
+- from: loadBalancerServiceModify
+  to: loadBalancerIpAddressCreate
+  type: has_many
+  via: ip_addresses
+- from: loadBalancerFrontendModify
+  to: loadBalancerFrontendPropertiesCreate
+  type: has_one
+  via: properties
+- from: loadBalancerFrontendModify
+  to: loadBalancerFrontendNetworkCreate
+  type: has_many
+  via: networks
+- from: loadBalancerBackendModify
+  to: loadBalancerBackendPropertiesCreate
+  type: has_one
+  via: properties
+- from: loadBalancerCertificateBundleCreate
+  to: loadBalancerLabelCreate
+  type: has_many
+  via: labels
+- from: loadBalancerCertificateBundleManualModify
+  to: loadBalancerLabelCreate
+  type: has_many
+  via: labels
+- from: loadBalancerCertificateBundleDynamicModify
+  to: loadBalancerLabelCreate
+  type: has_many
+  via: labels
+- from: loadBalancerCertificateBundleAuthorityModify
+  to: loadBalancerLabelCreate
+  type: has_many
+  via: labels
+- from: loadBalancerService
+  to: loadBalancerFrontend
+  type: has_many
+  via: frontends
+- from: loadBalancerService
+  to: loadBalancerBackend
+  type: has_many
+  via: backends
+- from: loadBalancerService
+  to: loadBalancerResolver
+  type: has_many
+  via: resolvers
+- from: loadBalancerService
+  to: loadBalancerNetwork
+  type: has_many
+  via: networks
+- from: loadBalancerService
+  to: loadBalancerIpAddress
+  type: has_many
+  via: ip_addresses
+- from: loadBalancerService
+  to: loadBalancerLabelResponse
+  type: has_many
+  via: labels
+- from: loadBalancerFrontend
+  to: loadBalancerFrontendPropertiesResponse
+  type: has_one
+  via: properties
+- from: loadBalancerRule
+  to: loadBalancerMatcherResponse
+  type: has_many
+  via: matchers
+- from: loadBalancerRule
+  to: loadBalancerActionResponse
+  type: has_many
+  via: actions
+- from: loadBalancerMatcherResponse
+  to: loadBalancerMatchIpResponse
+  type: has_one
+  via: match_src_ip
+- from: loadBalancerMatcherResponse
+  to: loadBalancerMatchIntResponse
+  type: has_one
+  via: match_src_port
+- from: loadBalancerMatcherResponse
+  to: loadBalancerMatchIntResponse
+  type: has_one
+  via: match_body_size
+- from: loadBalancerMatcherResponse
+  to: loadBalancerMatchStringWithArgResponse
+  type: has_one
+  via: match_cookie
+- from: loadBalancerMatcherResponse
+  to: loadBalancerMatchStringWithArgResponse
+  type: has_one
+  via: match_header
+- from: loadBalancerMatcherResponse
+  to: loadBalancerMatchStringWithArgResponse
+  type: has_one
+  via: match_url_param
+- from: loadBalancerMatcherResponse
+  to: loadBalancerMatchStringWithArgResponse
+  type: has_one
+  via: match_request_header
+- from: loadBalancerMatcherResponse
+  to: loadBalancerMatchStringWithArgResponse
+  type: has_one
+  via: match_response_header
+- from: loadBalancerMatcherResponse
+  to: loadBalancerMatchIntResponse
+  type: has_one
+  via: match_http_status
+- from: loadBalancerMatcherResponse
+  to: loadBalancerMatchStringResponse
+  type: has_one
+  via: match_http_method
+- from: loadBalancerMatcherResponse
+  to: loadBalancerMatchStringResponse
+  type: has_one
+  via: match_path
+- from: loadBalancerMatcherResponse
+  to: loadBalancerMatchStringResponse
+  type: has_one
+  via: match_url
+- from: loadBalancerMatcherResponse
+  to: loadBalancerMatchStringResponse
+  type: has_one
+  via: match_host
+- from: loadBalancerMatcherResponse
+  to: loadBalancerMatchStringResponse
+  type: has_one
+  via: match_url_query
+- from: loadBalancerMatcherResponse
+  to: loadBalancerMatchBackendResponse
+  type: has_one
+  via: match_num_members_up
+- from: loadBalancerActionResponse
+  to: loadBalancerActionUseBackendResponse
+  type: has_one
+  via: action_use_backend
+- from: loadBalancerActionResponse
+  to: loadBalancerActionHttpReturnResponse
+  type: has_one
+  via: action_http_return
+- from: loadBalancerActionResponse
+  to: loadBalancerActionHttpRedirectResponse
+  type: has_one
+  via: action_http_redirect
+- from: loadBalancerActionResponse
+  to: loadBalancerActionTcpRejectResponse
+  type: has_one
+  via: action_tcp_reject
+- from: loadBalancerActionResponse
+  to: loadBalancerActionSetForwardedHeadersResponse
+  type: has_one
+  via: action_set_forwarded_headers
+- from: loadBalancerActionResponse
+  to: loadBalancerActionSetHeaderResponse
+  type: has_one
+  via: action_set_request_header
+- from: loadBalancerActionResponse
+  to: loadBalancerActionSetHeaderResponse
+  type: has_one
+  via: action_set_response_header
+- from: loadBalancerActionResponse
+  to: loadBalancerActionHttpRewritePathResponse
+  type: has_one
+  via: action_http_rewrite_path
+- from: loadBalancerActionResponse
+  to: loadBalancerActionHttpRewriteUriResponse
+  type: has_one
+  via: action_http_rewrite_uri
+- from: loadBalancerBackend
+  to: loadBalancerMember
+  type: has_many
+  via: members
+- from: loadBalancerBackend
+  to: loadBalancerTlsConfig
+  type: has_many
+  via: tls_configs
+- from: loadBalancerBackend
+  to: loadBalancerBackendPropertiesResponse
+  type: has_one
+  via: properties
+- from: loadBalancerMetrics
+  to: loadBalancerFrontendMetricsResponse
+  type: has_many
+  via: frontends
+- from: loadBalancerMetrics
+  to: loadBalancerBackendMetricsResponse
+  type: has_many
+  via: backends
+- from: loadBalancerBackendMetricsResponse
+  to: loadBalancerMemberMetricsResponse
+  type: has_many
+  via: members
+- from: loadBalancerCertificateBundle
+  to: loadBalancerChallengeProblemResponse
+  type: has_many
+  via: challenge_problems
+- from: loadBalancerCertificateBundle
+  to: loadBalancerEmbeddedServiceResponse
+  type: has_many
+  via: services
+- from: loadBalancerCertificateBundle
+  to: loadBalancerLabelResponse
+  type: has_many
+  via: labels
+- from: loadBalancerChallengeProblemResponse
+  to: loadBalancerProblemResponse
+  type: has_one
+  via: problem
+- from: loadBalancerProblemResponse
+  to: loadBalancerProblemInvalidParamResponse
+  type: has_many
+  via: invalid_params
+- from: loadBalancerEmbeddedServiceResponse
+  to: loadBalancerEmbeddedFrontendResponse
+  type: has_many
+  via: frontends
+- from: loadBalancerEmbeddedServiceResponse
+  to: loadBalancerEmbeddedBackendResponse
+  type: has_many
+  via: backends
+- from: loadBalancerEmbeddedFrontendResponse
+  to: loadBalancerTlsConfig
+  type: has_many
+  via: tls_configs
+- from: loadBalancerEmbeddedBackendResponse
+  to: loadBalancerTlsConfig
+  type: has_many
+  via: tls_configs
+- from: createFirewallRuleset
+  to: firewallRulesetCreateLabel
+  type: has_many
+  via: labels
+- from: firewallRulesetModify
+  to: firewallRulesetCreateLabel
+  type: has_many
+  via: labels
+- from: firewallRulesetDetailResponse
+  to: firewallRulesetCreateLabel
+  type: has_many
+  via: labels
+- from: firewallRulesetFirewallMultipleRuleCreate
+  to: firewallRulesetFirewallRuleCreate
+  type: has_many
+  via: rules
+- from: firewallRulesetServerFirewallRuleCreate
+  to: firewallRulesetServerFirewallRule
+  type: has_one
+  via: firewall_rule
+- from: firewallRulesetFirewallRuleListResponse
+  to: firewallRulesetRuleDetailResponse
+  type: has_many
+  via: rules
+- from: firewallRulesetServerFirewallDetailResponse
+  to: firewallRulesetServerFirewallRules
+  type: has_one
+  via: firewall_rules
+- from: firewallRulesetServerFirewallRuleDetail
+  to: firewallRulesetServerFirewallRule
+  type: has_one
+  via: firewall_rule

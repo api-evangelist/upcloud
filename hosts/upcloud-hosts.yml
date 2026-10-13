@@ -1,0 +1,138 @@
+generated: '2026-10-13'
+method: derived
+source: the pre-flight dossier, apis.yml pointers, spec servers, well-known, vendors -- nothing fetched here
+generator: derive-hosts.py
+summary:
+  hosts: 9
+  own: 8
+  other_domain: 0
+  platform: 1
+  roles:
+  - api
+  - identity
+  - other
+  - portal
+  - source
+  - status
+  - website
+hosts:
+- host: api.upcloud.com
+  found_by:
+  - apis[]
+  - contract-discovery
+  types: []
+  serves:
+  - api
+  registrable_domain: upcloud.com
+  role: api
+  relation: own
+- host: calc.upcloud.com
+  found_by:
+  - probed
+  - site-links
+  - contract-discovery
+  - well-known
+  types: []
+  serves: []
+  registrable_domain: upcloud.com
+  role: other
+  relation: own
+- host: demo.upcloud.com
+  found_by:
+  - probed
+  - site-links
+  - contract-discovery
+  - well-known
+  types: []
+  serves: []
+  registrable_domain: upcloud.com
+  role: other
+  relation: own
+- host: developers.upcloud.com
+  found_by:
+  - pointer
+  - apis[]
+  - probed
+  - site-links
+  - namespace-probe
+  - docs-index
+  - spec-found
+  - contract-discovery
+  - well-known
+  types:
+  - DeveloperPortal
+  - GettingStarted
+  serves:
+  - docs
+  - spec
+  title: UpCloud API | UpCloud Developer Documentation
+  status: 200
+  registrable_domain: upcloud.com
+  role: portal
+  relation: own
+- host: github.com
+  found_by:
+  - pointer
+  types:
+  - GitHubOrganization
+  serves: []
+  registrable_domain: github.com
+  role: source
+  relation: platform
+- host: hub.upcloud.com
+  found_by:
+  - pointer
+  - probed
+  - site-links
+  - well-known
+  types:
+  - Login
+  serves: []
+  registrable_domain: upcloud.com
+  role: identity
+  relation: own
+- host: signup.upcloud.com
+  found_by:
+  - pointer
+  - probed
+  - site-links
+  - well-known
+  types:
+  - SignUp
+  serves: []
+  registrable_domain: upcloud.com
+  role: identity
+  relation: own
+- host: status.upcloud.com
+  found_by:
+  - pointer
+  - probed
+  - site-links
+  - well-known
+  types:
+  - StatusPage
+  serves: []
+  registrable_domain: upcloud.com
+  role: status
+  relation: own
+- host: upcloud.com
+  found_by:
+  - pointer
+  - probed
+  - docs-index
+  - contract-discovery
+  - well-known
+  types:
+  - Website
+  - Blog
+  - ChangeLog
+  - Documentation
+  - Pricing
+  - PrivacyPolicy
+  - Support
+  - TermsOfService
+  serves:
+  - docs
+  registrable_domain: upcloud.com
+  role: website
+  relation: own

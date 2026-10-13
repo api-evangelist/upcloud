@@ -1,0 +1,784 @@
+{
+  "@context": {
+    "@vocab": "https://upcloud.com/schema#",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "upcloud": "https://upcloud.com/schema#",
+    "createSubaccountRequest": "upcloud:createSubaccountRequest",
+    "sub_account": {
+      "@id": "upcloud:sub_account"
+    },
+    "account": "upcloud:account",
+    "accountDetails": "upcloud:accountDetails",
+    "resource_limits": {
+      "@id": "upcloud:resource_limits",
+      "@type": "@id"
+    },
+    "username": {
+      "@id": "upcloud:username",
+      "@type": "@id"
+    },
+    "credits": {
+      "@id": "upcloud:credits",
+      "@type": "@id"
+    },
+    "credits_breakdown": {
+      "@id": "upcloud:credits_breakdown",
+      "@type": "@id"
+    },
+    "trial_mode": {
+      "@id": "upcloud:trial_mode",
+      "@type": "@id"
+    },
+    "accounts": "upcloud:accounts",
+    "accountResourceNetworkUsageType": "upcloud:accountResourceNetworkUsageType",
+    "accountUsageAccumulateParameter": "upcloud:accountUsageAccumulateParameter",
+    "accountBooleanYesno": "upcloud:accountBooleanYesno",
+    "accountLabel": "upcloud:accountLabel",
+    "key": {
+      "@id": "upcloud:key",
+      "@type": "xsd:string"
+    },
+    "value": {
+      "@id": "upcloud:value",
+      "@type": "xsd:string"
+    },
+    "accountResourceLimits": "upcloud:accountResourceLimits",
+    "managed_databases": {
+      "@id": "upcloud:managed_databases",
+      "@type": "xsd:integer"
+    },
+    "network_peerings": {
+      "@id": "upcloud:network_peerings",
+      "@type": "xsd:integer"
+    },
+    "file_storages": {
+      "@id": "upcloud:file_storages",
+      "@type": "xsd:integer"
+    },
+    "managed_container_registries": {
+      "@id": "upcloud:managed_container_registries",
+      "@type": "xsd:integer"
+    },
+    "managed_kubernetes": {
+      "@id": "upcloud:managed_kubernetes",
+      "@type": "xsd:integer"
+    },
+    "tags": {
+      "@id": "upcloud:tags",
+      "@type": "xsd:integer"
+    },
+    "cores": {
+      "@id": "upcloud:cores",
+      "@type": "xsd:integer"
+    },
+    "cloud_server_dev_1xcpu_1gb_10gb_plans": {
+      "@id": "upcloud:cloud_server_dev_1xcpu_1gb_10gb_plans",
+      "@type": "xsd:integer"
+    },
+    "cloud_server_dev_1xcpu_1gb_plans": {
+      "@id": "upcloud:cloud_server_dev_1xcpu_1gb_plans",
+      "@type": "xsd:integer"
+    },
+    "storage_hdd": {
+      "@id": "upcloud:storage_hdd",
+      "@type": "xsd:integer"
+    },
+    "networks": {
+      "@id": "upcloud:networks",
+      "@type": "xsd:integer"
+    },
+    "network_gateways_essentials": {
+      "@id": "upcloud:network_gateways_essentials",
+      "@type": "xsd:integer"
+    },
+    "network_gateways": {
+      "@id": "upcloud:network_gateways",
+      "@type": "xsd:integer"
+    },
+    "storage_ssd": {
+      "@id": "upcloud:storage_ssd",
+      "@type": "xsd:integer"
+    },
+    "load_balancers_essentials": {
+      "@id": "upcloud:load_balancers_essentials",
+      "@type": "xsd:integer"
+    },
+    "load_balancers": {
+      "@id": "upcloud:load_balancers",
+      "@type": "xsd:integer"
+    },
+    "gpus": {
+      "@id": "upcloud:gpus",
+      "@type": "xsd:integer"
+    },
+    "detached_interfaces": {
+      "@id": "upcloud:detached_interfaces",
+      "@type": "xsd:integer"
+    },
+    "detached_floating_ips": {
+      "@id": "upcloud:detached_floating_ips",
+      "@type": "xsd:integer"
+    },
+    "managed_object_storages": {
+      "@id": "upcloud:managed_object_storages",
+      "@type": "xsd:integer"
+    },
+    "memory": {
+      "@id": "upcloud:memory",
+      "@type": "xsd:integer"
+    },
+    "ntp_excess_gib": {
+      "@id": "upcloud:ntp_excess_gib",
+      "@type": "xsd:integer"
+    },
+    "public_ipv4": {
+      "@id": "upcloud:public_ipv4",
+      "@type": "xsd:integer"
+    },
+    "public_ipv6": {
+      "@id": "upcloud:public_ipv6",
+      "@type": "xsd:integer"
+    },
+    "routers": {
+      "@id": "upcloud:routers",
+      "@type": "xsd:integer"
+    },
+    "storage_maxiops": {
+      "@id": "upcloud:storage_maxiops",
+      "@type": "xsd:integer"
+    },
+    "storage_standard": {
+      "@id": "upcloud:storage_standard",
+      "@type": "xsd:integer"
+    },
+    "storage_total": {
+      "@id": "upcloud:storage_total",
+      "@type": "xsd:integer"
+    },
+    "type": {
+      "@id": "upcloud:type"
+    },
+    "required": {
+      "@id": "upcloud:required"
+    },
+    "additionalProperties": {
+      "@id": "upcloud:additionalProperties"
+    },
+    "accountCreditsBreakdown": "upcloud:accountCreditsBreakdown",
+    "account_credits": {
+      "@id": "upcloud:account_credits"
+    },
+    "account_free_credits": {
+      "@id": "upcloud:account_free_credits"
+    },
+    "total_credits": {
+      "@id": "upcloud:total_credits",
+      "@type": "xsd:decimal"
+    },
+    "accountBoolean01": "upcloud:accountBoolean01",
+    "accountError": "upcloud:accountError",
+    "error": {
+      "@id": "upcloud:error"
+    },
+    "accountBillingSummary": "upcloud:accountBillingSummary",
+    "currency": {
+      "@id": "upcloud:currency",
+      "@type": "@id"
+    },
+    "total_amount": {
+      "@id": "upcloud:total_amount",
+      "@type": "xsd:decimal"
+    },
+    "accountBillingSummaryResponse": "upcloud:accountBillingSummaryResponse",
+    "billing": {
+      "@id": "upcloud:billing",
+      "@type": "@id"
+    },
+    "accountCurrentNetworkUsage": "upcloud:accountCurrentNetworkUsage",
+    "stats": {
+      "@id": "upcloud:stats"
+    },
+    "accountCreateMsLmaSigningLinkResponse": "upcloud:accountCreateMsLmaSigningLinkResponse",
+    "signing_status": {
+      "@id": "upcloud:signing_status"
+    },
+    "accountResourceNetworkUsage": "upcloud:accountResourceNetworkUsage",
+    "accountNetworkUsage": "upcloud:accountNetworkUsage",
+    "accountResourceBillingSummaryResponse": "upcloud:accountResourceBillingSummaryResponse",
+    "kubernetesVersion": "upcloud:kubernetesVersion",
+    "id": {
+      "@id": "upcloud:id",
+      "@type": "@id"
+    },
+    "version": {
+      "@id": "upcloud:version",
+      "@type": "xsd:string"
+    },
+    "kubernetesAccepted": "upcloud:kubernetesAccepted",
+    "message": {
+      "@id": "upcloud:message",
+      "@type": "@id"
+    },
+    "kubernetesCluster": "upcloud:kubernetesCluster",
+    "control_plane_ip_filter": {
+      "@id": "upcloud:control_plane_ip_filter",
+      "@type": "@id"
+    },
+    "name": {
+      "@id": "upcloud:name",
+      "@type": "@id"
+    },
+    "network": {
+      "@id": "upcloud:network",
+      "@type": "@id"
+    },
+    "network_cidr": {
+      "@id": "upcloud:network_cidr",
+      "@type": "@id"
+    },
+    "storage_encryption": {
+      "@id": "upcloud:storage_encryption",
+      "@type": "@id"
+    },
+    "node_groups": {
+      "@id": "upcloud:node_groups",
+      "@type": "@id"
+    },
+    "state": {
+      "@id": "upcloud:state",
+      "@type": "@id"
+    },
+    "uuid": {
+      "@id": "upcloud:uuid",
+      "@type": "@id"
+    },
+    "zone": {
+      "@id": "upcloud:zone",
+      "@type": "@id"
+    },
+    "plan": {
+      "@id": "upcloud:plan",
+      "@type": "@id"
+    },
+    "private_node_groups": {
+      "@id": "upcloud:private_node_groups",
+      "@type": "@id"
+    },
+    "authentication": {
+      "@id": "upcloud:authentication",
+      "@type": "@id"
+    },
+    "labels": {
+      "@id": "upcloud:labels"
+    },
+    "kubernetesClusterAvailableUpgrades": "upcloud:kubernetesClusterAvailableUpgrades",
+    "versions": {
+      "@id": "upcloud:versions",
+      "@container": "@list"
+    },
+    "kubernetesClusterAvailableUpgradesPost": "upcloud:kubernetesClusterAvailableUpgradesPost",
+    "strategy": {
+      "@id": "upcloud:strategy",
+      "@type": "@id"
+    },
+    "kubernetesClusterKubeconfig": "upcloud:kubernetesClusterKubeconfig",
+    "kubeconfig": {
+      "@id": "upcloud:kubeconfig",
+      "@type": "@id"
+    },
+    "kubernetesClusterPatch": "upcloud:kubernetesClusterPatch",
+    "kubernetesClusterState": "upcloud:kubernetesClusterState",
+    "kubernetesNodeState": "upcloud:kubernetesNodeState",
+    "kubernetesEffect": "upcloud:kubernetesEffect",
+    "kubernetesError": "upcloud:kubernetesError",
+    "title": {
+      "@id": "upcloud:title",
+      "@type": "@id"
+    },
+    "status": {
+      "@id": "upcloud:status",
+      "@type": "@id"
+    },
+    "invalid_params": {
+      "@id": "upcloud:invalid_params",
+      "@type": "@id"
+    },
+    "correlation_id": {
+      "@id": "upcloud:correlation_id",
+      "@type": "@id"
+    },
+    "kubernetesKubeletArg": "upcloud:kubernetesKubeletArg",
+    "kubernetesLabel": "upcloud:kubernetesLabel",
+    "kubernetesNodeGroup": "upcloud:kubernetesNodeGroup",
+    "count": {
+      "@id": "upcloud:count",
+      "@type": "@id"
+    },
+    "kubelet_args": {
+      "@id": "upcloud:kubelet_args",
+      "@type": "@id"
+    },
+    "custom_plan": {
+      "@id": "upcloud:custom_plan",
+      "@type": "@id"
+    },
+    "cloud_native_plan": {
+      "@id": "upcloud:cloud_native_plan",
+      "@type": "@id"
+    },
+    "gpu_plan": {
+      "@id": "upcloud:gpu_plan",
+      "@type": "@id"
+    },
+    "ssh_keys": {
+      "@id": "upcloud:ssh_keys",
+      "@type": "@id"
+    },
+    "storage": {
+      "@id": "upcloud:storage",
+      "@type": "@id"
+    },
+    "taints": {
+      "@id": "upcloud:taints",
+      "@type": "@id"
+    },
+    "anti_affinity": {
+      "@id": "upcloud:anti_affinity",
+      "@type": "@id"
+    },
+    "utility_network_access": {
+      "@id": "upcloud:utility_network_access",
+      "@type": "@id"
+    },
+    "node_updates": {
+      "@id": "upcloud:node_updates",
+      "@type": "@id"
+    },
+    "kubernetesNodeGroupPatch": "upcloud:kubernetesNodeGroupPatch",
+    "kubernetesNodeGroupState": "upcloud:kubernetesNodeGroupState",
+    "kubernetesPlan": "upcloud:kubernetesPlan",
+    "description": {
+      "@id": "upcloud:description",
+      "@type": "@id"
+    },
+    "kubernetesNodeGroupCloudNativePlan": "upcloud:kubernetesNodeGroupCloudNativePlan",
+    "storage_size": {
+      "@id": "upcloud:storage_size",
+      "@type": "@id"
+    },
+    "storage_tier": {
+      "@id": "upcloud:storage_tier",
+      "@type": "@id"
+    },
+    "kubernetesNodeGroupGPUPlan": "upcloud:kubernetesNodeGroupGPUPlan",
+    "kubernetesNodeGroupCustomPlan": "upcloud:kubernetesNodeGroupCustomPlan",
+    "kubernetesStorageTier": "upcloud:kubernetesStorageTier",
+    "kubernetesStorageEncryption": "upcloud:kubernetesStorageEncryption",
+    "kubernetesTaint": "upcloud:kubernetesTaint",
+    "effect": {
+      "@id": "upcloud:effect",
+      "@type": "@id"
+    },
+    "kubernetesClusterUpgradeStrategy": "upcloud:kubernetesClusterUpgradeStrategy",
+    "kubernetesClusterUpgradeStrategyType": "upcloud:kubernetesClusterUpgradeStrategyType",
+    "kubernetesClusterPlan": "upcloud:kubernetesClusterPlan",
+    "kubernetesNodeGroupDetails": "upcloud:kubernetesNodeGroupDetails",
+    "kubernetesNode": "upcloud:kubernetesNode",
+    "kubelet_version": {
+      "@id": "upcloud:kubelet_version",
+      "@type": "@id"
+    },
+    "kubernetesNodeUpdates": "upcloud:kubernetesNodeUpdates",
+    "kubernetes_patches": {
+      "@id": "upcloud:kubernetes_patches",
+      "@type": "xsd:boolean"
+    },
+    "schedule_dow": {
+      "@id": "upcloud:schedule_dow",
+      "@type": "xsd:string"
+    },
+    "schedule_time": {
+      "@id": "upcloud:schedule_time",
+      "@type": "xsd:string"
+    },
+    "kubernetesAuthenticationIssuerConfig": "upcloud:kubernetesAuthenticationIssuerConfig",
+    "issuer_url": {
+      "@id": "upcloud:issuer_url",
+      "@type": "@id"
+    },
+    "discovery_url": {
+      "@id": "upcloud:discovery_url",
+      "@type": "@id"
+    },
+    "audiences": {
+      "@id": "upcloud:audiences",
+      "@container": "@list"
+    },
+    "audience_match_policy": {
+      "@id": "upcloud:audience_match_policy",
+      "@type": "xsd:string"
+    },
+    "certificate_authority": {
+      "@id": "upcloud:certificate_authority",
+      "@type": "xsd:string"
+    },
+    "claim_mappings": {
+      "@id": "upcloud:claim_mappings",
+      "@type": "@id"
+    },
+    "claim_validation_rules": {
+      "@id": "upcloud:claim_validation_rules",
+      "@container": "@list"
+    },
+    "user_validation_rules": {
+      "@id": "upcloud:user_validation_rules",
+      "@container": "@list"
+    },
+    "kubernetesClaimMappings": "upcloud:kubernetesClaimMappings",
+    "groups": {
+      "@id": "upcloud:groups",
+      "@type": "@id"
+    },
+    "uid": {
+      "@id": "upcloud:uid",
+      "@type": "@id"
+    },
+    "extra": {
+      "@id": "upcloud:extra",
+      "@container": "@list"
+    },
+    "kubernetesPrefixedClaimOrExpression": "upcloud:kubernetesPrefixedClaimOrExpression",
+    "claim": {
+      "@id": "upcloud:claim",
+      "@type": "xsd:string"
+    },
+    "prefix": {
+      "@id": "upcloud:prefix",
+      "@type": "xsd:string"
+    },
+    "expression": {
+      "@id": "upcloud:expression",
+      "@type": "xsd:string"
+    },
+    "kubernetesClaimOrExpression": "upcloud:kubernetesClaimOrExpression",
+    "kubernetesClaimValidationRule": "upcloud:kubernetesClaimValidationRule",
+    "required_value": {
+      "@id": "upcloud:required_value",
+      "@type": "xsd:string"
+    },
+    "kubernetesExtraMapping": "upcloud:kubernetesExtraMapping",
+    "value_expression": {
+      "@id": "upcloud:value_expression",
+      "@type": "xsd:string"
+    },
+    "kubernetesUserValidationRule": "upcloud:kubernetesUserValidationRule",
+    "currencyCurrencies": "upcloud:currencyCurrencies",
+    "currencies": {
+      "@id": "upcloud:currencies"
+    },
+    "currencyError": "upcloud:currencyError",
+    "deviceError": "upcloud:deviceError",
+    "events": "upcloud:events",
+    "eventsEventType": "upcloud:eventsEventType",
+    "eventsError": "upcloud:eventsError",
+    "addIpAddressRequest": "upcloud:addIpAddressRequest",
+    "ip_address": {
+      "@id": "upcloud:ip_address"
+    },
+    "bulkPatchIpAddressesRequestV1.3": "upcloud:bulkPatchIpAddressesRequestV1.3",
+    "ip_addresses": {
+      "@id": "upcloud:ip_addresses",
+      "@container": "@list"
+    },
+    "modifyIpAddressRequestV1.0": "upcloud:modifyIpAddressRequestV1.0",
+    "patchIpAddressRequestV1.3": "upcloud:patchIpAddressRequestV1.3",
+    "ipAddressesResponse": "upcloud:ipAddressesResponse",
+    "ipAddressDetails": "upcloud:ipAddressDetails",
+    "access": {
+      "@id": "upcloud:access",
+      "@type": "@id"
+    },
+    "account_id": {
+      "@id": "upcloud:account_id",
+      "@type": "@id"
+    },
+    "address": {
+      "@id": "upcloud:address",
+      "@type": "@id"
+    },
+    "delegated_to_account_id": {
+      "@id": "upcloud:delegated_to_account_id",
+      "@type": "@id"
+    },
+    "family": {
+      "@id": "upcloud:family",
+      "@type": "@id"
+    },
+    "floating": {
+      "@id": "upcloud:floating",
+      "@type": "@id"
+    },
+    "mac": {
+      "@id": "upcloud:mac",
+      "@type": "@id"
+    },
+    "part_of_plan": {
+      "@id": "upcloud:part_of_plan",
+      "@type": "@id"
+    },
+    "ptr_record": {
+      "@id": "upcloud:ptr_record",
+      "@type": "xsd:string"
+    },
+    "release_policy": {
+      "@id": "upcloud:release_policy",
+      "@type": "@id"
+    },
+    "server": {
+      "@id": "upcloud:server",
+      "@type": "@id"
+    },
+    "ipAddressRequest": "upcloud:ipAddressRequest",
+    "ipAddressResponse": "upcloud:ipAddressResponse",
+    "ipAddressIpFamily": "upcloud:ipAddressIpFamily",
+    "ipAddressBooleanYesno": "upcloud:ipAddressBooleanYesno",
+    "ipAddressIpReleasePolicy": "upcloud:ipAddressIpReleasePolicy",
+    "ipAddressNetworkType": "upcloud:ipAddressNetworkType",
+    "ipAddressError": "upcloud:ipAddressError",
+    "networkPeeringCreate": "upcloud:networkPeeringCreate",
+    "configured_status": {
+      "@id": "upcloud:configured_status",
+      "@type": "xsd:string"
+    },
+    "peer_network": {
+      "@id": "upcloud:peer_network"
+    },
+    "networkPeeringModify": "upcloud:networkPeeringModify",
+    "networkPeerings": "upcloud:networkPeerings",
+    "networkPeering": "upcloud:networkPeering",
+    "created_at": {
+      "@id": "upcloud:created_at"
+    },
+    "updated_at": {
+      "@id": "upcloud:updated_at"
+    },
+    "networkPeeringState": "upcloud:networkPeeringState",
+    "networkPeeringIpFamily": "upcloud:networkPeeringIpFamily",
+    "networkPeeringError": "upcloud:networkPeeringError",
+    "createNetworkRequest": "upcloud:createNetworkRequest",
+    "networkType": "upcloud:networkType",
+    "modifyNetworkRequest": "upcloud:modifyNetworkRequest",
+    "networkFeatures": "upcloud:networkFeatures",
+    "networkDetails": "upcloud:networkDetails",
+    "grt_export": {
+      "@id": "upcloud:grt_export",
+      "@type": "@id"
+    },
+    "ip_networks": {
+      "@id": "upcloud:ip_networks"
+    },
+    "network_features": {
+      "@id": "upcloud:network_features",
+      "@container": "@list"
+    },
+    "parent_network": {
+      "@id": "upcloud:parent_network",
+      "@type": "@id"
+    },
+    "peerings": {
+      "@id": "upcloud:peerings"
+    },
+    "router": {
+      "@id": "upcloud:router",
+      "@type": "@id"
+    },
+    "servers": {
+      "@id": "upcloud:servers"
+    },
+    "services": {
+      "@id": "upcloud:services"
+    },
+    "networkLabel": "upcloud:networkLabel",
+    "networkIpFamily": "upcloud:networkIpFamily",
+    "networkBooleanYesno": "upcloud:networkBooleanYesno",
+    "networkLabels": "upcloud:networkLabels",
+    "label": {
+      "@id": "upcloud:label",
+      "@container": "@list"
+    },
+    "networkCreateInterfaceRequest": "upcloud:networkCreateInterfaceRequest",
+    "main_account_id": {
+      "@id": "upcloud:main_account_id",
+      "@type": "@id"
+    },
+    "interface": {
+      "@id": "upcloud:interface"
+    },
+    "networkTags": "upcloud:networkTags",
+    "networkServers": "upcloud:networkServers",
+    "networkBoolean01": "upcloud:networkBoolean01",
+    "networkError": "upcloud:networkError",
+    "networkInterfaces": "upcloud:networkInterfaces",
+    "interfaces": {
+      "@id": "upcloud:interfaces"
+    },
+    "networkInterface": "upcloud:networkInterface",
+    "bootable": {
+      "@id": "upcloud:bootable",
+      "@type": "@id"
+    },
+    "source_ip_filtering": {
+      "@id": "upcloud:source_ip_filtering",
+      "@type": "@id"
+    },
+    "auditLogsResponse": "upcloud:auditLogsResponse",
+    "audit_logs": {
+      "@id": "upcloud:audit_logs",
+      "@container": "@list"
+    },
+    "auditLogsFormatParameter": "upcloud:auditLogsFormatParameter",
+    "auditLogsAuditLog": "upcloud:auditLogsAuditLog",
+    "time": {
+      "@id": "upcloud:time",
+      "@type": "xsd:dateTime"
+    },
+    "auth_type": {
+      "@id": "upcloud:auth_type",
+      "@type": "xsd:string"
+    },
+    "cloud_event_id": {
+      "@id": "upcloud:cloud_event_id",
+      "@type": "xsd:string"
+    },
+    "upcloud_correlation_id": {
+      "@id": "upcloud:upcloud_correlation_id",
+      "@type": "xsd:string"
+    },
+    "resource_type": {
+      "@id": "upcloud:resource_type",
+      "@type": "xsd:string"
+    },
+    "resource_sub_type": {
+      "@id": "upcloud:resource_sub_type",
+      "@type": "xsd:string"
+    },
+    "action": {
+      "@id": "upcloud:action",
+      "@type": "xsd:string"
+    },
+    "origin": {
+      "@id": "upcloud:origin",
+      "@type": "xsd:string"
+    },
+    "account_username": {
+      "@id": "upcloud:account_username",
+      "@type": "xsd:string"
+    },
+    "resource_id": {
+      "@id": "upcloud:resource_id",
+      "@type": "xsd:string"
+    },
+    "current_state": {
+      "@id": "upcloud:current_state"
+    },
+    "previous_state": {
+      "@id": "upcloud:previous_state"
+    },
+    "auditLogsErrorResponse": "upcloud:auditLogsErrorResponse",
+    "detail": {
+      "@id": "upcloud:detail",
+      "@type": "xsd:string"
+    },
+    "auditLogsFilterOptionsResponse": "upcloud:auditLogsFilterOptionsResponse",
+    "resource_types": {
+      "@id": "upcloud:resource_types",
+      "@container": "@list"
+    },
+    "actions": {
+      "@id": "upcloud:actions",
+      "@container": "@list"
+    },
+    "origins": {
+      "@id": "upcloud:origins",
+      "@container": "@list"
+    },
+    "partnerCreateAccount": "upcloud:partnerCreateAccount",
+    "password": {
+      "@id": "upcloud:password",
+      "@type": "xsd:string"
+    },
+    "contact_details": {
+      "@id": "upcloud:contact_details"
+    },
+    "partnerAccount": "upcloud:partnerAccount",
+    "city": {
+      "@id": "upcloud:city",
+      "@type": "xsd:string"
+    },
+    "company": {
+      "@id": "upcloud:company",
+      "@type": "xsd:string"
+    },
+    "country": {
+      "@id": "upcloud:country",
+      "@type": "xsd:string"
+    },
+    "email": {
+      "@id": "upcloud:email",
+      "@type": "xsd:string"
+    },
+    "first_name": {
+      "@id": "upcloud:first_name",
+      "@type": "xsd:string"
+    },
+    "last_name": {
+      "@id": "upcloud:last_name",
+      "@type": "xsd:string"
+    },
+    "phone": {
+      "@id": "upcloud:phone",
+      "@type": "xsd:string"
+    },
+    "postal_code": {
+      "@id": "upcloud:postal_code",
+      "@type": "xsd:string"
+    },
+    "vat_number": {
+      "@id": "upcloud:vat_number",
+      "@type": "xsd:string"
+    },
+    "partnerError": "upcloud:partnerError",
+    "partnerError400": "upcloud:partnerError400",
+    "partnerError400AddressInvalid": "upcloud:partnerError400AddressInvalid",
+    "error_code": {
+      "@id": "upcloud:error_code",
+      "@type": "xsd:string"
+    },
+    "error_message": {
+      "@id": "upcloud:error_message",
+      "@type": "xsd:string"
+    },
+    "partnerError400CityInvalid": "upcloud:partnerError400CityInvalid",
+    "partnerError400CompanyInvalid": "upcloud:partnerError400CompanyInvalid",
+    "partnerError400CountryInvalid": "upcloud:partnerError400CountryInvalid",
+    "partnerError400CountryMissing": "upcloud:partnerError400CountryMissing",
+    "partnerError400EmailInvalid": "upcloud:partnerError400EmailInvalid",
+    "partnerError400EmailMissing": "upcloud:partnerError400EmailMissing",
+    "partnerError400FirstNameInvalid": "upcloud:partnerError400FirstNameInvalid",
+    "partnerError400FirstNameMissing": "upcloud:partnerError400FirstNameMissing",
+    "partnerError400LastNameInvalid": "upcloud:partnerError400LastNameInvalid",
+    "partnerError400LastNameMissing": "upcloud:partnerError400LastNameMissing",
+    "partnerError400PasswordInvalid": "upcloud:partnerError400PasswordInvalid",
+    "partnerError400PasswordMissing": "upcloud:partnerError400PasswordMissing",
+    "partnerError400PhoneInvalid": "upcloud:partnerError400PhoneInvalid"
+  },
+  "@type": "schema:Dataset",
+  "schema:name": "UpCloud API JSON-LD context",
+  "schema:description": "A JSON-LD @context for the objects UpCloud's own API contract declares: one class per component schema, one property per declared field, typed from the contract. Derived by script (derive-json-ld.py, 2026-10-13) from openapi/upcloud-openapi.yml.",
+  "dcterms:created": "2026-10-13",
+  "dcterms:source": [
+    "openapi/upcloud-openapi.yml"
+  ]
+}

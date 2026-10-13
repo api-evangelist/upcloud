@@ -1,0 +1,16 @@
+generated: '2026-10-13'
+method: none
+source:
+- https://zapier.com/apps/upcloud/integrations
+- https://n8n.io/integrations/upcloud/
+- https://composio.dev/toolkits/upcloud
+- https://monid.ai/tools/upcloud
+checked:
+- https://composio.dev/toolkits/upcloud
+- https://monid.ai/tools/upcloud
+- https://n8n.io/integrations/upcloud/
+- https://zapier.com/apps/upcloud/integrations
+summary: null
+marketplace_apps: []
+edges: []
+templates: []

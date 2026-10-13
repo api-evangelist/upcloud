@@ -1,0 +1,17 @@
+generated: '2026-10-13'
+method: derived
+source: openapi/upcloud-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: apiToken
+  type: http
+  scheme: bearer
+  description: UpCloud API uses HTTP Bearer authentication. An API token is required to authenticate.
+    The API token can be created in the UpCloud control panel. Alternatively, you can create
+    an API token using the API directly, or with upctl. Note that if you want to use HTTP Basic
+    authentication on API or with upctl, you will need to enable API access in the UpCloud control
+    panel first.
+  sources:
+  - openapi/upcloud-openapi.yml

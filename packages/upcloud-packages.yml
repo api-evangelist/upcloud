@@ -1,0 +1,50 @@
+generated: '2026-10-13'
+method: searched
+source: https://github.com/UpCloudLtd
+packages:
+- name: upcloud-api
+  registry: pypi
+  url: https://pypi.org/project/upcloud-api/
+  language: python
+  official: true
+  version: 2.9.0
+  published: '2025-09-25'
+  repo: https://github.com/UpCloudLtd/upcloud-python-api
+  ownership_audit: metadata names upcloud.com
+- name: github.com/UpCloudLtd/upcloud-go-api/v8
+  registry: go
+  url: https://pkg.go.dev/github.com/UpCloudLtd/upcloud-go-api/v8
+  language: go
+  official: true
+  version: v8.42.0
+  published: '2026-09-18'
+- name: upcloudltd/upcloud-php-api
+  registry: packagist
+  url: https://packagist.org/packages/upcloudltd/upcloud-php-api
+  language: php
+  official: false
+  version: v3.0.0
+  published: '2023-12-01'
+  ownership_audit: 'registry metadata names neither the provider''s domain nor its GitHub org: official downgraded (harvest-packages.py --audit)'
+- name: github.com/UpCloudLtd/upcloud-cli/v3
+  registry: go
+  url: https://github.com/UpCloudLtd/upcloud-cli
+  language: go
+  official: true
+  version: v3.37.0
+  published: '2026-10-13'
+  note: upctl command line client
+- name: UpCloudLtd/upcloud
+  registry: terraform
+  url: https://registry.terraform.io/providers/UpCloudLtd/upcloud
+  language: hcl
+  official: true
+  version: 5.47.0
+  published: '2026-10-12'
+- name: upcloud_api
+  registry: rubygems
+  url: https://rubygems.org/gems/upcloud_api
+  language: ruby
+  official: false
+  version: 2.1.1
+  note: community gem (github.com/Smarre/upcloud_api), not published by UpCloud

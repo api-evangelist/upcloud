@@ -1,0 +1,81 @@
+generated: '2026-10-13'
+method: derived
+generator: derive-problem-types.py
+source:
+- openapi/upcloud-openapi.yml
+format: rfc9457
+envelope:
+  media_type: application/problem+json
+  schema: objectStorage2ErrorResponse
+coverage:
+  operations: 487
+  statuses_declared: 9
+problems:
+- status: 400
+  title: Bad Request
+  description: The Cloud Server UUID is invalid or the request body is malformed
+  operations: 72
+  media_types:
+  - application/json
+  - application/problem+json
+  schema: serverError400
+- status: 401
+  title: Unauthorized
+  description: 401 Unauthorized
+  operations: 28
+  media_types:
+  - application/problem+json
+  schema: kubernetesError
+- status: 403
+  title: Forbidden
+  description: Username does not have access to this Cloud Server
+  operations: 48
+  media_types:
+  - application/json
+  - application/problem+json
+  schema: serverError403
+- status: 404
+  title: Not Found
+  description: 404 Not found
+  operations: 79
+  media_types:
+  - application/json
+  - application/problem+json
+  schema: serverError404
+- status: 409
+  title: Conflict
+  description: Conflict
+  operations: 38
+  media_types:
+  - application/json
+  - application/problem+json
+  schema: serverError409
+- status: 422
+  title: Unprocessable Content
+  description: 422 Unprocessable entity
+  operations: 4
+  media_types:
+  - application/problem+json
+  schema: kubernetesError
+- status: 503
+  title: Service Unavailable
+  description: Storage import is temporarily unavailable
+  operations: 1
+  media_types:
+  - application/json
+  schema: storageError
+- status: 511
+  title: Network Authentication Required
+  description: The CD-ROM media could not be ejected from the running Cloud Server
+  operations: 3
+  media_types:
+  - application/json
+  schema: serverError511
+- status: default
+  title: null
+  description: Unexpected error
+  operations: 487
+  media_types:
+  - application/problem+json
+  - application/json
+  schema: objectStorage2ErrorResponse

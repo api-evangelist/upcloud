@@ -1,0 +1,434 @@
+generated: '2026-10-13'
+method: derived
+generator: derive-vocabulary.py
+source: openapi/upcloud-openapi.yml
+vocabulary:
+  name: UpCloud Domain Vocabulary
+  description: 'Terms declared by UpCloud''s own API contract: its resource groups, objects and enumerations, with the contract''s definitions.
+    Derived, not authored.'
+  version: '2026-10-13'
+  terms:
+  - term: upcloud
+    definition: UpCloud
+    tags:
+    - Resource Group
+    source: openapi/upcloud-openapi.yml
+  - term: account
+    definition: Account management and authentication
+    tags:
+    - Resource Group
+    source: openapi/upcloud-openapi.yml
+  - term: kubernetes
+    definition: Kubernetes is a container orchestration system for automating, managing and scaling software deployment. Managed Kubernetes allows
+      you to easily create Kubernetes clusters without having to take care about low level details.
+    tags:
+    - Resource Group
+    source: openapi/upcloud-openapi.yml
+  - term: currency
+    definition: Currency management
+    tags:
+    - Resource Group
+    source: openapi/upcloud-openapi.yml
+  - term: device
+    definition: Device management
+    tags:
+    - Resource Group
+    source: openapi/upcloud-openapi.yml
+  - term: events
+    definition: Event management
+    tags:
+    - Resource Group
+    source: openapi/upcloud-openapi.yml
+  - term: ip_address
+    definition: The UpCloud network has public and private IP addresses. Public IP addresses are used to connect to the server from the Internet.
+      Private Utility network addresses are available for all servers within a single account, and can communicate with each other globally as
+      long as the servers have the utility network interfaces configured. This is added to servers by default. A server has a minimum of ze
+    tags:
+    - Resource Group
+    source: openapi/upcloud-openapi.yml
+  - term: network-peering
+    definition: Network peering management
+    tags:
+    - Resource Group
+    source: openapi/upcloud-openapi.yml
+  - term: network
+    definition: 'The network API calls present the different networks attached to cloud servers and allow the configuration of SDN private networks.
+      Networks define a secure connections between attached cloud servers using a specialised network interface. A cloud server may belong to
+      any number of virtual networks at the same time. Server interfaces are identified and ordered by their index. ## Network types ### P'
+    tags:
+    - Resource Group
+    source: openapi/upcloud-openapi.yml
+  - term: audit-logs
+    definition: The Audit Log Service API allows customers to query and export their audit logs. Audit logs track all actions performed on customer
+      accounts, including resource creation, modification, and deletion. The API provides filtering, pagination, and export capabilities. All
+      endpoints require HTTP Basic authentication using UpCloud account credentials.
+    tags:
+    - Resource Group
+    source: openapi/upcloud-openapi.yml
+  - term: partner
+    definition: Partner API gives UpCloud partners the ability manage accounts for their customers. Note that use of this API is available only
+      to accounts provisioned as partner accounts. Please contact your account representative for further details.
+    tags:
+    - Resource Group
+    source: openapi/upcloud-openapi.yml
+  - term: permission
+    definition: Manage permissions for sub-accounts to access resources owned by the main account.
+    tags:
+    - Resource Group
+    source: openapi/upcloud-openapi.yml
+  - term: plan
+    definition: Plans are preconfigured server configurations with fixed price. Each plan includes certain number of CPU cores, memory amount,
+      storage and transfer quota. Most plans also include one public IPv4 address. Utility IPv4 addresses and public IPv6 addresses are currently
+      free of charge, so they are not included in plan. In addition to plans available in a zone, there is always possibility for free scal
+    tags:
+    - Resource Group
+    source: openapi/upcloud-openapi.yml
+  - term: price
+    definition: Retrieve pricing information for UpCloud resources and services.
+    tags:
+    - Resource Group
+    source: openapi/upcloud-openapi.yml
+  - term: router
+    definition: Router management
+    tags:
+    - Resource Group
+    source: openapi/upcloud-openapi.yml
+  - term: server-group
+    definition: Server group management
+    tags:
+    - Resource Group
+    source: openapi/upcloud-openapi.yml
+  - term: server
+    definition: Manages Cloud Servers
+    tags:
+    - Resource Group
+    source: openapi/upcloud-openapi.yml
+  - term: server_size
+    definition: Server size management
+    tags:
+    - Resource Group
+    source: openapi/upcloud-openapi.yml
+  - term: storage
+    definition: Block Storage is similar to a physical hard disk. It can be used to install an operating system or hold another filesystem for
+      a Cloud Server. Writable Block Storage and CD-ROM resources can be freely attached to any Cloud Server within the same zone and under the
+      same account. A maximum of 16 storage devices can be attached to a Cloud Server at the same time; however, the combined limit for netwo
+    tags:
+    - Resource Group
+    source: openapi/upcloud-openapi.yml
+  - term: tag
+    definition: User can define a set of free-form tags to group and identify a subset of their servers. Tags can be for example _webserver_,
+      _database_, _PROD_, _QA_, _DEV_ etc. A server can have several tags. API can be used to return only servers matching specified tags. Note
+      that all operations changing server's state or attributes must still be done individually for each server UUID, tags can be used only to
+    tags:
+    - Resource Group
+    source: openapi/upcloud-openapi.yml
+  - term: timezone
+    definition: Timezone management
+    tags:
+    - Resource Group
+    source: openapi/upcloud-openapi.yml
+  - term: account-tokens
+    definition: 'UpCloud API calls can be authenticated with HTTP Bearer (token) authentication. The token API requests below allow creation,
+      management and deletion of bearer tokens. The bearer token can be used for authentication by setting the Authorization header of the API
+      request: `Authorization: Bearer ucat_01DQE3AJDEBFEKECFM558TGH2F`.'
+    tags:
+    - Resource Group
+    source: openapi/upcloud-openapi.yml
+  - term: object-storage-2
+    definition: 'Object Storage is a computer data storage architecture that manages data as objects as opposed to block storage which manages
+      data as blocks within sectors and tracks. Managed Object storage is commonly used to manage large amounts of unstructured data for example
+      storing large datasets like photos, music, or files in online collaboration services. All customers data is encrypted by default using '
+    tags:
+    - Resource Group
+    source: openapi/upcloud-openapi.yml
+  - term: file-storage
+    definition: File Storage is a scalable file storage service that provides shared access to files over a network using the NFS protocol. The
+      File Storage API allows the creation, configuration, and deletion of file storage service, as well as monitoring of network and storage
+      usage. API follows JSON Merge Patch semantics. Note when modifying nested structures payload should contain entire array, which in a sen
+    tags:
+    - Resource Group
+    source: openapi/upcloud-openapi.yml
+  - term: database
+    definition: A Managed Database is a database-as-a-service that lets customers use a database without setting up servers or database software.
+      The service configuration defines high availability, resources, the database software version, and security parameters. The Managed Database
+      API lets you manage instances of supported open-source engines, including MySQL, PostgreSQL, Valkey, and OpenSearch. Managed Data
+    tags:
+    - Resource Group
+    source: openapi/upcloud-openapi.yml
+  - term: gateway
+    definition: UpCloud Gateway API. Allows creation, management and deletion of gateways.
+    tags:
+    - Resource Group
+    source: openapi/upcloud-openapi.yml
+  - term: load-balancer
+    definition: A Managed load balancer works as the network level frontend of customer application by directing connections to the backend servers.
+      The Managed load balancer API allows customer to manage their services. Managed load balancers are available in every UpCloud zone. The
+      API requests and responses payload are in JSON format only. API follows JSON Merge Patch semantics. Note when modifying nested stru
+    tags:
+    - Resource Group
+    source: openapi/upcloud-openapi.yml
+  - term: firewall-ruleset
+    definition: UpCloud SDN Firewall API. Allows creation, management and deletion of Firewall rulesets and Firewall rules.
+    tags:
+    - Resource Group
+    source: openapi/upcloud-openapi.yml
+  - term: vnc_keymap
+    definition: VNC keymap management
+    tags:
+    - Resource Group
+    source: openapi/upcloud-openapi.yml
+  - term: zone
+    definition: Operations for managing zones.
+    tags:
+    - Resource Group
+    source: openapi/upcloud-openapi.yml
+  - term: createSubaccountRequest
+    definition: Request for creating a subaccount.
+    tags:
+    - Object
+    source: openapi/upcloud-openapi.yml#/components/schemas/createSubaccountRequest
+  - term: accountDetails
+    definition: Detailed account information and limits.
+    tags:
+    - Object
+    source: openapi/upcloud-openapi.yml#/components/schemas/accountDetails
+  - term: accounts
+    definition: Main account and subaccounts accessible to the authenticated account.
+    tags:
+    - Object
+    source: openapi/upcloud-openapi.yml#/components/schemas/accounts
+  - term: accountUserName
+    definition: Username for an account.
+    tags:
+    - Object
+    source: openapi/upcloud-openapi.yml#/components/schemas/accountUserName
+  - term: accountRfc3339Datetime
+    definition: Datetime in RFC 3339 format
+    tags:
+    - Object
+    source: openapi/upcloud-openapi.yml#/components/schemas/accountRfc3339Datetime
+  - term: accountResourceNetworkUsageType
+    definition: Network usage type for resource
+    tags:
+    - Enumeration
+    source: openapi/upcloud-openapi.yml#/components/schemas/accountResourceNetworkUsageType
+  - term: accountZone
+    definition: Zone identifier
+    tags:
+    - Object
+    source: openapi/upcloud-openapi.yml#/components/schemas/accountZone
+  - term: accountUsageAccumulateParameter
+    definition: Usage accumulator hour or day parameter
+    tags:
+    - Enumeration
+    source: openapi/upcloud-openapi.yml#/components/schemas/accountUsageAccumulateParameter
+  - term: accountUuid
+    definition: Universally unique identifier
+    tags:
+    - Object
+    source: openapi/upcloud-openapi.yml#/components/schemas/accountUuid
+  - term: accountCountryCode
+    definition: ISO 3166-1 Alpha-3 code
+    tags:
+    - Object
+    source: openapi/upcloud-openapi.yml#/components/schemas/accountCountryCode
+  - term: accountPhoneNumber
+    definition: Phone number in international format.
+    tags:
+    - Object
+    source: openapi/upcloud-openapi.yml#/components/schemas/accountPhoneNumber
+  - term: accountLanguageCode
+    definition: ISO 639-1 code
+    tags:
+    - Object
+    source: openapi/upcloud-openapi.yml#/components/schemas/accountLanguageCode
+  - term: accountCurrencyCode
+    definition: ISO 4217 code
+    tags:
+    - Object
+    source: openapi/upcloud-openapi.yml#/components/schemas/accountCurrencyCode
+  - term: accountBooleanYesno
+    definition: Boolean value represented as yes/no
+    tags:
+    - Enumeration
+    source: openapi/upcloud-openapi.yml#/components/schemas/accountBooleanYesno
+  - term: accountLabel
+    definition: A key/value pair to label and categorize resources
+    tags:
+    - Object
+    source: openapi/upcloud-openapi.yml#/components/schemas/accountLabel
+  - term: accountResourceLimits
+    definition: Per-resource quota limits for an account.
+    tags:
+    - Object
+    source: openapi/upcloud-openapi.yml#/components/schemas/accountResourceLimits
+  - term: accountCredits
+    definition: Current account credit balance.
+    tags:
+    - Object
+    source: openapi/upcloud-openapi.yml#/components/schemas/accountCredits
+  - term: accountCreditsBreakdown
+    definition: Detailed breakdown of account credits.
+    tags:
+    - Object
+    source: openapi/upcloud-openapi.yml#/components/schemas/accountCreditsBreakdown
+  - term: accountBoolean01
+    definition: Schema for boolean-like values encoded as 0 or 1.
+    tags:
+    - Enumeration
+    source: openapi/upcloud-openapi.yml#/components/schemas/accountBoolean01
+  - term: accountError
+    definition: A general error response indicating that the request could not be fulfilled due to a technical issue.
+    tags:
+    - Object
+    source: openapi/upcloud-openapi.yml#/components/schemas/accountError
+  - term: accountBillingSummary
+    definition: Monthly billing totals grouped by resource type and subtype.
+    tags:
+    - Object
+    source: openapi/upcloud-openapi.yml#/components/schemas/accountBillingSummary
+  - term: accountBillingSummaryResponse
+    definition: Response containing a monthly billing summary.
+    tags:
+    - Object
+    source: openapi/upcloud-openapi.yml#/components/schemas/accountBillingSummaryResponse
+  - term: accountCurrentNetworkUsage
+    definition: Current Fair Transfer Policy usage for an account.
+    tags:
+    - Object
+    source: openapi/upcloud-openapi.yml#/components/schemas/accountCurrentNetworkUsage
+  - term: accountCreateMsLmaSigningLinkResponse
+    definition: Response schema for Microsoft LMA signing link creation.
+    tags:
+    - Object
+    source: openapi/upcloud-openapi.yml#/components/schemas/accountCreateMsLmaSigningLinkResponse
+  - term: accountResourceNetworkUsage
+    definition: Network usage statistics grouped by resource.
+    tags:
+    - Object
+    source: openapi/upcloud-openapi.yml#/components/schemas/accountResourceNetworkUsage
+  - term: accountNetworkUsage
+    definition: Account network usage and Fair Transfer Policy quota statistics.
+    tags:
+    - Object
+    source: openapi/upcloud-openapi.yml#/components/schemas/accountNetworkUsage
+  - term: accountResourceUsage
+    definition: Current account resource usage keyed by resource limit name.
+    tags:
+    - Object
+    source: openapi/upcloud-openapi.yml#/components/schemas/accountResourceUsage
+  - term: accountResourceBillingSummaryResponse
+    definition: Response containing the monthly billing summary for a resource.
+    tags:
+    - Object
+    source: openapi/upcloud-openapi.yml#/components/schemas/accountResourceBillingSummaryResponse
+  - term: kubernetesVersion
+    definition: Kubernetes version
+    tags:
+    - Object
+    source: openapi/upcloud-openapi.yml#/components/schemas/kubernetesVersion
+  - term: kubernetesVersions
+    definition: List of Kubernetes versions
+    tags:
+    - Object
+    source: openapi/upcloud-openapi.yml#/components/schemas/kubernetesVersions
+  - term: kubernetesAuthenticationConfigurationYAML
+    definition: kube-apiserver v1 AuthenticationConfiguration YAML document
+    tags:
+    - Object
+    source: openapi/upcloud-openapi.yml#/components/schemas/kubernetesAuthenticationConfigurationYAML
+  - term: kubernetesAccepted
+    definition: Message
+    tags:
+    - Object
+    source: openapi/upcloud-openapi.yml#/components/schemas/kubernetesAccepted
+  - term: kubernetesCluster
+    definition: Kubernetes cluster
+    tags:
+    - Object
+    source: openapi/upcloud-openapi.yml#/components/schemas/kubernetesCluster
+  - term: kubernetesClusterAvailableUpgrades
+    definition: 'Object declared by the contract with fields: versions.'
+    tags:
+    - Object
+    source: openapi/upcloud-openapi.yml#/components/schemas/kubernetesClusterAvailableUpgrades
+  - term: kubernetesClusterAvailableUpgradesPost
+    definition: 'Object declared by the contract with fields: version, strategy.'
+    tags:
+    - Object
+    source: openapi/upcloud-openapi.yml#/components/schemas/kubernetesClusterAvailableUpgradesPost
+  - term: kubernetesClusterKubeconfig
+    definition: Kubernetes cluster kubeconfig
+    tags:
+    - Object
+    source: openapi/upcloud-openapi.yml#/components/schemas/kubernetesClusterKubeconfig
+  - term: kubernetesClusterPatch
+    definition: 'Object declared by the contract with fields: control_plane_ip_filter, labels, plan.'
+    tags:
+    - Object
+    source: openapi/upcloud-openapi.yml#/components/schemas/kubernetesClusterPatch
+  - term: kubernetesClusters
+    definition: List of Kubernetes clusters
+    tags:
+    - Object
+    source: openapi/upcloud-openapi.yml#/components/schemas/kubernetesClusters
+  - term: kubernetesClusterState
+    definition: Cluster operational state
+    tags:
+    - Enumeration
+    source: openapi/upcloud-openapi.yml#/components/schemas/kubernetesClusterState
+  - term: kubernetesNodeState
+    definition: Node operational state
+    tags:
+    - Enumeration
+    source: openapi/upcloud-openapi.yml#/components/schemas/kubernetesNodeState
+  - term: kubernetesCount
+    definition: Amount of nodes in a node group
+    tags:
+    - Object
+    source: openapi/upcloud-openapi.yml#/components/schemas/kubernetesCount
+  - term: kubernetesDescription
+    definition: Plan description
+    tags:
+    - Object
+    source: openapi/upcloud-openapi.yml#/components/schemas/kubernetesDescription
+  - term: kubernetesEffect
+    definition: Taint effect
+    tags:
+    - Enumeration
+    source: openapi/upcloud-openapi.yml#/components/schemas/kubernetesEffect
+  - term: kubernetesError
+    definition: Response error
+    tags:
+    - Object
+    source: openapi/upcloud-openapi.yml#/components/schemas/kubernetesError
+  - term: kubernetesErrorType
+    definition: URI to a page describing the problem
+    tags:
+    - Object
+    source: openapi/upcloud-openapi.yml#/components/schemas/kubernetesErrorType
+  - term: kubernetesErrorTitle
+    definition: human-readable description of the error
+    tags:
+    - Object
+    source: openapi/upcloud-openapi.yml#/components/schemas/kubernetesErrorTitle
+  - term: kubernetesErrorInvalidParams
+    definition: list of parameters describing a specific part(s) of the request that caused the error
+    tags:
+    - Object
+    source: openapi/upcloud-openapi.yml#/components/schemas/kubernetesErrorInvalidParams
+  - term: kubernetesErrorCorrelationID
+    definition: unique string that identifies the request that caused the error
+    tags:
+    - Object
+    source: openapi/upcloud-openapi.yml#/components/schemas/kubernetesErrorCorrelationID
+  - term: kubernetesErrorStatus
+    definition: HTTP Status code
+    tags:
+    - Object
+    source: openapi/upcloud-openapi.yml#/components/schemas/kubernetesErrorStatus
+  - term: kubernetesIPBlock
+    definition: IP prefix of a single IPv4 address or a network CIDR
+    tags:
+    - Object
+    source: openapi/upcloud-openapi.yml#/components/schemas/kubernetesIPBlock

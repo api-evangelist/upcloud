@@ -1,23 +1,118 @@
 aid: upcloud
 name: UpCloud
-description: 'UpCloud is a company surfaced via the API Evangelist harvest backlog (source: market-gap:object-storage)
-  and added to the network as a stub for full-pipeline profiling.'
+description: UpCloud is a Finnish cloud infrastructure provider offering cloud servers,
+  block and object storage, managed databases, managed Kubernetes (UKS), load balancers
+  and private networking from data centres in Europe, North America, Asia and Australia.
+  Its public REST API (version 1.3, api.upcloud.com) is documented at developers.upcloud.com
+  with a published OpenAPI 3.1 contract, and is backed by official Go, Python and
+  PHP clients, the upctl CLI and a Terraform provider.
 url: https://raw.githubusercontent.com/api-evangelist/upcloud/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:market-gap:object-storage
-x-tier: stub
-x-tier-reason: harvest
+x-tier: profiled
+x-tier-reason: enrichment pass 2026-10-13 (local-v5; was harvest)
 specificationVersion: '0.20'
 created: '2026-10-13'
 modified: '2026-10-13'
 tags:
 - Company
-apis: []
+- Cloud
+- Infrastructure
+- Object Storage
+- Kubernetes
+- Databases
+- Servers
+- Networking
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: AgenticAccess
+  url: agentic-access/upcloud-agentic-access.yml
+- type: Spectral
+  url: rules/upcloud-rules.yml
+- type: JSONLD
+  url: json-ld/upcloud-context.jsonld
+- type: Vocabulary
+  url: vocabulary/upcloud-vocabulary.yml
+- type: DataModel
+  url: data-model/upcloud-data-model.yml
+- type: CLI
+  url: cli/upcloud-cli.yml
+- type: ErrorCatalog
+  url: errors/upcloud-problem-types.yml
+- type: Conformance
+  url: conformance/upcloud-conformance.yml
+- type: LLMsTxt
+  url: llms/upcloud-llms.txt
+- type: SecurityTxt
+  url: well-known/upcloud-status-security.txt
+- type: WellKnown
+  url: well-known/upcloud-well-known.yml
+- type: Hosts
+  url: hosts/upcloud-hosts.yml
+- type: Vendors
+  url: vendors/upcloud-vendors.yml
+- type: SDKs
+  url: packages/upcloud-packages.yml
+- type: Packages
+  url: packages/upcloud-packages.yml
+- type: Authentication
+  url: authentication/upcloud-authentication.yml
+- type: DomainSecurity
+  url: security/upcloud-domain-security.yml
 - type: Website
   url: https://upcloud.com
+- type: Blog
+  url: https://upcloud.com/blog/
+- type: ChangeLog
+  url: https://upcloud.com/docs/changelog/
+- type: DeveloperPortal
+  url: https://developers.upcloud.com/api/1.3
+- type: Documentation
+  url: https://upcloud.com/docs/
+- type: GettingStarted
+  url: https://developers.upcloud.com/api/1.3/getting-started
+- type: GitHubOrganization
+  url: https://github.com/UpCloudLtd
+- type: Login
+  url: https://hub.upcloud.com/login
+- type: Pricing
+  url: https://upcloud.com/pricing/
+- type: PrivacyPolicy
+  url: https://upcloud.com/privacy-notice/
+- type: SignUp
+  url: https://signup.upcloud.com/?promo=goupcloud
+- type: StatusPage
+  url: https://status.upcloud.com/
+- type: Support
+  url: https://upcloud.com/support/
+- type: TermsOfService
+  url: https://upcloud.com/terms-of-service/
+apis:
+- aid: upcloud:upcloud-api
+  name: UpCloud API
+  description: REST API for managing UpCloud cloud servers, storage, networking, managed
+    databases, object storage, Kubernetes, load balancers and account resources.
+  humanURL: https://developers.upcloud.com/api/1.3
+  baseURL: https://api.upcloud.com
+  tags:
+  - Cloud
+  - Infrastructure
+  - Servers
+  - Storage
+  properties:
+  - type: OpenAPI
+    url: openapi/upcloud-openapi.yml
+  - type: OpenAPI
+    name: OpenAPI (provider-hosted)
+    url: https://developers.upcloud.com/api/1.3/upcloud-openapi.json
+  - type: Documentation
+    url: https://developers.upcloud.com/api/1.3
+x-enrichment:
+  date: '2026-10-13'
+  status: enriched
+  artifacts_added: 20
+  pass: local-v5
