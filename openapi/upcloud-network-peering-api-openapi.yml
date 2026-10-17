@@ -1,0 +1,604 @@
+openapi: 3.2.0
+info:
+  title: Upcloud Network Peering API
+  version: '1.3'
+  contact:
+    name: UpCloud
+    url: https://upcloud.com
+    email: hello@upcloud.com
+  license:
+    name: MIT
+    url: https://spdx.org/licenses/MIT.html
+  termsOfService: https://upcloud.com/terms-of-service/
+  description: 'Operations tagged network-peering across 2 of this provider''s published API definitions: upcloud-openapi.json, upcloud-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.upcloud.com
+security:
+- apiToken: []
+tags:
+- name: network-peering
+  description: Network peering management
+  x-displayName: Network Peering
+paths:
+  /1.3/network-peering:
+    get:
+      tags:
+      - network-peering
+      summary: List peerings
+      description: 'Get a list of all peerings within the current account. Only peerings that refer to a network that the current
+
+        account has access are returned.
+
+
+        It is also possible to filter network peering with label URL parameters, e.g.
+
+        `?label=env` or `?label=env%3Dprod`. The URL parameter can be given multiple
+
+        times to add more filters (e.g. `?label=env%3Dprod&label=v2`), where
+
+        only network peering that match all labels are returned.
+
+        Label keys are matched case insensitively.'
+      operationId: listNetworkPeerings
+      parameters:
+      - $ref: '#/components/parameters/listNetworkPeeringsUuid'
+      - $ref: '#/components/parameters/listNetworkPeeringsNetworkUuidLocal'
+      - $ref: '#/components/parameters/listNetworkPeeringsNetworkUuidPeer'
+      - $ref: '#/components/parameters/listNetworkPeeringsLabel'
+      responses:
+        '200':
+          $ref: '#/components/responses/listNetworkPeerings200'
+        default:
+          $ref: '#/components/responses/listNetworkPeeringsDefault'
+      x-upcloud-visibility: public
+    post:
+      tags:
+      - network-peering
+      summary: Create peering
+      description: 'Network peerings are used to enable traffic between two networks that can be on different main accounts.
+
+        The peering must be established both ways before it''s considered as active. Peering is only supported between networks
+
+        of type `private`.
+
+
+        **Note**: you should only create peering between accounts and networks you trust. There is no limits on what traffic
+
+        can flow. The server firewall **has no effect** for `private` type networks.
+
+
+        It is required that both networks have a *Router* attached to the network.'
+      operationId: createNetworkPeering
+      requestBody:
+        $ref: '#/components/requestBodies/createNetworkPeering'
+      responses:
+        '201':
+          $ref: '#/components/responses/createNetworkPeering201'
+        '400':
+          $ref: '#/components/responses/createNetworkPeering400'
+        '404':
+          $ref: '#/components/responses/createNetworkPeering404'
+        '409':
+          $ref: '#/components/responses/createNetworkPeering409'
+        default:
+          $ref: '#/components/responses/createNetworkPeeringDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/network-peering/{peering_uuid}:
+    get:
+      tags:
+      - network-peering
+      summary: Get peering
+      description: 'Returns the state of an existing network peering.
+
+
+        Note that the `peer_network` field only contains the network details if the peering has been defined by both accounts.'
+      operationId: getNetworkPeering
+      parameters:
+      - $ref: '#/components/parameters/getNetworkPeeringPeeringUuid'
+      responses:
+        '200':
+          $ref: '#/components/responses/getNetworkPeering200'
+        '404':
+          $ref: '#/components/responses/getNetworkPeering404'
+        default:
+          $ref: '#/components/responses/getNetworkPeeringDefault'
+      x-upcloud-visibility: public
+    delete:
+      tags:
+      - network-peering
+      summary: Delete peering
+      description: Deletes a network peering. It is required that the peering is in `disabled` state before delete is possible.
+      operationId: deleteNetworkPeering
+      parameters:
+      - $ref: '#/components/parameters/deleteNetworkPeeringPeeringUuid'
+      responses:
+        '204':
+          $ref: '#/components/responses/deleteNetworkPeering204'
+        '404':
+          $ref: '#/components/responses/deleteNetworkPeering404'
+        default:
+          $ref: '#/components/responses/deleteNetworkPeeringDefault'
+      x-upcloud-visibility: public
+    patch:
+      tags:
+      - network-peering
+      summary: Modify peering
+      description: Modifies attributes of an existing network peering.
+      operationId: modifyNetworkPeering
+      parameters:
+      - $ref: '#/components/parameters/modifyNetworkPeeringPeeringUuid'
+      requestBody:
+        $ref: '#/components/requestBodies/modifyNetworkPeering'
+      responses:
+        '200':
+          $ref: '#/components/responses/modifyNetworkPeering200'
+        '400':
+          $ref: '#/components/responses/modifyNetworkPeering400'
+        '404':
+          $ref: '#/components/responses/modifyNetworkPeering404'
+        default:
+          $ref: '#/components/responses/modifyNetworkPeeringDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+components:
+  responses:
+    createNetworkPeering400:
+      description: Invalid request data.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/networkPeeringError'
+    deleteNetworkPeering404:
+      description: The specified network peering does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/networkPeeringError'
+    createNetworkPeering404:
+      description: One of the specified networks does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/networkPeeringError'
+    modifyNetworkPeering200:
+      description: The network peering was successfully modified.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/networkPeering'
+    modifyNetworkPeering404:
+      description: The specified network peering does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/networkPeeringError'
+    listNetworkPeerings200:
+      description: A list of network peerings.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/networkPeerings'
+    listNetworkPeeringsDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/networkPeeringError'
+    createNetworkPeeringDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/networkPeeringError'
+    deleteNetworkPeering204:
+      description: The network peering was successfully deleted.
+    deleteNetworkPeeringDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/networkPeeringError'
+    modifyNetworkPeering400:
+      description: Invalid request data.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/networkPeeringError'
+    modifyNetworkPeeringDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/networkPeeringError'
+    getNetworkPeeringDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/networkPeeringError'
+    createNetworkPeering201:
+      description: The network peering was successfully created.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/networkPeering'
+    getNetworkPeering404:
+      description: The specified network peering does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/networkPeeringError'
+    createNetworkPeering409:
+      description: A peering between the specified networks already exists.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/networkPeeringError'
+    getNetworkPeering200:
+      description: Details of the specified network peering.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/networkPeering'
+  parameters:
+    getNetworkPeeringPeeringUuid:
+      name: peering_uuid
+      in: path
+      description: The network peering identifier.
+      required: true
+      schema:
+        type: string
+        format: uuid
+    deleteNetworkPeeringPeeringUuid:
+      name: peering_uuid
+      in: path
+      description: The network peering identifier.
+      required: true
+      schema:
+        type: string
+        format: uuid
+    listNetworkPeeringsNetworkUuidLocal:
+      name: network_uuid_local
+      in: query
+      description: Filter by local network uuid.
+      required: false
+      schema:
+        $ref: '#/components/schemas/networkPeeringUuid'
+    listNetworkPeeringsUuid:
+      name: uuid
+      in: query
+      description: Filter by network peering UUID.
+      required: false
+      schema:
+        $ref: '#/components/schemas/networkPeeringUuid'
+    modifyNetworkPeeringPeeringUuid:
+      name: peering_uuid
+      in: path
+      description: The network peering identifier.
+      required: true
+      schema:
+        type: string
+        format: uuid
+    listNetworkPeeringsLabel:
+      name: label
+      in: query
+      description: Label filter in the form key=value. Can be specified multiple times to filter by multiple labels.
+      required: false
+      schema:
+        type: string
+    listNetworkPeeringsNetworkUuidPeer:
+      name: network_uuid_peer
+      in: query
+      description: Filter by peer network uuid.
+      required: false
+      schema:
+        $ref: '#/components/schemas/networkPeeringUuid'
+  schemas:
+    networkPeeringIpFamily:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      enum:
+      - IPv4
+      - IPv6
+      description: IP address family
+      example: IPv4
+    networkPeeringCreate:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        configured_status:
+          type: string
+          enum:
+          - active
+          - disabled
+          default: active
+        name:
+          type: string
+          example: Peering A->B
+        network:
+          type: object
+          properties:
+            uuid:
+              $ref: '#/components/schemas/networkPeeringUuid'
+          required:
+          - uuid
+          description: Describes the local side of the peering
+        peer_network:
+          type: object
+          properties:
+            uuid:
+              $ref: '#/components/schemas/networkPeeringUuid'
+          required:
+          - uuid
+          description: Describes the peer side of the peering
+      required:
+      - name
+      - network
+      - peer_network
+      additionalProperties: false
+      description: Describes the mutable properties when creating a network-peering between two networks
+      example:
+        configured_status: active
+        name: Peering A->B
+        network:
+          uuid: 03126dc1-a69f-4bc2-8b24-e31c22d64712
+        peer_network:
+          uuid: 03585987-bf7d-4544-8e9b-5a1b4d74a333
+    networkPeeringUuid:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+      format: uuid
+      description: Universally unique identifier
+      example: 0414e0d7-4436-4037-9dd8-6eaf47dce599
+    networkPeeringError:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            error_code:
+              type: string
+              examples:
+              - GENERAL_FAILURE
+            error_message:
+              type: string
+              examples:
+              - Your request could not be fulfilled due to a technical issue.
+          required:
+          - error_code
+          - error_message
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+      description: A general error response indicating that the request could not be fulfilled due to a technical issue.
+    networkPeeringIpCidr:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      format: cidr
+      description: IP CIDR
+    networkPeeringName:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      maxLength: 255
+      minLength: 1
+      description: Name of a network peering relationship.
+    networkPeering:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        configured_status:
+          type: string
+          enum:
+          - active
+          - disabled
+        name:
+          $ref: '#/components/schemas/networkPeeringName'
+        network:
+          type: object
+          properties:
+            ip_networks:
+              type: object
+              properties:
+                ip_network:
+                  type: array
+                  items:
+                    properties:
+                      address:
+                        $ref: '#/components/schemas/networkPeeringIpCidr'
+                      family:
+                        $ref: '#/components/schemas/networkPeeringIpFamily'
+            uuid:
+              $ref: '#/components/schemas/networkPeeringUuid'
+          description: Describes the local side of the peering
+        peer_network:
+          type: object
+          properties:
+            ip_networks:
+              type: object
+              properties:
+                ip_network:
+                  type: array
+                  items:
+                    properties:
+                      address:
+                        $ref: '#/components/schemas/networkPeeringIpCidr'
+                      family:
+                        $ref: '#/components/schemas/networkPeeringIpFamily'
+              description: 'note: only visible if both sides have a peering defined'
+            uuid:
+              $ref: '#/components/schemas/networkPeeringUuid'
+          description: Describes the peer side of the peering
+        state:
+          $ref: '#/components/schemas/networkPeeringState'
+        uuid:
+          $ref: '#/components/schemas/networkPeeringUuid'
+        created_at:
+          oneOf:
+          - $ref: '#/components/schemas/networkPeeringRfc3339Datetime'
+          - type: 'null'
+          description: When the network peering was created
+        updated_at:
+          oneOf:
+          - $ref: '#/components/schemas/networkPeeringRfc3339Datetime'
+          - type: 'null'
+          description: When the network peering was last updated. Null until the first modification.
+      description: Network peering object describes a peering relationship between two networks
+      example:
+        configured_status: active
+        name: Peering A->B
+        network:
+          ip_networks:
+            ip_network:
+            - address: 192.168.0.0/24
+              family: IPv4
+            - address: fc02:c4f3::/64
+              family: IPv6
+          uuid: 03126dc1-a69f-4bc2-8b24-e31c22d64712
+        peer_network:
+          ip_networks:
+            ip_network:
+            - address: 192.168.99.0/24
+              family: IPv4
+            - address: fc02:c4f3:99::/64
+              family: IPv6
+          uuid: 03585987-bf7d-4544-8e9b-5a1b4d74a333
+        state: active
+        uuid: 0f7984bc-5d72-4aaf-b587-90e6a8f32efc
+        created_at: '2026-07-01T00:00:00Z'
+    networkPeeringModify:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        configured_status:
+          enum:
+          - active
+          - disabled
+        name:
+          type: string
+      additionalProperties: false
+      description: Describes the mutable properties when modifying a network-peering
+      example:
+        configured_status: disabled
+        name: Peering A->B modified
+    networkPeeringRfc3339Datetime:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      examples:
+      - '2026-07-01T00:00:00Z'
+      - '2026-07-31T23:59:59Z'
+      format: date-time
+      description: Datetime in RFC 3339 format
+    networkPeerings:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        network_peerings:
+          type: object
+          properties:
+            network_peering:
+              type: array
+              items:
+                $ref: '#/components/schemas/networkPeering'
+          required:
+          - network_peering
+          additionalProperties: false
+          example:
+            network_peering:
+            - configured_status: active
+              name: Peering A->B
+              network:
+                uuid: 03126dc1-a69f-4bc2-8b24-e31c22d64712
+              peer_network:
+                uuid: 03585987-bf7d-4544-8e9b-5a1b4d74a333
+              state: active
+              uuid: 0f7984bc-5d72-4aaf-b587-90e6a8f32efc
+              created_at: '2026-07-01T00:00:00Z'
+      required:
+      - network_peerings
+      additionalProperties: false
+      description: Network peerings
+      example:
+        network_peerings:
+          network_peering:
+          - configured_status: active
+            name: Peering A->B
+            network:
+              uuid: 03126dc1-a69f-4bc2-8b24-e31c22d64712
+            peer_network:
+              uuid: 03585987-bf7d-4544-8e9b-5a1b4d74a333
+            state: active
+            uuid: 0f7984bc-5d72-4aaf-b587-90e6a8f32efc
+            created_at: '2026-07-01T00:00:00Z'
+    networkPeeringState:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      enum:
+      - active
+      - pending-peer
+      - provisioning
+      - conflict-subnet
+      - missing-local-router
+      - missing-peer-router
+      - deleted-peer-network
+      - disabled
+      - peer-disabled
+      - error
+      description: Current lifecycle state of a network peering.
+  requestBodies:
+    modifyNetworkPeering:
+      description: Attributes to modify for the network peering.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/networkPeeringModify'
+    createNetworkPeering:
+      description: Attributes for the new network peering.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/networkPeeringCreate'
+  securitySchemes:
+    apiToken:
+      type: http
+      description: UpCloud API uses HTTP Bearer authentication. An API token is required to authenticate. The API token can be created in the UpCloud control panel. Alternatively, you can create an API token using the API directly, or with upctl. Note that if you want to use HTTP Basic authentication on API or with upctl, you will need to enable API access in the UpCloud control panel first.
+      scheme: bearer
+x-refined-from:
+- upcloud-openapi.json
+- upcloud-openapi.yml
+x-upcloud-visibility: public
+x-tagGroups:
+- name: Server
+  tags:
+  - server
+  - server-group
+  - server_size
+  - plan
+  - device
+  - events
+  - timezone
+  - vnc_keymap
+- name: Network
+  tags:
+  - network
+  - network-peering
+  - ip_address
+  - router
+  - gateway
+  - firewall-ruleset
+- name: Account & Access
+  tags:
+  - account
+  - audit-logs
+  - account-tokens
+  - permission
+  - tag
+- name: Billing
+  tags:
+  - price
+  - currency

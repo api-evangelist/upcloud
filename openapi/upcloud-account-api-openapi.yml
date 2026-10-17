@@ -1,0 +1,1670 @@
+openapi: 3.2.0
+info:
+  title: Upcloud Account API
+  version: '1.3'
+  contact:
+    name: UpCloud
+    url: https://upcloud.com
+    email: hello@upcloud.com
+  license:
+    name: MIT
+    url: https://spdx.org/licenses/MIT.html
+  termsOfService: https://upcloud.com/terms-of-service/
+  description: 'Operations tagged account across 2 of this provider''s published API definitions: upcloud-openapi.json, upcloud-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.upcloud.com
+security:
+- apiToken: []
+tags:
+- name: Account
+  description: Account management and authentication
+  x-displayName: Account
+paths:
+  /1.3/account:
+    get:
+      tags:
+      - Account
+      summary: Account details
+      description: Returns account details for the authenticated user
+      operationId: accountDetails
+      responses:
+        '200':
+          $ref: '#/components/responses/accountDetails200'
+        default:
+          $ref: '#/components/responses/accountDetailsDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/account/billing/summary/{year}-{month}:
+    get:
+      tags:
+      - Account
+      summary: Get monthly billing summary with resource details
+      description: Returns a billing summary grouped by resource, including billing detail changes during the specified month. The API user must have permission to read billing details.
+      operationId: getMonthlyDetailedBillingSummary
+      parameters:
+      - $ref: '#/components/parameters/accountGetMonthlyDetailedBillingSummaryYear'
+      - $ref: '#/components/parameters/accountGetMonthlyDetailedBillingSummaryMonth'
+      - $ref: '#/components/parameters/accountGetMonthlyDetailedBillingSummaryUsername'
+      - $ref: '#/components/parameters/accountGetMonthlyDetailedBillingSummaryResourceId'
+      responses:
+        '200':
+          $ref: '#/components/responses/accountGetMonthlyDetailedBillingSummary200'
+        default:
+          $ref: '#/components/responses/accountGetMonthlyDetailedBillingSummaryDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/account/billing_summary/{year}-{month}:
+    get:
+      tags:
+      - Account
+      summary: Get monthly billing summary
+      description: Returns a billing summary for the specified month. The API user must have permission to read billing details. This endpoint is deprecated; use the monthly billing summary with resource details instead.
+      operationId: getMonthlyBillingSummary
+      parameters:
+      - $ref: '#/components/parameters/accountGetMonthlyBillingSummaryYear'
+      - $ref: '#/components/parameters/accountGetMonthlyBillingSummaryMonth'
+      responses:
+        '200':
+          $ref: '#/components/responses/accountGetMonthlyBillingSummary200'
+        default:
+          $ref: '#/components/responses/accountGetMonthlyBillingSummaryDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/account/current_network_usage:
+    get:
+      tags:
+      - Account
+      summary: Get current network usage
+      description: Returns the latest Network Transfer Pool usage report for the account.
+      operationId: getCurrentNetworkUsage
+      responses:
+        '200':
+          $ref: '#/components/responses/accountGetCurrentNetworkUsage200'
+        default:
+          $ref: '#/components/responses/accountGetCurrentNetworkUsageDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/account/list:
+    get:
+      tags:
+      - Account
+      summary: List accounts
+      description: Returns the main account and its subaccounts. Account listing is available only to the main account.
+      operationId: listAccounts
+      parameters:
+      - $ref: '#/components/parameters/listAccountsLabel'
+      responses:
+        '200':
+          $ref: '#/components/responses/listAccounts200'
+        default:
+          $ref: '#/components/responses/listAccountsDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/account/ms_lma:
+    post:
+      tags:
+      - Account
+      summary: Create Microsoft LMA signing link
+      description: Create a new Microsoft LMA signing link
+      operationId: createMSLMASigningLink
+      responses:
+        '201':
+          $ref: '#/components/responses/accountCreateMSLMASigningLink201'
+        default:
+          $ref: '#/components/responses/accountCreateMSLMASigningLinkDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/account/network_top_usage:
+    get:
+      tags:
+      - Account
+      summary: Get top network usage
+      description: Returns the resources with the highest network usage.
+      operationId: getAccountNetworkTopUsage
+      parameters:
+      - $ref: '#/components/parameters/getAccountNetworkTopUsageFrom'
+      - $ref: '#/components/parameters/getAccountNetworkTopUsageTo'
+      - $ref: '#/components/parameters/getAccountNetworkTopUsageService'
+      - $ref: '#/components/parameters/getAccountNetworkTopUsageZone'
+      - $ref: '#/components/parameters/getAccountNetworkTopUsageAccumulate'
+      responses:
+        '200':
+          $ref: '#/components/responses/getAccountNetworkTopUsage200'
+        default:
+          $ref: '#/components/responses/getAccountNetworkTopUsageDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/account/network_usage:
+    get:
+      tags:
+      - Account
+      summary: Get network transfer statistics
+      description: Returns network transfer statistics. JSON responses support a maximum time window of 31 days; CSV responses have no time-window limit. Select the output format with the Accept header using application/json or text/csv.
+      operationId: getAccountNetworkUsage
+      parameters:
+      - $ref: '#/components/parameters/getAccountNetworkUsageFrom'
+      - $ref: '#/components/parameters/getAccountNetworkUsageTo'
+      - $ref: '#/components/parameters/getAccountNetworkUsageAccumulate'
+      responses:
+        '200':
+          $ref: '#/components/responses/getAccountNetworkUsage200'
+        default:
+          $ref: '#/components/responses/getAccountNetworkUsageDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/account/resource-usage:
+    get:
+      tags:
+      - Account
+      summary: Get resource usage
+      description: Returns current resource usage counts for the account.
+      operationId: getAccountResourceUsage
+      responses:
+        '200':
+          $ref: '#/components/responses/getAccountResourceUsage200'
+        default:
+          $ref: '#/components/responses/getAccountResourceUsageDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/account/resource_billing_summary/{resource_id}/{year}-{month}:
+    get:
+      tags:
+      - Account
+      summary: Get monthly resource billing summary
+      description: Returns a billing summary for one resource during the specified month. The API user must have permission to read billing details.
+      operationId: getMonthlyResourceBillingSummary
+      parameters:
+      - $ref: '#/components/parameters/accountGetMonthlyResourceBillingSummaryResourceId'
+      - $ref: '#/components/parameters/accountGetMonthlyResourceBillingSummaryYear'
+      - $ref: '#/components/parameters/accountGetMonthlyResourceBillingSummaryMonth'
+      responses:
+        '200':
+          $ref: '#/components/responses/accountGetMonthlyResourceBillingSummary200'
+        default:
+          $ref: '#/components/responses/accountGetMonthlyResourceBillingSummaryDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/account/resource_network_usage:
+    get:
+      tags:
+      - Account
+      summary: Get resource transfer statistics
+      description: Returns network transfer statistics grouped by resource, service, and zone. JSON responses support a maximum time window of 31 days; CSV responses have no time-window limit. Select the output format with the Accept header using application/json or text/csv.
+      operationId: getAccountResourceNetworkUsage
+      parameters:
+      - $ref: '#/components/parameters/getAccountResourceNetworkUsageFrom'
+      - $ref: '#/components/parameters/getAccountResourceNetworkUsageTo'
+      - $ref: '#/components/parameters/getAccountResourceNetworkUsageService'
+      - $ref: '#/components/parameters/getAccountResourceNetworkUsageResourceId'
+      - $ref: '#/components/parameters/getAccountResourceNetworkUsageZone'
+      - $ref: '#/components/parameters/getAccountResourceNetworkUsageAccumulate'
+      responses:
+        '200':
+          $ref: '#/components/responses/getAccountResourceNetworkUsage200'
+        default:
+          $ref: '#/components/responses/getAccountResourceNetworkUsageDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/account/sub:
+    post:
+      tags:
+      - Account
+      summary: Create subaccount
+      description: Creates a subaccount for the authenticated main account.
+      operationId: createSubaccount
+      requestBody:
+        $ref: '#/components/requestBodies/createSubaccount'
+      responses:
+        '204':
+          $ref: '#/components/responses/createSubaccount204'
+        default:
+          $ref: '#/components/responses/createSubaccountDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/account/sub/{username}:
+    delete:
+      tags:
+      - Account
+      summary: Delete subaccount
+      description: Deletes a subaccount from the authenticated main account.
+      operationId: deleteSubaccount
+      parameters:
+      - $ref: '#/components/parameters/deleteSubaccountUsername'
+      responses:
+        '204':
+          $ref: '#/components/responses/deleteSubaccount204'
+        default:
+          $ref: '#/components/responses/deleteSubaccountDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+components:
+  schemas:
+    accountCountryCode:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      pattern: ^[A-Z]{3}$
+      description: ISO 3166-1 Alpha-3 code
+    accountPhoneNumber:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      description: Phone number in international format.
+    accountRfc3339Datetime:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      examples:
+      - '2026-07-01T00:00:00Z'
+      - '2026-07-31T23:59:59Z'
+      format: date-time
+      description: Datetime in RFC 3339 format
+    accountBillingSummaryResponse:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        billing:
+          $ref: '#/components/schemas/accountBillingSummary'
+      required:
+      - billing
+      additionalProperties: false
+      description: Response containing a monthly billing summary.
+      example:
+        billing:
+          currency: EUR
+          networks:
+            bandwidth:
+              total_amount: 52.136
+            total_amount: 52.136
+          managed_databases:
+            managed_database:
+              total_amount: 80.13127
+            total_amount: 80.13127
+          managed_object_storages:
+            managed_object_storage:
+              total_amount: 2.2253
+            total_amount: 2.2253
+          servers:
+            server:
+              total_amount: 28.05132
+            total_amount: 28.05132
+          storages:
+            storage:
+              total_amount: 3.6224
+            total_amount: 3.6224
+          total_amount: 166.16629
+    accountBoolean01:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: integer
+      format: int64
+      enum:
+      - 0
+      - 1
+      description: Schema for boolean-like values encoded as 0 or 1.
+    accountLabel:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        key:
+          type: string
+          description: Label key used to classify the resource
+        value:
+          type: string
+          description: Value associated with the label key
+      required:
+      - key
+      - value
+      additionalProperties: false
+      description: A key/value pair to label and categorize resources
+      example:
+        key: env
+        value: production
+    accountUserName:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      maxLength: 64
+      minLength: 4
+      description: Username for an account.
+    accountNetworkUsage:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        stats:
+          type: object
+          properties:
+            stat:
+              type: array
+              items:
+                type: object
+                properties:
+                  start_time:
+                    $ref: '#/components/schemas/accountRfc3339Datetime'
+                  sent_bytes:
+                    type: integer
+                    format: int64
+                  total_sent_bytes:
+                    type: integer
+                    format: int64
+                  accumulated_quota_bytes:
+                    type: integer
+                    format: int64
+                  projected_monthly_quota_bytes:
+                    type: integer
+                    format: int64
+                  quota_increase_bytes:
+                    type: integer
+                    format: int64
+                required:
+                - start_time
+                - sent_bytes
+                - total_sent_bytes
+                - accumulated_quota_bytes
+                - projected_monthly_quota_bytes
+                - quota_increase_bytes
+                additionalProperties: false
+          required:
+          - stat
+          additionalProperties: false
+      required:
+      - stats
+      additionalProperties: false
+      description: Account network usage and Fair Transfer Policy quota statistics.
+      example:
+        stats:
+          stat:
+          - accumulated_quota_bytes: 6352371508013
+            projected_monthly_quota_bytes: 6362243967561
+            quota_increase_bytes: 9872459548
+            sent_bytes: 1254
+            start_time: '2020-09-30T22:00:00Z'
+            total_sent_bytes: 225149331390
+          - accumulated_quota_bytes: 6362243967561
+            projected_monthly_quota_bytes: 6362243967561
+            quota_increase_bytes: 9872459548
+            sent_bytes: 1254
+            start_time: '2020-09-30T23:00:00Z'
+            total_sent_bytes: 225149332644
+          - accumulated_quota_bytes: 9872459548
+            projected_monthly_quota_bytes: 7345109903712
+            quota_increase_bytes: 9872459548
+            sent_bytes: 906
+            start_time: '2020-10-01T00:00:00Z'
+            total_sent_bytes: 906
+    accountCredits:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: number
+      format: double
+      description: Current account credit balance.
+    accountCurrentNetworkUsage:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        stats:
+          type: object
+          properties:
+            current_network_usage:
+              type: object
+              properties:
+                updated:
+                  $ref: '#/components/schemas/accountRfc3339Datetime'
+                accumulated_quota_bytes:
+                  type: integer
+                  format: int64
+                total_sent_bytes:
+                  type: integer
+                  format: int64
+                hourly_quota_increase_bytes:
+                  type: integer
+                  format: int64
+                projected_monthly_quota_bytes:
+                  type: integer
+                  format: int64
+              required:
+              - updated
+              - accumulated_quota_bytes
+              - total_sent_bytes
+              - hourly_quota_increase_bytes
+              - projected_monthly_quota_bytes
+              additionalProperties: false
+          required:
+          - current_network_usage
+          additionalProperties: false
+      required:
+      - stats
+      additionalProperties: false
+      description: Current Fair Transfer Policy usage for an account.
+      example:
+        stats:
+          current_network_usage:
+            accumulated_quota_bytes: 3546328504778
+            hourly_quota_increase_bytes: 10577635230
+            projected_monthly_quota_bytes: 7777382596778
+            total_sent_bytes: 13682943146
+            updated: '2020-10-15T07:00:00Z'
+    accountDetails:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        resource_limits:
+          $ref: '#/components/schemas/accountResourceLimits'
+        username:
+          $ref: '#/components/schemas/accountUserName'
+        credits:
+          $ref: '#/components/schemas/accountCredits'
+        credits_breakdown:
+          $ref: '#/components/schemas/accountCreditsBreakdown'
+        trial_mode:
+          $ref: '#/components/schemas/accountBoolean01'
+      required:
+      - username
+      - resource_limits
+      additionalProperties: true
+      description: Detailed account information and limits.
+      example:
+        username: apiuser01
+        credits: 125
+        credits_breakdown:
+          account_credits:
+            debt_credits: 0
+            max_debt: 0
+            paid_credits: 25
+          account_free_credits:
+            breakdown:
+            - free_credit_type: other
+              free_credits: 100
+              free_credits_expire: '2027-08-11T11:00:41Z'
+          total_credits: 125
+        resource_limits:
+          managed_databases: 5
+          network_peerings: 20
+          file_storages: 10
+          managed_kubernetes: 5
+          tags: 200
+          cores: 64
+          cloud_server_dev_1xcpu_1gb_10gb_plans: 0
+          cloud_server_dev_1xcpu_1gb_plans: 0
+          storage_hdd: 10240
+          networks: 100
+          network_gateways_essentials: 20
+          network_gateways: 20
+          storage_ssd: 20480
+          load_balancers_essentials: 20
+          load_balancers: 20
+          gpus: 8
+          detached_interfaces: 100
+          detached_floating_ips: 50
+          managed_object_storages: 50
+          memory: 524288
+          ntp_excess_gib: 100
+          public_ipv4: 64
+          public_ipv6: 64
+          routers: 20
+          storage_maxiops: 10240
+          storage_standard: 20480
+          storage_total: 40960
+    accountUuid:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+      format: uuid
+      description: Universally unique identifier
+      example: 0414e0d7-4436-4037-9dd8-6eaf47dce599
+    accounts:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        accounts:
+          type: object
+          properties:
+            account:
+              type: array
+              items:
+                type: object
+                properties:
+                  type:
+                    type: string
+                    enum:
+                    - main
+                    - sub
+                  username:
+                    $ref: '#/components/schemas/accountUserName'
+                  roles:
+                    type: object
+                    properties:
+                      role:
+                        type: array
+                        items:
+                          type: string
+                    required:
+                    - role
+                    additionalProperties: false
+                  labels:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/accountLabel'
+                required:
+                - type
+                - username
+                - roles
+                - labels
+                additionalProperties: false
+          required:
+          - account
+          additionalProperties: false
+      required:
+      - accounts
+      additionalProperties: false
+      description: Main account and subaccounts accessible to the authenticated account.
+      example:
+        accounts:
+          account:
+          - labels: []
+            roles:
+              role:
+              - technical
+            type: mymain
+            username: test
+          - labels: []
+            roles:
+              role:
+              - technical
+            type: sub
+            username: my_sub_account
+          - labels:
+            - key: to_be_removed
+              value: after 2022-31-12
+            roles:
+              role: []
+            type: sub
+            username: my_temp_account
+          - labels: []
+            roles:
+              role:
+              - billing
+            type: sub
+            username: my_billing_account
+    accountResourceLimits:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      properties:
+        managed_databases:
+          type: integer
+          minimum: 0
+          format: int64
+          description: The maximum number of managed databases allowed.
+        network_peerings:
+          type: integer
+          minimum: 0
+          format: int64
+          description: The maximum number of network peerings allowed.
+        file_storages:
+          type: integer
+          minimum: 0
+          format: int64
+          description: The maximum number of file storage instances allowed.
+        managed_container_registries:
+          type: integer
+          minimum: 0
+          format: int64
+          description: The maximum number of managed container registries allowed.
+        managed_kubernetes:
+          type: integer
+          minimum: 0
+          format: int64
+          description: The maximum number of managed Kubernetes clusters allowed.
+        tags:
+          type: integer
+          minimum: 0
+          format: int64
+          description: The maximum number of tags allowed.
+        cores:
+          type: integer
+          minimum: 0
+          format: int64
+          description: The maximum number of CPU cores allowed.
+        cloud_server_dev_1xcpu_1gb_10gb_plans:
+          type:
+          - integer
+          - 'null'
+          minimum: 0
+          format: int64
+          description: The maximum number of cloud server dev 1xCPU 1GB 10GB plans allowed.
+        cloud_server_dev_1xcpu_1gb_plans:
+          type:
+          - integer
+          - 'null'
+          minimum: 0
+          format: int64
+          description: The maximum number of cloud server dev 1xCPU 1GB 10GB plans allowed.
+        storage_hdd:
+          type: integer
+          minimum: 0
+          format: int64
+          description: The maximum amount of HDD storage (in GiB) allowed.
+        networks:
+          type: integer
+          minimum: 0
+          format: int64
+          description: The maximum number of networks allowed.
+        network_gateways_essentials:
+          type: integer
+          minimum: 0
+          format: int64
+          description: The maximum number of essential network gateways allowed.
+        network_gateways:
+          type: integer
+          minimum: 0
+          format: int64
+          description: The maximum number of network gateways allowed.
+        storage_ssd:
+          type: integer
+          minimum: 0
+          format: int64
+          description: The maximum amount of SSD storage (in GiB) allowed.
+        load_balancers_essentials:
+          type: integer
+          minimum: 0
+          format: int64
+          description: The maximum number of essential load balancers allowed.
+        load_balancers:
+          type: integer
+          minimum: 0
+          format: int64
+          description: The maximum number of load balancers allowed.
+        gpus:
+          type: integer
+          minimum: 0
+          format: int64
+          description: The maximum number of GPUs allowed.
+        detached_interfaces:
+          type: integer
+          minimum: 0
+          format: int64
+          description: The maximum number of detached network interfaces allowed.
+        detached_floating_ips:
+          type: integer
+          minimum: 0
+          format: int64
+          description: The maximum number of detached floating IPs allowed.
+        managed_object_storages:
+          type: integer
+          minimum: 0
+          format: int64
+          description: The maximum number of managed object storage instances allowed.
+        memory:
+          type: integer
+          minimum: 0
+          format: int64
+          description: The maximum amount of memory (in MiB) allowed.
+        ntp_excess_gib:
+          type: integer
+          minimum: 0
+          format: int64
+          description: The maximum amount of excess NTP data (in GiB) allowed.
+        public_ipv4:
+          type: integer
+          minimum: 0
+          format: int64
+          description: The maximum number of public IPv4 addresses allowed.
+        public_ipv6:
+          type: integer
+          minimum: 0
+          format: int64
+          description: The maximum number of public IPv6 addresses allowed.
+        routers:
+          type: integer
+          minimum: 0
+          format: int64
+          description: The maximum number of routers allowed.
+        storage_maxiops:
+          type: integer
+          minimum: 0
+          format: int64
+          description: The maximum amount of MaxiOPS storage (in GiB) allowed.
+        storage_standard:
+          type: integer
+          minimum: 0
+          format: int64
+          description: The maximum amount of standard storage (in GiB) allowed.
+        storage_total:
+          type: integer
+          minimum: 0
+          format: int64
+          description: The maximum total amount of storage (in GiB) allowed.
+        type: {}
+        required: {}
+        additionalProperties: {}
+      description: Per-resource quota limits for an account.
+    accountCurrencyCode:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      pattern: ^[A-Z]{3}$
+      description: ISO 4217 code
+    accountResourceUsage:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      additionalProperties:
+        type: integer
+        minimum: 0
+      description: Current account resource usage keyed by resource limit name.
+    accountResourceNetworkUsage:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        stats:
+          type: object
+          properties:
+            stat:
+              type: array
+              items:
+                type: object
+                properties:
+                  resource_id:
+                    $ref: '#/components/schemas/accountUuid'
+                  service:
+                    $ref: '#/components/schemas/accountResourceNetworkUsageType'
+                  zone:
+                    $ref: '#/components/schemas/accountZone'
+                  start_time:
+                    $ref: '#/components/schemas/accountRfc3339Datetime'
+                  sent_bytes:
+                    type:
+                    - integer
+                    - 'null'
+                    format: int64
+                required:
+                - resource_id
+                - service
+                - zone
+                - start_time
+                - sent_bytes
+                additionalProperties: false
+          required:
+          - stat
+          additionalProperties: false
+      required:
+      - stats
+      additionalProperties: false
+      description: Network usage statistics grouped by resource.
+      example:
+        stats:
+          stat:
+          - resource_id: 00777436-a6f8-43af-9daf-89e8e6833a7a
+            sent_bytes: 10094
+            service: server_public
+            start_time: '2020-09-07T00:00:00Z'
+            zone: de-fra1
+          - resource_id: 00777436-a6f8-43af-9daf-89e8e6833a7a
+            sent_bytes: 35174050
+            service: server_public
+            start_time: '2020-09-08T00:00:00Z'
+            zone: de-fra1
+          - resource_id: 00777436-a6f8-43af-9daf-89e8e6833a7a
+            sent_bytes: 32790622
+            service: server_public
+            start_time: '2020-09-09T00:00:00Z'
+            zone: de-fra1
+    createSubaccountRequest:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        sub_account:
+          type: object
+          properties:
+            username:
+              $ref: '#/components/schemas/accountUserName'
+            password:
+              type: string
+              format: password
+            first_name:
+              type: string
+            last_name:
+              type: string
+            company:
+              type: string
+            vat_number:
+              type: string
+            address:
+              type: string
+            postal_code:
+              type: string
+            city:
+              type: string
+            state:
+              type: string
+            country:
+              $ref: '#/components/schemas/accountCountryCode'
+            email:
+              type: string
+              format: email
+            phone:
+              $ref: '#/components/schemas/accountPhoneNumber'
+            language:
+              $ref: '#/components/schemas/accountLanguageCode'
+            currency:
+              $ref: '#/components/schemas/accountCurrencyCode'
+            timezone:
+              type: string
+            allow_api:
+              $ref: '#/components/schemas/accountBooleanYesno'
+            allow_gui:
+              $ref: '#/components/schemas/accountBooleanYesno'
+            roles:
+              type: object
+              properties:
+                role:
+                  type: array
+                  items:
+                    type: string
+              required:
+              - role
+              additionalProperties: false
+            labels:
+              type: array
+              items:
+                $ref: '#/components/schemas/accountLabel'
+            ip_filters:
+              type: object
+              properties:
+                ip_filter:
+                  type: array
+                  items:
+                    type: string
+              required:
+              - ip_filter
+              additionalProperties: false
+            server_access:
+              type: object
+              additionalProperties: true
+            storage_access:
+              type: object
+              additionalProperties: true
+            network_access:
+              type: object
+              additionalProperties: true
+            tag_access:
+              type: object
+              additionalProperties: true
+            enable_3rd_party_services:
+              $ref: '#/components/schemas/accountBooleanYesno'
+          required:
+          - username
+          - email
+          - phone
+          - language
+          - timezone
+          additionalProperties: false
+      required:
+      - sub_account
+      additionalProperties: false
+      description: Request for creating a subaccount.
+      example:
+        sub_account:
+          first_name: first
+          last_name: last
+          company: my company name
+          address: my address
+          postal_code: '00130'
+          city: Helsinki
+          state: ''
+          country: FIN
+          phone: '+358.31245434'
+          email: user@example.com
+          vat_number: my vat number
+          timezone: Europe/Helsinki
+          username: myusername
+          password: mysecr3tPassword
+          currency: EUR
+          language: en
+          roles:
+            role:
+            - technical
+            - billing
+            - aux_billing
+          allow_gui: 'no'
+          allow_api: 'yes'
+          network_access:
+            network: []
+          server_access:
+            server: []
+          storage_access:
+            storage: []
+          tag_access:
+            tag: []
+          ip_filters:
+            ip_filter: []
+          labels:
+          - key: department
+            value: it
+    accountResourceNetworkUsageType:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      enum:
+      - load_balancer_private
+      - load_balancer_private_vlan
+      - load_balancer_public
+      - network_gateway_private
+      - network_gateway_private_vlan
+      - network_gateway_public
+      - object_storage_v2_private
+      - object_storage_v2_public
+      - server_private
+      - server_private_vlan
+      - server_public
+      description: Network usage type for resource
+    accountBillingSummary:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        currency:
+          $ref: '#/components/schemas/accountCurrencyCode'
+        total_amount:
+          type: number
+      additionalProperties: true
+      description: Monthly billing totals grouped by resource type and subtype.
+      example:
+        currency: EUR
+        managed_databases:
+          managed_database:
+            resources:
+            - amount: 15.10223
+              details:
+              - amount: 15.10223
+                hours: 420
+                plan: 1x1xCPU-2GB-25GB
+                zone: fi-hel2
+              hours: 420
+              resource_id: 09001a4d-b525-4ab8-835d-000000000000
+            total_amount: 15.10223
+          total_amount: 15.10223
+        managed_object_storages:
+          managed_object_storage:
+            resources:
+            - amount: 5.03384
+              details:
+              - amount: 5.03384
+                billable_size_gib: 500
+                hours: 420
+                zone: fi-hel2
+              hours: 420
+              resource_id: 127ee42a-8304-477c-84e1-000000000000
+            total_amount: 5.03384
+          total_amount: 5.03384
+        servers:
+          server:
+            resources:
+            - amount: 16.18091
+              details:
+              - amount: 16.18091
+                hours: 420
+                labels:
+                - key: test
+                  value: ''
+                plan: 2xCPU-4GB
+                zone: fi-hel2
+              hours: 420
+              resource_id: 001c2caa-00dc-4eff-9321-000000000000
+            - amount: 16.10386
+              details:
+              - amount: 16.10386
+                hours: 418
+                labels:
+                - key: test2
+                  value: ''
+                plan: 2xCPU-4GB
+                zone: fi-hel2
+              - amount: 0.9288
+                hours: 12
+                labels:
+                - key: test2
+                  value: ''
+                plan: 4xCPU-8GB
+                zone: fi-hel2
+              hours: 430
+              resource_id: 0010cf04-3608-4512-b4de-000000000000
+            total_amount: 33.21357
+          total_amount: 33.21357
+        total_amount: 53.34964
+    accountBooleanYesno:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      enum:
+      - 'yes'
+      - 'no'
+      description: Boolean value represented as yes/no
+      example: 'yes'
+    accountCreditsBreakdown:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        account_credits:
+          type: object
+          properties:
+            debt_credits:
+              type: number
+              description: Outstanding debt credits.
+            max_debt:
+              type: number
+              description: Maximum allowed debt.
+            paid_credits:
+              type: number
+              description: Paid credits on the account.
+          required:
+          - debt_credits
+          - max_debt
+          - paid_credits
+          description: Paid and debt credits on the account.
+        account_free_credits:
+          type: object
+          properties:
+            breakdown:
+              type: array
+              items:
+                type: object
+                properties:
+                  free_credit_type:
+                    type: string
+                    description: Type identifier for the free credit grant.
+                  free_credits:
+                    type: number
+                    format: double
+                    description: Amount of free credits.
+                  free_credits_expire:
+                    type: string
+                    format: date-time
+                    description: Expiry date-time of the free credits in ISO 8601 format. Absent if the credits do not expire.
+                required:
+                - free_credit_type
+                - free_credits
+              description: List of individual free credit grants.
+          required:
+          - breakdown
+          description: Free credits allocated to the account.
+        total_credits:
+          type: number
+          format: double
+          description: Total combined credit balance.
+      required:
+      - account_credits
+      - account_free_credits
+      - total_credits
+      description: Detailed breakdown of account credits.
+    accountError:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            error_code:
+              type: string
+              examples:
+              - GENERAL_FAILURE
+            error_message:
+              type: string
+              examples:
+              - Your request could not be fulfilled due to a technical issue.
+          required:
+          - error_code
+          - error_message
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+      description: A general error response indicating that the request could not be fulfilled due to a technical issue.
+    account:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        account:
+          $ref: '#/components/schemas/accountDetails'
+      required:
+      - account
+      additionalProperties: false
+      description: Response schema containing account details.
+      example:
+        account:
+          username: apiuser01
+          credits: 125
+          credits_breakdown:
+            account_credits:
+              debt_credits: 0
+              max_debt: 0
+              paid_credits: 25
+            account_free_credits:
+              breakdown:
+              - free_credit_type: other
+                free_credits: 100
+                free_credits_expire: '2027-08-11T11:00:41Z'
+            total_credits: 125
+          resource_limits:
+            managed_databases: 5
+            network_peerings: 20
+            file_storages: 10
+            managed_kubernetes: 5
+            tags: 200
+            cores: 64
+            cloud_server_dev_1xcpu_1gb_10gb_plans: 0
+            cloud_server_dev_1xcpu_1gb_plans: 0
+            storage_hdd: 10240
+            networks: 100
+            network_gateways_essentials: 20
+            network_gateways: 20
+            storage_ssd: 20480
+            load_balancers_essentials: 20
+            load_balancers: 20
+            gpus: 8
+            detached_interfaces: 100
+            detached_floating_ips: 50
+            managed_object_storages: 50
+            memory: 524288
+            ntp_excess_gib: 100
+            public_ipv4: 64
+            public_ipv6: 64
+            routers: 20
+            storage_maxiops: 10240
+            storage_standard: 20480
+            storage_total: 40960
+    accountLanguageCode:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      pattern: ^[a-z]{2}$
+      description: ISO 639-1 code
+    accountZone:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      examples:
+      - fi-hel1
+      - de-fra1
+      - us-nyc1
+      maxLength: 15
+      minLength: 2
+      pattern: ^[a-z][a-z0-9-]{0,14}[a-z0-9]$
+      description: Zone identifier
+    accountUsageAccumulateParameter:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      enum:
+      - hour
+      - day
+      description: Usage accumulator hour or day parameter
+    accountCreateMsLmaSigningLinkResponse:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        signing_status:
+          type: object
+          properties:
+            id:
+              type: string
+            initiated:
+              type: string
+              examples:
+              - '2026-07-29T11:00:00Z'
+              format: date-time
+            signed_at:
+              type: string
+              examples:
+              - '2026-07-29T11:05:00Z'
+              format: date-time
+            signing_link:
+              type: string
+              format: uri
+            state:
+              type: string
+              enum:
+              - initiated
+              - waiting
+              - completed
+              - canceled
+          required:
+          - id
+          - state
+          - initiated
+          - signing_link
+          - signed_at
+          example:
+            id: mslma_1234567890
+            initiated: '2026-07-29T11:00:00Z'
+            signed_at: '2026-07-29T11:05:00Z'
+            signing_link: https://example.com/sign/mslma_1234567890
+            state: completed
+      description: Response schema for Microsoft LMA signing link creation.
+      example:
+        signing_status:
+          id: mslma_1234567890
+          initiated: '2026-07-29T11:00:00Z'
+          signed_at: '2026-07-29T11:05:00Z'
+          signing_link: https://example.com/sign/mslma_1234567890
+          state: completed
+    accountResourceBillingSummaryResponse:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        billing:
+          type: object
+          properties:
+            currency:
+              $ref: '#/components/schemas/accountCurrencyCode'
+            daily_sums:
+              type: object
+              additionalProperties:
+                type: number
+            details:
+              type: object
+              additionalProperties: true
+            total_amount:
+              type: number
+          additionalProperties: false
+      required:
+      - billing
+      additionalProperties: false
+      description: Response containing the monthly billing summary for a resource.
+      example:
+        billing:
+          daily_sums:
+            '2019-12-02': 3.33684
+            '2019-12-03': 52.77344
+            '2019-12-04': 1.07424
+            '2019-12-05': 1.07424
+            '2019-12-06': 1.07424
+            '2019-12-07': 1.07424
+            '2019-12-08': 1.07424
+            '2019-12-09': 1.07424
+            '2019-12-12': 3.22272
+            '2019-12-13': 0.58188
+          details:
+            hours: 792
+            plan: 1xCPU-1GB
+            resource_id: 00ce9363-9065-4c2a-9d66-3b0c762f556b
+            title: My Glorious Server
+            type: server
+            zone: fi-hel1
+          total_amount: 66.36032
+  responses:
+    listAccountsDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/accountError'
+    accountDetailsDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/accountError'
+    accountDetails200:
+      description: Account details
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/account'
+    getAccountNetworkUsageDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/accountError'
+    accountCreateMSLMASigningLink201:
+      description: LMA signing link created successfully
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/accountCreateMsLmaSigningLinkResponse'
+    createSubaccountDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/accountError'
+    getAccountResourceUsage200:
+      description: Current account resource usage.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/accountResourceUsage'
+    deleteSubaccountDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/accountError'
+    getAccountNetworkTopUsage200:
+      description: Top resource network usage statistics.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/accountResourceNetworkUsage'
+    accountGetMonthlyDetailedBillingSummary200:
+      description: Detailed monthly billing summary.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/accountBillingSummary'
+    getAccountResourceNetworkUsageDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/accountError'
+    accountGetMonthlyDetailedBillingSummaryDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/accountError'
+    getAccountNetworkTopUsageDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/accountError'
+    accountGetMonthlyResourceBillingSummary200:
+      description: Monthly resource billing summary.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/accountResourceBillingSummaryResponse'
+    createSubaccount204:
+      description: Subaccount created.
+    deleteSubaccount204:
+      description: Subaccount deleted.
+    getAccountResourceNetworkUsage200:
+      description: Resource network usage statistics.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/accountResourceNetworkUsage'
+    accountGetCurrentNetworkUsageDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/accountError'
+    accountGetCurrentNetworkUsage200:
+      description: Current Fair Transfer Policy usage.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/accountCurrentNetworkUsage'
+    getAccountResourceUsageDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/accountError'
+    accountCreateMSLMASigningLinkDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/accountError'
+    accountGetMonthlyBillingSummaryDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/accountError'
+    accountGetMonthlyResourceBillingSummaryDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/accountError'
+    listAccounts200:
+      description: Account list.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/accounts'
+    getAccountNetworkUsage200:
+      description: Account network usage statistics.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/accountNetworkUsage'
+    accountGetMonthlyBillingSummary200:
+      description: Monthly billing summary.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/accountBillingSummaryResponse'
+  parameters:
+    accountGetMonthlyDetailedBillingSummaryUsername:
+      name: username
+      in: query
+      description: Return the billing summary for this account instead of the calling account. Requires Partner API access and an existing association with the account.
+      required: false
+      schema:
+        $ref: '#/components/schemas/accountUserName'
+    deleteSubaccountUsername:
+      name: username
+      in: path
+      description: Subaccount username.
+      required: true
+      schema:
+        $ref: '#/components/schemas/accountUserName'
+    accountGetMonthlyDetailedBillingSummaryResourceId:
+      name: resource_id
+      in: query
+      description: Return details only for this resource UUID or IP address.
+      required: false
+      schema:
+        type: string
+        maxLength: 128
+    accountGetMonthlyBillingSummaryYear:
+      name: year
+      in: path
+      description: Billing year.
+      required: true
+      schema:
+        type: string
+        pattern: ^20\d{2}$
+    getAccountNetworkTopUsageFrom:
+      name: from
+      in: query
+      description: Start of the usage period.
+      required: true
+      schema:
+        $ref: '#/components/schemas/accountRfc3339Datetime'
+    getAccountResourceNetworkUsageTo:
+      name: to
+      in: query
+      description: Data end timestamp in RFC 3339 format.
+      required: true
+      schema:
+        $ref: '#/components/schemas/accountRfc3339Datetime'
+    getAccountResourceNetworkUsageFrom:
+      name: from
+      in: query
+      description: Data start timestamp in RFC 3339 format.
+      required: true
+      schema:
+        $ref: '#/components/schemas/accountRfc3339Datetime'
+    accountGetMonthlyResourceBillingSummaryMonth:
+      name: month
+      in: path
+      description: Billing month.
+      required: true
+      schema:
+        type: string
+        pattern: ^(0[1-9]|1[0-2])$
+    getAccountNetworkTopUsageService:
+      name: service
+      in: query
+      description: Filter by service type. Repeat the parameter to include multiple service types.
+      required: false
+      schema:
+        $ref: '#/components/schemas/accountResourceNetworkUsageType'
+    accountGetMonthlyResourceBillingSummaryResourceId:
+      name: resource_id
+      in: path
+      description: Server UUID, storage UUID, or IP address.
+      required: true
+      schema:
+        type: string
+    accountGetMonthlyBillingSummaryMonth:
+      name: month
+      in: path
+      description: Billing month.
+      required: true
+      schema:
+        type: string
+        pattern: ^(0[1-9]|1[0-2])$
+    getAccountNetworkTopUsageZone:
+      name: zone
+      in: query
+      description: Filter by zone. Repeat the parameter to include multiple zones.
+      required: false
+      schema:
+        $ref: '#/components/schemas/accountZone'
+    getAccountNetworkUsageTo:
+      name: to
+      in: query
+      description: Last measurement timestamp in RFC 3339 format.
+      required: true
+      schema:
+        $ref: '#/components/schemas/accountRfc3339Datetime'
+    getAccountResourceNetworkUsageService:
+      name: service
+      in: query
+      description: Limit results to a service type. Repeat the parameter to include multiple service types.
+      required: false
+      schema:
+        $ref: '#/components/schemas/accountResourceNetworkUsageType'
+    getAccountNetworkTopUsageAccumulate:
+      name: accumulate
+      in: query
+      description: Accumulation period for the usage statistics.
+      required: false
+      schema:
+        $ref: '#/components/schemas/accountUsageAccumulateParameter'
+    getAccountNetworkUsageAccumulate:
+      name: accumulate
+      in: query
+      description: Accumulate the transfer statistics by hour or day.
+      required: false
+      schema:
+        $ref: '#/components/schemas/accountUsageAccumulateParameter'
+    accountGetMonthlyDetailedBillingSummaryYear:
+      name: year
+      in: path
+      description: Billing year.
+      required: true
+      schema:
+        type: string
+        pattern: ^20\d{2}$
+    getAccountResourceNetworkUsageAccumulate:
+      name: accumulate
+      in: query
+      description: Accumulate the transfer statistics by hour or day.
+      required: false
+      schema:
+        $ref: '#/components/schemas/accountUsageAccumulateParameter'
+    accountGetMonthlyResourceBillingSummaryYear:
+      name: year
+      in: path
+      description: Billing year.
+      required: true
+      schema:
+        type: string
+        pattern: ^20\d{2}$
+    getAccountNetworkTopUsageTo:
+      name: to
+      in: query
+      description: End of the usage period.
+      required: true
+      schema:
+        $ref: '#/components/schemas/accountRfc3339Datetime'
+    getAccountResourceNetworkUsageResourceId:
+      name: resource_id
+      in: query
+      description: Limit results to this resource UUID.
+      required: false
+      schema:
+        $ref: '#/components/schemas/accountUuid'
+    getAccountResourceNetworkUsageZone:
+      name: zone
+      in: query
+      description: Limit results to a zone. Repeat the parameter to include multiple zones.
+      required: false
+      schema:
+        $ref: '#/components/schemas/accountZone'
+    accountGetMonthlyDetailedBillingSummaryMonth:
+      name: month
+      in: path
+      description: Billing month.
+      required: true
+      schema:
+        type: string
+        pattern: ^(0[1-9]|1[0-2])$
+    listAccountsLabel:
+      name: label
+      in: query
+      description: Filter by label key or key-value pair. Repeat the parameter to require all labels. Label keys are matched case-insensitively.
+      required: false
+      schema:
+        type: string
+    getAccountNetworkUsageFrom:
+      name: from
+      in: query
+      description: First measurement timestamp in RFC 3339 format.
+      required: true
+      schema:
+        $ref: '#/components/schemas/accountRfc3339Datetime'
+  requestBodies:
+    createSubaccount:
+      description: Subaccount details.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/createSubaccountRequest'
+  securitySchemes:
+    apiToken:
+      type: http
+      description: UpCloud API uses HTTP Bearer authentication. An API token is required to authenticate. The API token can be created in the UpCloud control panel. Alternatively, you can create an API token using the API directly, or with upctl. Note that if you want to use HTTP Basic authentication on API or with upctl, you will need to enable API access in the UpCloud control panel first.
+      scheme: bearer
+x-refined-from:
+- upcloud-openapi.json
+- upcloud-openapi.yml
+x-upcloud-visibility: public
+x-tagGroups:
+- name: Server
+  tags:
+  - server
+  - server-group
+  - server_size
+  - plan
+  - device
+  - events
+  - timezone
+  - vnc_keymap
+- name: Network
+  tags:
+  - network
+  - network-peering
+  - ip_address
+  - router
+  - gateway
+  - firewall-ruleset
+- name: Account & Access
+  tags:
+  - account
+  - audit-logs
+  - account-tokens
+  - permission
+  - tag
+- name: Billing
+  tags:
+  - price
+  - currency

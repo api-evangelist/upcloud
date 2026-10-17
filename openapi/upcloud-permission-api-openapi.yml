@@ -1,0 +1,398 @@
+openapi: 3.2.0
+info:
+  title: Upcloud Permission API
+  version: '1.3'
+  contact:
+    name: UpCloud
+    url: https://upcloud.com
+    email: hello@upcloud.com
+  license:
+    name: MIT
+    url: https://spdx.org/licenses/MIT.html
+  termsOfService: https://upcloud.com/terms-of-service/
+  description: 'Operations tagged permission across 2 of this provider''s published API definitions: upcloud-openapi.json, upcloud-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.upcloud.com
+security:
+- apiToken: []
+tags:
+- name: Permission
+  description: Manage permissions for sub-accounts to access resources owned by the main account.
+  x-displayName: Permission
+paths:
+  /1.3/permission:
+    get:
+      tags:
+      - Permission
+      summary: List permissions
+      description: Retrieves a list of permissions for sub-accounts to access resources owned by the main account.
+      operationId: listPermissions
+      responses:
+        '200':
+          $ref: '#/components/responses/listPermissions200'
+        default:
+          $ref: '#/components/responses/listPermissionsDefault'
+      x-upcloud-visibility: public
+    put:
+      tags:
+      - Permission
+      summary: Replace permissions
+      description: Replaces the entire set of permissions for sub-accounts to access resources owned by the main account.
+      operationId: replacePermissions
+      requestBody:
+        $ref: '#/components/requestBodies/replacePermissions'
+      responses:
+        '200':
+          $ref: '#/components/responses/replacePermissions200'
+        default:
+          $ref: '#/components/responses/replacePermissionsDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/permission/grant:
+    post:
+      tags:
+      - Permission
+      summary: Grant permission
+      description: Grants a permission for a sub-account to access a resource owned by the main account.
+      operationId: grantPermission
+      parameters:
+      - $ref: '#/components/parameters/grantPermissionSkipTargetCheck'
+      requestBody:
+        $ref: '#/components/requestBodies/grantPermission'
+      responses:
+        '200':
+          $ref: '#/components/responses/grantPermission200'
+        default:
+          $ref: '#/components/responses/grantPermissionDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/permission/revoke:
+    post:
+      tags:
+      - Permission
+      summary: Revoke permission
+      description: Revokes a permission for a sub-account to access a resource owned by the main account.
+      operationId: revokePermission
+      requestBody:
+        $ref: '#/components/requestBodies/revokePermission'
+      responses:
+        '204':
+          $ref: '#/components/responses/revokePermission204'
+        default:
+          $ref: '#/components/responses/revokePermissionDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/permission/revoke-all-from-target/{target_type}/{target_identifier}:
+    post:
+      tags:
+      - Permission
+      summary: Revoke all permissions by target
+      description: Revokes all permissions for sub-accounts to access a specific resource owned by the main account.
+      operationId: revokeAllPermissionsByTarget
+      parameters:
+      - $ref: '#/components/parameters/revokeAllPermissionsByTargetTargetType'
+      - $ref: '#/components/parameters/revokeAllPermissionsByTargetTargetIdentifier'
+      - $ref: '#/components/parameters/revokeAllPermissionsByTargetMainAccountId'
+      responses:
+        '204':
+          $ref: '#/components/responses/revokeAllPermissionsByTarget204'
+        default:
+          $ref: '#/components/responses/revokeAllPermissionsByTargetDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/permission/revoke-all-from-user/{user}:
+    post:
+      tags:
+      - Permission
+      summary: Revoke all permissions by user
+      description: Revokes all permissions for a specific sub-account to access any resources owned by the main account.
+      operationId: revokeAllPermissionsByUser
+      parameters:
+      - $ref: '#/components/parameters/revokeAllPermissionsByUserUser'
+      responses:
+        '204':
+          $ref: '#/components/responses/revokeAllPermissionsByUser204'
+        default:
+          $ref: '#/components/responses/revokeAllPermissionsByUserDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+components:
+  parameters:
+    revokeAllPermissionsByTargetTargetIdentifier:
+      name: target_identifier
+      in: path
+      description: The identifier of the target resource.
+      required: true
+      schema:
+        type: string
+    revokeAllPermissionsByTargetMainAccountId:
+      name: main_account_id
+      in: query
+      description: If specified, revokes permissions for resources owned by the specified main account ID. Default is the current main account.
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+    revokeAllPermissionsByTargetTargetType:
+      name: target_type
+      in: path
+      description: The type of the target resource (e.g., "server", "storage").
+      required: true
+      schema:
+        type: string
+    grantPermissionSkipTargetCheck:
+      name: skip_target_check
+      in: query
+      description: If true, skips the check whether the target resource exists. Default is false.
+      required: false
+      schema:
+        type: boolean
+    revokeAllPermissionsByUserUser:
+      name: user
+      in: path
+      description: The username of the sub-account.
+      required: true
+      schema:
+        type: string
+  responses:
+    grantPermissionDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/permissionError'
+    revokePermissionDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/permissionError'
+    revokeAllPermissionsByTargetDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/permissionError'
+    listPermissionsDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/permissionError'
+    replacePermissionsDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/permissionError'
+    grantPermission200:
+      description: The granted permission.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/permission'
+    listPermissions200:
+      description: A list of permissions.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/permissions'
+    revokeAllPermissionsByUserDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/permissionError'
+    revokePermission204:
+      description: Permission successfully revoked. No content in response body.
+    revokeAllPermissionsByTarget204:
+      description: All permissions for the specified target successfully revoked. No content in response body.
+    replacePermissions200:
+      description: The updated list of permissions.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/permissions'
+    revokeAllPermissionsByUser204:
+      description: All permissions for the specified user successfully revoked. No content in response body.
+  schemas:
+    permissionTargetType:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      enum:
+      - server
+      - storage
+      - network
+      - router
+      - object_storage
+      - managed_database
+      - managed_object_storage
+      - managed_loadbalancer
+      - managed_kubernetes
+      - interface
+      - network_gateway
+      - tag_access
+      - managed_container_registry
+      - file_storage
+      - ssh_key
+      description: Type of the target to grant permission to
+    permissions:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        permissions:
+          type: object
+          properties:
+            permission:
+              type: array
+              items:
+                $ref: '#/components/schemas/permissionDocument'
+          required:
+          - permission
+          additionalProperties: false
+      required:
+      - permissions
+      additionalProperties: false
+      description: List of permissions.
+      example:
+        permissions:
+          permission:
+          - user: subaccount1
+            target_type: server
+            target_identifier: 00e1d79f-d2d8-40ca-a68d-812655b34766
+            options:
+              storage: 'yes'
+          - user: subaccount2
+            target_type: storage
+            target_identifier: 01f6d5e3-c3b2-41ba-912a-723ab2c12345
+    permissionTargetIdentifier:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      description: 'Target identifying string. This is type specific and in most cases is a UUID4. Wildcard value "*" can be used to
+
+        reference all target resources.
+
+        '
+    permissionDocument:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        options:
+          type: object
+          description: Target specific options.
+        target_identifier:
+          $ref: '#/components/schemas/permissionTargetIdentifier'
+        target_type:
+          $ref: '#/components/schemas/permissionTargetType'
+        user:
+          $ref: '#/components/schemas/permissionUserName'
+      required:
+      - user
+      - target_type
+      - target_identifier
+      additionalProperties: false
+      description: Permission document defining access rights for a sub-account to a specific resource.
+      example:
+        options:
+          storage: 'yes'
+        target_identifier: 00e1d79f-d2d8-40ca-a68d-812655b34766
+        target_type: server
+        user: test
+    permission:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        permission:
+          $ref: '#/components/schemas/permissionDocument'
+      description: A single permission object.
+    permissionUserName:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      maxLength: 64
+      minLength: 4
+      description: Username for an account.
+    permissionError:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            error_code:
+              type: string
+              examples:
+              - GENERAL_FAILURE
+            error_message:
+              type: string
+              examples:
+              - Your request could not be fulfilled due to a technical issue.
+          required:
+          - error_code
+          - error_message
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+      description: A general error response indicating that the request could not be fulfilled due to a technical issue.
+  requestBodies:
+    grantPermission:
+      description: The permission to be granted.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/permission'
+    replacePermissions:
+      description: The new set of permissions.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/permission'
+    revokePermission:
+      description: The permission to be revoked.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/permission'
+  securitySchemes:
+    apiToken:
+      type: http
+      description: UpCloud API uses HTTP Bearer authentication. An API token is required to authenticate. The API token can be created in the UpCloud control panel. Alternatively, you can create an API token using the API directly, or with upctl. Note that if you want to use HTTP Basic authentication on API or with upctl, you will need to enable API access in the UpCloud control panel first.
+      scheme: bearer
+x-refined-from:
+- upcloud-openapi.json
+- upcloud-openapi.yml
+x-upcloud-visibility: public
+x-tagGroups:
+- name: Server
+  tags:
+  - server
+  - server-group
+  - server_size
+  - plan
+  - device
+  - events
+  - timezone
+  - vnc_keymap
+- name: Network
+  tags:
+  - network
+  - network-peering
+  - ip_address
+  - router
+  - gateway
+  - firewall-ruleset
+- name: Account & Access
+  tags:
+  - account
+  - audit-logs
+  - account-tokens
+  - permission
+  - tag
+- name: Billing
+  tags:
+  - price
+  - currency

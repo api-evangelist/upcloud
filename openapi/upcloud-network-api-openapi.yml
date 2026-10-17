@@ -1,0 +1,1128 @@
+openapi: 3.2.0
+info:
+  title: Upcloud Network API
+  version: '1.3'
+  contact:
+    name: UpCloud
+    url: https://upcloud.com
+    email: hello@upcloud.com
+  license:
+    name: MIT
+    url: https://spdx.org/licenses/MIT.html
+  termsOfService: https://upcloud.com/terms-of-service/
+  description: 'Operations tagged network across 2 of this provider''s published API definitions: upcloud-openapi.json, upcloud-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.upcloud.com
+security:
+- apiToken: []
+tags:
+- name: Network
+  description: The network API calls present the different networks attached to cloud servers and allow the configuration of SDN private networks.
+  x-displayName: Network
+paths:
+  /1.3/network:
+    get:
+      tags:
+      - Network
+      summary: List networks
+      description: 'Get a list of all networks.
+
+
+        It is also possible to filter networks with label URL parameters, e.g.
+
+        `?label=env` or `?label=env%3Dprod`. URL parameter can be given multiple
+
+        times to add more filters (e.g. `?label=env%3Dprod&label=v2`), where
+
+        only networks that match all labels are returned.
+
+        Label keys are matched case insensitively.'
+      operationId: listNetworks
+      parameters:
+      - $ref: '#/components/parameters/listNetworksLabel'
+      responses:
+        '200':
+          $ref: '#/components/responses/listNetworks200'
+        default:
+          $ref: '#/components/responses/listNetworksDefault'
+      x-upcloud-visibility: public
+    post:
+      tags:
+      - Network
+      summary: Create SDN network
+      description: Creates a new SDN private network that cloud servers from the same zone can be attached to.
+      operationId: createNetwork
+      requestBody:
+        $ref: '#/components/requestBodies/createNetwork'
+      responses:
+        '201':
+          $ref: '#/components/responses/createNetwork201'
+        default:
+          $ref: '#/components/responses/createNetworkDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/network/interface:
+    get:
+      tags:
+      - Network
+      summary: List interfaces
+      description: Retrieves a list of network interfaces.
+      operationId: listNetworkInterfaces
+      responses:
+        '200':
+          $ref: '#/components/responses/listNetworkInterfaces200'
+        default:
+          $ref: '#/components/responses/listNetworkInterfacesDefault'
+      x-upcloud-visibility: public
+    post:
+      tags:
+      - Network
+      summary: Create interface
+      description: Creates a new network interface.
+      operationId: createNetworkInterface
+      requestBody:
+        $ref: '#/components/requestBodies/createNetworkInterface'
+      responses:
+        '201':
+          $ref: '#/components/responses/createNetworkInterface201'
+        default:
+          $ref: '#/components/responses/createNetworkInterfaceDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/network/interface/{uuid}:
+    get:
+      tags:
+      - Network
+      summary: Get interface
+      description: Retrieves details of a specific network interface.
+      operationId: getNetworkInterfaceDetails
+      parameters:
+      - $ref: '#/components/parameters/getNetworkInterfaceDetailsUuid'
+      responses:
+        '200':
+          $ref: '#/components/responses/getNetworkInterfaceDetails200'
+        default:
+          $ref: '#/components/responses/getNetworkInterfaceDetailsDefault'
+      x-upcloud-visibility: public
+    delete:
+      tags:
+      - Network
+      summary: Delete interface
+      description: Deletes a specific network interface.
+      operationId: deleteNetworkInterface
+      parameters:
+      - $ref: '#/components/parameters/deleteNetworkInterfaceUuid'
+      responses:
+        '204':
+          $ref: '#/components/responses/deleteNetworkInterface204'
+        default:
+          $ref: '#/components/responses/deleteNetworkInterfaceDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/network/{uuid}:
+    get:
+      tags:
+      - Network
+      summary: Get network
+      description: Retrieves details of a specific network.
+      operationId: getNetworkDetails
+      parameters:
+      - $ref: '#/components/parameters/getNetworkDetailsUuid'
+      responses:
+        '200':
+          $ref: '#/components/responses/getNetworkDetails200'
+        default:
+          $ref: '#/components/responses/getNetworkDetailsDefault'
+      x-upcloud-visibility: public
+    put:
+      tags:
+      - Network
+      summary: Modify network
+      description: Modifies the details of a specific SDN private network. The Utility and public networks cannot be modified.
+      operationId: modifyNetwork
+      parameters:
+      - $ref: '#/components/parameters/modifyNetworkUuid'
+      requestBody:
+        $ref: '#/components/requestBodies/modifyNetwork'
+      responses:
+        '200':
+          $ref: '#/components/responses/modifyNetwork200'
+        default:
+          $ref: '#/components/responses/modifyNetworkDefault'
+      x-upcloud-visibility: public
+    delete:
+      tags:
+      - Network
+      summary: Delete network
+      description: Deletes an SDN private network. All attached cloud servers must first be detached before SDN private networks can be deleted. Utility and public networks can only be detached from servers by Releasing the corresponding IP addresses.
+      operationId: deleteNetwork
+      parameters:
+      - $ref: '#/components/parameters/deleteNetworkUuid'
+      responses:
+        '204':
+          $ref: '#/components/responses/deleteNetwork204'
+        default:
+          $ref: '#/components/responses/deleteNetworkDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+components:
+  parameters:
+    getNetworkDetailsUuid:
+      name: uuid
+      in: path
+      description: UUID of the network.
+      required: true
+      schema:
+        $ref: '#/components/schemas/networkUuid'
+    modifyNetworkUuid:
+      name: uuid
+      in: path
+      description: UUID of the network.
+      required: true
+      schema:
+        $ref: '#/components/schemas/networkUuid'
+    getNetworkInterfaceDetailsUuid:
+      name: uuid
+      in: path
+      description: UUID of the network interface.
+      required: true
+      schema:
+        $ref: '#/components/schemas/networkUuid'
+    listNetworksLabel:
+      name: label
+      in: query
+      description: Filter networks by labels.
+      required: false
+      schema:
+        $ref: '#/components/schemas/networkLabel'
+    deleteNetworkInterfaceUuid:
+      name: uuid
+      in: path
+      description: UUID of the network.
+      required: true
+      schema:
+        $ref: '#/components/schemas/networkUuid'
+    deleteNetworkUuid:
+      name: uuid
+      in: path
+      description: UUID of the network.
+      required: true
+      schema:
+        $ref: '#/components/schemas/networkUuid'
+  schemas:
+    networkBoolean01:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: integer
+      format: int64
+      enum:
+      - 0
+      - 1
+      description: Schema for boolean-like values encoded as 0 or 1.
+    networkBootfileUrl:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      format: url
+      description: HTTP or HTTPS URL for DHCP bootfile delivery.
+    networkLabel:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        key:
+          type: string
+          description: Label key used to classify the resource
+        value:
+          type: string
+          description: Value associated with the label key
+      required:
+      - key
+      - value
+      additionalProperties: false
+      description: A key/value pair to label and categorize resources
+      example:
+        key: env
+        value: production
+    networkDetails:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        grt_export:
+          $ref: '#/components/schemas/networkBooleanYesno'
+        ip_networks:
+          type: object
+          properties:
+            ip_network:
+              type: array
+              items:
+                type: object
+                properties:
+                  address:
+                    $ref: '#/components/schemas/networkIpCidr'
+                  dhcp:
+                    $ref: '#/components/schemas/networkBooleanYesno'
+                  dhcp_bootfile_url:
+                    $ref: '#/components/schemas/networkBootfileUrl'
+                  dhcp_default_route:
+                    $ref: '#/components/schemas/networkBooleanYesno'
+                  dhcp_dns:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/networkIpAddress'
+                  dhcp_routes:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/networkIpCidr'
+                  family:
+                    $ref: '#/components/schemas/networkIpFamily'
+                  gateway:
+                    $ref: '#/components/schemas/networkIpAddress'
+                required:
+                - family
+                - address
+          required:
+          - ip_network
+        name:
+          type: string
+        network_features:
+          type: array
+          items:
+            type: string
+        parent_network:
+          $ref: '#/components/schemas/networkUuid'
+        peerings:
+          type: object
+          properties:
+            peering:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    $ref: '#/components/schemas/networkPeeringName'
+                  state:
+                    $ref: '#/components/schemas/networkPeeringState'
+                  uuid:
+                    $ref: '#/components/schemas/networkUuid'
+          description: List of network peerings the network is part of
+        router:
+          $ref: '#/components/schemas/networkUuid'
+        servers:
+          type: object
+          properties:
+            server:
+              type: array
+              items:
+                type: object
+                properties:
+                  title:
+                    type: string
+                  uuid:
+                    $ref: '#/components/schemas/networkUuid'
+                required:
+                - uuid
+                - title
+          required:
+          - server
+        services:
+          type: object
+          properties:
+            service:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  service_routes:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/networkIpCidr'
+                required:
+                - name
+                - service_routes
+          required:
+          - service
+          description: List of services this network is joined to
+        tags:
+          type: array
+          items:
+            type: string
+        type:
+          $ref: '#/components/schemas/networkType'
+        uuid:
+          type: string
+          format: uuid
+        zone:
+          $ref: '#/components/schemas/networkZone'
+      required:
+      - name
+      - zone
+      description: Detailed network resource attributes.
+      example:
+        evi: 1234
+        grt_export: 'no'
+        ip_networks:
+          ip_network:
+          - family: IPv4
+            address: 192.168.150.0/24
+            dhcp: 'yes'
+            dhcp_dns:
+            - 192.168.150.1
+            - 192.168.150.254
+            gateway: 192.168.150.1
+        name: Example network
+        network_features:
+        - allow-linklocal-address
+        - allow-overlapping-ip-network
+        - managed-by-service
+        parent_network: 037b0e4b-2734-4d5d-89ba-1737fc4593bf
+        peerings:
+          peering:
+          - name: Peering A->B
+            state: pending-peer
+            uuid: 0fc82c18-1e5e-4076-afcd-3b85869800e7
+        router: 0414e0d7-4436-4037-9dd8-6eaf47dce599
+        services:
+          service:
+          - name: OBJECT-STORAGE
+            service_routes:
+            - 10.10.10.0/24
+        type: private
+        uuid: 039a8811-e279-46c2-8e45-1962767f5a4c
+        zone: fi-hel1
+    networkUuid:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+      format: uuid
+      description: Universally unique identifier
+      example: 0414e0d7-4436-4037-9dd8-6eaf47dce599
+    networkIpAddress:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      oneOf:
+      - type: string
+        pattern: ^([0-9]{1,3}\.){3}[0-9]{1,3}$
+        description: IPv4 address
+      - type: string
+        pattern: ^[a-fA-F0-9:]+$
+        description: IPv6 address
+      description: IP address
+      example: 10.0.0.20
+    networkCreateInterfaceRequest:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      properties:
+        main_account_id:
+          $ref: '#/components/schemas/networkAccountId'
+        interface:
+          type: object
+          properties:
+            bootable:
+              $ref: '#/components/schemas/networkBooleanYesno'
+            network:
+              type: string
+            source_ip_filtering:
+              $ref: '#/components/schemas/networkBooleanYesno'
+            type:
+              $ref: '#/components/schemas/networkType'
+            labels:
+              type: array
+              items:
+                type: object
+                properties:
+                  key:
+                    type: string
+                  value:
+                    type: string
+                  visible:
+                    $ref: '#/components/schemas/networkBooleanYesno'
+                required:
+                - key
+                - value
+                - visible
+          required:
+          - type
+          - network
+          - source_ip_filtering
+          - bootable
+      description: Request schema for creating a network interface
+      example:
+        main_account_id: 123456
+        interface:
+          type: private
+          network: 8f6d1ec2-8f5e-4b67-8fcb-6fa9c1a8a001
+          source_ip_filtering: 'yes'
+          bootable: 'no'
+    networkName:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      examples:
+      - DEV
+      - PROD
+      - private
+      - QA
+      - webserver
+      - database
+      maxLength: 32
+      minLength: 1
+      pattern: ^[A-Za-z0-9_]{1,32}$
+      description: Short name used to identify a tag.
+    networkIpFamily:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      enum:
+      - IPv4
+      - IPv6
+      description: IP address family
+      example: IPv4
+    networks:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        networks:
+          type: object
+          properties:
+            network:
+              type: array
+              items:
+                $ref: '#/components/schemas/networkDetails'
+          required:
+          - network
+          additionalProperties: false
+          description: Container object for network items.
+          example:
+            network:
+            - uuid: 8f6d1ec2-8f5e-4b67-8fcb-6fa9c1a8a001
+              name: backend-net
+              type: private
+              zone: fi-hel2
+      required:
+      - networks
+      additionalProperties: false
+      description: Response schema containing a list of networks.
+      example:
+        networks:
+          network:
+          - uuid: 8f6d1ec2-8f5e-4b67-8fcb-6fa9c1a8a001
+            name: backend-net
+            type: private
+            zone: fi-hel2
+    networkZone:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      examples:
+      - fi-hel1
+      - de-fra1
+      - us-nyc1
+      maxLength: 15
+      minLength: 2
+      pattern: ^[a-z][a-z0-9-]{0,14}[a-z0-9]$
+      description: Zone identifier
+    networkDescription:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      examples:
+      - Development servers
+      - Production servers
+      - Private environment
+      - Quality Assurance environment
+      - Web servers
+      - Database servers
+      description: Human-readable description for a tag.
+    networkPeeringName:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      maxLength: 255
+      minLength: 1
+      description: Name of a network peering relationship.
+    networkInterface:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        bootable:
+          $ref: '#/components/schemas/networkBooleanYesno'
+        ip_addresses:
+          type: array
+          items:
+            type: object
+          example:
+          - ip_address:
+              address: 10.0.0.10
+              family: IPv4
+              floating: 'no'
+              release_policy: keep
+              dhcp_provided: 'yes'
+        mac:
+          type: string
+        network:
+          type: string
+        source_ip_filtering:
+          $ref: '#/components/schemas/networkBooleanYesno'
+        server:
+          $ref: '#/components/schemas/networkUuid'
+        type:
+          $ref: '#/components/schemas/networkType'
+        uuid:
+          $ref: '#/components/schemas/networkUuid'
+      required:
+      - uuid
+      - type
+      - network
+      - mac
+      - source_ip_filtering
+      - bootable
+      - ip_addresses
+      description: Response schema for listing network interfaces
+      example:
+        uuid: 8f6d1ec2-8f5e-4b67-8fcb-6fa9c1a8a003
+        type: private
+        network: 8f6d1ec2-8f5e-4b67-8fcb-6fa9c1a8a001
+        mac: 00:16:3e:12:34:56
+        source_ip_filtering: 'yes'
+        bootable: 'no'
+        ip_addresses:
+        - ip_address:
+            address: 10.0.0.10
+            family: IPv4
+            floating: 'no'
+            release_policy: keep
+            dhcp_provided: 'yes'
+    createNetworkRequest:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        network:
+          type: object
+          properties:
+            type:
+              $ref: '#/components/schemas/networkType'
+            name:
+              type: string
+              example: backend-net
+            zone:
+              $ref: '#/components/schemas/networkZone'
+            router:
+              $ref: '#/components/schemas/networkUuid'
+            ip_networks:
+              type: object
+              properties:
+                ip_network:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      family:
+                        $ref: '#/components/schemas/networkIpFamily'
+                      address:
+                        $ref: '#/components/schemas/networkIpCidr'
+                      gateway:
+                        $ref: '#/components/schemas/networkIpAddress'
+                      dhcp:
+                        $ref: '#/components/schemas/networkBooleanYesno'
+                      dhcp_default_route:
+                        $ref: '#/components/schemas/networkBooleanYesno'
+                      dhcp_dns:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/networkIpAddress'
+                      dhcp_routes:
+                        type: array
+                        items:
+                          type: string
+                      dhcp_bootfile_url:
+                        $ref: '#/components/schemas/networkBootfileUrl'
+                      dhcp_routes_configuration:
+                        type: object
+                        properties:
+                          effective_routes_auto_population:
+                            type: object
+                            properties:
+                              enabled:
+                                $ref: '#/components/schemas/networkBooleanYesno'
+                              exclude_by_source:
+                                type: array
+                                items:
+                                  type: string
+                              filter_by_destination:
+                                type: array
+                                items:
+                                  $ref: '#/components/schemas/networkIpCidr'
+                              filter_by_route_type:
+                                type: array
+                                items:
+                                  type: string
+                    required:
+                    - family
+                    - address
+                    - dhcp
+              required:
+              - ip_network
+            labels:
+              $ref: '#/components/schemas/networkLabels'
+          required:
+          - type
+          - name
+          - zone
+          - ip_networks
+          example:
+            type: private
+            name: backend-net
+            zone: fi-hel2
+            ip_networks:
+              ip_network:
+              - family: IPv4
+                address: 10.0.0.0/24
+                dhcp: 'yes'
+      required:
+      - network
+      description: Request schema for creating a network
+      example:
+        network:
+          type: private
+          name: backend-net
+          zone: fi-hel2
+          ip_networks:
+            ip_network:
+            - family: IPv4
+              address: 10.0.0.0/24
+              dhcp: 'yes'
+    networkError:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            error_code:
+              type: string
+              examples:
+              - GENERAL_FAILURE
+            error_message:
+              type: string
+              examples:
+              - Your request could not be fulfilled due to a technical issue.
+          required:
+          - error_code
+          - error_message
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+      description: A general error response indicating that the request could not be fulfilled due to a technical issue.
+    networkType:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      enum:
+      - public
+      - utility
+      - private
+      description: Network access type
+      example: public
+    networkFeatures:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      enum:
+      - allow-linklocal-address
+      - allow-overlapping-ip-network
+      - managed-by-service
+      - allow-cgnat-address
+      description: Features available for a network
+    network:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        network:
+          $ref: '#/components/schemas/networkDetails'
+      required:
+      - network
+      additionalProperties: false
+      description: Response schema containing a single network.
+    networkAccountId:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: integer
+      minimum: 1
+      format: int64
+      description: Unique numeric identifier of an account.
+    networkLabels:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        label:
+          type: array
+          items:
+            $ref: '#/components/schemas/networkLabel'
+      description: Collection of key/value labels for a resource.
+      example:
+        label:
+        - key: env
+          value: prod
+        - key: team
+          value: network
+    networkIpCidr:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      format: cidr
+      description: IP CIDR
+    networkServers:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        server:
+          type: array
+          items:
+            type: string
+            examples:
+            - 0077fa3d-32db-4b09-9f5f-30d9e9afb565
+            - 00c78863-db86-44ea-af70-d6edc4d162bf
+            format: uuid
+            description: Unique identifier of the server.
+      description: List of servers associated with the tag.
+      example:
+        server:
+        - 0077fa3d-32db-4b09-9f5f-30d9e9afb565
+        - 00c78863-db86-44ea-af70-d6edc4d162bf
+    modifyNetworkRequest:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        network:
+          type: object
+          properties:
+            type:
+              $ref: '#/components/schemas/networkType'
+            name:
+              type: string
+            zone:
+              $ref: '#/components/schemas/networkZone'
+            tags:
+              $ref: '#/components/schemas/networkTags'
+            labels:
+              $ref: '#/components/schemas/networkLabels'
+            router:
+              $ref: '#/components/schemas/networkUuid'
+            grt_export:
+              $ref: '#/components/schemas/networkBoolean01'
+            parent_network:
+              type: string
+            ip_networks:
+              type: object
+              properties:
+                ip_network:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      family:
+                        $ref: '#/components/schemas/networkIpFamily'
+                      address:
+                        $ref: '#/components/schemas/networkIpCidr'
+                      gateway:
+                        $ref: '#/components/schemas/networkIpAddress'
+                      dhcp:
+                        type: string
+                      dhcp_default_route:
+                        type: string
+                      dhcp_dns:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/networkIpAddress'
+                      dhcp_routes:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/networkIpCidr'
+                      dhcp_bootfile_url:
+                        type: string
+                    required:
+                    - family
+                    - address
+              required:
+              - ip_network
+            network_features:
+              $ref: '#/components/schemas/networkFeatures'
+            main_account_id:
+              $ref: '#/components/schemas/networkAccountId'
+          required:
+          - type
+          - name
+          - zone
+          - tags
+          - labels
+          - router
+          - grt_export
+          - parent_network
+          - ip_networks
+          - network_features
+          - main_account_id
+      required:
+      - network
+      description: Request schema for modifying a network
+    networkTags:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        tags:
+          type: object
+          properties:
+            tag:
+              type: array
+              items:
+                type: object
+                properties:
+                  description:
+                    $ref: '#/components/schemas/networkDescription'
+                  name:
+                    $ref: '#/components/schemas/networkName'
+                  servers:
+                    $ref: '#/components/schemas/networkServers'
+                required:
+                - name
+                - servers
+          required:
+          - tag
+          example:
+            tag:
+            - name: PROD
+              description: Production servers
+              servers:
+                server:
+                - 0077fa3d-32db-4b09-9f5f-30d9e9afb565
+      required:
+      - tags
+      description: Container object for resource tags.
+      example:
+        tags:
+          tag:
+          - name: PROD
+            description: Production servers
+            servers:
+              server:
+              - 0077fa3d-32db-4b09-9f5f-30d9e9afb565
+    networkInterfaces:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        interfaces:
+          type: object
+          properties:
+            interface:
+              $ref: '#/components/schemas/networkInterface'
+          required:
+          - interface
+          example:
+            interface:
+              uuid: 8f6d1ec2-8f5e-4b67-8fcb-6fa9c1a8a003
+              type: private
+              network: 8f6d1ec2-8f5e-4b67-8fcb-6fa9c1a8a001
+              mac: 00:16:3e:12:34:56
+              source_ip_filtering: 'yes'
+              bootable: 'no'
+              ip_addresses:
+              - ip_address:
+                  address: 10.0.0.10
+                  family: IPv4
+                  floating: 'no'
+                  release_policy: keep
+                  dhcp_provided: 'yes'
+      required:
+      - interfaces
+      description: Response schema for listing network interfaces
+      example:
+        interfaces:
+          interface:
+            uuid: 8f6d1ec2-8f5e-4b67-8fcb-6fa9c1a8a003
+            type: private
+            network: 8f6d1ec2-8f5e-4b67-8fcb-6fa9c1a8a001
+            mac: 00:16:3e:12:34:56
+            source_ip_filtering: 'yes'
+            bootable: 'no'
+            ip_addresses:
+            - ip_address:
+                address: 10.0.0.10
+                family: IPv4
+                floating: 'no'
+                release_policy: keep
+                dhcp_provided: 'yes'
+    networkPeeringState:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      enum:
+      - active
+      - pending-peer
+      - provisioning
+      - conflict-subnet
+      - missing-local-router
+      - missing-peer-router
+      - deleted-peer-network
+      - disabled
+      - peer-disabled
+      - error
+      description: Current lifecycle state of a network peering.
+    networkBooleanYesno:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      enum:
+      - 'yes'
+      - 'no'
+      description: Boolean value represented as yes/no
+      example: 'yes'
+  responses:
+    createNetworkInterface201:
+      description: Created network interface.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/networkInterface'
+    createNetworkInterfaceDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/networkError'
+    listNetworkInterfacesDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/networkError'
+    modifyNetworkDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/networkError'
+    deleteNetworkDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/networkError'
+    createNetworkDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/networkError'
+    deleteNetwork204:
+      description: Network successfully deleted.
+    listNetworksDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/networkError'
+    deleteNetworkInterfaceDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/networkError'
+    listNetworkInterfaces200:
+      description: List of network interfaces.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/networkInterfaces'
+    getNetworkDetailsDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/networkError'
+    modifyNetwork200:
+      description: Updated network details.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/network'
+    deleteNetworkInterface204:
+      description: Network interface successfully deleted.
+    getNetworkInterfaceDetails200:
+      description: Details of the requested network interface.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/network'
+    getNetworkInterfaceDetailsDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/networkError'
+    getNetworkDetails200:
+      description: Details of the requested network.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/network'
+    listNetworks200:
+      description: List of networks.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/networks'
+    createNetwork201:
+      description: Created network.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/network'
+  requestBodies:
+    createNetworkInterface:
+      description: Attributes for the new network interface.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/networkCreateInterfaceRequest'
+    createNetwork:
+      description: Attributes for the new network.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/createNetworkRequest'
+    modifyNetwork:
+      description: Attributes to modify for the network.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/modifyNetworkRequest'
+  securitySchemes:
+    apiToken:
+      type: http
+      description: UpCloud API uses HTTP Bearer authentication. An API token is required to authenticate. The API token can be created in the UpCloud control panel. Alternatively, you can create an API token using the API directly, or with upctl. Note that if you want to use HTTP Basic authentication on API or with upctl, you will need to enable API access in the UpCloud control panel first.
+      scheme: bearer
+x-refined-from:
+- upcloud-openapi.json
+- upcloud-openapi.yml
+x-upcloud-visibility: public
+x-tagGroups:
+- name: Server
+  tags:
+  - server
+  - server-group
+  - server_size
+  - plan
+  - device
+  - events
+  - timezone
+  - vnc_keymap
+- name: Network
+  tags:
+  - network
+  - network-peering
+  - ip_address
+  - router
+  - gateway
+  - firewall-ruleset
+- name: Account & Access
+  tags:
+  - account
+  - audit-logs
+  - account-tokens
+  - permission
+  - tag
+- name: Billing
+  tags:
+  - price
+  - currency

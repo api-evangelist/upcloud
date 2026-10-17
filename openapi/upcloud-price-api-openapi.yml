@@ -1,0 +1,220 @@
+openapi: 3.2.0
+info:
+  title: Upcloud Price API
+  version: '1.3'
+  contact:
+    name: UpCloud
+    url: https://upcloud.com
+    email: hello@upcloud.com
+  license:
+    name: MIT
+    url: https://spdx.org/licenses/MIT.html
+  termsOfService: https://upcloud.com/terms-of-service/
+  description: 'Operations tagged price across 2 of this provider''s published API definitions: upcloud-openapi.json, upcloud-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.upcloud.com
+security:
+- apiToken: []
+tags:
+- name: Price
+  description: Retrieve pricing information for UpCloud resources and services.
+  x-displayName: Price
+paths:
+  /1.3/price:
+    get:
+      tags:
+      - Price
+      summary: Returns a price list
+      description: Returns a price list.
+      operationId: getPrice
+      parameters:
+      - $ref: '#/components/parameters/getPriceZone'
+      responses:
+        '200':
+          $ref: '#/components/responses/getPrice200'
+        '400':
+          $ref: '#/components/responses/getPrice400'
+        default:
+          $ref: '#/components/responses/getPriceDefault'
+    servers:
+    - url: https://api.upcloud.com
+components:
+  responses:
+    getPrice400:
+      description: Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/priceError400'
+    getPriceDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/priceError'
+    getPrice200:
+      description: A price list.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/prices'
+  schemas:
+    priceError400:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              examples:
+              - PRICE_INVALID
+              enum:
+              - PRICE_INVALID
+            message:
+              type: string
+              examples:
+              - The price ID is invalid
+          required:
+          - code
+          - message
+      required:
+      - error
+      description: Invalid price request error.
+    prices:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        prices:
+          type: object
+          properties:
+            currency:
+              $ref: '#/components/schemas/priceCurrency'
+            zone:
+              type: array
+              items:
+                $ref: '#/components/schemas/zonePrices'
+          required:
+          - currency
+          - zone
+          example:
+            currency: USD
+            zone:
+            - server_cores:
+                amount: 1
+                price: 2.4
+              server_memory:
+                amount: 1024
+                price: 3.84
+      required:
+      - prices
+      description: Price list for UpCloud resources and services.
+      example:
+        prices:
+          currency: USD
+          zone:
+          - server_cores:
+              amount: 1
+              price: 2.4
+            server_memory:
+              amount: 1024
+              price: 3.84
+            storage:
+              amount: 1
+              price: 0.04
+    priceCurrency:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      pattern: ^[A-Z]{3}$
+      description: ISO 4217 code
+    zonePrices:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        items:
+          type: object
+          additionalProperties:
+            type: object
+            properties:
+              amount:
+                type: integer
+                format: int32
+              price:
+                type: number
+                format: double
+            required:
+            - amount
+            - price
+            additionalProperties: false
+      description: Pricing information organized by zone.
+    priceError:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            error_code:
+              type: string
+              examples:
+              - GENERAL_FAILURE
+            error_message:
+              type: string
+              examples:
+              - Your request could not be fulfilled due to a technical issue.
+          required:
+          - error_code
+          - error_message
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+      description: A general error response indicating that the request could not be fulfilled due to a technical issue.
+  parameters:
+    getPriceZone:
+      name: zone
+      in: query
+      description: Filter results to a specific zone. Can be specified multiple times.
+      required: false
+      schema:
+        type: string
+  securitySchemes:
+    apiToken:
+      type: http
+      description: UpCloud API uses HTTP Bearer authentication. An API token is required to authenticate. The API token can be created in the UpCloud control panel. Alternatively, you can create an API token using the API directly, or with upctl. Note that if you want to use HTTP Basic authentication on API or with upctl, you will need to enable API access in the UpCloud control panel first.
+      scheme: bearer
+x-refined-from:
+- upcloud-openapi.json
+- upcloud-openapi.yml
+x-upcloud-visibility: public
+x-tagGroups:
+- name: Server
+  tags:
+  - server
+  - server-group
+  - server_size
+  - plan
+  - device
+  - events
+  - timezone
+  - vnc_keymap
+- name: Network
+  tags:
+  - network
+  - network-peering
+  - ip_address
+  - router
+  - gateway
+  - firewall-ruleset
+- name: Account & Access
+  tags:
+  - account
+  - audit-logs
+  - account-tokens
+  - permission
+  - tag
+- name: Billing
+  tags:
+  - price
+  - currency

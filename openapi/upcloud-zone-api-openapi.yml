@@ -1,0 +1,280 @@
+openapi: 3.2.0
+info:
+  title: Upcloud Zone API
+  version: '1.3'
+  contact:
+    name: UpCloud
+    url: https://upcloud.com
+    email: hello@upcloud.com
+  license:
+    name: MIT
+    url: https://spdx.org/licenses/MIT.html
+  termsOfService: https://upcloud.com/terms-of-service/
+  description: 'Operations tagged zone across 2 of this provider''s published API definitions: upcloud-openapi.json, upcloud-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.upcloud.com
+security:
+- apiToken: []
+tags:
+- name: Zone
+  description: Operations for managing zones.
+  x-displayName: Zone
+paths:
+  /1.3/zone:
+    get:
+      tags:
+      - Zone
+      summary: List zones
+      description: Retrieves a list of zones.
+      operationId: listZones
+      responses:
+        '200':
+          $ref: '#/components/responses/listZones200'
+        default:
+          $ref: '#/components/responses/listZonesDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/zone/{zone}/vlans:
+    get:
+      tags:
+      - Zone
+      summary: List VLANs in a zone
+      description: Retrieves a list of VLANs in a specific zone.
+      operationId: listZoneVLANs
+      parameters:
+      - $ref: '#/components/parameters/listZoneVLANsZone'
+      responses:
+        '200':
+          $ref: '#/components/responses/listZoneVLANs200'
+        default:
+          $ref: '#/components/responses/listZoneVLANsDefault'
+    servers:
+    - url: https://api.upcloud.com
+components:
+  schemas:
+    zones:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        zones:
+          type: object
+          properties:
+            zone:
+              type: array
+              items:
+                type: object
+                properties:
+                  description:
+                    type: string
+                  id:
+                    $ref: '#/components/schemas/zone'
+                  public:
+                    $ref: '#/components/schemas/zoneBooleanYesno'
+                required:
+                - description
+                - id
+                - public
+                additionalProperties: false
+              example:
+              - id: de-fra1
+                description: Germany, Frankfurt
+                public: 'yes'
+          required:
+          - zone
+          additionalProperties: false
+          example:
+            zone:
+            - id: de-fra1
+              description: Germany, Frankfurt
+              public: 'yes'
+      required:
+      - zones
+      additionalProperties: false
+      description: Zones schema
+      example:
+        zones:
+          zone:
+          - id: de-fra1
+            description: Germany, Frankfurt
+            public: 'yes'
+          - id: fi-hel2
+            description: Finland, Helsinki
+            public: 'no'
+    zoneBoolean01:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: integer
+      format: int64
+      enum:
+      - 0
+      - 1
+      description: Schema for boolean-like values encoded as 0 or 1.
+    zoneVlans:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        zone_vlans:
+          type: object
+          properties:
+            vlan:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    minimum: 1
+                    format: int64
+                  access:
+                    type: string
+                    maxLength: 255
+                  description:
+                    type: string
+                    maxLength: 255
+                  default:
+                    $ref: '#/components/schemas/zoneBoolean01'
+                required:
+                - id
+                - access
+                - description
+                - default
+                additionalProperties: false
+              example:
+              - id: 100
+                access: public
+                description: default public vlan
+                default: 1
+          required:
+          - vlan
+          additionalProperties: false
+          example:
+            vlan:
+            - id: 100
+              access: public
+              description: default public vlan
+              default: 1
+      required:
+      - zone_vlans
+      additionalProperties: false
+      description: Schema for zone VLANs
+      example:
+        zone_vlans:
+          vlan:
+          - id: 100
+            access: public
+            description: default public vlan
+            default: 1
+    zoneBooleanYesno:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      enum:
+      - 'yes'
+      - 'no'
+      description: Boolean value represented as yes/no
+      example: 'yes'
+    zoneError:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            error_code:
+              type: string
+              examples:
+              - GENERAL_FAILURE
+            error_message:
+              type: string
+              examples:
+              - Your request could not be fulfilled due to a technical issue.
+          required:
+          - error_code
+          - error_message
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+      description: A general error response indicating that the request could not be fulfilled due to a technical issue.
+    zone:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      examples:
+      - fi-hel1
+      - de-fra1
+      - us-nyc1
+      maxLength: 15
+      minLength: 2
+      pattern: ^[a-z][a-z0-9-]{0,14}[a-z0-9]$
+      description: Zone identifier
+  responses:
+    listZonesDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/zoneError'
+    listZoneVLANs200:
+      description: A list of zones.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/zoneVlans'
+    listZones200:
+      description: A list of zones.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/zones'
+    listZoneVLANsDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/zoneError'
+  parameters:
+    listZoneVLANsZone:
+      name: zone
+      in: path
+      description: The zone identifier.
+      required: true
+      schema:
+        $ref: '#/components/schemas/zone'
+  securitySchemes:
+    apiToken:
+      type: http
+      description: UpCloud API uses HTTP Bearer authentication. An API token is required to authenticate. The API token can be created in the UpCloud control panel. Alternatively, you can create an API token using the API directly, or with upctl. Note that if you want to use HTTP Basic authentication on API or with upctl, you will need to enable API access in the UpCloud control panel first.
+      scheme: bearer
+x-refined-from:
+- upcloud-openapi.json
+- upcloud-openapi.yml
+x-upcloud-visibility: public
+x-tagGroups:
+- name: Server
+  tags:
+  - server
+  - server-group
+  - server_size
+  - plan
+  - device
+  - events
+  - timezone
+  - vnc_keymap
+- name: Network
+  tags:
+  - network
+  - network-peering
+  - ip_address
+  - router
+  - gateway
+  - firewall-ruleset
+- name: Account & Access
+  tags:
+  - account
+  - audit-logs
+  - account-tokens
+  - permission
+  - tag
+- name: Billing
+  tags:
+  - price
+  - currency

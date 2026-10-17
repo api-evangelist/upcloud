@@ -1,0 +1,677 @@
+openapi: 3.2.0
+info:
+  title: Upcloud Partner API
+  version: '1.3'
+  contact:
+    name: UpCloud
+    url: https://upcloud.com
+    email: hello@upcloud.com
+  license:
+    name: MIT
+    url: https://spdx.org/licenses/MIT.html
+  termsOfService: https://upcloud.com/terms-of-service/
+  description: 'Operations tagged partner across 2 of this provider''s published API definitions: upcloud-openapi.json, upcloud-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.upcloud.com
+security:
+- apiToken: []
+tags:
+- name: Partner
+  description: 'Partner API gives UpCloud partners the ability manage accounts for their customers.
+
+
+    Note that use of this API is available only to accounts provisioned as partner accounts. Please contact your account representative for further details.'
+  x-displayName: Partner
+paths:
+  /1.3/partner/accounts:
+    get:
+      tags:
+      - Partner
+      summary: Get account list
+      description: Returns list of accounts associated with the partner.
+      operationId: listPartnerAccounts
+      responses:
+        '200':
+          $ref: '#/components/responses/listPartnerAccounts200'
+        default:
+          $ref: '#/components/responses/listPartnerAccountsDefault'
+    post:
+      tags:
+      - Partner
+      summary: Create new account
+      description: Creates new UpCloud account that will be linked to partner's existing invoicing.
+      operationId: createPartnerAccount
+      requestBody:
+        $ref: '#/components/requestBodies/createPartnerAccount'
+      responses:
+        '201':
+          $ref: '#/components/responses/createPartnerAccount201'
+        '400':
+          $ref: '#/components/responses/createPartnerAccount400'
+        '403':
+          $ref: '#/components/responses/createPartnerAccount403'
+        '409':
+          $ref: '#/components/responses/createPartnerAccount409'
+        default:
+          $ref: '#/components/responses/createPartnerAccountDefault'
+    servers:
+    - url: https://api.upcloud.com
+components:
+  schemas:
+    partnerError400PasswordInvalid:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        error_code:
+          type: string
+          const: PASSWORD_INVALID
+        error_message:
+          type: string
+          examples:
+          - The attribute password has an invalid value.
+      required:
+      - error_code
+      - error_message
+      additionalProperties: false
+      description: The attribute password has an invalid value.
+    partnerError409:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            error_code:
+              type: string
+              const: ACCOUNT_EXISTS
+            error_message:
+              type: string
+              examples:
+              - An account using the given username already exists.
+          required:
+          - error_code
+          - error_message
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+      description: 409 Conflict errors for partner account creation.
+    partnerError400PhoneMissing:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        error_code:
+          type: string
+          const: PHONE_MISSING
+        error_message:
+          type: string
+          examples:
+          - The attribute phone is missing.
+      required:
+      - error_code
+      - error_message
+      additionalProperties: false
+      description: The attribute phone is missing from the request.
+    partnerError400CompanyInvalid:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        error_code:
+          type: string
+          const: COMPANY_INVALID
+        error_message:
+          type: string
+          examples:
+          - The attribute company has an invalid value.
+      required:
+      - error_code
+      - error_message
+      additionalProperties: false
+      description: The attribute company has an invalid value.
+    partnerError400LastNameInvalid:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        error_code:
+          type: string
+          const: LAST_NAME_INVALID
+        error_message:
+          type: string
+          examples:
+          - The attribute last_name has an invalid value.
+      required:
+      - error_code
+      - error_message
+      additionalProperties: false
+      description: The attribute last_name has an invalid value.
+    partnerError400PasswordMissing:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        error_code:
+          type: string
+          const: PASSWORD_MISSING
+        error_message:
+          type: string
+          examples:
+          - The attribute password is missing.
+      required:
+      - error_code
+      - error_message
+      additionalProperties: false
+      description: The attribute password is missing from the request.
+    partnerError400EmailMissing:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        error_code:
+          type: string
+          const: EMAIL_MISSING
+        error_message:
+          type: string
+          examples:
+          - The attribute email is missing.
+      required:
+      - error_code
+      - error_message
+      additionalProperties: false
+      description: The attribute email is missing from the request.
+    partnerError400PhoneInvalid:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        error_code:
+          type: string
+          const: PHONE_INVALID
+        error_message:
+          type: string
+          examples:
+          - The attribute phone has an invalid value.
+      required:
+      - error_code
+      - error_message
+      additionalProperties: false
+      description: The attribute phone has an invalid value.
+    partnerAccounts:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: array
+      items:
+        $ref: '#/components/schemas/partnerAccount'
+      description: Collection of partner-managed accounts.
+    partnerCreateAccount:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        username:
+          type: string
+          examples:
+          - newuser
+        password:
+          type: string
+          examples:
+          - superSecret123
+        contact_details:
+          type: object
+          properties:
+            address:
+              type: string
+              examples:
+              - Some street
+            city:
+              type: string
+              examples:
+              - Some city
+            company:
+              type: string
+              examples:
+              - Some company
+            country:
+              type: string
+              examples:
+              - FIN
+              format: iso-3166-1-alpha-3
+            email:
+              type: string
+              examples:
+              - some.user@example.com
+              format: email
+            first_name:
+              type: string
+              examples:
+              - Some
+            last_name:
+              type: string
+              examples:
+              - User
+            phone:
+              type: string
+              examples:
+              - '+358.91234567'
+            postal_code:
+              type: string
+              examples:
+              - '00100'
+            state:
+              type: string
+              examples:
+              - ''
+              description: State or province, if applicable. Required for some countries.
+            vat_number:
+              type: string
+              examples:
+              - FI24315605
+          required:
+          - country
+          - email
+          - first_name
+          - last_name
+          - phone
+      required:
+      - username
+      - password
+      description: Request payload for creating a partner-managed account.
+    partnerError:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            error_code:
+              type: string
+              examples:
+              - GENERAL_FAILURE
+            error_message:
+              type: string
+              examples:
+              - Your request could not be fulfilled due to a technical issue.
+          required:
+          - error_code
+          - error_message
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+      description: A general error response indicating that the request could not be fulfilled due to a technical issue.
+    partnerError400CountryInvalid:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        error_code:
+          type: string
+          const: COUNTRY_INVALID
+        error_message:
+          type: string
+          examples:
+          - The attribute country has an invalid value.
+      required:
+      - error_code
+      - error_message
+      additionalProperties: false
+      description: The attribute country has an invalid value.
+    partnerAccount:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        address:
+          type: string
+          examples:
+          - Some street
+        city:
+          type: string
+          examples:
+          - Some city
+        company:
+          type: string
+          examples:
+          - Some company
+        country:
+          type: string
+          examples:
+          - FIN
+          format: iso-3166-1-alpha-3
+        email:
+          type: string
+          examples:
+          - some.user@example.com
+          format: email
+        first_name:
+          type: string
+          examples:
+          - Some
+        last_name:
+          type: string
+          examples:
+          - User
+        phone:
+          type: string
+          examples:
+          - '+358.91234567'
+        postal_code:
+          type: string
+          examples:
+          - '00100'
+        state:
+          type: string
+          examples:
+          - ''
+        username:
+          type: string
+          examples:
+          - somename
+        vat_number:
+          type: string
+          examples:
+          - FI24315605
+      required:
+      - username
+      description: Partner-managed account details.
+    partnerError400FirstNameMissing:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        error_code:
+          type: string
+          const: FIRST_NAME_MISSING
+        error_message:
+          type: string
+          examples:
+          - The attribute first_name is missing.
+      required:
+      - error_code
+      - error_message
+      additionalProperties: false
+      description: The attribute first_name is missing from the request.
+    partnerError400PostalCodeInvalid:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        error_code:
+          type: string
+          const: POSTAL_CODE_INVALID
+        error_message:
+          type: string
+          examples:
+          - The attribute postal_code has an invalid value.
+      required:
+      - error_code
+      - error_message
+      additionalProperties: false
+      description: The attribute postal_code has an invalid value.
+    partnerError400PostalCodeMissing:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        error_code:
+          type: string
+          const: POSTAL_CODE_MISSING
+        error_message:
+          type: string
+          examples:
+          - The attribute postal_code is missing.
+      required:
+      - error_code
+      - error_message
+      additionalProperties: false
+      description: The attribute postal_code is missing from the request.
+    partnerError400FirstNameInvalid:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        error_code:
+          type: string
+          const: FIRST_NAME_INVALID
+        error_message:
+          type: string
+          examples:
+          - The attribute first_name has an invalid value.
+      required:
+      - error_code
+      - error_message
+      additionalProperties: false
+      description: The attribute first_name has an invalid value.
+    partnerError403:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            error_code:
+              type: string
+              const: ACCOUNT_CREATION_LIMIT_REACHED
+            error_message:
+              type: string
+              examples:
+              - Partner account creation limit has been reached.
+          required:
+          - error_code
+          - error_message
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+      description: 403 Forbidden errors for partner account creation.
+    partnerError400CityInvalid:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        error_code:
+          type: string
+          const: CITY_INVALID
+        error_message:
+          type: string
+          examples:
+          - The attribute city has an invalid value.
+      required:
+      - error_code
+      - error_message
+      additionalProperties: false
+      description: The attribute city has an invalid value.
+    partnerError400:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        error:
+          oneOf:
+          - $ref: '#/components/schemas/partnerError400AddressInvalid'
+          - $ref: '#/components/schemas/partnerError400CityInvalid'
+          - $ref: '#/components/schemas/partnerError400CompanyInvalid'
+          - $ref: '#/components/schemas/partnerError400CountryInvalid'
+          - $ref: '#/components/schemas/partnerError400CountryMissing'
+          - $ref: '#/components/schemas/partnerError400EmailInvalid'
+          - $ref: '#/components/schemas/partnerError400EmailMissing'
+          - $ref: '#/components/schemas/partnerError400FirstNameInvalid'
+          - $ref: '#/components/schemas/partnerError400FirstNameMissing'
+          - $ref: '#/components/schemas/partnerError400LastNameInvalid'
+          - $ref: '#/components/schemas/partnerError400LastNameMissing'
+          - $ref: '#/components/schemas/partnerError400PasswordInvalid'
+          - $ref: '#/components/schemas/partnerError400PasswordMissing'
+          - $ref: '#/components/schemas/partnerError400PhoneInvalid'
+          - $ref: '#/components/schemas/partnerError400PhoneMissing'
+          - $ref: '#/components/schemas/partnerError400PostalCodeInvalid'
+          - $ref: '#/components/schemas/partnerError400PostalCodeMissing'
+          discriminator:
+            propertyName: error_code
+            mapping:
+              ADDRESS_INVALID: '#/components/schemas/partnerError400AddressInvalid'
+              CITY_INVALID: '#/components/schemas/partnerError400CityInvalid'
+              COMPANY_INVALID: '#/components/schemas/partnerError400CompanyInvalid'
+              COUNTRY_INVALID: '#/components/schemas/partnerError400CountryInvalid'
+              COUNTRY_MISSING: '#/components/schemas/partnerError400CountryMissing'
+              EMAIL_INVALID: '#/components/schemas/partnerError400EmailInvalid'
+              EMAIL_MISSING: '#/components/schemas/partnerError400EmailMissing'
+              FIRST_NAME_INVALID: '#/components/schemas/partnerError400FirstNameInvalid'
+              FIRST_NAME_MISSING: '#/components/schemas/partnerError400FirstNameMissing'
+              LAST_NAME_INVALID: '#/components/schemas/partnerError400LastNameInvalid'
+              LAST_NAME_MISSING: '#/components/schemas/partnerError400LastNameMissing'
+              PASSWORD_INVALID: '#/components/schemas/partnerError400PasswordInvalid'
+              PASSWORD_MISSING: '#/components/schemas/partnerError400PasswordMissing'
+              PHONE_INVALID: '#/components/schemas/partnerError400PhoneInvalid'
+              PHONE_MISSING: '#/components/schemas/partnerError400PhoneMissing'
+              POSTAL_CODE_INVALID: '#/components/schemas/partnerError400PostalCodeInvalid'
+              POSTAL_CODE_MISSING: '#/components/schemas/partnerError400PostalCodeMissing'
+          example:
+            error_code: EMAIL_INVALID
+            error_message: The attribute email has an invalid value.
+      required:
+      - error
+      additionalProperties: false
+      description: 400 Bad Request errors for partner account creation.
+      example:
+        error:
+          error_code: EMAIL_INVALID
+          error_message: The attribute email has an invalid value.
+    partnerError400EmailInvalid:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        error_code:
+          type: string
+          const: EMAIL_INVALID
+        error_message:
+          type: string
+          examples:
+          - The attribute email has an invalid value.
+      required:
+      - error_code
+      - error_message
+      additionalProperties: false
+      description: The attribute email has an invalid value.
+    partnerError400CountryMissing:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        error_code:
+          type: string
+          const: COUNTRY_MISSING
+        error_message:
+          type: string
+          examples:
+          - The attribute country is missing.
+      required:
+      - error_code
+      - error_message
+      additionalProperties: false
+      description: The attribute country is missing from the request.
+    partnerError400LastNameMissing:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        error_code:
+          type: string
+          const: LAST_NAME_MISSING
+        error_message:
+          type: string
+          examples:
+          - The attribute last_name is missing.
+      required:
+      - error_code
+      - error_message
+      additionalProperties: false
+      description: The attribute last_name is missing from the request.
+    partnerError400AddressInvalid:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        error_code:
+          type: string
+          const: ADDRESS_INVALID
+        error_message:
+          type: string
+          examples:
+          - The attribute address has an invalid value.
+      required:
+      - error_code
+      - error_message
+      additionalProperties: false
+      description: The attribute address has an invalid value.
+  responses:
+    createPartnerAccount400:
+      description: Invalid or missing attribute(s) in the request.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/partnerError400'
+    createPartnerAccount409:
+      description: An account using the given `username` already exists.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/partnerError409'
+    createPartnerAccount403:
+      description: Partner specific account creation limit has been reached.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/partnerError403'
+    createPartnerAccountDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/partnerError'
+    listPartnerAccounts200:
+      description: A list of partner accounts.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/partnerAccounts'
+    listPartnerAccountsDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/partnerError'
+    createPartnerAccount201:
+      description: Created partner account.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/partnerAccount'
+  requestBodies:
+    createPartnerAccount:
+      description: Account to create
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/partnerCreateAccount'
+  securitySchemes:
+    apiToken:
+      type: http
+      description: UpCloud API uses HTTP Bearer authentication. An API token is required to authenticate. The API token can be created in the UpCloud control panel. Alternatively, you can create an API token using the API directly, or with upctl. Note that if you want to use HTTP Basic authentication on API or with upctl, you will need to enable API access in the UpCloud control panel first.
+      scheme: bearer
+x-refined-from:
+- upcloud-openapi.json
+- upcloud-openapi.yml
+x-upcloud-visibility: public
+x-tagGroups:
+- name: Server
+  tags:
+  - server
+  - server-group
+  - server_size
+  - plan
+  - device
+  - events
+  - timezone
+  - vnc_keymap
+- name: Network
+  tags:
+  - network
+  - network-peering
+  - ip_address
+  - router
+  - gateway
+  - firewall-ruleset
+- name: Account & Access
+  tags:
+  - account
+  - audit-logs
+  - account-tokens
+  - permission
+  - tag
+- name: Billing
+  tags:
+  - price
+  - currency

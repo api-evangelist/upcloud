@@ -1,0 +1,2155 @@
+openapi: 3.2.0
+info:
+  title: Upcloud Firewall Ruleset API
+  version: '1.3'
+  contact:
+    name: UpCloud
+    url: https://upcloud.com
+    email: hello@upcloud.com
+  license:
+    name: MIT
+    url: https://spdx.org/licenses/MIT.html
+  termsOfService: https://upcloud.com/terms-of-service/
+  description: 'Operations tagged firewall-ruleset across 2 of this provider''s published API definitions: upcloud-openapi.json, upcloud-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.upcloud.com
+security:
+- apiToken: []
+tags:
+- name: firewall-ruleset
+  description: UpCloud SDN Firewall API. Allows creation, management and deletion of Firewall rulesets and Firewall rules.
+  x-displayName: Firewall Ruleset
+paths:
+  /1.3/firewall-ruleset:
+    get:
+      tags:
+      - firewall-ruleset
+      summary: List firewall rulesets
+      description: Returns a list of firewall rulesets.
+      operationId: listFirewallRulesets
+      parameters:
+      - $ref: '#/components/parameters/listFirewallRulesetsLimit'
+      - $ref: '#/components/parameters/listFirewallRulesetsOffset'
+      - $ref: '#/components/parameters/listFirewallRulesetsSort'
+      responses:
+        '200':
+          $ref: '#/components/responses/listFirewallRulesets200'
+        default:
+          $ref: '#/components/responses/listFirewallRulesetsDefault'
+      x-upcloud-visibility: public
+    post:
+      tags:
+      - firewall-ruleset
+      summary: Create firewall ruleset
+      description: Creates a new firewall ruleset.
+      operationId: createFirewallRuleset
+      requestBody:
+        $ref: '#/components/requestBodies/createFirewallRuleset'
+      responses:
+        '201':
+          $ref: '#/components/responses/createFirewallRuleset201'
+        default:
+          $ref: '#/components/responses/createFirewallRulesetDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/firewall-ruleset/{ruleset-uuid}:
+    get:
+      tags:
+      - firewall-ruleset
+      summary: Get firewall ruleset details
+      description: Returns firewall ruleset details by given {ruleset-uuid}.
+      operationId: getFirewallRuleset
+      parameters:
+      - $ref: '#/components/parameters/getFirewallRulesetRulesetUuid'
+      responses:
+        '200':
+          $ref: '#/components/responses/getFirewallRuleset200'
+        default:
+          $ref: '#/components/responses/getFirewallRulesetDefault'
+      x-upcloud-visibility: public
+    delete:
+      tags:
+      - firewall-ruleset
+      summary: Delete firewall ruleset
+      description: Deletes existing firewall ruleset by given {ruleset-uuid}.
+      operationId: deleteFirewallRuleset
+      parameters:
+      - $ref: '#/components/parameters/deleteFirewallRulesetRulesetUuid'
+      responses:
+        '204':
+          $ref: '#/components/responses/deleteFirewallRuleset204'
+        default:
+          $ref: '#/components/responses/deleteFirewallRulesetDefault'
+      x-upcloud-visibility: public
+    patch:
+      tags:
+      - firewall-ruleset
+      summary: Modify firewall ruleset
+      description: Modifies existing firewall ruleset by given {ruleset-uuid}.
+      operationId: modifyFirewallRuleset
+      parameters:
+      - $ref: '#/components/parameters/modifyFirewallRulesetRulesetUuid'
+      requestBody:
+        $ref: '#/components/requestBodies/modifyFirewallRuleset'
+      responses:
+        '200':
+          $ref: '#/components/responses/modifyFirewallRuleset200'
+        default:
+          $ref: '#/components/responses/modifyFirewallRulesetDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/firewall-ruleset/{ruleset-uuid}/restore/{ruleset-version}:
+    patch:
+      tags:
+      - firewall-ruleset
+      summary: Restore firewall ruleset
+      description: Restores existing firewall ruleset by given {ruleset-uuid} and {ruleset-version}.
+      operationId: restoreFirewallRuleset
+      parameters:
+      - $ref: '#/components/parameters/restoreFirewallRulesetRulesetUuid'
+      - $ref: '#/components/parameters/restoreFirewallRulesetRulesetVersion'
+      responses:
+        '200':
+          $ref: '#/components/responses/restoreFirewallRuleset200'
+        default:
+          $ref: '#/components/responses/restoreFirewallRulesetDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/firewall-ruleset/{ruleset-uuid}/rule:
+    get:
+      tags:
+      - firewall-ruleset
+      summary: List firewall ruleset rules
+      description: Returns firewall ruleset rules.
+      operationId: listFirewallRulesetRules
+      parameters:
+      - $ref: '#/components/parameters/listFirewallRulesetRulesRulesetUuid'
+      - $ref: '#/components/parameters/listFirewallRulesetRulesLimit'
+      - $ref: '#/components/parameters/listFirewallRulesetRulesOffset'
+      - $ref: '#/components/parameters/listFirewallRulesetRulesSort'
+      responses:
+        '200':
+          $ref: '#/components/responses/listFirewallRulesetRules200'
+        default:
+          $ref: '#/components/responses/listFirewallRulesetRulesDefault'
+      x-upcloud-visibility: public
+    put:
+      tags:
+      - firewall-ruleset
+      summary: Create multiple firewall ruleset rules
+      description: Creates multiple firewall ruleset rules by the given {ruleset-uuid}.
+      operationId: createMultipleFirewallRulesetRule
+      parameters:
+      - $ref: '#/components/parameters/createMultipleFirewallRulesetRuleRulesetUuid'
+      requestBody:
+        $ref: '#/components/requestBodies/createMultipleFirewallRulesetRule'
+      responses:
+        '200':
+          $ref: '#/components/responses/createMultipleFirewallRulesetRule200'
+        default:
+          $ref: '#/components/responses/createMultipleFirewallRulesetRuleDefault'
+      x-upcloud-visibility: public
+    post:
+      tags:
+      - firewall-ruleset
+      summary: Create firewall ruleset rule
+      description: Creates a new firewall ruleset rule by the given {ruleset-uuid}.
+      operationId: createFirewallRulesetRule
+      parameters:
+      - $ref: '#/components/parameters/createFirewallRulesetRuleRulesetUuid'
+      requestBody:
+        $ref: '#/components/requestBodies/createFirewallRulesetRule'
+      responses:
+        '201':
+          $ref: '#/components/responses/createFirewallRulesetRule201'
+        default:
+          $ref: '#/components/responses/createFirewallRulesetRuleDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/firewall-ruleset/{ruleset-uuid}/rule/{rule-id}:
+    get:
+      tags:
+      - firewall-ruleset
+      summary: Get firewall ruleset rule details
+      description: Returns firewall ruleset rule details.
+      operationId: getFirewallRulesetRule
+      parameters:
+      - $ref: '#/components/parameters/getFirewallRulesetRuleRulesetUuid'
+      - $ref: '#/components/parameters/getFirewallRulesetRuleRuleId'
+      responses:
+        '200':
+          $ref: '#/components/responses/getFirewallRulesetRule200'
+        default:
+          $ref: '#/components/responses/getFirewallRulesetRuleDefault'
+      x-upcloud-visibility: public
+    delete:
+      tags:
+      - firewall-ruleset
+      summary: Delete firewall ruleset rule
+      description: Deletes an existing rule by given {ruleset-uuid} and {rule-uuid}.
+      operationId: deleteFirewallRulesetRule
+      parameters:
+      - $ref: '#/components/parameters/deleteFirewallRulesetRuleRulesetUuid'
+      - $ref: '#/components/parameters/deleteFirewallRulesetRuleRuleId'
+      responses:
+        '204':
+          $ref: '#/components/responses/deleteFirewallRulesetRule204'
+        default:
+          $ref: '#/components/responses/deleteFirewallRulesetRuleDefault'
+      x-upcloud-visibility: public
+    patch:
+      tags:
+      - firewall-ruleset
+      summary: Modify firewall ruleset rule
+      description: Modifies existing firewall ruleset rule by given {ruleset_uuid} and {rule-uuid}.
+      operationId: modifyFirewallRulesetRule
+      parameters:
+      - $ref: '#/components/parameters/modifyFirewallRulesetRuleRulesetUuid'
+      - $ref: '#/components/parameters/modifyFirewallRulesetRuleRuleId'
+      requestBody:
+        $ref: '#/components/requestBodies/modifyFirewallRulesetRule'
+      responses:
+        '200':
+          $ref: '#/components/responses/modifyFirewallRulesetRule200'
+        default:
+          $ref: '#/components/responses/modifyFirewallRulesetRuleDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/firewall-ruleset/{ruleset-uuid}/labels:
+    get:
+      tags:
+      - firewall-ruleset
+      summary: List firewall ruleset labels
+      description: Returns a list of available firewall ruleset labels by given {ruleset-uuid}.
+      operationId: listFirewallRulesetLabels
+      parameters:
+      - $ref: '#/components/parameters/listFirewallRulesetLabelsRulesetUuid'
+      responses:
+        '200':
+          $ref: '#/components/responses/listFirewallRulesetLabels200'
+        default:
+          $ref: '#/components/responses/listFirewallRulesetLabelsDefault'
+      x-upcloud-visibility: public
+    post:
+      tags:
+      - firewall-ruleset
+      summary: Create firewall ruleset label
+      description: Creates a new label by given {ruleset-uuid}. Labels are used for group filtering.
+      operationId: createFirewallRulesetLabel
+      parameters:
+      - $ref: '#/components/parameters/createFirewallRulesetLabelRulesetUuid'
+      requestBody:
+        $ref: '#/components/requestBodies/createFirewallRulesetLabel'
+      responses:
+        '201':
+          $ref: '#/components/responses/createFirewallRulesetLabel201'
+        default:
+          $ref: '#/components/responses/createFirewallRulesetLabelDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/firewall-ruleset/{ruleset-uuid}/servers:
+    get:
+      tags:
+      - firewall-ruleset
+      summary: List servers attached to a firewall ruleset
+      description: Returns a list of servers that are attached to the firewall ruleset by given {ruleset-uuid}.
+      operationId: listFirewallRulesetAttachedServers
+      parameters:
+      - $ref: '#/components/parameters/listFirewallRulesetAttachedServersRulesetUuid'
+      responses:
+        '200':
+          $ref: '#/components/responses/listFirewallRulesetAttachedServers200'
+        default:
+          $ref: '#/components/responses/listFirewallRulesetAttachedServersDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/firewall-ruleset/{ruleset-uuid}/labels/{label-key}:
+    get:
+      tags:
+      - firewall-ruleset
+      summary: Get firewall ruleset label details
+      description: Returns label details by given {ruleset-uuid} and {label-key}.
+      operationId: getFirewallRulesetLabel
+      parameters:
+      - $ref: '#/components/parameters/getFirewallRulesetLabelRulesetUuid'
+      - $ref: '#/components/parameters/getFirewallRulesetLabelLabelKey'
+      responses:
+        '200':
+          $ref: '#/components/responses/getFirewallRulesetLabel200'
+        default:
+          $ref: '#/components/responses/getFirewallRulesetLabelDefault'
+      x-upcloud-visibility: public
+    delete:
+      tags:
+      - firewall-ruleset
+      summary: Delete firewall ruleset label
+      description: Deletes existing label by given {ruleset-uuid} and {label-key}.
+      operationId: deleteFirewallRulesetLabel
+      parameters:
+      - $ref: '#/components/parameters/deleteFirewallRulesetLabelRulesetUuid'
+      - $ref: '#/components/parameters/deleteFirewallRulesetLabelLabelKey'
+      responses:
+        '204':
+          $ref: '#/components/responses/deleteFirewallRulesetLabel204'
+        default:
+          $ref: '#/components/responses/deleteFirewallRulesetLabelDefault'
+      x-upcloud-visibility: public
+    patch:
+      tags:
+      - firewall-ruleset
+      summary: Modify firewall ruleset label
+      description: Modifies existing label by given {ruleset-uuid} and {label-key}.
+      operationId: modifyFirewallRulesetLabel
+      parameters:
+      - $ref: '#/components/parameters/modifyFirewallRulesetLabelRulesetUuid'
+      - $ref: '#/components/parameters/modifyFirewallRulesetLabelLabelKey'
+      requestBody:
+        $ref: '#/components/requestBodies/modifyFirewallRulesetLabel'
+      responses:
+        '200':
+          $ref: '#/components/responses/modifyFirewallRulesetLabel200'
+        default:
+          $ref: '#/components/responses/modifyFirewallRulesetLabelDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/firewall-ruleset/server/{server-uuid}/firewall-rule:
+    get:
+      tags:
+      - firewall-ruleset
+      summary: List server firewall rules
+      description: Returns a list of server firewall rules.
+      operationId: listServerFirewallRule
+      parameters:
+      - $ref: '#/components/parameters/firewallRulesetListServerFirewallRuleServerUuid'
+      - $ref: '#/components/parameters/firewallRulesetListServerFirewallRuleLimit'
+      - $ref: '#/components/parameters/firewallRulesetListServerFirewallRuleOffset'
+      - $ref: '#/components/parameters/firewallRulesetListServerFirewallRuleSort'
+      responses:
+        '200':
+          $ref: '#/components/responses/firewallRulesetListServerFirewallRule200'
+        default:
+          $ref: '#/components/responses/firewallRulesetListServerFirewallRuleDefault'
+      x-upcloud-visibility: public
+    put:
+      tags:
+      - firewall-ruleset
+      summary: Create multiple server firewall rules
+      description: Creates multiple server firewall rules by given {server-uuid}.
+      operationId: createMultipleServerFirewallRules
+      parameters:
+      - $ref: '#/components/parameters/firewallRulesetCreateMultipleServerFirewallRulesServerUuid'
+      requestBody:
+        $ref: '#/components/requestBodies/firewallRulesetCreateMultipleServerFirewallRules'
+      responses:
+        '200':
+          $ref: '#/components/responses/firewallRulesetCreateMultipleServerFirewallRules200'
+        '400':
+          $ref: '#/components/responses/firewallRulesetCreateMultipleServerFirewallRules400'
+        '403':
+          $ref: '#/components/responses/firewallRulesetCreateMultipleServerFirewallRules403'
+        '404':
+          $ref: '#/components/responses/firewallRulesetCreateMultipleServerFirewallRules404'
+        '409':
+          $ref: '#/components/responses/firewallRulesetCreateMultipleServerFirewallRules409'
+        default:
+          $ref: '#/components/responses/firewallRulesetCreateMultipleServerFirewallRulesDefault'
+      x-upcloud-visibility: public
+    post:
+      tags:
+      - firewall-ruleset
+      summary: Create server firewall rule
+      description: Creates a new server firewall rule.
+      operationId: createServerFirewallRule
+      parameters:
+      - $ref: '#/components/parameters/firewallRulesetCreateServerFirewallRuleServerUuid'
+      requestBody:
+        $ref: '#/components/requestBodies/firewallRulesetCreateServerFirewallRule'
+      responses:
+        '201':
+          $ref: '#/components/responses/firewallRulesetCreateServerFirewallRule201'
+        '400':
+          $ref: '#/components/responses/firewallRulesetCreateServerFirewallRule400'
+        '403':
+          $ref: '#/components/responses/firewallRulesetCreateServerFirewallRule403'
+        '404':
+          $ref: '#/components/responses/firewallRulesetCreateServerFirewallRule404'
+        '409':
+          $ref: '#/components/responses/firewallRulesetCreateServerFirewallRule409'
+        default:
+          $ref: '#/components/responses/firewallRulesetCreateServerFirewallRuleDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/firewall-ruleset/server/{server-uuid}/firewall-rule/{position}:
+    get:
+      tags:
+      - firewall-ruleset
+      summary: Get server firewall rule details
+      description: Returns server firewall rule details by given {server-uuid} and {position}.
+      operationId: getServerFirewallRule
+      parameters:
+      - $ref: '#/components/parameters/firewallRulesetGetServerFirewallRuleServerUuid'
+      - $ref: '#/components/parameters/firewallRulesetGetServerFirewallRulePosition'
+      responses:
+        '200':
+          $ref: '#/components/responses/firewallRulesetGetServerFirewallRule200'
+        default:
+          $ref: '#/components/responses/firewallRulesetGetServerFirewallRuleDefault'
+      x-upcloud-visibility: public
+    delete:
+      tags:
+      - firewall-ruleset
+      summary: Delete server firewall rule
+      description: Deletes existing server firewall rule by given {server-uuid} and {position}.
+      operationId: deleteServerFirewallRule
+      parameters:
+      - $ref: '#/components/parameters/firewallRulesetDeleteServerFirewallRuleServerUuid'
+      - $ref: '#/components/parameters/firewallRulesetDeleteServerFirewallRulePosition'
+      responses:
+        '204':
+          $ref: '#/components/responses/firewallRulesetDeleteServerFirewallRule204'
+        '400':
+          $ref: '#/components/responses/firewallRulesetDeleteServerFirewallRule400'
+        '403':
+          $ref: '#/components/responses/firewallRulesetDeleteServerFirewallRule403'
+        '404':
+          $ref: '#/components/responses/firewallRulesetDeleteServerFirewallRule404'
+        '409':
+          $ref: '#/components/responses/firewallRulesetDeleteServerFirewallRule409'
+        default:
+          $ref: '#/components/responses/firewallRulesetDeleteServerFirewallRuleDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+components:
+  schemas:
+    firewallRulesetServerFirewallRuleDetail:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - firewall_rule:
+          direction: in
+          action: accept
+          family: IPv4
+          protocol: tcp
+      properties:
+        firewall_rule:
+          $ref: '#/components/schemas/firewallRulesetServerFirewallRule'
+      title: Server Firewall Rule Detail
+      required:
+      - firewall_rule
+      additionalProperties: false
+      description: Server firewall rule detail
+    firewallRulesetModify:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - name: modified_example_firewall_ruleset
+        description: Modified example stateless firewall ruleset
+        enabled: false
+        labels: []
+      properties:
+        name:
+          type: string
+          maxLength: 64
+          minLength: 1
+          pattern: ^[a-zA-Z0-9_-]+$
+          description: Name of the ruleset
+        description:
+          type: string
+          maxLength: 250
+          description: Description of the firewall ruleset
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/firewallRulesetCreateLabel'
+          maxItems: 255
+          description: Labels
+        enabled:
+          type: boolean
+          description: Enabled
+        default_dns_rules_enabled:
+          type: boolean
+      title: Firewall ruleset modify
+      additionalProperties: false
+      description: Modify firewall ruleset
+    firewallRulesetListResponse:
+      $schema: http://json-schema.org/draft/2020-12/schema
+      type: array
+      examples:
+      - - uuid: 1200ecde-db95-4d1c-9133-6508f3232567
+          name: example_stateless_firewall_ruleset
+          description: Example stateless firewall ruleset
+          stateful: false
+          enabled: true
+          default_dns_rules_enabled: false
+          labels:
+          - key: example-key
+            value: example-value
+          server_uuid: 03aa7245-2ff9-49c8-9f0e-7ca0270d71a4
+        - uuid: 1200ecde-db95-4d1c-9133-6508f3232445
+          name: example_stateful_firewall_ruleset
+          description: Example stateful firewall ruleset
+          stateful: true
+          enabled: true
+          default_dns_rules_enabled: false
+          labels:
+          - key: example-key
+            value: example-value
+      items:
+        $ref: '#/components/schemas/firewallRulesetDetailResponse'
+      title: Firewall Ruleset List Response
+      description: Response schema for a list of firewall rulesets.
+    firewallRulesetServerMultipleFirewallRulesCreate:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - firewall_rules:
+          firewall_rule:
+          - action: accept
+            comment: Allow SSH from this network
+            destination_address_start: null
+            destination_address_end: null
+            destination_port_start: '22'
+            destination_port_end: '22'
+            direction: in
+            family: IPv4
+            source_address_start: 192.168.1.1
+            source_address_end: 192.168.1.255
+            source_port_start: null
+            source_port_end: null
+            icmp_type: null
+            protocol: tcp
+          - action: accept
+            comment: Allow DNS from this network
+            destination_address_start: null
+            destination_address_end: null
+            destination_port_start: '53'
+            destination_port_end: '53'
+            direction: in
+            family: IPv4
+            source_address_start: 1.1.1.1
+            source_address_end: 1.1.1.1
+            source_port_start: null
+            source_port_end: null
+            icmp_type: null
+            protocol: tcp
+          - action: drop
+            comment: dfg
+            destination_address_start: 100.100.128.2
+            destination_address_end: 100.100.128.2
+            destination_port_start: '89'
+            destination_port_end: '89'
+            direction: out
+            family: IPv4
+            source_address_start: null
+            source_address_end: null
+            source_port_start: null
+            source_port_end: null
+            icmp_type: null
+            protocol: tcp
+          - action: accept
+            comment: '''w???''''?p''2''?12??12?3?''231'
+            destination_address_start: 2a04:3540:1001:1000:1411:4dff:fea5:1bab
+            destination_address_end: 2a04:3540:1001:1000:1411:4dff:fea5:1bab
+            destination_port_start: null
+            destination_port_end: null
+            direction: out
+            family: IPv6
+            source_address_start: null
+            source_address_end: null
+            source_port_start: null
+            source_port_end: null
+            icmp_type: '12'
+            protocol: icmp
+      - firewall_rules: null
+      properties:
+        firewall_rules:
+          oneOf:
+          - type: 'null'
+          - type: object
+            examples:
+            - firewall_rule:
+              - direction: in
+                action: accept
+                family: IPv4
+                protocol: tcp
+              - direction: out
+                action: drop
+                family: IPv4
+            properties:
+              firewall_rule:
+                oneOf:
+                - type: array
+                  items:
+                    $ref: '#/components/schemas/firewallRulesetServerFirewallRule'
+                - type: 'null'
+            required:
+            - firewall_rule
+            additionalProperties: false
+      title: Server Multiple Firewall Rules Create
+      required:
+      - firewall_rules
+      additionalProperties: false
+      description: Creates multiple server firewall rules.
+    firewallRulesetServerUuid:
+      type: string
+      examples:
+      - 01234567-89ab-cdef-0123-456789abcdef
+      - fedcba98-7654-3210-fedc-ba9876543210
+      title: Server UUID
+      format: uuid
+      description: The unique identifier for the server.
+    firewallRulesetFirewallRuleCreate:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - direction: in
+        action: accept
+        family: IPv4
+        protocol: tcp
+        enabled: false
+      - direction: out
+        action: drop
+        family: IPv6
+      properties:
+        enabled:
+          type: boolean
+          description: Enabled
+        action:
+          $ref: '#/components/schemas/firewallRulesetRuleAction'
+        comment:
+          type: string
+          maxLength: 250
+          description: Comments
+        destination_address_start:
+          type: string
+          format: ip-address
+        destination_address_end:
+          type: string
+          format: ip-address
+        destination_port_start:
+          type: integer
+          maximum: 65535
+          minimum: 0
+          format: int64
+        destination_port_end:
+          type: integer
+          maximum: 65535
+          minimum: 0
+          format: int64
+        destination_address_cidr:
+          type: string
+        direction:
+          $ref: '#/components/schemas/firewallRulesetRuleDirection'
+        family:
+          $ref: '#/components/schemas/firewallRulesetRuleFamily'
+        icmp_type:
+          $ref: '#/components/schemas/firewallRulesetIcmpType'
+        position:
+          type: integer
+          maximum: 1000
+          minimum: 0
+          format: int64
+        protocol:
+          $ref: '#/components/schemas/firewallRulesetRuleProtocol'
+        source_address_start:
+          type: string
+          format: ip-address
+        source_address_end:
+          type: string
+          format: ip-address
+        source_port_start:
+          type: integer
+          maximum: 65535
+          minimum: 0
+          format: int64
+        source_port_end:
+          type: integer
+          maximum: 65535
+          minimum: 0
+          format: int64
+        source_address_cidr:
+          type: string
+      required:
+      - action
+      - direction
+      - family
+      additionalProperties: false
+    firewallRulesetLabelModify:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - key: foo
+        value: bar
+      properties:
+        key:
+          $ref: '#/components/schemas/firewallRulesetLabelKey'
+        value:
+          $ref: '#/components/schemas/firewallRulesetLabelValue'
+      title: Label Modify
+      additionalProperties: false
+      description: Schema for modifying a label with a key-value pair.
+    firewallRulesetLabelListResponse:
+      $schema: http://json-schema.org/draft/2020-12/schema
+      type: array
+      examples:
+      - - key: foo
+          value: bar
+      items:
+        $ref: '#/components/schemas/firewallRulesetLabelDetailResponse'
+      title: Label List Response
+      description: Response schema for listing labels.
+    firewallRulesetQueryParamOffset:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: integer
+      examples:
+      - 0
+      - 10
+      - 20
+      - 50
+      title: Query Param Offset
+      minimum: 0
+      format: int64
+      description: Schema for a query parameter specifying the offset for pagination.
+      default: 0
+    firewallRulesetLabelKey:
+      type: string
+      examples:
+      - environment
+      - team
+      - project
+      - purpose
+      - cost-center
+      title: Label Key
+      maxLength: 32
+      minLength: 2
+      pattern: ^[\x20-\x5E\x60-\x7E][\x20-\x7E]+$
+      description: The key of a label.
+    firewallRulesetRuleFamily:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      title: Rule Family
+      enum:
+      - IPv4
+      - IPv6
+      - ''
+      description: Rule family.
+    firewallRulesetVersion:
+      type: integer
+      examples:
+      - 1
+      - 678
+      title: Firewall Ruleset Version
+      minimum: 1
+      format: int64
+      description: The firewall ruleset version.
+    firewallRulesetDetailResponse:
+      $schema: http://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - uuid: 1200ecde-db95-4d1c-9133-6508f3232567
+        name: example_firewall_ruleset
+        description: Example stateless firewall ruleset
+        stateful: false
+        enabled: true
+        default_dns_rules_enabled: false
+        labels:
+        - key: example-key
+          value: example-value
+        server_uuid: 03aa7245-2ff9-49c8-9f0e-7ca0270d71a4
+      properties:
+        uuid:
+          $ref: '#/components/schemas/firewallRulesetServerUuid'
+        name:
+          type: string
+          maxLength: 64
+          minLength: 1
+          pattern: ^[a-zA-Z0-9_-]+$
+          description: Name of the firewall ruleset
+        description:
+          type: string
+          maxLength: 250
+          description: Description of the firewall ruleset
+        stateful:
+          type: boolean
+        version:
+          $ref: '#/components/schemas/firewallRulesetVersion'
+        enabled:
+          type: boolean
+        default_dns_rules_enabled:
+          type: boolean
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/firewallRulesetCreateLabel'
+          maxItems: 255
+          description: Labels
+        server_uuid:
+          $ref: '#/components/schemas/firewallRulesetServerUuid'
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+      title: Firewall Ruleset Detail Response
+      additionalProperties: false
+      description: Response schema for firewall ruleset details, including UUID, name, description, stateful, enabled, labels and serverUUID.
+    firewallRulesetRuleProtocol:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      title: Rule Protocol
+      enum:
+      - tcp
+      - udp
+      - icmp
+      - esp
+      - ah
+      - all
+      - ''
+      description: Rule protocol.
+    firewallRulesetServerFirewallRules:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - firewall_rule:
+        - direction: in
+          action: accept
+          family: IPv4
+          protocol: tcp
+        - direction: out
+          action: drop
+          family: IPv4
+      properties:
+        firewall_rule:
+          oneOf:
+          - type: array
+            items:
+              $ref: '#/components/schemas/firewallRulesetServerFirewallRule'
+          - type: 'null'
+      title: Server Firewall Rules
+      required:
+      - firewall_rule
+      additionalProperties: false
+      description: Server firewall rules.
+    firewallRulesetIcmpType:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: integer
+      title: ICMP Type
+      maximum: 255
+      minimum: -1
+      format: int64
+      description: ICMP type.
+      default: -1
+    firewallRulesetServerFirewallRule:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - direction: in
+        action: accept
+        family: IPv4
+        protocol: tcp
+      - direction: out
+        action: drop
+        family: IPv4
+      properties:
+        direction:
+          $ref: '#/components/schemas/firewallRulesetRuleDirection'
+        action:
+          $ref: '#/components/schemas/firewallRulesetRuleAction'
+        position:
+          oneOf:
+          - type: integer
+            maximum: 1000
+            minimum: 1
+            format: int64
+          - type: string
+            pattern: ^([1-9][0-9]?[0-9]?|1000)$|^$
+          description: Rule position
+        family:
+          oneOf:
+          - type: 'null'
+          - type: string
+            pattern: ^(IPv4|IPv6)$
+          - type: string
+            pattern: ^$
+        protocol:
+          oneOf:
+          - type: 'null'
+          - type: string
+            pattern: ^(tcp|udp|icmp)$
+          - type: string
+            pattern: ^$
+          description: Rule protocol
+        enabled:
+          type: string
+          pattern: ^(true|1|yes|false|0|no)$|^$
+          description: Rule enabled
+        icmp_type:
+          oneOf:
+          - type: 'null'
+          - type: integer
+            maximum: 255
+            minimum: 0
+            format: int64
+          - type: string
+            pattern: ^([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$|^$
+          description: ICMP type
+        destination_port_start:
+          oneOf:
+          - type: 'null'
+          - type: integer
+            maximum: 65535
+            minimum: 1
+            format: int64
+          - type: string
+            pattern: ^([1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$|^$
+          description: Destination port range starts from this port number
+        destination_port_end:
+          oneOf:
+          - type: 'null'
+          - type: integer
+            maximum: 65535
+            minimum: 1
+            format: int64
+          - type: string
+            pattern: ^([1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$|^$
+          description: Destination port range ends at this port number
+        source_port_start:
+          oneOf:
+          - type: 'null'
+          - type: integer
+            maximum: 65535
+            minimum: 1
+            format: int64
+          - type: string
+            pattern: ^([1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$|^$
+          description: Source port range starts from this port number
+        source_port_end:
+          oneOf:
+          - type: 'null'
+          - type: integer
+            maximum: 65535
+            minimum: 1
+            format: int64
+          - type: string
+            pattern: ^([1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$|^$
+          description: Source port range ends at this port number
+        destination_address_start:
+          anyOf:
+          - type: string
+            format: ipv4
+          - type: string
+            format: ipv6
+          - type: string
+            pattern: ^$
+          - type: 'null'
+          description: Destination address range starts from this address
+        destination_address_end:
+          anyOf:
+          - type: string
+            format: ipv4
+          - type: string
+            format: ipv6
+          - type: string
+            pattern: ^$
+          - type: 'null'
+          description: Destination address range ends from to this address
+        source_address_start:
+          anyOf:
+          - type: string
+            format: ipv4
+          - type: string
+            format: ipv6
+          - type: string
+            pattern: ^$
+          - type: 'null'
+          description: Source address range starts from this address
+        source_address_end:
+          anyOf:
+          - type: string
+            format: ipv4
+          - type: string
+            format: ipv6
+          - type: string
+            pattern: ^$
+          - type: 'null'
+          description: Source address range ends at this address
+        comment:
+          type: string
+          maxLength: 250
+          description: Comment
+      title: Server Firewall Rule
+      required:
+      - direction
+      - action
+      additionalProperties: false
+      description: Server firewall rule
+    firewallRulesetLabelValue:
+      type: string
+      examples:
+      - production
+      - backend
+      - web-app
+      - backup
+      - engineering
+      title: Label Value
+      maxLength: 255
+      pattern: \A[\p{L}\p{N}\p{P}\p{S}\p{M}\p{Z}]*\z
+      description: Schema for a label value property, allowing a string or null with specific character constraints.
+      nullable: true
+    firewallRulesetServerFirewallDetailResponse:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - firewall_rules:
+          firewall_rule:
+          - direction: in
+            action: accept
+            family: IPv4
+            protocol: tcp
+          - direction: out
+            action: drop
+            family: IPv4
+      properties:
+        firewall_rules:
+          $ref: '#/components/schemas/firewallRulesetServerFirewallRules'
+      title: Server Firewall Detail Response
+      required:
+      - firewall_rules
+      additionalProperties: false
+      description: Server firewall detail response.
+    firewallRulesetServerFirewallRuleCreate:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - firewall_rule:
+          position: '1'
+          direction: in
+          family: IPv4
+          protocol: tcp
+          source_address_start: 192.168.1.1
+          source_address_end: 192.168.1.255
+          source_port_end: ''
+          source_port_start: ''
+          destination_address_start: ''
+          destination_address_end: ''
+          destination_port_start: '22'
+          destination_port_end: '22'
+          icmp_type: ''
+          action: accept
+          comment: Allow SSH from this network
+      properties:
+        firewall_rule:
+          $ref: '#/components/schemas/firewallRulesetServerFirewallRule'
+      required:
+      - firewall_rule
+      additionalProperties: false
+    firewallRulesetErrorResponse:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - type: https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST
+        title: Validation error.
+        invalid_params:
+        - name: configured_status
+          reason: Value must be one of "started", "stopped".
+        correlation_id: 01K1ZM92JWR9YMWTCMV6JPSQ0J
+        status: 400
+      - type: https://developers.upcloud.com/1.3/errors#ERROR_NOT_FOUND
+        title: The resource you requested does not exist.
+        correlation_id: 01K1ZJC6MSN91RQS3JMEESGG92
+        status: 404
+      - type: https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE
+        title: Your request could not be fulfilled due to a technical issue.
+        correlation_id: 01HEPYJ027RF0H29CKHWHCH7RE
+        status: 500
+      properties:
+        type:
+          type: string
+          description: Error code string.
+        title:
+          type: string
+          examples:
+          - Validation error.
+          - The resource you requested does not exist.
+          - Your request could not be fulfilled due to a technical issue.
+          description: Short description of the error.
+        correlation_id:
+          type: string
+          examples:
+          - 01K1K2TKEASWRJ6VFP9ZV5P2H4
+          description: Unique identifier for the request, useful for debugging.
+        status:
+          type: integer
+          examples:
+          - 400
+          - 404
+          - 402
+          - 500
+          format: int32
+          description: HTTP status code associated with the error.
+        invalid_params:
+          type: array
+          title: InvalidParameters
+          description: List of invalid parameters in the request.
+          items:
+            type: object
+      title: Error Response
+      required:
+      - type
+      - title
+      - correlation_id
+      - status
+      additionalProperties: false
+      description: Schema for error responses from the API.
+    firewallRulesetFirewallRuleListResponse:
+      $schema: http://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - rules:
+        - uuid: 16e7d7fc-9a90-4f42-83f5-ea0396f1592b
+          direction: in
+          action: accept
+          family: IPv4
+          protocol: tcp
+          enabled: false
+      properties:
+        rules:
+          type: array
+          items:
+            $ref: '#/components/schemas/firewallRulesetRuleDetailResponse'
+      title: Firewall Rule List Response
+      required:
+      - rules
+      description: Response schema for a list of firewall ruleset rules.
+    firewallRulesetQueryParamLimit:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: integer
+      examples:
+      - 10
+      - 25
+      - 50
+      - 100
+      title: QueryParamLimit
+      maximum: 100
+      minimum: 0
+      format: int64
+      description: Schema for a query parameter specifying the maximum number of entries to return (limit).
+      default: 10
+    firewallRulesetServerFirewallRulePosition:
+      type: integer
+      examples:
+      - 1
+      - 678
+      title: Server Firewall Rule Position
+      maximum: 1000
+      minimum: 1
+      format: int64
+      description: The server firewall rule position.
+    firewallRulesetFirewallRuleModify:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - direction: in
+        action: accept
+        family: IPv4
+        protocol: tcp
+        enabled: false
+      - direction: out
+        action: drop
+        family: IPv6
+      properties:
+        enabled:
+          type: boolean
+          description: Enabled
+        action:
+          $ref: '#/components/schemas/firewallRulesetRuleAction'
+        comment:
+          type: string
+          maxLength: 250
+          description: Comments
+        destination_address_start:
+          type: string
+          format: ip-address
+        destination_address_end:
+          type: string
+          format: ip-address
+        destination_port_start:
+          type: integer
+          maximum: 65535
+          minimum: 0
+          format: int64
+        destination_port_end:
+          type: integer
+          maximum: 65535
+          minimum: 0
+          format: int64
+        destination_address_cidr:
+          type: string
+        direction:
+          $ref: '#/components/schemas/firewallRulesetRuleDirection'
+        family:
+          $ref: '#/components/schemas/firewallRulesetRuleFamily'
+        icmp_type:
+          $ref: '#/components/schemas/firewallRulesetIcmpType'
+        position:
+          type: integer
+          maximum: 1000
+          minimum: 0
+          format: int64
+        protocol:
+          $ref: '#/components/schemas/firewallRulesetRuleProtocol'
+        source_address_start:
+          type: string
+          format: ip-address
+        source_address_end:
+          type: string
+          format: ip-address
+        source_port_start:
+          type: integer
+          maximum: 65535
+          minimum: 0
+          format: int64
+        source_port_end:
+          type: integer
+          maximum: 65535
+          minimum: 0
+          format: int64
+        source_address_cidr:
+          type: string
+          format: ip-address
+      additionalProperties: true
+    firewallRulesetLabelDetailResponse:
+      $schema: http://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - key: foo
+        value: bar
+      properties:
+        key:
+          type: string
+        value:
+          type: string
+      title: Label Detail Response
+      description: Schema for label details including key-value pairs.
+    firewallRulesetRuleAction:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      title: Rule Action
+      enum:
+      - accept
+      - drop
+      description: Rule action.
+    firewallRulesetCreateLabel:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - key: dev
+        value: dev-1
+      - key: staging
+        value: stg-1
+      properties:
+        key:
+          type: string
+          maxLength: 32
+          minLength: 2
+          pattern: ^[\x20-\x5E\x60-\x7E][\x20-\x7E]+$
+          description: Key
+        value:
+          type: string
+          maxLength: 255
+          pattern: \A[\p{L}\p{N}\p{P}\p{S}\p{Z}]*\z
+          description: Value
+      title: Create Label
+      required:
+      - key
+      - value
+      additionalProperties: false
+      description: UpCloud firewall ruleset Label
+    firewallRulesetQueryParamSort:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      examples:
+      - name
+      - created_at
+      - updated_at
+      title: Query Param Sort
+      description: Schema for a query parameter specifying the sort field.
+      default: -created_at
+    firewallRulesetFirewallMultipleRuleCreate:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - - direction: in
+          action: accept
+          family: IPv4
+          protocol: tcp
+          enabled: false
+        - direction: out
+          action: drop
+          family: IPv6
+      properties:
+        rules:
+          type: array
+          items:
+            $ref: '#/components/schemas/firewallRulesetFirewallRuleCreate'
+      required:
+      - rules
+      additionalProperties: false
+    firewallRulesetRuleDirection:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      title: Rule Direction
+      enum:
+      - in
+      - out
+      description: Rule direction.
+    createFirewallRuleset:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - name: example_firewall_ruleset
+        stateful: true
+        enabled: false
+        default_dns_rules_enabled: false
+      properties:
+        name:
+          type: string
+          maxLength: 64
+          minLength: 1
+          pattern: ^[a-zA-Z0-9_-]+$
+          description: Name of the firewall ruleset
+        description:
+          type: string
+          maxLength: 250
+          description: Description of the firewall ruleset
+        stateful:
+          type: boolean
+        enabled:
+          type: boolean
+        default_dns_rules_enabled:
+          type: boolean
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/firewallRulesetCreateLabel'
+          maxItems: 255
+          description: Labels
+      title: Create Firewall Ruleset
+      required:
+      - name
+      additionalProperties: false
+      description: Create firewall ruleset
+    firewallRulesetErrorLegacyResponse:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - error:
+          error_code: SERVER_INVALID
+          error_message: The server UUID is invalid.
+      properties:
+        error:
+          type: object
+          properties:
+            error_code:
+              type: string
+              examples:
+              - SERVER_INVALID
+            error_message:
+              type: string
+              examples:
+              - The server UUID is invalid.
+          description: Schema for legacy error response.
+      title: Error Legacy Response
+      required:
+      - error
+      additionalProperties: false
+      description: Schema for legacy error responses from API.
+    firewallRulesetRuleDetailResponse:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      examples:
+      - uuid: 16e7d7fc-9a90-4f42-83f5-ea0396f1592b
+        direction: in
+        action: accept
+        family: IPv4
+        protocol: tcp
+        enabled: false
+      properties:
+        uuid:
+          $ref: '#/components/schemas/firewallRulesetServerUuid'
+        enabled:
+          type: boolean
+          description: Enabled
+        action: {}
+        comment:
+          type: string
+          maxLength: 250
+          description: Comments
+        destination_address_start:
+          type: string
+          format: ip-address
+        destination_address_end:
+          type: string
+          format: ip-address
+        destination_port_start:
+          type: integer
+          maximum: 65535
+          minimum: 0
+          format: int64
+        destination_port_end:
+          type: integer
+          maximum: 65535
+          minimum: 0
+          format: int64
+        destination_address_cidr:
+          type: string
+        direction: {}
+        family: {}
+        icmp_type:
+          type: integer
+          maximum: 255
+          minimum: 0
+          format: int64
+        position:
+          type: integer
+          maximum: 1000
+          minimum: 0
+          format: int64
+        protocol: {}
+        source_address_start:
+          type: string
+          format: ip-address
+        source_address_end:
+          type: string
+          format: ip-address
+        source_port_start:
+          type: integer
+          maximum: 65535
+          minimum: 0
+          format: int64
+        source_port_end:
+          type: integer
+          maximum: 65535
+          minimum: 0
+          format: int64
+        source_address_cidr:
+          type: string
+          format: ip-address
+      title: Firewall Ruleset Rule Detail Response
+      required:
+      - action
+      - direction
+      - family
+      additionalProperties: false
+      description: Response schema for firewall ruleset rule details.
+  requestBodies:
+    createFirewallRulesetRule:
+      description: Creates a new firewall ruleset rule by the given {ruleset-uuid}.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/firewallRulesetFirewallRuleCreate'
+    firewallRulesetCreateServerFirewallRule:
+      description: Creates a new server firewall rule.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/firewallRulesetServerFirewallRuleCreate'
+    createFirewallRulesetLabel:
+      description: Creates a new label by given {ruleset-uuid}. Labels are used for group filtering.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/firewallRulesetCreateLabel'
+    modifyFirewallRuleset:
+      description: Modifies existing firewall ruleset by given {ruleset-uuid}.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/firewallRulesetModify'
+    createMultipleFirewallRulesetRule:
+      description: Creates multiple firewall ruleset rules by the given {ruleset-uuid}.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/firewallRulesetFirewallMultipleRuleCreate'
+    firewallRulesetCreateMultipleServerFirewallRules:
+      description: Creates multiple server firewall rules by given {server-uuid}.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/firewallRulesetServerMultipleFirewallRulesCreate'
+    modifyFirewallRulesetLabel:
+      description: Modifies existing label by given {ruleset-uuid} and {label-key}.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/firewallRulesetLabelModify'
+    createFirewallRuleset:
+      description: Creates a new firewall ruleset.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/createFirewallRuleset'
+    modifyFirewallRulesetRule:
+      description: Modifies existing firewall ruleset rule by given {ruleset_uuid} and {rule-uuid}.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/firewallRulesetFirewallRuleModify'
+  responses:
+    listFirewallRulesetRulesDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/firewallRulesetErrorResponse'
+    listFirewallRulesetsDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/firewallRulesetErrorResponse'
+    modifyFirewallRulesetLabelDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/firewallRulesetErrorResponse'
+    firewallRulesetCreateMultipleServerFirewallRules400:
+      description: Invalid input
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/firewallRulesetErrorLegacyResponse'
+    modifyFirewallRulesetRuleDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/firewallRulesetErrorResponse'
+    firewallRulesetCreateServerFirewallRule400:
+      description: Invalid input
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/firewallRulesetErrorLegacyResponse'
+    getFirewallRulesetRule200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/firewallRulesetRuleDetailResponse'
+    firewallRulesetGetServerFirewallRuleDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/firewallRulesetErrorResponse'
+    createFirewallRulesetDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/firewallRulesetErrorResponse'
+    deleteFirewallRulesetLabel204:
+      description: No Content
+    firewallRulesetListServerFirewallRule200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/firewallRulesetServerFirewallDetailResponse'
+    modifyFirewallRulesetRule200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/firewallRulesetRuleDetailResponse'
+    firewallRulesetDeleteServerFirewallRule400:
+      description: Invalid input
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/firewallRulesetErrorLegacyResponse'
+    getFirewallRulesetRuleDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/firewallRulesetErrorResponse'
+    firewallRulesetDeleteServerFirewallRuleDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/firewallRulesetErrorResponse'
+    firewallRulesetCreateServerFirewallRule201:
+      description: Created
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/firewallRulesetServerFirewallRuleDetail'
+    restoreFirewallRulesetDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/firewallRulesetErrorResponse'
+    deleteFirewallRuleset204:
+      description: No Content
+    createFirewallRulesetLabel201:
+      description: Created
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/firewallRulesetLabelDetailResponse'
+    firewallRulesetCreateMultipleServerFirewallRules409:
+      description: Conflict
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/firewallRulesetErrorLegacyResponse'
+    firewallRulesetListServerFirewallRuleDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/firewallRulesetErrorResponse'
+    createMultipleFirewallRulesetRule200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/firewallRulesetFirewallRuleListResponse'
+    deleteFirewallRulesetRule204:
+      description: No Content
+    getFirewallRulesetLabelDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/firewallRulesetErrorResponse'
+    createMultipleFirewallRulesetRuleDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/firewallRulesetErrorResponse'
+    listFirewallRulesetLabelsDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/firewallRulesetErrorResponse'
+    firewallRulesetCreateServerFirewallRule404:
+      description: Not Found
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/firewallRulesetErrorLegacyResponse'
+    createFirewallRulesetRuleDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/firewallRulesetErrorResponse'
+    deleteFirewallRulesetLabelDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/firewallRulesetErrorResponse'
+    createFirewallRulesetRule201:
+      description: Created
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/firewallRulesetRuleDetailResponse'
+    restoreFirewallRuleset200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/firewallRulesetDetailResponse'
+    getFirewallRuleset200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/firewallRulesetDetailResponse'
+    createFirewallRulesetLabelDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/firewallRulesetErrorResponse'
+    firewallRulesetCreateMultipleServerFirewallRulesDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/firewallRulesetErrorResponse'
+    listFirewallRulesetLabels200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/firewallRulesetLabelListResponse'
+    listFirewallRulesetRules200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/firewallRulesetFirewallRuleListResponse'
+    firewallRulesetDeleteServerFirewallRule204:
+      description: No Content
+    firewallRulesetGetServerFirewallRule200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/firewallRulesetServerFirewallRuleDetail'
+    firewallRulesetDeleteServerFirewallRule403:
+      description: Forbidden
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/firewallRulesetErrorLegacyResponse'
+    firewallRulesetCreateServerFirewallRuleDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/firewallRulesetErrorResponse'
+    modifyFirewallRuleset200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/firewallRulesetDetailResponse'
+    deleteFirewallRulesetDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/firewallRulesetErrorResponse'
+    getFirewallRulesetLabel200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/firewallRulesetLabelDetailResponse'
+    firewallRulesetCreateMultipleServerFirewallRules404:
+      description: Not Found
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/firewallRulesetErrorLegacyResponse'
+    firewallRulesetCreateMultipleServerFirewallRules403:
+      description: Forbidden
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/firewallRulesetErrorLegacyResponse'
+    modifyFirewallRulesetLabel200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/firewallRulesetLabelDetailResponse'
+    listFirewallRulesetAttachedServers200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/firewallRulesetLabelListResponse'
+    modifyFirewallRulesetDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/firewallRulesetErrorResponse'
+    getFirewallRulesetDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/firewallRulesetErrorResponse'
+    listFirewallRulesets200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/firewallRulesetListResponse'
+    firewallRulesetDeleteServerFirewallRule404:
+      description: Not Found
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/firewallRulesetErrorLegacyResponse'
+    firewallRulesetCreateServerFirewallRule409:
+      description: Conflict
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/firewallRulesetErrorLegacyResponse'
+    firewallRulesetCreateMultipleServerFirewallRules200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/firewallRulesetServerFirewallDetailResponse'
+    createFirewallRuleset201:
+      description: Created
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/firewallRulesetDetailResponse'
+    listFirewallRulesetAttachedServersDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/firewallRulesetErrorResponse'
+    firewallRulesetCreateServerFirewallRule403:
+      description: Forbidden
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/firewallRulesetErrorLegacyResponse'
+    deleteFirewallRulesetRuleDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/firewallRulesetErrorResponse'
+    firewallRulesetDeleteServerFirewallRule409:
+      description: Conflict
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/firewallRulesetErrorLegacyResponse'
+  parameters:
+    firewallRulesetDeleteServerFirewallRulePosition:
+      name: position
+      in: path
+      description: Server firewall rule position
+      required: true
+      schema:
+        $ref: '#/components/schemas/firewallRulesetServerFirewallRulePosition'
+    listFirewallRulesetsLimit:
+      name: limit
+      in: query
+      description: Number of entries to receive at most.
+      required: false
+      schema:
+        $ref: '#/components/schemas/firewallRulesetQueryParamLimit'
+    getFirewallRulesetRuleRulesetUuid:
+      name: ruleset-uuid
+      in: path
+      description: Firewall ruleset UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/firewallRulesetServerUuid'
+    getFirewallRulesetLabelRulesetUuid:
+      name: ruleset-uuid
+      in: path
+      description: Firewall ruleset UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/firewallRulesetServerUuid'
+    firewallRulesetCreateServerFirewallRuleServerUuid:
+      name: server-uuid
+      in: path
+      description: Server UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/firewallRulesetServerUuid'
+    modifyFirewallRulesetRulesetUuid:
+      name: ruleset-uuid
+      in: path
+      description: Firewall ruleset UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/firewallRulesetServerUuid'
+    modifyFirewallRulesetRuleRuleId:
+      name: rule-id
+      in: path
+      description: Firewall ruleset rule UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/firewallRulesetServerUuid'
+    createFirewallRulesetLabelRulesetUuid:
+      name: ruleset-uuid
+      in: path
+      description: Firewall ruleset UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/firewallRulesetServerUuid'
+    modifyFirewallRulesetLabelLabelKey:
+      name: label-key
+      in: path
+      description: The key of the label.
+      required: true
+      schema:
+        $ref: '#/components/schemas/firewallRulesetLabelKey'
+    listFirewallRulesetsSort:
+      name: sort
+      in: query
+      description: Order of returned results.
+      required: false
+      schema:
+        $ref: '#/components/schemas/firewallRulesetQueryParamSort'
+    listFirewallRulesetAttachedServersRulesetUuid:
+      name: ruleset-uuid
+      in: path
+      description: Firewall ruleset UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/firewallRulesetServerUuid'
+    deleteFirewallRulesetLabelLabelKey:
+      name: label-key
+      in: path
+      description: The key of the label.
+      required: true
+      schema:
+        $ref: '#/components/schemas/firewallRulesetLabelKey'
+    listFirewallRulesetsOffset:
+      name: offset
+      in: query
+      description: Offset for retrieved results.
+      required: false
+      schema:
+        $ref: '#/components/schemas/firewallRulesetQueryParamOffset'
+    listFirewallRulesetRulesOffset:
+      name: offset
+      in: query
+      description: Offset for retrieved results.
+      required: false
+      schema:
+        $ref: '#/components/schemas/firewallRulesetQueryParamOffset'
+    firewallRulesetCreateMultipleServerFirewallRulesServerUuid:
+      name: server-uuid
+      in: path
+      description: Server UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/firewallRulesetServerUuid'
+    getFirewallRulesetRulesetUuid:
+      name: ruleset-uuid
+      in: path
+      description: Firewall ruleset UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/firewallRulesetServerUuid'
+    getFirewallRulesetLabelLabelKey:
+      name: label-key
+      in: path
+      description: The key of the label.
+      required: true
+      schema:
+        $ref: '#/components/schemas/firewallRulesetLabelKey'
+    getFirewallRulesetRuleRuleId:
+      name: rule-id
+      in: path
+      description: Firewall ruleset rule UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/firewallRulesetServerUuid'
+    firewallRulesetGetServerFirewallRulePosition:
+      name: position
+      in: path
+      description: Server firewall rule position
+      required: true
+      schema:
+        $ref: '#/components/schemas/firewallRulesetServerFirewallRulePosition'
+    deleteFirewallRulesetRulesetUuid:
+      name: ruleset-uuid
+      in: path
+      description: Firewall ruleset UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/firewallRulesetServerUuid'
+    deleteFirewallRulesetRuleRulesetUuid:
+      name: ruleset-uuid
+      in: path
+      description: Firewall ruleset UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/firewallRulesetServerUuid'
+    firewallRulesetListServerFirewallRuleOffset:
+      name: offset
+      in: query
+      description: Offset for retrieved results.
+      required: false
+      schema:
+        $ref: '#/components/schemas/firewallRulesetQueryParamOffset'
+    listFirewallRulesetLabelsRulesetUuid:
+      name: ruleset-uuid
+      in: path
+      description: Firewall ruleset UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/firewallRulesetServerUuid'
+    firewallRulesetListServerFirewallRuleSort:
+      name: sort
+      in: query
+      description: Order of returned results.
+      required: false
+      schema:
+        $ref: '#/components/schemas/firewallRulesetQueryParamSort'
+    firewallRulesetListServerFirewallRuleLimit:
+      name: limit
+      in: query
+      description: Number of entries to receive at most.
+      required: false
+      schema:
+        $ref: '#/components/schemas/firewallRulesetQueryParamLimit'
+    restoreFirewallRulesetRulesetVersion:
+      name: ruleset-version
+      in: path
+      description: Firewall ruleset version
+      required: true
+      schema:
+        $ref: '#/components/schemas/firewallRulesetVersion'
+    firewallRulesetDeleteServerFirewallRuleServerUuid:
+      name: server-uuid
+      in: path
+      description: Server UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/firewallRulesetServerUuid'
+    deleteFirewallRulesetRuleRuleId:
+      name: rule-id
+      in: path
+      description: Firewall ruleset rule UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/firewallRulesetServerUuid'
+    deleteFirewallRulesetLabelRulesetUuid:
+      name: ruleset-uuid
+      in: path
+      description: Firewall ruleset UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/firewallRulesetServerUuid'
+    createFirewallRulesetRuleRulesetUuid:
+      name: ruleset-uuid
+      in: path
+      description: Firewall ruleset UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/firewallRulesetServerUuid'
+    restoreFirewallRulesetRulesetUuid:
+      name: ruleset-uuid
+      in: path
+      description: Firewall ruleset UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/firewallRulesetServerUuid'
+    listFirewallRulesetRulesRulesetUuid:
+      name: ruleset-uuid
+      in: path
+      description: Firewall ruleset UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/firewallRulesetServerUuid'
+    firewallRulesetListServerFirewallRuleServerUuid:
+      name: server-uuid
+      in: path
+      description: Server UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/firewallRulesetServerUuid'
+    listFirewallRulesetRulesSort:
+      name: sort
+      in: query
+      description: Order of returned results.
+      required: false
+      schema:
+        $ref: '#/components/schemas/firewallRulesetQueryParamSort'
+    modifyFirewallRulesetLabelRulesetUuid:
+      name: ruleset-uuid
+      in: path
+      description: Firewall ruleset UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/firewallRulesetServerUuid'
+    createMultipleFirewallRulesetRuleRulesetUuid:
+      name: ruleset-uuid
+      in: path
+      description: Firewall ruleset UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/firewallRulesetServerUuid'
+    listFirewallRulesetRulesLimit:
+      name: limit
+      in: query
+      description: Number of entries to receive at most.
+      required: false
+      schema:
+        $ref: '#/components/schemas/firewallRulesetQueryParamLimit'
+    firewallRulesetGetServerFirewallRuleServerUuid:
+      name: server-uuid
+      in: path
+      description: Server UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/firewallRulesetServerUuid'
+    modifyFirewallRulesetRuleRulesetUuid:
+      name: ruleset-uuid
+      in: path
+      description: Firewall ruleset UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/firewallRulesetServerUuid'
+  securitySchemes:
+    apiToken:
+      type: http
+      description: UpCloud API uses HTTP Bearer authentication. An API token is required to authenticate. The API token can be created in the UpCloud control panel. Alternatively, you can create an API token using the API directly, or with upctl. Note that if you want to use HTTP Basic authentication on API or with upctl, you will need to enable API access in the UpCloud control panel first.
+      scheme: bearer
+x-refined-from:
+- upcloud-openapi.json
+- upcloud-openapi.yml
+x-upcloud-visibility: public
+x-tagGroups:
+- name: Server
+  tags:
+  - server
+  - server-group
+  - server_size
+  - plan
+  - device
+  - events
+  - timezone
+  - vnc_keymap
+- name: Network
+  tags:
+  - network
+  - network-peering
+  - ip_address
+  - router
+  - gateway
+  - firewall-ruleset
+- name: Account & Access
+  tags:
+  - account
+  - audit-logs
+  - account-tokens
+  - permission
+  - tag
+- name: Billing
+  tags:
+  - price
+  - currency

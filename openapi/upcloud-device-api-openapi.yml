@@ -1,0 +1,169 @@
+openapi: 3.2.0
+info:
+  title: Upcloud Device API
+  version: '1.3'
+  contact:
+    name: UpCloud
+    url: https://upcloud.com
+    email: hello@upcloud.com
+  license:
+    name: MIT
+    url: https://spdx.org/licenses/MIT.html
+  termsOfService: https://upcloud.com/terms-of-service/
+  description: 'Operations tagged device across 2 of this provider''s published API definitions: upcloud-openapi.json, upcloud-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.upcloud.com
+security:
+- apiToken: []
+tags:
+- name: Device
+  description: Device management
+  x-displayName: Device
+paths:
+  /1.3/device/availability:
+    get:
+      tags:
+      - Device
+      summary: Get available passthrough devices
+      description: Returns a list of available passthrough devices.
+      operationId: getAvailablePassthroughDevices
+      parameters:
+      - $ref: '#/components/parameters/getAvailablePassthroughDevicesZone'
+      - $ref: '#/components/parameters/getAvailablePassthroughDevicesType'
+      responses:
+        '200':
+          $ref: '#/components/responses/getAvailablePassthroughDevices200'
+        default:
+          $ref: '#/components/responses/getAvailablePassthroughDevicesDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+components:
+  responses:
+    getAvailablePassthroughDevices200:
+      description: A list of available passthrough devices.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/devices'
+    getAvailablePassthroughDevicesDefault:
+      description: General failure
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/deviceError'
+  parameters:
+    getAvailablePassthroughDevicesType:
+      name: type
+      in: query
+      description: Filter results to a specific device type. The only valid type is "gpu" for now.
+      required: false
+      schema:
+        type: string
+        enum:
+        - gpu
+    getAvailablePassthroughDevicesZone:
+      name: zone
+      in: query
+      description: Filter results to a specific zone.
+      required: false
+      schema:
+        type: string
+  schemas:
+    deviceError:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            error_code:
+              type: string
+              examples:
+              - GENERAL_FAILURE
+            error_message:
+              type: string
+              examples:
+              - Your request could not be fulfilled due to a technical issue.
+          required:
+          - error_code
+          - error_message
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+      description: A general error response indicating that the request could not be fulfilled due to a technical issue.
+    devices:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      additionalProperties:
+        type: object
+        properties:
+          gpu_plans:
+            type: object
+            additionalProperties:
+              type: object
+              properties:
+                amount:
+                  type: integer
+                  minimum: 0
+                  format: int64
+                  example: 1
+              required:
+              - amount
+              example:
+                amount: 1
+            description: Available GPU plans in the zone.
+            example:
+              nvidia-a10:
+                amount: 1
+        description: Availability grouped by zone.
+        example:
+          gpu_plans:
+            nvidia-a10:
+              amount: 1
+      description: Zone device availability
+      example:
+        fra1:
+          gpu_plans:
+            nvidia-a10:
+              amount: 1
+  securitySchemes:
+    apiToken:
+      type: http
+      description: UpCloud API uses HTTP Bearer authentication. An API token is required to authenticate. The API token can be created in the UpCloud control panel. Alternatively, you can create an API token using the API directly, or with upctl. Note that if you want to use HTTP Basic authentication on API or with upctl, you will need to enable API access in the UpCloud control panel first.
+      scheme: bearer
+x-refined-from:
+- upcloud-openapi.json
+- upcloud-openapi.yml
+x-upcloud-visibility: public
+x-tagGroups:
+- name: Server
+  tags:
+  - server
+  - server-group
+  - server_size
+  - plan
+  - device
+  - events
+  - timezone
+  - vnc_keymap
+- name: Network
+  tags:
+  - network
+  - network-peering
+  - ip_address
+  - router
+  - gateway
+  - firewall-ruleset
+- name: Account & Access
+  tags:
+  - account
+  - audit-logs
+  - account-tokens
+  - permission
+  - tag
+- name: Billing
+  tags:
+  - price
+  - currency

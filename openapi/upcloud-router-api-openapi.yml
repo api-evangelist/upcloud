@@ -1,0 +1,666 @@
+openapi: 3.2.0
+info:
+  title: Upcloud Router API
+  version: '1.3'
+  contact:
+    name: UpCloud
+    url: https://upcloud.com
+    email: hello@upcloud.com
+  license:
+    name: MIT
+    url: https://spdx.org/licenses/MIT.html
+  termsOfService: https://upcloud.com/terms-of-service/
+  description: 'Operations tagged router across 2 of this provider''s published API definitions: upcloud-openapi.json, upcloud-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.upcloud.com
+security:
+- apiToken: []
+tags:
+- name: Router
+  description: Router management
+  x-displayName: Router
+paths:
+  /1.3/router:
+    get:
+      tags:
+      - Router
+      summary: List routers
+      description: 'Returns a list of all available routers associated with the current account.
+
+
+        It is also possible to filter routers with label URL parameters, e.g.
+
+        `?label=env` or `?label=env%3Dprod`. URL parameter can be given multiple
+
+        times to add more filters (e.g. `?label=env%3Dprod&label=v2`), where
+
+        only routers that match all labels are returned.
+
+        Label keys are matched case insensitively.'
+      operationId: listRouters
+      parameters:
+      - $ref: '#/components/parameters/listRoutersLabel'
+      responses:
+        '200':
+          $ref: '#/components/responses/listRouters200'
+        default:
+          $ref: '#/components/responses/listRoutersDefault'
+      x-upcloud-visibility: public
+    post:
+      tags:
+      - Router
+      summary: Create router
+      description: 'Creates a new router.
+
+        Routers can be used to connect multiple Private Networks. Cloud Servers on any attached network can communicate
+
+        directly with each other.'
+      operationId: createRouter
+      requestBody:
+        $ref: '#/components/requestBodies/createRouter'
+      responses:
+        '201':
+          $ref: '#/components/responses/createRouter201'
+        '400':
+          $ref: '#/components/responses/createRouter400'
+        '409':
+          $ref: '#/components/responses/createRouter409'
+        default:
+          $ref: '#/components/responses/createRouterDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/router/{router}:
+    get:
+      tags:
+      - Router
+      summary: Get router
+      description: Retrieves details of a specific router.
+      operationId: getRouter
+      parameters:
+      - $ref: '#/components/parameters/getRouterRouter'
+      responses:
+        '200':
+          $ref: '#/components/responses/getRouter200'
+        '404':
+          $ref: '#/components/responses/getRouter404'
+        default:
+          $ref: '#/components/responses/getRouterDefault'
+      x-upcloud-visibility: public
+    delete:
+      tags:
+      - Router
+      summary: Delete router
+      description: Deletes a specific router.
+      operationId: deleteRouter
+      parameters:
+      - $ref: '#/components/parameters/deleteRouterRouter'
+      responses:
+        '204':
+          $ref: '#/components/responses/deleteRouter204'
+        '404':
+          $ref: '#/components/responses/deleteRouter404'
+        '409':
+          $ref: '#/components/responses/deleteRouter409'
+        default:
+          $ref: '#/components/responses/deleteRouterDefault'
+      x-upcloud-visibility: public
+    patch:
+      tags:
+      - Router
+      summary: Modify router
+      description: 'Modifies attributes of a specific router.
+
+        Modifications to static routes of type `service` will be ignored.'
+      operationId: modifyRouter
+      parameters:
+      - $ref: '#/components/parameters/modifyRouterRouter'
+      requestBody:
+        $ref: '#/components/requestBodies/modifyRouter'
+      responses:
+        '200':
+          $ref: '#/components/responses/modifyRouter200'
+        '400':
+          $ref: '#/components/responses/modifyRouter400'
+        '404':
+          $ref: '#/components/responses/modifyRouter404'
+        '409':
+          $ref: '#/components/responses/modifyRouter409'
+        default:
+          $ref: '#/components/responses/modifyRouterDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+components:
+  schemas:
+    routerError:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            error_code:
+              type: string
+              examples:
+              - GENERAL_FAILURE
+            error_message:
+              type: string
+              examples:
+              - Your request could not be fulfilled due to a technical issue.
+          required:
+          - error_code
+          - error_message
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+      description: A general error response indicating that the request could not be fulfilled due to a technical issue.
+    routerType:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      enum:
+      - normal
+      - service
+      description: Type of the router.
+      example: normal
+    routerIpAddress:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      oneOf:
+      - type: string
+        pattern: ^([0-9]{1,3}\.){3}[0-9]{1,3}$
+        description: IPv4 address
+      - type: string
+        pattern: ^[a-fA-F0-9:]+$
+        description: IPv6 address
+      description: IP address
+      example: 10.0.0.20
+    router:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        router:
+          $ref: '#/components/schemas/routerDetails'
+      required:
+      - router
+      additionalProperties: false
+      description: Schema for a single router
+    routerStaticRouteType:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      enum:
+      - user
+      - service
+      description: Type of static route.
+      example: user
+    routerDetails:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        attached_network_gateways:
+          type: array
+          items:
+            type: object
+            properties:
+              uuid:
+                $ref: '#/components/schemas/routerUuid'
+            required:
+            - uuid
+            additionalProperties: false
+          description: Gateways of the networks attached to the router.
+        attached_networks:
+          type: object
+          properties:
+            network:
+              type: array
+              items:
+                type: object
+                properties:
+                  uuid:
+                    $ref: '#/components/schemas/routerUuid'
+                required:
+                - uuid
+          required:
+          - network
+          description: Networks attached to the router.
+          example:
+            network:
+            - uuid: 03804f7f-828a-4610-867f-9d62cf9fc14f
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/routerLabel'
+        name:
+          type: string
+          example: Example router
+        static_routes:
+          type: array
+          items:
+            $ref: '#/components/schemas/routerRouteNexthop'
+          example:
+          - name: static-route-0
+            nexthop: 192.168.1.1
+            route: 0.0.0.0/0
+            type: user
+        type:
+          $ref: '#/components/schemas/routerType'
+        uuid:
+          $ref: '#/components/schemas/routerUuid'
+      required:
+      - uuid
+      - name
+      - type
+      - attached_networks
+      - static_routes
+      - labels
+      - attached_network_gateways
+      additionalProperties: false
+      description: Router describes a virtual router that can route between SDN networks
+      example:
+        attached_network_gateways: []
+        attached_networks:
+          network:
+          - uuid: 03804f7f-828a-4610-867f-9d62cf9fc14f
+        name: Example router
+        static_routes:
+        - name: static-route-0
+          nexthop: 192.168.1.1
+          route: 0.0.0.0/0
+          type: user
+        labels: []
+        type: normal
+        uuid: 0414e0d7-4436-4037-9dd8-6eaf47dce599
+    routerModify:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        router:
+          type: object
+          properties:
+            name:
+              type: string
+              example: Example router
+            static_routes:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    pattern: ^[a-zA-Z0-9_-]+$
+                  nexthop:
+                    oneOf:
+                    - $ref: '#/components/schemas/routerIpAddress'
+                    - type: string
+                      enum:
+                      - no-nexthop
+                  route:
+                    $ref: '#/components/schemas/routerIpCidr'
+                required:
+                - nexthop
+                - route
+                additionalProperties: false
+              description: Static routes that will be added to the routing table of the SDN router
+              example:
+              - name: static-route-0
+                nexthop: 192.168.1.1
+                route: 0.0.0.0/0
+            labels:
+              type: array
+              items:
+                $ref: '#/components/schemas/routerLabel'
+          additionalProperties: false
+          example:
+            name: Example router
+            static_routes:
+            - name: static-route-0
+              nexthop: 192.168.1.1
+              route: 0.0.0.0/0
+      required:
+      - router
+      additionalProperties: false
+      description: Request schema for modifying a router
+      example:
+        router:
+          name: Example router
+          labels:
+          - key: service
+            value: postgres cluster connectivity
+          static_routes: []
+    routerRouteNexthop:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        name:
+          type: string
+          pattern: ^[a-zA-Z0-9_-]+$
+        nexthop:
+          oneOf:
+          - $ref: '#/components/schemas/routerIpAddress'
+          - type: string
+            enum:
+            - no-nexthop
+        route:
+          $ref: '#/components/schemas/routerIpCidr'
+        type:
+          $ref: '#/components/schemas/routerStaticRouteType'
+      required:
+      - name
+      - nexthop
+      - route
+      - type
+      additionalProperties: false
+      description: Static route with nexthop information.
+    routerLabel:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        key:
+          type: string
+          description: Label key used to classify the resource
+        value:
+          type: string
+          description: Value associated with the label key
+      required:
+      - key
+      - value
+      additionalProperties: false
+      description: A key/value pair to label and categorize resources
+      example:
+        key: env
+        value: production
+    routerCreate:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        router:
+          type: object
+          properties:
+            name:
+              type: string
+              example: Example router
+            static_routes:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    pattern: ^[a-zA-Z0-9_-]+$
+                  nexthop:
+                    oneOf:
+                    - $ref: '#/components/schemas/routerIpAddress'
+                    - type: string
+                      enum:
+                      - no-nexthop
+                  route:
+                    $ref: '#/components/schemas/routerIpCidr'
+                required:
+                - nexthop
+                - route
+                additionalProperties: false
+              description: Static routes that will be added to the routing table of the SDN router
+              example:
+              - name: static-route-0
+                nexthop: 192.168.1.1
+                route: 0.0.0.0/0
+            labels:
+              type: array
+              items:
+                $ref: '#/components/schemas/routerLabel'
+          required:
+          - name
+          additionalProperties: false
+          example:
+            name: Example router
+            static_routes:
+            - name: static-route-0
+              nexthop: 192.168.1.1
+              route: 0.0.0.0/0
+      required:
+      - router
+      additionalProperties: false
+      description: Request schema for creating a router
+      example:
+        router:
+          name: Example router
+          static_routes:
+          - name: static-route-0
+            nexthop: 192.168.1.1
+            route: 0.0.0.0/0
+    routers:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        routers:
+          type: object
+          properties:
+            router:
+              type: array
+              items:
+                $ref: '#/components/schemas/routerDetails'
+          required:
+          - router
+          additionalProperties: false
+          example:
+            router:
+            - attached_network_gateways: []
+              attached_networks:
+                network: []
+              labels: []
+              name: Example router
+              static_routes: []
+              type: normal
+              uuid: 04c0df35-2658-4b0c-8ac7-962090f4e92a
+      required:
+      - routers
+      additionalProperties: false
+      description: A list of routers
+      example:
+        routers:
+          router:
+          - attached_network_gateways: []
+            attached_networks:
+              network: []
+            labels: []
+            name: Example router
+            static_routes: []
+            type: normal
+            uuid: 04c0df35-2658-4b0c-8ac7-962090f4e92a
+    routerUuid:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+      format: uuid
+      description: Universally unique identifier
+      example: 0414e0d7-4436-4037-9dd8-6eaf47dce599
+    routerIpCidr:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      format: cidr
+      description: IP CIDR
+  responses:
+    modifyRouter400:
+      description: Invalid input data.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/routerError'
+    createRouter201:
+      description: Router created successfully.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/router'
+    getRouter404:
+      description: Router not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/routerError'
+    getRouter200:
+      description: Router details.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/router'
+    createRouter400:
+      description: Invalid input data.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/routerError'
+    modifyRouter200:
+      description: Router modified successfully.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/router'
+    deleteRouter409:
+      description: Router cannot be deleted due to existing dependencies.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/routerError'
+    deleteRouter204:
+      description: Router deleted successfully.
+    deleteRouter404:
+      description: Router not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/routerError'
+    createRouterDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/routerError'
+    listRoutersDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/routerError'
+    modifyRouter404:
+      description: Router not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/routerError'
+    createRouter409:
+      description: Router with the same name already exists.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/routerError'
+    modifyRouter409:
+      description: Conflict in modifying the router.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/routerError'
+    getRouterDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/routerError'
+    modifyRouterDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/routerError'
+    deleteRouterDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/routerError'
+    listRouters200:
+      description: A list of routers.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/routers'
+  parameters:
+    listRoutersLabel:
+      name: label
+      in: query
+      description: 'A label filter. Can be specified multiple times to create an AND condition. Format: label=key:value'
+      schema:
+        $ref: '#/components/schemas/routerLabel'
+    modifyRouterRouter:
+      name: router
+      in: path
+      description: The router identifier.
+      required: true
+      schema:
+        $ref: '#/components/schemas/routerUuid'
+    getRouterRouter:
+      name: router
+      in: path
+      description: The router identifier.
+      required: true
+      schema:
+        $ref: '#/components/schemas/routerUuid'
+    deleteRouterRouter:
+      name: router
+      in: path
+      description: The router identifier.
+      required: true
+      schema:
+        $ref: '#/components/schemas/routerUuid'
+  requestBodies:
+    createRouter:
+      description: Router creation parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/routerCreate'
+    modifyRouter:
+      description: Router modification parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/routerModify'
+  securitySchemes:
+    apiToken:
+      type: http
+      description: UpCloud API uses HTTP Bearer authentication. An API token is required to authenticate. The API token can be created in the UpCloud control panel. Alternatively, you can create an API token using the API directly, or with upctl. Note that if you want to use HTTP Basic authentication on API or with upctl, you will need to enable API access in the UpCloud control panel first.
+      scheme: bearer
+x-refined-from:
+- upcloud-openapi.json
+- upcloud-openapi.yml
+x-upcloud-visibility: public
+x-tagGroups:
+- name: Server
+  tags:
+  - server
+  - server-group
+  - server_size
+  - plan
+  - device
+  - events
+  - timezone
+  - vnc_keymap
+- name: Network
+  tags:
+  - network
+  - network-peering
+  - ip_address
+  - router
+  - gateway
+  - firewall-ruleset
+- name: Account & Access
+  tags:
+  - account
+  - audit-logs
+  - account-tokens
+  - permission
+  - tag
+- name: Billing
+  tags:
+  - price
+  - currency

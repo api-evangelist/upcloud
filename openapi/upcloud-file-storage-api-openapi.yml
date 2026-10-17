@@ -1,0 +1,1985 @@
+openapi: 3.2.0
+info:
+  title: Upcloud File Storage API
+  version: '1.3'
+  contact:
+    name: UpCloud
+    url: https://upcloud.com
+    email: hello@upcloud.com
+  license:
+    name: MIT
+    url: https://spdx.org/licenses/MIT.html
+  termsOfService: https://upcloud.com/terms-of-service/
+  description: 'Operations tagged file-storage across 2 of this provider''s published API definitions: upcloud-openapi.json, upcloud-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.upcloud.com
+security:
+- apiToken: []
+tags:
+- name: file-storage
+  description: File Storage is a scalable file storage service that provides shared access to files over a network using the NFS protocol.
+  x-displayName: File Storage
+paths:
+  /1.3/file-storage:
+    get:
+      tags:
+      - file-storage
+      summary: List services
+      description: Returns a list of File Storage services.
+      operationId: listFileStorages
+      parameters:
+      - $ref: '#/components/parameters/listFileStoragesLimit'
+      - $ref: '#/components/parameters/listFileStoragesOffset'
+      - $ref: '#/components/parameters/listFileStoragesSort'
+      responses:
+        '200':
+          $ref: '#/components/responses/listFileStorages200'
+        default:
+          $ref: '#/components/responses/listFileStoragesDefault'
+    post:
+      tags:
+      - file-storage
+      summary: Create service
+      description: Creates a new File Storage service.
+      operationId: createFileStorage
+      requestBody:
+        $ref: '#/components/requestBodies/createFileStorage'
+      responses:
+        '201':
+          $ref: '#/components/responses/createFileStorage201'
+        default:
+          $ref: '#/components/responses/createFileStorageDefault'
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/file-storage/{service-uuid}:
+    get:
+      tags:
+      - file-storage
+      summary: Get service details
+      description: Returns managed File Storage details by given {service_uuid}.
+      operationId: getFileStorage
+      parameters:
+      - $ref: '#/components/parameters/getFileStorageServiceUuid'
+      responses:
+        '200':
+          $ref: '#/components/responses/getFileStorage200'
+        default:
+          $ref: '#/components/responses/getFileStorageDefault'
+    put:
+      tags:
+      - file-storage
+      summary: Replace service
+      description: Replaces existing File Storage service by given {service_uuid}.
+      operationId: replaceFileStorage
+      parameters:
+      - $ref: '#/components/parameters/replaceFileStorageServiceUuid'
+      requestBody:
+        $ref: '#/components/requestBodies/replaceFileStorage'
+      responses:
+        '200':
+          $ref: '#/components/responses/replaceFileStorage200'
+        default:
+          $ref: '#/components/responses/replaceFileStorageDefault'
+    delete:
+      tags:
+      - file-storage
+      summary: Delete service
+      description: Deletes existing File Storage service by given {service_uuid}.
+      operationId: deleteFileStorage
+      parameters:
+      - $ref: '#/components/parameters/deleteFileStorageServiceUuid'
+      responses:
+        '204':
+          $ref: '#/components/responses/deleteFileStorage204'
+        default:
+          $ref: '#/components/responses/deleteFileStorageDefault'
+    patch:
+      tags:
+      - file-storage
+      summary: Modify service
+      description: Modifies existing File Storage service by given {service_uuid}.
+      operationId: modifyFileStorage
+      parameters:
+      - $ref: '#/components/parameters/modifyFileStorageServiceUuid'
+      requestBody:
+        $ref: '#/components/requestBodies/modifyFileStorage'
+      responses:
+        '200':
+          $ref: '#/components/responses/modifyFileStorage200'
+        default:
+          $ref: '#/components/responses/modifyFileStorageDefault'
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/file-storage/{service-uuid}/networks:
+    get:
+      tags:
+      - file-storage
+      summary: List networks
+      description: Returns a list of available service networks by given {service_uuid}.
+      operationId: listFileStorageNetworks
+      parameters:
+      - $ref: '#/components/parameters/listFileStorageNetworksServiceUuid'
+      responses:
+        '200':
+          $ref: '#/components/responses/listFileStorageNetworks200'
+        default:
+          $ref: '#/components/responses/listFileStorageNetworksDefault'
+    post:
+      tags:
+      - file-storage
+      summary: Create network
+      description: Creates a new service network by given {service_uuid}.
+      operationId: createFileStorageNetwork
+      parameters:
+      - $ref: '#/components/parameters/createFileStorageNetworkServiceUuid'
+      requestBody:
+        $ref: '#/components/requestBodies/createFileStorageNetwork'
+      responses:
+        '201':
+          $ref: '#/components/responses/createFileStorageNetwork201'
+        default:
+          $ref: '#/components/responses/createFileStorageNetworkDefault'
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/file-storage/{service-uuid}/networks/{network-name}:
+    get:
+      tags:
+      - file-storage
+      summary: Get network details
+      description: Returns service network details by given {service_uuid} and {network_name}.
+      operationId: getFileStorageNetwork
+      parameters:
+      - $ref: '#/components/parameters/getFileStorageNetworkServiceUuid'
+      - $ref: '#/components/parameters/getFileStorageNetworkNetworkName'
+      responses:
+        '200':
+          $ref: '#/components/responses/getFileStorageNetwork200'
+        default:
+          $ref: '#/components/responses/getFileStorageNetworkDefault'
+    delete:
+      tags:
+      - file-storage
+      summary: Delete network
+      description: Deletes existing network by given {service_uuid} and {network_name}.
+      operationId: deleteFileStorageNetwork
+      parameters:
+      - $ref: '#/components/parameters/deleteFileStorageNetworkServiceUuid'
+      - $ref: '#/components/parameters/deleteFileStorageNetworkNetworkName'
+      responses:
+        '204':
+          $ref: '#/components/responses/deleteFileStorageNetwork204'
+        default:
+          $ref: '#/components/responses/deleteFileStorageNetworkDefault'
+    patch:
+      tags:
+      - file-storage
+      summary: Modify network
+      description: Modifies existing service network by given {service_uuid} and {network_name}.
+      operationId: modifyFileStorageNetwork
+      parameters:
+      - $ref: '#/components/parameters/modifyFileStorageNetworkServiceUuid'
+      - $ref: '#/components/parameters/modifyFileStorageNetworkNetworkName'
+      requestBody:
+        $ref: '#/components/requestBodies/modifyFileStorageNetwork'
+      responses:
+        '200':
+          $ref: '#/components/responses/modifyFileStorageNetwork200'
+        default:
+          $ref: '#/components/responses/modifyFileStorageNetworkDefault'
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/file-storage/{service-uuid}/shares:
+    get:
+      tags:
+      - file-storage
+      summary: List shares
+      description: Returns a list of available service shares by given {service_uuid}.
+      operationId: listFileStorageShares
+      parameters:
+      - $ref: '#/components/parameters/listFileStorageSharesServiceUuid'
+      responses:
+        '200':
+          $ref: '#/components/responses/listFileStorageShares200'
+        default:
+          $ref: '#/components/responses/listFileStorageSharesDefault'
+    post:
+      tags:
+      - file-storage
+      summary: Create share
+      description: Creates a new service share by given {service_uuid}.
+      operationId: createFileStorageShare
+      parameters:
+      - $ref: '#/components/parameters/createFileStorageShareServiceUuid'
+      requestBody:
+        $ref: '#/components/requestBodies/createFileStorageShare'
+      responses:
+        '201':
+          $ref: '#/components/responses/createFileStorageShare201'
+        default:
+          $ref: '#/components/responses/createFileStorageShareDefault'
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/file-storage/{service-uuid}/shares/{share-name}:
+    get:
+      tags:
+      - file-storage
+      summary: Get share details
+      description: Returns service share details by given {service_uuid} and {share_name}.
+      operationId: getFileStorageShare
+      parameters:
+      - $ref: '#/components/parameters/getFileStorageShareServiceUuid'
+      - $ref: '#/components/parameters/getFileStorageShareShareName'
+      responses:
+        '200':
+          $ref: '#/components/responses/getFileStorageShare200'
+        default:
+          $ref: '#/components/responses/getFileStorageShareDefault'
+    delete:
+      tags:
+      - file-storage
+      summary: Delete share
+      description: Deletes existing share by given {service_uuid} and {share_name}.
+      operationId: deleteFileStorageShare
+      parameters:
+      - $ref: '#/components/parameters/deleteFileStorageShareServiceUuid'
+      - $ref: '#/components/parameters/deleteFileStorageShareShareName'
+      responses:
+        '204':
+          $ref: '#/components/responses/deleteFileStorageShare204'
+        default:
+          $ref: '#/components/responses/deleteFileStorageShareDefault'
+    patch:
+      tags:
+      - file-storage
+      summary: Modify share
+      description: Modifies existing service share by given {service_uuid} and {share_name}.
+      operationId: modifyFileStorageShare
+      parameters:
+      - $ref: '#/components/parameters/modifyFileStorageShareServiceUuid'
+      - $ref: '#/components/parameters/modifyFileStorageShareShareName'
+      requestBody:
+        $ref: '#/components/requestBodies/modifyFileStorageShare'
+      responses:
+        '200':
+          $ref: '#/components/responses/modifyFileStorageShare200'
+        default:
+          $ref: '#/components/responses/modifyFileStorageShareDefault'
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/file-storage/{service-uuid}/shares/{share-name}/acl:
+    get:
+      tags:
+      - file-storage
+      summary: List ACLs
+      description: Returns a list of available ACLs by given {service_uuid} and {share_name}.
+      operationId: listFileStorageAcls
+      parameters:
+      - $ref: '#/components/parameters/listFileStorageAclsServiceUuid'
+      - $ref: '#/components/parameters/listFileStorageAclsShareName'
+      responses:
+        '200':
+          $ref: '#/components/responses/listFileStorageAcls200'
+        default:
+          $ref: '#/components/responses/listFileStorageAclsDefault'
+    post:
+      tags:
+      - file-storage
+      summary: Create ACL
+      description: Creates a new share ACL by given {service_uuid} and {share_name}.
+      operationId: createFileStorageAcl
+      parameters:
+      - $ref: '#/components/parameters/createFileStorageAclServiceUuid'
+      - $ref: '#/components/parameters/createFileStorageAclShareName'
+      requestBody:
+        $ref: '#/components/requestBodies/createFileStorageAcl'
+      responses:
+        '201':
+          $ref: '#/components/responses/createFileStorageAcl201'
+        default:
+          $ref: '#/components/responses/createFileStorageAclDefault'
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/file-storage/{service-uuid}/shares/{share-name}/acl/{acl-name}:
+    get:
+      tags:
+      - file-storage
+      summary: Get ACL details
+      description: Returns ACL details by given {service_uuid}, {share_name} and {acl_name}.
+      operationId: getFileStorageAcl
+      parameters:
+      - $ref: '#/components/parameters/getFileStorageAclServiceUuid'
+      - $ref: '#/components/parameters/getFileStorageAclShareName'
+      - $ref: '#/components/parameters/getFileStorageAclAclName'
+      responses:
+        '200':
+          $ref: '#/components/responses/getFileStorageAcl200'
+        default:
+          $ref: '#/components/responses/getFileStorageAclDefault'
+    delete:
+      tags:
+      - file-storage
+      summary: Delete ACL
+      description: Deletes existing ACL by given {service_uuid}, {share_name} and {acl_name}.
+      operationId: deleteFileStorageAcl
+      parameters:
+      - $ref: '#/components/parameters/deleteFileStorageAclServiceUuid'
+      - $ref: '#/components/parameters/deleteFileStorageAclShareName'
+      - $ref: '#/components/parameters/deleteFileStorageAclAclName'
+      responses:
+        '204':
+          $ref: '#/components/responses/deleteFileStorageAcl204'
+        default:
+          $ref: '#/components/responses/deleteFileStorageAclDefault'
+    patch:
+      tags:
+      - file-storage
+      summary: Modify ACL
+      description: Modifies existing ACL by given {service_uuid}, {share_name} and {acl_name}.
+      operationId: modifyFileStorageAcl
+      parameters:
+      - $ref: '#/components/parameters/modifyFileStorageAclServiceUuid'
+      - $ref: '#/components/parameters/modifyFileStorageAclShareName'
+      - $ref: '#/components/parameters/modifyFileStorageAclAclName'
+      requestBody:
+        $ref: '#/components/requestBodies/modifyFileStorageAcl'
+      responses:
+        '200':
+          $ref: '#/components/responses/modifyFileStorageAcl200'
+        default:
+          $ref: '#/components/responses/modifyFileStorageAclDefault'
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/file-storage/{service-uuid}/labels:
+    get:
+      tags:
+      - file-storage
+      summary: List labels
+      description: Returns a list of available service labels by given {service_uuid}.
+      operationId: listFileStorageLabels
+      parameters:
+      - $ref: '#/components/parameters/listFileStorageLabelsServiceUuid'
+      responses:
+        '200':
+          $ref: '#/components/responses/listFileStorageLabels200'
+        default:
+          $ref: '#/components/responses/listFileStorageLabelsDefault'
+    post:
+      tags:
+      - file-storage
+      summary: Create label
+      description: Creates a new label by given {service_uuid}. Labels are used for service filtering.
+      operationId: createFileStorageLabel
+      parameters:
+      - $ref: '#/components/parameters/createFileStorageLabelServiceUuid'
+      requestBody:
+        $ref: '#/components/requestBodies/createFileStorageLabel'
+      responses:
+        '201':
+          $ref: '#/components/responses/createFileStorageLabel201'
+        default:
+          $ref: '#/components/responses/createFileStorageLabelDefault'
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/file-storage/{service-uuid}/labels/{label-key}:
+    get:
+      tags:
+      - file-storage
+      summary: Get label details
+      description: Returns label details by given {service_uuid} and {key}.
+      operationId: getFileStorageLabel
+      parameters:
+      - $ref: '#/components/parameters/getFileStorageLabelServiceUuid'
+      - $ref: '#/components/parameters/getFileStorageLabelLabelKey'
+      responses:
+        '200':
+          $ref: '#/components/responses/getFileStorageLabel200'
+        default:
+          $ref: '#/components/responses/getFileStorageLabelDefault'
+    delete:
+      tags:
+      - file-storage
+      summary: Delete label
+      description: Deletes existing label by given {service_uuid} and {key}.
+      operationId: deleteFileStorageLabel
+      parameters:
+      - $ref: '#/components/parameters/deleteFileStorageLabelServiceUuid'
+      - $ref: '#/components/parameters/deleteFileStorageLabelLabelKey'
+      responses:
+        '204':
+          $ref: '#/components/responses/deleteFileStorageLabel204'
+        default:
+          $ref: '#/components/responses/deleteFileStorageLabelDefault'
+    patch:
+      tags:
+      - file-storage
+      summary: Modify label
+      description: Modifies existing label by given {service_uuid} and {key}.
+      operationId: modifyFileStorageLabel
+      parameters:
+      - $ref: '#/components/parameters/modifyFileStorageLabelServiceUuid'
+      - $ref: '#/components/parameters/modifyFileStorageLabelLabelKey'
+      requestBody:
+        $ref: '#/components/requestBodies/modifyFileStorageLabel'
+      responses:
+        '200':
+          $ref: '#/components/responses/modifyFileStorageLabel200'
+        default:
+          $ref: '#/components/responses/modifyFileStorageLabelDefault'
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/file-storage/{service-uuid}/current-state:
+    get:
+      tags:
+      - file-storage
+      summary: Get service current state
+      description: Returns the current state of the File Storage service by given {service_uuid}.
+      operationId: getFileStorageCurrentState
+      parameters:
+      - $ref: '#/components/parameters/getFileStorageCurrentStateServiceUuid'
+      responses:
+        '200':
+          $ref: '#/components/responses/getFileStorageCurrentState200'
+        default:
+          $ref: '#/components/responses/getFileStorageCurrentStateDefault'
+    servers:
+    - url: https://api.upcloud.com
+components:
+  schemas:
+    fileStorageServiceCreate:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - name: test-name
+        zone: fi-hel2
+        configured_status: started
+        size_gib: 250
+        encrypted: false
+        networks:
+        - uuid: 03720d07-80a9-41ac-90b0-68a932109339
+          name: net
+          family: IPv4
+          ip_address: 192.168.147.120
+        shares:
+        - name: read
+          path: /public
+          acl:
+          - name: test-name
+            target: '*'
+            permission: ro
+        - name: write
+          path: /project/data
+          acl:
+          - name: test-name
+            target: 192.168.147.0/24
+            permission: rw
+          - name: test-name
+            target: local.domain
+            permission: rw
+        labels:
+        - key: environment
+          value: production
+      properties:
+        name:
+          $ref: '#/components/schemas/fileStorageName'
+        zone:
+          type: string
+          examples:
+          - fi-hel2
+          title: Zone
+          pattern: ^[a-z]{2}-[a-z]{3}\d$
+          description: Indicates the zone where the service will be created.
+        configured_status:
+          $ref: '#/components/schemas/fileStorageConfiguredStatus'
+        size_gib:
+          $ref: '#/components/schemas/fileStorageSizeGiB'
+        encrypted:
+          type: boolean
+          examples:
+          - true
+          - false
+          title: Encryption at Rest
+          description: Indicates whether encryption at rest is enabled for the service.
+          default: false
+        networks:
+          type: array
+          items:
+            $ref: '#/components/schemas/fileStorageNetworkCreate'
+          maxItems: 1
+        shares:
+          type: array
+          items:
+            $ref: '#/components/schemas/fileStorageShareCreate'
+          maxItems: 50
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/fileStorageLabelCreate'
+          maxItems: 255
+          description: Labels
+      title: ServiceCreate
+      required:
+      - name
+      - zone
+      - configured_status
+      - size_gib
+      additionalProperties: false
+      description: Schema for creating a new service.
+    fileStorageLabelCreate:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - key: environment
+        value: production
+      properties:
+        key:
+          $ref: '#/components/schemas/fileStorageLabelKey'
+        value:
+          $ref: '#/components/schemas/fileStorageLabelValue'
+      title: LabelCreate
+      required:
+      - key
+      - value
+      additionalProperties: false
+      description: Schema for creating a new label.
+    fileStorageQueryParamSort:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      title: QueryParamSort
+      enum:
+      - created_at
+      - -created_at
+      description: Query parameter to specify the sorting order of results in API responses, allowing clients to order data based on specific fields.
+      default: -created_at
+    fileStorageLabelValue:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type:
+      - string
+      - 'null'
+      examples:
+      - development
+      title: LabelValue
+      maxLength: 255
+      pattern: \A[\p{L}\p{N}\p{P}\p{S}\p{M}\p{Z}]*\z
+      description: Represents the label value.
+    fileStorageQueryParameterLimit:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: integer
+      title: QueryParameterLimit
+      maximum: 100
+      minimum: 0
+      description: Schema for the limit query parameter, used to specify the maximum number of items to return in a paginated response.
+      default: 10
+    fileStoragePath:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      examples:
+      - /public
+      - /projects/myproject
+      title: Path
+      maxLength: 512
+      minLength: 1
+      pattern: ^/[a-zA-Z0-9/_-]*$
+      description: The absolute path of the share.
+    fileStorageConfiguredStatus:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      examples:
+      - started
+      title: ConfiguredStatus
+      enum:
+      - started
+      - stopped
+      description: The service configured status indicates the service's current intended status. Managed by the customer.
+    fileStorageServiceListResponse:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: array
+      examples:
+      - - configured_status: started
+          created_at: '2025-08-01T10:40:04.140473Z'
+          encrypted: false
+          labels:
+          - key: environment
+            value: production
+          name: test2
+          networks:
+          - family: IPv4
+            ip_address: 10.10.10.50
+            name: net
+            uuid: 0391f203-6eef-4a69-bfcc-fffffbdfdc32
+          operational_state: running
+          shares:
+          - acl:
+            - name: test-name
+              permission: ro
+              target: '*'
+            name: read
+            path: /public
+          - acl:
+            - name: test-name
+              permission: rw
+              target: 10.10.10.0/24
+            - name: test-name
+              permission: rw
+              target: local.domain
+            name: write
+            path: /project/data
+          size_gib: 250
+          state_messages: []
+          updated_at: '2025-08-03T19:23:52.350216Z'
+          uuid: 17871d62-6964-4336-b68d-4a85a8ee10fe
+          zone: fi-dev2
+      items:
+        $ref: '#/components/schemas/fileStorageServiceDetailResponse'
+      title: ServiceListResponse
+      description: Schema for the response containing a list of services.
+    fileStorageLabelKey:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      examples:
+      - environment
+      title: LabelKey
+      maxLength: 32
+      minLength: 2
+      pattern: ^[\x20-\x5E\x60-\x7E][\x20-\x7E]+$
+      description: Represents the label identifier. The key is unique within a service.
+    fileStorageShareListResponse:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: array
+      examples:
+      - - name: write
+          path: /project/data
+          acl:
+          - name: test-name
+            target: '*'
+            permission: rw
+        - name: read
+          path: /project/logs
+          acl:
+          - name: test-name
+            target: 192.168.147.0/24
+            permission: ro
+      items:
+        $ref: '#/components/schemas/fileStorageShareDetailResponse'
+      title: ShareListResponse
+      description: Schema for the response containing a list of shares.
+    fileStorageAclModify:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - name: test-name
+        target: 192.168.25.0/24
+        permission: rw
+      properties:
+        name:
+          $ref: '#/components/schemas/fileStorageName'
+        target:
+          type: string
+          examples:
+          - 192.168.25.147
+          - 192.168.25.0/24
+          - '*'
+          maxLength: 255
+          minLength: 1
+          description: The target of the ACL entry. It can be an IP Address, Network Prefix or a wildcard.
+        permission:
+          $ref: '#/components/schemas/fileStoragePermission'
+      title: AclModify
+      additionalProperties: false
+      description: Schema for modifying an existing ACL.
+    fileStorageNetworkListResponse:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: array
+      examples:
+      - - family: IPv4
+          ip_address: 192.168.147.250
+          name: test-name
+          uuid: 03720d07-80a9-41ac-90b0-68a932109339
+      items:
+        $ref: '#/components/schemas/fileStorageNetworkDetailResponse'
+      title: NetworkListResponse
+      description: Schema for the response containing a list of networks.
+    fileStorageNetworkDetailResponse:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - family: IPv4
+        ip_address: 192.168.147.250
+        name: test-name
+        uuid: 03720d07-80a9-41ac-90b0-68a932109339
+      properties:
+        family:
+          type: string
+        ip_address:
+          type: string
+        name:
+          type: string
+        uuid:
+          type: string
+      title: NetworkDetailResponse
+      description: Schema for the detailed response of a network.
+    fileStorageNetworkCreate:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - uuid: 03720d07-80a9-41ac-90b0-68a932109339
+        name: test-name
+        family: IPv4
+        ip_address: 10.20.30.40
+      properties:
+        uuid:
+          $ref: '#/components/schemas/fileStorageNetworkUUID'
+        name:
+          $ref: '#/components/schemas/fileStorageName'
+        family:
+          $ref: '#/components/schemas/fileStorageNetworkFamily'
+        ip_address:
+          $ref: '#/components/schemas/fileStorageIPAddress'
+      title: NetworkCreate
+      required:
+      - uuid
+      - name
+      - family
+      additionalProperties: false
+      description: Schema for creating a network.
+    fileStorageSizeGiB:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: integer
+      examples:
+      - 250
+      title: SizeGiB
+      maximum: 25000
+      minimum: 250
+      format: int32
+      description: The size of the service in gibibytes (GiB)
+    fileStorageShareDetailResponse:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - acl:
+        - name: test-name
+          permission: rw
+          target: '*'
+        name: write
+        path: /project/data
+      properties:
+        name:
+          type: string
+        path:
+          type: string
+        acl:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              target:
+                type: string
+              permission:
+                type: string
+      title: ShareDetailResponse
+      description: Schema for the detailed response of a share.
+    fileStorageNetworkFamily:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      examples:
+      - IPv4
+      title: NetworkFamily
+      enum:
+      - IPv4
+      - IPv6
+      description: Network family. IPv6 currently not supported.
+    fileStorageName:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      examples:
+      - test-name
+      title: Name
+      maxLength: 64
+      minLength: 1
+      pattern: ^[a-zA-Z0-9_-]+$
+      description: A resource name.
+    fileStorageLabelModify:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - key: environment
+        value: production
+      properties:
+        key:
+          $ref: '#/components/schemas/fileStorageLabelKey'
+        value:
+          $ref: '#/components/schemas/fileStorageLabelValue'
+      title: LabelModify
+      additionalProperties: false
+      description: Schema for modifying an existing label.
+    fileStoragePermission:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      examples:
+      - rw
+      title: Permission
+      enum:
+      - ro
+      - rw
+      description: The permission level for the ACL target.
+    fileStorageServiceReplace:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - name: test-name
+        configured_status: started
+        size_gib: 250
+        networks:
+        - uuid: 03720d07-80a9-41ac-90b0-68a932109339
+          name: net
+          family: IPv4
+          ip_address: 192.168.147.120
+        labels:
+        - key: environment
+          value: production
+      properties:
+        name:
+          $ref: '#/components/schemas/fileStorageName'
+        configured_status:
+          $ref: '#/components/schemas/fileStorageConfiguredStatus'
+        size_gib:
+          $ref: '#/components/schemas/fileStorageSizeGiB'
+        networks:
+          type: array
+          items:
+            $ref: '#/components/schemas/fileStorageNetworkCreate'
+          maxItems: 1
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/fileStorageLabelCreate'
+          maxItems: 255
+          description: Labels
+      title: ServiceReplace
+      required:
+      - name
+      - configured_status
+      - size_gib
+      additionalProperties: false
+      description: Schema for replacing an existing service with a new configuration.
+    fileStorageErrorResponse:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - type: https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST
+        title: Validation error.
+        invalid_params:
+        - name: configured_status
+          reason: Value must be one of "started", "stopped".
+        correlation_id: 01K1RPB4Z1EXJSBFHTVGJD00CV
+        status: 400
+      - type: https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND
+        title: The resource you requested does not exist.
+        correlation_id: 01K1ZJC6MSN91RQS3JMEESGG92
+        status: 404
+      - type: https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE
+        title: Your request could not be fulfilled due to a technical issue.
+        correlation_id: 01HEPYJ027RF0H29CKHWHCH7RE
+        status: 500
+      properties:
+        type:
+          type: string
+          enum:
+          - https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST
+          - https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND
+          - https://developers.upcloud.com/1.3/errors#ERROR_INSUFFICIENT_CREDITS
+          - https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE
+          description: Error code string.
+        title:
+          type: string
+          examples:
+          - Validation error.
+          - The resource you requested does not exist.
+          - Your request could not be fulfilled due to a technical issue.
+          description: Short description of the error.
+        correlation_id:
+          type: string
+          examples:
+          - 01K1K2TKEASWRJ6VFP9ZV5P2H4
+          description: Unique identifier for the request, useful for debugging.
+        status:
+          type: integer
+          examples:
+          - 400
+          - 404
+          - 402
+          - 500
+          format: int32
+          description: HTTP status code associated with the error.
+        invalid_params:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                examples:
+                - zone
+                - networks.0.ip_address
+                description: Path to the field with invalid parameter.
+              reason:
+                type: string
+                examples:
+                - Zone is not valid.
+                description: Human-readable error message.
+            required:
+            - name
+            - reason
+          title: InvalidParameters
+          description: List of invalid parameters in the request.
+      title: ErrorResponse
+      required:
+      - type
+      - title
+      - correlation_id
+      - status
+      additionalProperties: false
+      description: Schema for error responses from the API.
+    fileStorageLabelsListResponse:
+      $schema: http://json-schema.org/draft/2020-12/schema
+      type: array
+      examples:
+      - - key: environment
+          value: production
+      items:
+        $ref: '#/components/schemas/fileStorageLabelDetails'
+      title: LabelsListResponse
+      description: Response schema for listing labels.
+    fileStorageNetworkUUID:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      examples:
+      - 03720d07-80a9-41ac-90b0-68a932109339
+      title: NetworkUUID
+      format: uuid
+      description: Unique identifier for the network.
+    fileStorageShareModify:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - name: test-name
+        acl:
+        - name: test-name
+          target: 192.168.25.0/24
+          permission: ro
+      properties:
+        name:
+          type: string
+          examples:
+          - test-name
+          maxLength: 128
+          minLength: 1
+          pattern: ^[a-zA-Z0-9_-]+$
+          description: A resource name.
+        acl:
+          type: array
+          items:
+            $ref: '#/components/schemas/fileStorageAclCreate'
+          maxItems: 50
+      title: ShareModify
+      additionalProperties: false
+      description: Schema for modifying an existing share.
+    fileStorageShareCreate:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - name: read
+        path: /public
+        acl:
+        - name: test-name
+          target: 192.168.147.0/24
+          permission: ro
+      properties:
+        name:
+          type: string
+          examples:
+          - test-name
+          maxLength: 128
+          minLength: 1
+          pattern: ^[a-zA-Z0-9_-]+$
+          description: A resource name.
+        path:
+          $ref: '#/components/schemas/fileStoragePath'
+        acl:
+          type: array
+          items:
+            $ref: '#/components/schemas/fileStorageAclCreate'
+          maxItems: 50
+      title: ShareCreate
+      required:
+      - name
+      - path
+      - acl
+      additionalProperties: false
+      description: Schema for creating a new share with access control lists (ACLs).
+    fileStorageIPAddress:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      examples:
+      - 10.20.30.40
+      title: IPAddress
+      format: ipv4
+      description: The desired IP address for the service. If not specified, the service will be assigned an IP address from the network's pool.
+    fileStorageAclCreate:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/fileStorageName'
+        target:
+          type: string
+          examples:
+          - 192.168.25.147
+          - 192.168.25.0/24
+          - '*'
+          maxLength: 255
+          minLength: 1
+          description: The target of the ACL entry. It can be an IP Address, Network Prefix or a wildcard.
+        permission:
+          $ref: '#/components/schemas/fileStoragePermission'
+      title: AclCreate
+      required:
+      - name
+      - target
+      - permission
+      additionalProperties: false
+      description: Schema for creating an ACL entry.
+    fileStorageServiceModify:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - name: test-name
+        configured_status: started
+        size_gib: 250
+        networks:
+        - uuid: 03720d07-80a9-41ac-90b0-68a932109339
+          name: net
+          family: IPv4
+          ip_address: 192.168.147.120
+        labels:
+        - key: environment
+          value: production
+      properties:
+        name:
+          $ref: '#/components/schemas/fileStorageName'
+        configured_status:
+          $ref: '#/components/schemas/fileStorageConfiguredStatus'
+        size_gib:
+          $ref: '#/components/schemas/fileStorageSizeGiB'
+        networks:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/fileStorageNetworkCreate'
+          maxItems: 1
+        labels:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/fileStorageLabelCreate'
+          maxItems: 255
+      title: ServiceModify
+      additionalProperties: false
+      description: Schema for modifying an existing service.
+    fileStorageQueryParamOffset:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: integer
+      title: QueryParamOffset
+      minimum: 0
+      description: Query parameter to specify the offset for pagination in API responses, allowing clients to retrieve results starting from a specific point.
+      default: 0
+    fileStorageAclDetailResponse:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - name: test-name
+        permission: rw
+        target: '*'
+      properties:
+        name:
+          type: string
+        target:
+          type: string
+        permission:
+          type: string
+      title: AclDetailResponse
+      description: Schema for the detailed response of an ACL.
+    fileStorageLabelDetails:
+      $schema: http://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - key: environment
+        value: production
+      properties:
+        key:
+          type: string
+        value:
+          type: string
+      title: LabelDetails
+      description: Schema for label details including key-value pairs.
+    fileStorageEntityUUID:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      examples:
+      - 17fd43a5-a97e-44f7-98a8-0a787da67069
+      title: EntityUUID
+      format: uuid
+      description: The unique identifier.
+    fileStorageServiceDetailResponse:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - configured_status: started
+        created_at: '2025-08-01T10:40:04.140473Z'
+        encrypted: false
+        labels:
+        - key: environment
+          value: production
+        name: test2
+        networks:
+        - family: IPv4
+          ip_address: 10.10.10.50
+          name: net
+          uuid: 0391f203-6eef-4a69-bfcc-fffffbdfdc32
+        operational_state: running
+        shares:
+        - acl:
+          - name: test-name
+            permission: ro
+            target: '*'
+          name: read
+          path: /public
+        - acl:
+          - name: test-name
+            permission: rw
+            target: 10.10.10.0/24
+          - name: test-name
+            permission: rw
+            target: local.domain
+          name: write
+          path: /project/data
+        size_gib: 250
+        state_messages: []
+        updated_at: '2025-08-03T19:23:52.350216Z'
+        uuid: 17871d62-6964-4336-b68d-4a85a8ee10fe
+        zone: fi-dev2
+      properties:
+        uuid:
+          type: string
+        name:
+          type: string
+        zone:
+          type: string
+        configured_status:
+          type: string
+        operational_state:
+          type: string
+        size_gib:
+          type: integer
+          format: int32
+        encrypted:
+          type: boolean
+        networks:
+          type: array
+          items:
+            $ref: '#/components/schemas/fileStorageNetworkDetailResponse'
+        shares:
+          type: array
+          items:
+            $ref: '#/components/schemas/fileStorageShareDetailResponse'
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/fileStorageLabelDetails'
+        state_messages:
+          type: array
+          items:
+            type: object
+            properties:
+              operational_state:
+                type: string
+              message:
+                type: string
+              code:
+                type: string
+        created_at:
+          type: string
+          examples:
+          - '2025-08-01T10:40:04.140473Z'
+          format: date-time
+        updated_at:
+          type: string
+          examples:
+          - '2025-08-01T10:40:04.140473Z'
+          format: date-time
+      title: ServiceDetailResponse
+      description: Schema for the detailed response of a service.
+    fileStorageNetworkModify:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - uuid: 03720d07-80a9-41ac-90b0-68a932109339
+        name: test-name
+        family: IPv4
+        ip_address: 10.20.30.40
+      properties:
+        uuid:
+          $ref: '#/components/schemas/fileStorageNetworkUUID'
+        name:
+          $ref: '#/components/schemas/fileStorageName'
+        family:
+          $ref: '#/components/schemas/fileStorageNetworkFamily'
+        ip_address:
+          $ref: '#/components/schemas/fileStorageIPAddress'
+      title: NetworkModify
+      additionalProperties: false
+      description: Schema for modifying an existing network.
+    fileStorageAclListResponse:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: array
+      examples:
+      - - name: test-name-1
+          target: '*'
+          permission: rw
+        - name: test-name-2
+          target: 192.168.147.0/24
+          permission: ro
+      items:
+        $ref: '#/components/schemas/fileStorageAclDetailResponse'
+      title: AclListResponse
+      description: Schema for the response containing a list of ACLs.
+  parameters:
+    listFileStoragesLimit:
+      name: limit
+      in: query
+      description: Number of entries to receive at most.
+      required: false
+      schema:
+        $ref: '#/components/schemas/fileStorageQueryParameterLimit'
+    getFileStorageNetworkNetworkName:
+      name: network-name
+      in: path
+      description: The name of the network.
+      required: true
+      schema:
+        $ref: '#/components/schemas/fileStorageName'
+    listFileStorageLabelsServiceUuid:
+      name: service-uuid
+      in: path
+      description: Service UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/fileStorageEntityUUID'
+    deleteFileStorageLabelLabelKey:
+      name: label-key
+      in: path
+      description: The key of the label.
+      required: true
+      schema:
+        $ref: '#/components/schemas/fileStorageLabelKey'
+    deleteFileStorageNetworkServiceUuid:
+      name: service-uuid
+      in: path
+      description: Service UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/fileStorageEntityUUID'
+    deleteFileStorageShareShareName:
+      name: share-name
+      in: path
+      description: The name of the share.
+      required: true
+      schema:
+        $ref: '#/components/schemas/fileStorageName'
+    deleteFileStorageAclAclName:
+      name: acl-name
+      in: path
+      description: The name of the ACL.
+      required: true
+      schema:
+        $ref: '#/components/schemas/fileStorageName'
+    createFileStorageNetworkServiceUuid:
+      name: service-uuid
+      in: path
+      description: Service UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/fileStorageEntityUUID'
+    createFileStorageAclShareName:
+      name: share-name
+      in: path
+      description: The name of the share.
+      required: true
+      schema:
+        $ref: '#/components/schemas/fileStorageName'
+    listFileStorageNetworksServiceUuid:
+      name: service-uuid
+      in: path
+      description: Service UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/fileStorageEntityUUID'
+    getFileStorageLabelServiceUuid:
+      name: service-uuid
+      in: path
+      description: Service UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/fileStorageEntityUUID'
+    modifyFileStorageServiceUuid:
+      name: service-uuid
+      in: path
+      description: Service UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/fileStorageEntityUUID'
+    modifyFileStorageShareShareName:
+      name: share-name
+      in: path
+      description: The name of the share.
+      required: true
+      schema:
+        $ref: '#/components/schemas/fileStorageName'
+    deleteFileStorageAclShareName:
+      name: share-name
+      in: path
+      description: The name of the share.
+      required: true
+      schema:
+        $ref: '#/components/schemas/fileStorageName'
+    listFileStorageSharesServiceUuid:
+      name: service-uuid
+      in: path
+      description: Service UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/fileStorageEntityUUID'
+    deleteFileStorageServiceUuid:
+      name: service-uuid
+      in: path
+      description: Service UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/fileStorageEntityUUID'
+    deleteFileStorageLabelServiceUuid:
+      name: service-uuid
+      in: path
+      description: Service UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/fileStorageEntityUUID'
+    deleteFileStorageNetworkNetworkName:
+      name: network-name
+      in: path
+      description: The name of the network.
+      required: true
+      schema:
+        $ref: '#/components/schemas/fileStorageName'
+    getFileStorageServiceUuid:
+      name: service-uuid
+      in: path
+      description: Service UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/fileStorageEntityUUID'
+    modifyFileStorageAclShareName:
+      name: share-name
+      in: path
+      description: The name of the share.
+      required: true
+      schema:
+        $ref: '#/components/schemas/fileStorageName'
+    modifyFileStorageAclAclName:
+      name: acl-name
+      in: path
+      description: The name of the ACL.
+      required: true
+      schema:
+        $ref: '#/components/schemas/fileStorageName'
+    getFileStorageAclServiceUuid:
+      name: service-uuid
+      in: path
+      description: Service UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/fileStorageEntityUUID'
+    modifyFileStorageAclServiceUuid:
+      name: service-uuid
+      in: path
+      description: Service UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/fileStorageEntityUUID'
+    createFileStorageLabelServiceUuid:
+      name: service-uuid
+      in: path
+      description: Service UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/fileStorageEntityUUID'
+    modifyFileStorageShareServiceUuid:
+      name: service-uuid
+      in: path
+      description: Service UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/fileStorageEntityUUID'
+    listFileStoragesOffset:
+      name: offset
+      in: query
+      description: Offset for retrieved results.
+      required: false
+      schema:
+        $ref: '#/components/schemas/fileStorageQueryParamOffset'
+    modifyFileStorageLabelLabelKey:
+      name: label-key
+      in: path
+      description: The key of the label.
+      required: true
+      schema:
+        $ref: '#/components/schemas/fileStorageLabelKey'
+    getFileStorageShareShareName:
+      name: share-name
+      in: path
+      description: The name of the share.
+      required: true
+      schema:
+        $ref: '#/components/schemas/fileStorageName'
+    listFileStoragesSort:
+      name: sort
+      in: query
+      description: Order of returned results.
+      required: false
+      schema:
+        $ref: '#/components/schemas/fileStorageQueryParamSort'
+    getFileStorageShareServiceUuid:
+      name: service-uuid
+      in: path
+      description: Service UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/fileStorageEntityUUID'
+    replaceFileStorageServiceUuid:
+      name: service-uuid
+      in: path
+      description: Service UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/fileStorageEntityUUID'
+    createFileStorageAclServiceUuid:
+      name: service-uuid
+      in: path
+      description: Service UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/fileStorageEntityUUID'
+    listFileStorageAclsServiceUuid:
+      name: service-uuid
+      in: path
+      description: Service UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/fileStorageEntityUUID'
+    getFileStorageLabelLabelKey:
+      name: label-key
+      in: path
+      description: The key of the label.
+      required: true
+      schema:
+        $ref: '#/components/schemas/fileStorageLabelKey'
+    listFileStorageAclsShareName:
+      name: share-name
+      in: path
+      description: The name of the share.
+      required: true
+      schema:
+        $ref: '#/components/schemas/fileStorageName'
+    getFileStorageCurrentStateServiceUuid:
+      name: service-uuid
+      in: path
+      description: Service UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/fileStorageEntityUUID'
+    createFileStorageShareServiceUuid:
+      name: service-uuid
+      in: path
+      description: Service UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/fileStorageEntityUUID'
+    modifyFileStorageNetworkNetworkName:
+      name: network-name
+      in: path
+      description: The name of the network.
+      required: true
+      schema:
+        $ref: '#/components/schemas/fileStorageName'
+    modifyFileStorageNetworkServiceUuid:
+      name: service-uuid
+      in: path
+      description: Service UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/fileStorageEntityUUID'
+    getFileStorageAclShareName:
+      name: share-name
+      in: path
+      description: The name of the share.
+      required: true
+      schema:
+        $ref: '#/components/schemas/fileStorageName'
+    modifyFileStorageLabelServiceUuid:
+      name: service-uuid
+      in: path
+      description: Service UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/fileStorageEntityUUID'
+    getFileStorageNetworkServiceUuid:
+      name: service-uuid
+      in: path
+      description: Service UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/fileStorageEntityUUID'
+    getFileStorageAclAclName:
+      name: acl-name
+      in: path
+      description: The name of the ACL.
+      required: true
+      schema:
+        $ref: '#/components/schemas/fileStorageName'
+    deleteFileStorageShareServiceUuid:
+      name: service-uuid
+      in: path
+      description: Service UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/fileStorageEntityUUID'
+    deleteFileStorageAclServiceUuid:
+      name: service-uuid
+      in: path
+      description: Service UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/fileStorageEntityUUID'
+  responses:
+    modifyFileStorageNetworkDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/fileStorageErrorResponse'
+    getFileStorageNetworkDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/fileStorageErrorResponse'
+    listFileStoragesDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/fileStorageErrorResponse'
+    createFileStorageLabelDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/fileStorageErrorResponse'
+    createFileStorageShareDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/fileStorageErrorResponse'
+    replaceFileStorage200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/fileStorageServiceDetailResponse'
+    modifyFileStorage200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/fileStorageServiceDetailResponse'
+    modifyFileStorageNetwork200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/fileStorageNetworkDetailResponse'
+    listFileStorageNetworksDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/fileStorageErrorResponse'
+    modifyFileStorageAcl200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/fileStorageAclDetailResponse'
+    listFileStorageNetworks200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/fileStorageNetworkListResponse'
+    listFileStorageShares200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/fileStorageShareListResponse'
+    createFileStorageShare201:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/fileStorageShareDetailResponse'
+    getFileStorageCurrentState200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/fileStorageServiceDetailResponse'
+    modifyFileStorageLabelDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/fileStorageErrorResponse'
+    createFileStorageLabel201:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/fileStorageLabelDetails'
+    getFileStorage200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/fileStorageServiceDetailResponse'
+    createFileStorageDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/fileStorageErrorResponse'
+    replaceFileStorageDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/fileStorageErrorResponse'
+    listFileStorageSharesDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/fileStorageErrorResponse'
+    deleteFileStorageAclDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/fileStorageErrorResponse'
+    modifyFileStorageAclDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/fileStorageErrorResponse'
+    deleteFileStorageLabel204:
+      description: No Content
+    modifyFileStorageLabel200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/fileStorageLabelDetails'
+    modifyFileStorageDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/fileStorageErrorResponse'
+    getFileStorageLabelDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/fileStorageErrorResponse'
+    deleteFileStorageShare204:
+      description: No Content
+    createFileStorageNetworkDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/fileStorageErrorResponse'
+    getFileStorageNetwork200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/fileStorageNetworkDetailResponse'
+    getFileStorageShare200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/fileStorageShareDetailResponse'
+    createFileStorage201:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/fileStorageServiceDetailResponse'
+    listFileStorageAclsDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/fileStorageErrorResponse'
+    getFileStorageAcl200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/fileStorageAclDetailResponse'
+    createFileStorageNetwork201:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/fileStorageNetworkDetailResponse'
+    listFileStorages200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/fileStorageServiceListResponse'
+    deleteFileStorageAcl204:
+      description: No Content
+    getFileStorageDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/fileStorageErrorResponse'
+    listFileStorageLabelsDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/fileStorageErrorResponse'
+    createFileStorageAclDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/fileStorageErrorResponse'
+    getFileStorageLabel200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/fileStorageLabelDetails'
+    modifyFileStorageShareDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/fileStorageErrorResponse'
+    deleteFileStorageNetwork204:
+      description: No Content
+    deleteFileStorageLabelDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/fileStorageErrorResponse'
+    deleteFileStorage204:
+      description: No Content
+    getFileStorageCurrentStateDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/fileStorageErrorResponse'
+    getFileStorageAclDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/fileStorageErrorResponse'
+    modifyFileStorageShare200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/fileStorageShareDetailResponse'
+    listFileStorageLabels200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/fileStorageLabelsListResponse'
+    deleteFileStorageDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/fileStorageErrorResponse'
+    createFileStorageAcl201:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/fileStorageAclDetailResponse'
+    deleteFileStorageNetworkDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/fileStorageErrorResponse'
+    deleteFileStorageShareDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/fileStorageErrorResponse'
+    listFileStorageAcls200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/fileStorageAclListResponse'
+    getFileStorageShareDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/fileStorageErrorResponse'
+  requestBodies:
+    createFileStorageAcl:
+      description: Creates a new share ACL by given {service_uuid} and {share_name}.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/fileStorageAclCreate'
+    createFileStorageShare:
+      description: Creates a new service share by given {service_uuid}.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/fileStorageShareCreate'
+    createFileStorageNetwork:
+      description: Creates a new service network by given {service_uuid}.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/fileStorageNetworkCreate'
+    createFileStorageLabel:
+      description: Creates a new label by given {service_uuid}. Labels are used for service filtering.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/fileStorageLabelCreate'
+    createFileStorage:
+      description: Creates a new File Storage service.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/fileStorageServiceCreate'
+    modifyFileStorageLabel:
+      description: Modifies existing label by given {service_uuid} and {key}.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/fileStorageLabelModify'
+    modifyFileStorageShare:
+      description: Modifies existing service share by given {service_uuid} and {share_name}.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/fileStorageShareModify'
+    replaceFileStorage:
+      description: Replaces existing File Storage service by given {service_uuid}.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/fileStorageServiceReplace'
+    modifyFileStorageAcl:
+      description: Modifies existing ACL by given {service_uuid}, {share_name} and {acl_name}.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/fileStorageAclModify'
+    modifyFileStorage:
+      description: Modifies existing File Storage service by given {service_uuid}.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/fileStorageServiceModify'
+    modifyFileStorageNetwork:
+      description: Modifies existing service network by given {service_uuid} and {network_name}.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/fileStorageNetworkModify'
+  securitySchemes:
+    apiToken:
+      type: http
+      description: UpCloud API uses HTTP Bearer authentication. An API token is required to authenticate. The API token can be created in the UpCloud control panel. Alternatively, you can create an API token using the API directly, or with upctl. Note that if you want to use HTTP Basic authentication on API or with upctl, you will need to enable API access in the UpCloud control panel first.
+      scheme: bearer
+x-refined-from:
+- upcloud-openapi.json
+- upcloud-openapi.yml
+x-upcloud-visibility: public
+x-tagGroups:
+- name: Server
+  tags:
+  - server
+  - server-group
+  - server_size
+  - plan
+  - device
+  - events
+  - timezone
+  - vnc_keymap
+- name: Network
+  tags:
+  - network
+  - network-peering
+  - ip_address
+  - router
+  - gateway
+  - firewall-ruleset
+- name: Account & Access
+  tags:
+  - account
+  - audit-logs
+  - account-tokens
+  - permission
+  - tag
+- name: Billing
+  tags:
+  - price
+  - currency

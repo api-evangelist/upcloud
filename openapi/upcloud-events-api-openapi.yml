@@ -1,0 +1,207 @@
+openapi: 3.2.0
+info:
+  title: Upcloud Events API
+  version: '1.3'
+  contact:
+    name: UpCloud
+    url: https://upcloud.com
+    email: hello@upcloud.com
+  license:
+    name: MIT
+    url: https://spdx.org/licenses/MIT.html
+  termsOfService: https://upcloud.com/terms-of-service/
+  description: 'Operations tagged events across 2 of this provider''s published API definitions: upcloud-openapi.json, upcloud-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.upcloud.com
+security:
+- apiToken: []
+tags:
+- name: Events
+  description: Event management
+  x-displayName: Events
+paths:
+  /1.3/events/{server_uuid}/{offset},{count}:
+    get:
+      tags:
+      - Events
+      summary: List events
+      description: Retrieves a list of events.
+      operationId: listEvents
+      parameters:
+      - $ref: '#/components/parameters/listEventsServerUuid'
+      - $ref: '#/components/parameters/listEventsOffset'
+      - $ref: '#/components/parameters/listEventsCount'
+      responses:
+        '200':
+          $ref: '#/components/responses/listEvents200'
+        default:
+          $ref: '#/components/responses/listEventsDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+components:
+  parameters:
+    listEventsCount:
+      name: count
+      in: path
+      description: The numbers of items to return.
+      required: true
+      schema:
+        type: integer
+        maximum: 10000
+        minimum: 1
+    listEventsOffset:
+      name: offset
+      in: path
+      description: The number of items to skip before starting to collect the result set. Default is 0.
+      required: true
+      schema:
+        type: integer
+        minimum: 0
+    listEventsServerUuid:
+      name: server_uuid
+      in: path
+      description: Filter results to a specific server.
+      required: true
+      schema:
+        type: string
+        format: uuid
+  responses:
+    listEvents200:
+      description: A list of events.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/events'
+    listEventsDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/eventsError'
+  schemas:
+    eventsUuid:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+      format: uuid
+      description: Universally unique identifier
+      example: 0414e0d7-4436-4037-9dd8-6eaf47dce599
+    eventsEventType:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      enum:
+      - server_create
+      - server_error
+      - server_modify
+      - server_shutdown
+      - server_start
+      - server_start_init
+      - server_stop
+      description: Server event type
+    eventsError:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            error_code:
+              type: string
+              examples:
+              - GENERAL_FAILURE
+            error_message:
+              type: string
+              examples:
+              - Your request could not be fulfilled due to a technical issue.
+          required:
+          - error_code
+          - error_message
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+      description: A general error response indicating that the request could not be fulfilled due to a technical issue.
+    events:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      properties:
+        events:
+          type: object
+          examples:
+          - event:
+            - email: user@example.com
+              first_name: John
+              last_name: Doe
+              server: 00798b85-efdc-41ca-8021-f6ef457b8531
+              time: '2024-02-23T12:34:56Z'
+              type: server_start
+          properties:
+            event:
+              type: array
+              items:
+                type: object
+                properties:
+                  email:
+                    type: string
+                    format: email
+                  first_name:
+                    type: string
+                  last_name:
+                    type: string
+                  server:
+                    $ref: '#/components/schemas/eventsUuid'
+                  time:
+                    type: string
+                    examples:
+                    - '2024-02-23T12:34:56Z'
+                    format: date-time
+                    description: Timestamp of when the event occurred
+                  type:
+                    $ref: '#/components/schemas/eventsEventType'
+                required:
+                - server
+                - time
+                - type
+              description: List of events associated with servers
+          required:
+          - event
+      description: Server event type
+  securitySchemes:
+    apiToken:
+      type: http
+      description: UpCloud API uses HTTP Bearer authentication. An API token is required to authenticate. The API token can be created in the UpCloud control panel. Alternatively, you can create an API token using the API directly, or with upctl. Note that if you want to use HTTP Basic authentication on API or with upctl, you will need to enable API access in the UpCloud control panel first.
+      scheme: bearer
+x-refined-from:
+- upcloud-openapi.json
+- upcloud-openapi.yml
+x-upcloud-visibility: public
+x-tagGroups:
+- name: Server
+  tags:
+  - server
+  - server-group
+  - server_size
+  - plan
+  - device
+  - events
+  - timezone
+  - vnc_keymap
+- name: Network
+  tags:
+  - network
+  - network-peering
+  - ip_address
+  - router
+  - gateway
+  - firewall-ruleset
+- name: Account & Access
+  tags:
+  - account
+  - audit-logs
+  - account-tokens
+  - permission
+  - tag
+- name: Billing
+  tags:
+  - price
+  - currency

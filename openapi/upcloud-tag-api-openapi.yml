@@ -1,0 +1,550 @@
+openapi: 3.2.0
+info:
+  title: Upcloud Tag API
+  version: '1.3'
+  contact:
+    name: UpCloud
+    url: https://upcloud.com
+    email: hello@upcloud.com
+  license:
+    name: MIT
+    url: https://spdx.org/licenses/MIT.html
+  termsOfService: https://upcloud.com/terms-of-service/
+  description: 'Operations tagged tag across 2 of this provider''s published API definitions: upcloud-openapi.json, upcloud-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.upcloud.com
+security:
+- apiToken: []
+tags:
+- name: Tag
+  description: 'User can define a set of free-form tags to group and identify a subset
+
+    of their servers.'
+  x-displayName: Tag
+paths:
+  /1.3/tag:
+    get:
+      tags:
+      - Tag
+      summary: List existing tags
+      description: Returns all existing tags with their properties and servers tagged.
+      operationId: listTags
+      responses:
+        '200':
+          $ref: '#/components/responses/listTags200'
+        default:
+          $ref: '#/components/responses/listTagsDefault'
+    post:
+      tags:
+      - Tag
+      summary: Create a new tag
+      description: Creates a new tag. Existing servers can be tagged in same request.
+      operationId: createTag
+      requestBody:
+        $ref: '#/components/requestBodies/createTag'
+      responses:
+        '200':
+          $ref: '#/components/responses/createTag200'
+        '400':
+          $ref: '#/components/responses/createTag400'
+        '403':
+          $ref: '#/components/responses/createTag403'
+        '409':
+          $ref: '#/components/responses/createTag409'
+        default:
+          $ref: '#/components/responses/createTagDefault'
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/tag/{name}:
+    get:
+      tags:
+      - Tag
+      summary: Get tag details
+      description: Returns details for a specific tag.
+      operationId: getTag
+      parameters:
+      - $ref: '#/components/parameters/getTagName'
+      responses:
+        '200':
+          $ref: '#/components/responses/getTag200'
+        '400':
+          $ref: '#/components/responses/getTag400'
+        '403':
+          $ref: '#/components/responses/getTag403'
+        '404':
+          $ref: '#/components/responses/getTag404'
+        default:
+          $ref: '#/components/responses/getTagDefault'
+    put:
+      tags:
+      - Tag
+      summary: Modify existing tag
+      description: Changes attributes of an existing tag
+      operationId: modifyTag
+      parameters:
+      - $ref: '#/components/parameters/modifyTagName'
+      requestBody:
+        $ref: '#/components/requestBodies/modifyTag'
+      responses:
+        '200':
+          $ref: '#/components/responses/modifyTag200'
+        '400':
+          $ref: '#/components/responses/modifyTag400'
+        '403':
+          $ref: '#/components/responses/modifyTag403'
+        '404':
+          $ref: '#/components/responses/modifyTag404'
+        default:
+          $ref: '#/components/responses/modifyTagDefault'
+    delete:
+      tags:
+      - Tag
+      summary: Delete a tag
+      description: Deletes a specific tag.
+      operationId: deleteTag
+      parameters:
+      - $ref: '#/components/parameters/deleteTagName'
+      responses:
+        '204':
+          $ref: '#/components/responses/deleteTag204'
+        '400':
+          $ref: '#/components/responses/deleteTag400'
+        '403':
+          $ref: '#/components/responses/deleteTag403'
+        '404':
+          $ref: '#/components/responses/deleteTag404'
+        default:
+          $ref: '#/components/responses/deleteTagDefault'
+    servers:
+    - url: https://api.upcloud.com
+components:
+  schemas:
+    tagServers:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        server:
+          type: array
+          items:
+            type: string
+            examples:
+            - 0077fa3d-32db-4b09-9f5f-30d9e9afb565
+            - 00c78863-db86-44ea-af70-d6edc4d162bf
+            format: uuid
+            description: Unique identifier of the server.
+      description: List of servers associated with the tag.
+      example:
+        server:
+        - 0077fa3d-32db-4b09-9f5f-30d9e9afb565
+        - 00c78863-db86-44ea-af70-d6edc4d162bf
+    tagError409:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            error_code:
+              type: string
+              const: TAG_EXISTS
+            error_message:
+              type: string
+              examples:
+              - Tag already exists
+          required:
+          - error_code
+          - error_message
+          additionalProperties: false
+      required:
+      - error
+      description: 409 Conflict errors for tag operations.
+    tagError404:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            error_code:
+              type: string
+              const: TAG_NOT_FOUND
+            error_message:
+              type: string
+              examples:
+              - Tag does not exist
+          required:
+          - error_code
+          - error_message
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+      description: 404 Not Found errors for tag operations.
+    tagError400:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            error_code:
+              type: string
+              const: TAG_INVALID
+            error_message:
+              type: string
+              examples:
+              - The tag name is invalid
+          required:
+          - error_code
+          - error_message
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+      description: 400 Bad Request errors for tag operations.
+    tagError403:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            error_code:
+              type: string
+              const: TAG_FORBIDDEN
+            error_message:
+              type: string
+              examples:
+              - Username does not have access to this tag
+          required:
+          - error_code
+          - error_message
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+      description: 400 Forbidden errors for tag operations.
+    tags:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        tags:
+          type: object
+          properties:
+            tag:
+              type: array
+              items:
+                type: object
+                properties:
+                  description:
+                    $ref: '#/components/schemas/tagDescription'
+                  name:
+                    $ref: '#/components/schemas/tagName'
+                  servers:
+                    $ref: '#/components/schemas/tagServers'
+                required:
+                - name
+                - servers
+          required:
+          - tag
+          example:
+            tag:
+            - name: PROD
+              description: Production servers
+              servers:
+                server:
+                - 0077fa3d-32db-4b09-9f5f-30d9e9afb565
+      required:
+      - tags
+      description: Container object for resource tags.
+      example:
+        tags:
+          tag:
+          - name: PROD
+            description: Production servers
+            servers:
+              server:
+              - 0077fa3d-32db-4b09-9f5f-30d9e9afb565
+    tagName:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      examples:
+      - DEV
+      - PROD
+      - private
+      - QA
+      - webserver
+      - database
+      maxLength: 32
+      minLength: 1
+      pattern: ^[A-Za-z0-9_]{1,32}$
+      description: Short name used to identify a tag.
+    tagDescription:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      examples:
+      - Development servers
+      - Production servers
+      - Private environment
+      - Quality Assurance environment
+      - Web servers
+      - Database servers
+      description: Human-readable description for a tag.
+    tag:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        tag:
+          type: object
+          properties:
+            description:
+              $ref: '#/components/schemas/tagDescription'
+            name:
+              $ref: '#/components/schemas/tagName'
+            servers:
+              $ref: '#/components/schemas/tagServers'
+          required:
+          - name
+          - servers
+          example:
+            name: PROD
+            description: Production servers
+            servers:
+              server:
+              - 0077fa3d-32db-4b09-9f5f-30d9e9afb565
+      required:
+      - tag
+      description: Container object for a single tag resource.
+      example:
+        tag:
+          name: PROD
+          description: Production servers
+          servers:
+            server:
+            - 0077fa3d-32db-4b09-9f5f-30d9e9afb565
+    tagError:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            error_code:
+              type: string
+              examples:
+              - GENERAL_FAILURE
+            error_message:
+              type: string
+              examples:
+              - Your request could not be fulfilled due to a technical issue.
+          required:
+          - error_code
+          - error_message
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+      description: A general error response indicating that the request could not be fulfilled due to a technical issue.
+  responses:
+    deleteTag404:
+      description: Tag does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/tagError404'
+    deleteTag400:
+      description: The tag name is invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/tagError400'
+    modifyTag200:
+      description: Modified tag.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/tag'
+    modifyTag400:
+      description: The tag name is invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/tagError400'
+    deleteTag403:
+      description: Username does not have access to this tag
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/tagError403'
+    createTag400:
+      description: The tag name is invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/tagError400'
+    getTag404:
+      description: Tag does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/tagError404'
+    deleteTag204:
+      description: Tag deleted successfully.
+    deleteTagDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/tagError'
+    getTag200:
+      description: Tag details.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/tag'
+    listTagsDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/tagError'
+    getTag403:
+      description: Username does not have access to this tag
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/tagError403'
+    listTags200:
+      description: A list of tags.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/tags'
+    modifyTagDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/tagError'
+    modifyTag404:
+      description: Tag does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/tagError404'
+    modifyTag403:
+      description: Username does not have access to this tag
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/tagError403'
+    getTag400:
+      description: The tag name is invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/tagError400'
+    createTagDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/tagError'
+    createTag403:
+      description: Username does not have access to this tag
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/tagError403'
+    createTag200:
+      description: Created tag.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/tag'
+    createTag409:
+      description: Tag already exists
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/tagError409'
+    getTagDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/tagError'
+  parameters:
+    getTagName:
+      name: name
+      in: path
+      description: Tag name
+      required: true
+      schema:
+        $ref: '#/components/schemas/tagName'
+    modifyTagName:
+      name: name
+      in: path
+      description: Tag name
+      required: true
+      schema:
+        $ref: '#/components/schemas/tagName'
+    deleteTagName:
+      name: name
+      in: path
+      description: Tag name
+      required: true
+      schema:
+        $ref: '#/components/schemas/tagName'
+  requestBodies:
+    createTag:
+      description: Tag to create
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/tag'
+    modifyTag:
+      description: Tag to modify
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/tag'
+  securitySchemes:
+    apiToken:
+      type: http
+      description: UpCloud API uses HTTP Bearer authentication. An API token is required to authenticate. The API token can be created in the UpCloud control panel. Alternatively, you can create an API token using the API directly, or with upctl. Note that if you want to use HTTP Basic authentication on API or with upctl, you will need to enable API access in the UpCloud control panel first.
+      scheme: bearer
+x-refined-from:
+- upcloud-openapi.json
+- upcloud-openapi.yml
+x-upcloud-visibility: public
+x-tagGroups:
+- name: Server
+  tags:
+  - server
+  - server-group
+  - server_size
+  - plan
+  - device
+  - events
+  - timezone
+  - vnc_keymap
+- name: Network
+  tags:
+  - network
+  - network-peering
+  - ip_address
+  - router
+  - gateway
+  - firewall-ruleset
+- name: Account & Access
+  tags:
+  - account
+  - audit-logs
+  - account-tokens
+  - permission
+  - tag
+- name: Billing
+  tags:
+  - price
+  - currency

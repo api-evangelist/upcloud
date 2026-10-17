@@ -1,0 +1,245 @@
+openapi: 3.2.0
+info:
+  title: Upcloud Server Size API
+  version: '1.3'
+  contact:
+    name: UpCloud
+    url: https://upcloud.com
+    email: hello@upcloud.com
+  license:
+    name: MIT
+    url: https://spdx.org/licenses/MIT.html
+  termsOfService: https://upcloud.com/terms-of-service/
+  description: 'Operations tagged server_size across 2 of this provider''s published API definitions: upcloud-openapi.json, upcloud-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.upcloud.com
+security:
+- apiToken: []
+tags:
+- name: server_size
+  description: Server size management
+  x-displayName: Server Size
+paths:
+  /1.3/server_size:
+    get:
+      tags:
+      - server_size
+      summary: List server sizes
+      description: Retrieves a list of available server sizes (combinations of memory and CPU cores).
+      operationId: listServerSizes
+      responses:
+        '200':
+          $ref: '#/components/responses/listServerSizes200'
+        default:
+          $ref: '#/components/responses/listServerSizesDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/server_size/limits:
+    get:
+      tags:
+      - server_size
+      summary: Get server size limits
+      description: Retrieves the minimum and maximum limits for server sizes, including any zone-specific limits for private zones.
+      operationId: getServerSizeLimits
+      responses:
+        '200':
+          $ref: '#/components/responses/getServerSizeLimits200'
+        default:
+          $ref: '#/components/responses/getServerSizeLimitsDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+components:
+  schemas:
+    serverSizeLimits:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        server_size_limits:
+          type: object
+          properties:
+            core_number_min:
+              type: integer
+              minimum: 1
+              format: int64
+              description: Minimum number of CPU cores
+            core_number_max:
+              type: integer
+              maximum: 64
+              minimum: 1
+              format: int64
+              description: Maximum number of CPU cores
+            memory_amount_min:
+              type: integer
+              maximum: 524288
+              minimum: 1024
+              format: int64
+              description: Minimum amount of memory in MB
+            memory_amount_max:
+              type: integer
+              maximum: 524288
+              minimum: 1024
+              format: int64
+              description: Maximum amount of memory in MB
+            memory_amount_step:
+              type: integer
+              minimum: 1024
+              format: int64
+              description: Step size for memory allocation in MB
+          required:
+          - core_number_min
+          - core_number_max
+          - memory_amount_min
+          - memory_amount_max
+          - memory_amount_step
+          additionalProperties: false
+          example:
+            core_number_min: 1
+            core_number_max: 64
+            memory_amount_min: 1024
+            memory_amount_max: 524288
+            memory_amount_step: 1024
+      required:
+      - server_size_limits
+      additionalProperties: false
+      description: Schema for server size limits
+      example:
+        server_size_limits:
+          core_number_min: 1
+          core_number_max: 64
+          memory_amount_min: 1024
+          memory_amount_max: 524288
+          memory_amount_step: 1024
+    serverSizeError:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            error_code:
+              type: string
+              examples:
+              - GENERAL_FAILURE
+            error_message:
+              type: string
+              examples:
+              - Your request could not be fulfilled due to a technical issue.
+          required:
+          - error_code
+          - error_message
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+      description: A general error response indicating that the request could not be fulfilled due to a technical issue.
+    serverSizes:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        server_sizes:
+          type: object
+          properties:
+            server_size:
+              type: array
+              items:
+                type: object
+                properties:
+                  core_number:
+                    type: string
+                    pattern: ^[0-9]+$
+                    description: Number of CPU cores
+                  memory_amount:
+                    type: string
+                    pattern: ^[0-9]+$
+                    description: Amount of memory in MB
+                required:
+                - core_number
+                - memory_amount
+                additionalProperties: false
+              example:
+              - core_number: '2'
+                memory_amount: '4096'
+          required:
+          - server_size
+          additionalProperties: false
+          example:
+            server_size:
+            - core_number: '2'
+              memory_amount: '4096'
+      required:
+      - server_sizes
+      additionalProperties: false
+      description: List of server sizes
+      example:
+        server_sizes:
+          server_size:
+          - core_number: '2'
+            memory_amount: '4096'
+          - core_number: '4'
+            memory_amount: '8192'
+  responses:
+    getServerSizeLimitsDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/serverSizeError'
+    listServerSizes200:
+      description: A list of server sizes.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/serverSizes'
+    getServerSizeLimits200:
+      description: Server size limits.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/serverSizeLimits'
+    listServerSizesDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/serverSizeError'
+  securitySchemes:
+    apiToken:
+      type: http
+      description: UpCloud API uses HTTP Bearer authentication. An API token is required to authenticate. The API token can be created in the UpCloud control panel. Alternatively, you can create an API token using the API directly, or with upctl. Note that if you want to use HTTP Basic authentication on API or with upctl, you will need to enable API access in the UpCloud control panel first.
+      scheme: bearer
+x-refined-from:
+- upcloud-openapi.json
+- upcloud-openapi.yml
+x-upcloud-visibility: public
+x-tagGroups:
+- name: Server
+  tags:
+  - server
+  - server-group
+  - server_size
+  - plan
+  - device
+  - events
+  - timezone
+  - vnc_keymap
+- name: Network
+  tags:
+  - network
+  - network-peering
+  - ip_address
+  - router
+  - gateway
+  - firewall-ruleset
+- name: Account & Access
+  tags:
+  - account
+  - audit-logs
+  - account-tokens
+  - permission
+  - tag
+- name: Billing
+  tags:
+  - price
+  - currency

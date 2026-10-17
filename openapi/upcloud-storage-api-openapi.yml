@@ -1,0 +1,2566 @@
+openapi: 3.2.0
+info:
+  title: Upcloud Storage API
+  version: '1.3'
+  contact:
+    name: UpCloud
+    url: https://upcloud.com
+    email: hello@upcloud.com
+  license:
+    name: MIT
+    url: https://spdx.org/licenses/MIT.html
+  termsOfService: https://upcloud.com/terms-of-service/
+  description: 'Operations tagged storage across 2 of this provider''s published API definitions: upcloud-openapi.json, upcloud-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.upcloud.com
+security:
+- apiToken: []
+tags:
+- name: Storage
+  description: Block Storage is similar to a physical hard disk.
+  x-displayName: Block Storage
+paths:
+  /1.3/storage:
+    get:
+      tags:
+      - Storage
+      summary: List storage resources
+      description: Returns all storage resources accessible to the account. The results can be filtered by labels or a title and UUID search, sorted, and paginated.
+      operationId: getStorageList
+      parameters:
+      - $ref: '#/components/parameters/getStorageListLabel'
+      - $ref: '#/components/parameters/getStorageListSearch'
+      - $ref: '#/components/parameters/getStorageListSortBy'
+      - $ref: '#/components/parameters/getStorageListOrderBy'
+      - $ref: '#/components/parameters/getStorageListLimit'
+      - $ref: '#/components/parameters/getStorageListOffset'
+      responses:
+        '200':
+          $ref: '#/components/responses/getStorageList200'
+        '400':
+          $ref: '#/components/responses/getStorageList400'
+        default:
+          $ref: '#/components/responses/getStorageListDefault'
+      x-upcloud-visibility: public
+    post:
+      tags:
+      - Storage
+      summary: Create Block Storage
+      description: Creates a block storage resource in a specific zone. The new block storage is not attached to a Cloud Server.
+      operationId: createStorage
+      requestBody:
+        $ref: '#/components/requestBodies/createStorage'
+      responses:
+        '201':
+          $ref: '#/components/responses/createStorage201'
+        default:
+          $ref: '#/components/responses/createStorageDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/storage/backup:
+    get:
+      tags:
+      - Storage
+      summary: List storage backups
+      description: Returns accessible storage resources whose type is `backup`.
+      operationId: getStorageListByBackup
+      parameters:
+      - $ref: '#/components/parameters/getStorageListByBackupLabel'
+      - $ref: '#/components/parameters/getStorageListByBackupSearch'
+      - $ref: '#/components/parameters/getStorageListByBackupSortBy'
+      - $ref: '#/components/parameters/getStorageListByBackupOrderBy'
+      - $ref: '#/components/parameters/getStorageListByBackupLimit'
+      - $ref: '#/components/parameters/getStorageListByBackupOffset'
+      responses:
+        '200':
+          $ref: '#/components/responses/getStorageListByBackup200'
+        '400':
+          $ref: '#/components/responses/getStorageListByBackup400'
+        default:
+          $ref: '#/components/responses/getStorageListByBackupDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/storage/cdrom:
+    get:
+      tags:
+      - Storage
+      summary: List CD-ROM images
+      description: Returns accessible storage resources whose type is `cdrom`.
+      operationId: getStorageListByCdrom
+      parameters:
+      - $ref: '#/components/parameters/getStorageListByCdromLabel'
+      - $ref: '#/components/parameters/getStorageListByCdromSearch'
+      - $ref: '#/components/parameters/getStorageListByCdromSortBy'
+      - $ref: '#/components/parameters/getStorageListByCdromOrderBy'
+      - $ref: '#/components/parameters/getStorageListByCdromLimit'
+      - $ref: '#/components/parameters/getStorageListByCdromOffset'
+      responses:
+        '200':
+          $ref: '#/components/responses/getStorageListByCdrom200'
+        '400':
+          $ref: '#/components/responses/getStorageListByCdrom400'
+        default:
+          $ref: '#/components/responses/getStorageListByCdromDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/storage/favorite:
+    get:
+      tags:
+      - Storage
+      summary: List favorite storage resources
+      description: Returns the public templates and CD-ROM images that the account has marked as favorites.
+      operationId: getFavoriteStorageList
+      responses:
+        '200':
+          $ref: '#/components/responses/getFavoriteStorageList200'
+        default:
+          $ref: '#/components/responses/getFavoriteStorageListDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/storage/normal:
+    get:
+      tags:
+      - Storage
+      summary: List normal Block Storage
+      description: Returns accessible Block Storage resources whose type is `normal`.
+      operationId: getStorageListByNormal
+      parameters:
+      - $ref: '#/components/parameters/getStorageListByNormalLabel'
+      - $ref: '#/components/parameters/getStorageListByNormalSearch'
+      - $ref: '#/components/parameters/getStorageListByNormalSortBy'
+      - $ref: '#/components/parameters/getStorageListByNormalOrderBy'
+      - $ref: '#/components/parameters/getStorageListByNormalLimit'
+      - $ref: '#/components/parameters/getStorageListByNormalOffset'
+      responses:
+        '200':
+          $ref: '#/components/responses/getStorageListByNormal200'
+        '400':
+          $ref: '#/components/responses/getStorageListByNormal400'
+        default:
+          $ref: '#/components/responses/getStorageListByNormalDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/storage/private:
+    get:
+      tags:
+      - Storage
+      summary: List private storage resources
+      description: Returns accessible storage resources whose access type is `private`.
+      operationId: getStorageListByPrivateAccess
+      parameters:
+      - $ref: '#/components/parameters/getStorageListByPrivateAccessLabel'
+      - $ref: '#/components/parameters/getStorageListByPrivateAccessSearch'
+      - $ref: '#/components/parameters/getStorageListByPrivateAccessSortBy'
+      - $ref: '#/components/parameters/getStorageListByPrivateAccessOrderBy'
+      - $ref: '#/components/parameters/getStorageListByPrivateAccessLimit'
+      - $ref: '#/components/parameters/getStorageListByPrivateAccessOffset'
+      responses:
+        '200':
+          $ref: '#/components/responses/getStorageListByPrivateAccess200'
+        '400':
+          $ref: '#/components/responses/getStorageListByPrivateAccess400'
+        default:
+          $ref: '#/components/responses/getStorageListByPrivateAccessDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/storage/public:
+    get:
+      tags:
+      - Storage
+      summary: List public storage resources
+      description: Returns accessible storage resources whose access type is `public`.
+      operationId: getStorageListByPublicAccess
+      parameters:
+      - $ref: '#/components/parameters/getStorageListByPublicAccessLabel'
+      - $ref: '#/components/parameters/getStorageListByPublicAccessSearch'
+      - $ref: '#/components/parameters/getStorageListByPublicAccessSortBy'
+      - $ref: '#/components/parameters/getStorageListByPublicAccessOrderBy'
+      - $ref: '#/components/parameters/getStorageListByPublicAccessLimit'
+      - $ref: '#/components/parameters/getStorageListByPublicAccessOffset'
+      responses:
+        '200':
+          $ref: '#/components/responses/getStorageListByPublicAccess200'
+        '400':
+          $ref: '#/components/responses/getStorageListByPublicAccess400'
+        default:
+          $ref: '#/components/responses/getStorageListByPublicAccessDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/storage/template:
+    get:
+      tags:
+      - Storage
+      summary: List storage templates
+      description: Returns accessible storage resources whose type is `template`.
+      operationId: getStorageListByTemplate
+      parameters:
+      - $ref: '#/components/parameters/getStorageListByTemplateLabel'
+      - $ref: '#/components/parameters/getStorageListByTemplateSearch'
+      - $ref: '#/components/parameters/getStorageListByTemplateSortBy'
+      - $ref: '#/components/parameters/getStorageListByTemplateOrderBy'
+      - $ref: '#/components/parameters/getStorageListByTemplateLimit'
+      - $ref: '#/components/parameters/getStorageListByTemplateOffset'
+      responses:
+        '200':
+          $ref: '#/components/responses/getStorageListByTemplate200'
+        '400':
+          $ref: '#/components/responses/getStorageListByTemplate400'
+        default:
+          $ref: '#/components/responses/getStorageListByTemplateDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/storage/{type}/{access}:
+    get:
+      tags:
+      - Storage
+      summary: List storage resources by type and access
+      description: Returns accessible storage resources matching both the requested storage type and access type.
+      operationId: getStorageListByTypeAndAccess
+      parameters:
+      - $ref: '#/components/parameters/getStorageListByTypeAndAccessType'
+      - $ref: '#/components/parameters/getStorageListByTypeAndAccessAccess'
+      - $ref: '#/components/parameters/getStorageListByTypeAndAccessLabel'
+      - $ref: '#/components/parameters/getStorageListByTypeAndAccessSearch'
+      - $ref: '#/components/parameters/getStorageListByTypeAndAccessSortBy'
+      - $ref: '#/components/parameters/getStorageListByTypeAndAccessOrderBy'
+      - $ref: '#/components/parameters/getStorageListByTypeAndAccessLimit'
+      - $ref: '#/components/parameters/getStorageListByTypeAndAccessOffset'
+      responses:
+        '200':
+          $ref: '#/components/responses/getStorageListByTypeAndAccess200'
+        '400':
+          $ref: '#/components/responses/getStorageListByTypeAndAccess400'
+        default:
+          $ref: '#/components/responses/getStorageListByTypeAndAccessDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/storage/{uuid}:
+    get:
+      tags:
+      - Storage
+      summary: Get storage resource details
+      description: Returns detailed information about a storage resource, including its current state, attachments, labels, and backup configuration when applicable.
+      operationId: getStorageInfo
+      parameters:
+      - $ref: '#/components/parameters/getStorageInfoUuid'
+      responses:
+        '200':
+          $ref: '#/components/responses/getStorageInfo200'
+        '404':
+          $ref: '#/components/responses/getStorageInfo404'
+        default:
+          $ref: '#/components/responses/getStorageInfoDefault'
+      x-upcloud-visibility: public
+    put:
+      tags:
+      - Storage
+      summary: Modify Block Storage
+      description: Modifies a block storage title, labels, automatic backup rule, or size. A new size must be greater than the current size. Set `filesystem_resize` to `yes` to also resize the last partition and its supported filesystem after increasing the block storage size.
+      operationId: modifyStorage
+      parameters:
+      - $ref: '#/components/parameters/modifyStorageUuid'
+      requestBody:
+        $ref: '#/components/requestBodies/modifyStorage'
+      responses:
+        '200':
+          $ref: '#/components/responses/modifyStorage200'
+        default:
+          $ref: '#/components/responses/modifyStorageDefault'
+      x-upcloud-visibility: public
+    delete:
+      tags:
+      - Storage
+      summary: Delete storage resource
+      description: Schedules an unattached private storage resource for deletion. Associated backups are kept by default unless another backup policy is selected.
+      operationId: deleteStorage
+      parameters:
+      - $ref: '#/components/parameters/deleteStorageUuid'
+      - $ref: '#/components/parameters/deleteStorageBackups'
+      responses:
+        '204':
+          $ref: '#/components/responses/deleteStorage204'
+        default:
+          $ref: '#/components/responses/deleteStorageDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/storage/{uuid}/attach:
+    post:
+      tags:
+      - Storage
+      summary: Attach storage to a Cloud Server
+      description: Attaches the storage resource to a Cloud Server in the same zone. The device defaults to a disk at the next available address. IDE and CD-ROM devices can be attached only while the Cloud Server is stopped; SCSI and VirtIO disks can also be attached while it is running.
+      operationId: attachStorageToServer
+      parameters:
+      - $ref: '#/components/parameters/attachStorageToServerUuid'
+      requestBody:
+        $ref: '#/components/requestBodies/attachStorageToServer'
+      responses:
+        '200':
+          $ref: '#/components/responses/attachStorageToServer200'
+        default:
+          $ref: '#/components/responses/attachStorageToServerDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/storage/{uuid}/backup:
+    post:
+      tags:
+      - Storage
+      summary: Create on-demand backup
+      description: 'Creates a point-in-time backup of private normal block storage. The operation is asynchronous: the source block storage is `backuping` while the backup is created, and the returned backup remains in `maintenance` until it is ready.'
+      operationId: createOnDemandBackup
+      parameters:
+      - $ref: '#/components/parameters/storageCreateOnDemandBackupUuid'
+      requestBody:
+        $ref: '#/components/requestBodies/storageCreateOnDemandBackup'
+      responses:
+        '201':
+          $ref: '#/components/responses/storageCreateOnDemandBackup201'
+        default:
+          $ref: '#/components/responses/storageCreateOnDemandBackupDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/storage/{uuid}/cancel:
+    post:
+      tags:
+      - Storage
+      summary: Cancel Block Storage operation
+      description: Requests cancellation of an interruptible operation on block storage in the `maintenance` state. For a running clone, cancellation removes the incomplete copy and returns the source block storage to the `online` state.
+      operationId: cancelStorageOperation
+      parameters:
+      - $ref: '#/components/parameters/cancelStorageOperationUuid'
+      responses:
+        '204':
+          $ref: '#/components/responses/cancelStorageOperation204'
+        default:
+          $ref: '#/components/responses/cancelStorageOperationDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/storage/{uuid}/clone:
+    post:
+      tags:
+      - Storage
+      summary: Clone Block Storage
+      description: 'Creates a Block Storage copy of a storage resource. Cloning is asynchronous: the returned block storage remains in the `maintenance` state until the operation completes and can be monitored with the storage resource details endpoint.'
+      operationId: cloneStorage
+      parameters:
+      - $ref: '#/components/parameters/cloneStorageUuid'
+      requestBody:
+        $ref: '#/components/requestBodies/cloneStorage'
+      responses:
+        '201':
+          $ref: '#/components/responses/cloneStorage201'
+        '404':
+          $ref: '#/components/responses/cloneStorage404'
+        default:
+          $ref: '#/components/responses/cloneStorageDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/storage/{uuid}/detach:
+    post:
+      tags:
+      - Storage
+      summary: Detach storage from a Cloud Server
+      description: Detaches the storage resource from its attached Cloud Server. IDE and CD-ROM devices can be detached only while the Cloud Server is stopped; SCSI and VirtIO disks can also be detached while it is running. If the storage resource is already detached, it is returned unchanged.
+      operationId: detachStorageFromServer
+      parameters:
+      - $ref: '#/components/parameters/detachStorageFromServerUuid'
+      responses:
+        '200':
+          $ref: '#/components/responses/detachStorageFromServer200'
+        default:
+          $ref: '#/components/responses/detachStorageFromServerDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/storage/{uuid}/favorite:
+    post:
+      tags:
+      - Storage
+      summary: Add storage resource to favorites
+      description: Adds an accessible storage resource to the account's favorites. The operation succeeds if the storage resource is already a favorite.
+      operationId: addStorageToFavorites
+      parameters:
+      - $ref: '#/components/parameters/addStorageToFavoritesUuid'
+      responses:
+        '204':
+          $ref: '#/components/responses/addStorageToFavorites204'
+        default:
+          $ref: '#/components/responses/addStorageToFavoritesDefault'
+      x-upcloud-visibility: public
+    delete:
+      tags:
+      - Storage
+      summary: Remove storage resource from favorites
+      description: Removes an accessible storage resource from the account's favorites. The operation succeeds if the storage resource is not a favorite.
+      operationId: removeStorageFromFavorites
+      parameters:
+      - $ref: '#/components/parameters/removeStorageFromFavoritesUuid'
+      responses:
+        '204':
+          $ref: '#/components/responses/removeStorageFromFavorites204'
+        default:
+          $ref: '#/components/responses/removeStorageFromFavoritesDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/storage/{uuid}/import:
+    get:
+      tags:
+      - Storage
+      summary: Get storage import details
+      description: Returns details of the latest import task for a storage resource, including its state, transferred byte counts, checksums, and any error information.
+      operationId: getStorageImportDetails
+      parameters:
+      - $ref: '#/components/parameters/getStorageImportDetailsUuid'
+      responses:
+        '200':
+          $ref: '#/components/responses/getStorageImportDetails200'
+        '404':
+          $ref: '#/components/responses/getStorageImportDetails404'
+        default:
+          $ref: '#/components/responses/getStorageImportDetailsDefault'
+      x-upcloud-visibility: public
+    post:
+      tags:
+      - Storage
+      summary: Create storage import
+      description: Creates an asynchronous task that imports a raw disk image into existing Block Storage from an HTTP URL or a temporary direct-upload URL. Attached Cloud Servers must be stopped.
+      operationId: createStorageImport
+      parameters:
+      - $ref: '#/components/parameters/createStorageImportUuid'
+      requestBody:
+        $ref: '#/components/requestBodies/createStorageImport'
+      responses:
+        '201':
+          $ref: '#/components/responses/createStorageImport201'
+        '400':
+          $ref: '#/components/responses/createStorageImport400'
+        '409':
+          $ref: '#/components/responses/createStorageImport409'
+        '503':
+          $ref: '#/components/responses/createStorageImport503'
+        default:
+          $ref: '#/components/responses/createStorageImportDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/storage/{uuid}/import/cancel:
+    post:
+      tags:
+      - Storage
+      summary: Cancel storage import
+      description: Requests cancellation of an ongoing storage import. The task enters the `cancelling` state while imported data is rolled back when necessary.
+      operationId: cancelStorageImport
+      parameters:
+      - $ref: '#/components/parameters/cancelStorageImportUuid'
+      responses:
+        '202':
+          $ref: '#/components/responses/cancelStorageImport202'
+        '404':
+          $ref: '#/components/responses/cancelStorageImport404'
+        '409':
+          $ref: '#/components/responses/cancelStorageImport409'
+        default:
+          $ref: '#/components/responses/cancelStorageImportDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/storage/{uuid}/resize:
+    post:
+      tags:
+      - Storage
+      summary: Resize Block Storage partition and filesystem
+      description: Resizes the last partition and its supported filesystem to use the block storage capacity already available. A backup is created before the operation and returned on success. Increase the block storage capacity first with the modify block storage endpoint.
+      operationId: resizeStorage
+      parameters:
+      - $ref: '#/components/parameters/resizeStorageUuid'
+      responses:
+        '200':
+          $ref: '#/components/responses/resizeStorage200'
+        default:
+          $ref: '#/components/responses/resizeStorageDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/storage/{uuid}/restore:
+    post:
+      tags:
+      - Storage
+      summary: Restore Block Storage from backup
+      description: Starts restoring the backup identified by `uuid` to its origin block storage. If the origin block storage is attached to a Cloud Server, the Cloud Server must be stopped.
+      operationId: restoreStorageFromBackup
+      parameters:
+      - $ref: '#/components/parameters/restoreStorageFromBackupUuid'
+      responses:
+        '204':
+          $ref: '#/components/responses/restoreStorageFromBackup204'
+        default:
+          $ref: '#/components/responses/restoreStorageFromBackupDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/storage/{uuid}/templatize:
+    post:
+      tags:
+      - Storage
+      summary: Create template from Block Storage
+      description: 'Creates a private template from private normal block storage. The operation is asynchronous: the returned template remains in `maintenance` until it is ready. Deployments from the template use the source block storage tier.'
+      operationId: createTemplateFromStorage
+      parameters:
+      - $ref: '#/components/parameters/createTemplateFromStorageUuid'
+      requestBody:
+        $ref: '#/components/requestBodies/createTemplateFromStorage'
+      responses:
+        '201':
+          $ref: '#/components/responses/createTemplateFromStorage201'
+        default:
+          $ref: '#/components/responses/createTemplateFromStorageDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+components:
+  responses:
+    removeStorageFromFavoritesDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/storageError'
+    addStorageToFavoritesDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/storageError'
+    cloneStorageDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/storageError'
+    cancelStorageImport202:
+      description: Storage import cancellation requested
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/storageImportResponse'
+    getStorageInfo200:
+      description: Storage resource details
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/storage'
+    getStorageInfoDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/storageError'
+    createTemplateFromStorageDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/storageError'
+    cancelStorageImport404:
+      description: The storage resource has no import task
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/storageError'
+    createStorageImport400:
+      description: Invalid import parameters or unsupported storage type
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/storageError'
+    getStorageListByNormal400:
+      description: Invalid query parameter value
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/storageError'
+    getStorageListByTemplateDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/storageError'
+    getStorageListByPublicAccessDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/storageError'
+    getStorageListByBackup400:
+      description: Invalid query parameter value
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/storageError'
+    restoreStorageFromBackup204:
+      description: Block storage restore started
+    getStorageListByNormalDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/storageError'
+    getStorageListDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/storageError'
+    storageCreateOnDemandBackupDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/storageError'
+    getStorageListByCdromDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/storageError'
+    cancelStorageImport409:
+      description: The storage import is not in progress
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/storageError'
+    getStorageListByTypeAndAccess400:
+      description: Invalid query parameter value
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/storageError'
+    createStorage201:
+      description: Block storage created
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/createStorageResponse'
+    cancelStorageImportDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/storageError'
+    getStorageList200:
+      description: A list of storage resources
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/storages'
+    getStorageListByPublicAccess200:
+      description: A list of storage resources
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/storages'
+    createStorageImport409:
+      description: The storage or attached Cloud Server is in an incompatible state
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/storageError'
+    detachStorageFromServer200:
+      description: Storage resource detached from Cloud Server
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/detachStorageResponse'
+    getFavoriteStorageList200:
+      description: A list of favorite storage resources
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/storages'
+    createStorageDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/storageError'
+    getStorageListByPublicAccess400:
+      description: Invalid query parameter value
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/storageError'
+    cancelStorageOperationDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/storageError'
+    getStorageInfo404:
+      description: Storage resource not found
+    addStorageToFavorites204:
+      description: Storage resource added to favorites
+    getStorageImportDetailsDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/storageError'
+    getStorageListByNormal200:
+      description: A list of storage resources
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/storages'
+    createTemplateFromStorage201:
+      description: Template created
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/createStorageTemplateResponse'
+    cancelStorageOperation204:
+      description: Block storage operation cancelled
+    getStorageListByPrivateAccessDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/storageError'
+    getFavoriteStorageListDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/storageError'
+    deleteStorage204:
+      description: Storage resource deleted
+    modifyStorageDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/storageError'
+    getStorageListByBackupDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/storageError'
+    removeStorageFromFavorites204:
+      description: Storage resource removed from favorites
+    getStorageListByBackup200:
+      description: A list of storage resources
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/storages'
+    resizeStorageDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/storageError'
+    storageCreateOnDemandBackup201:
+      description: On-demand backup created
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/createStorageBackupResponse'
+    getStorageListByPrivateAccess400:
+      description: Invalid query parameter value
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/storageError'
+    modifyStorage200:
+      description: Block storage modified
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/modifyStorageResponse'
+    getStorageListByTypeAndAccess200:
+      description: A list of storage resources
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/storages'
+    getStorageListByPrivateAccess200:
+      description: A list of storage resources
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/storages'
+    detachStorageFromServerDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/storageError'
+    createStorageImport201:
+      description: Storage import created
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/storageImportResponse'
+    getStorageImportDetails404:
+      description: The storage resource has no import task
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/storageError'
+    cloneStorage201:
+      description: Block storage cloned
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/createStorageResponse'
+    createStorageImport503:
+      description: Storage import is temporarily unavailable
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/storageError'
+    getStorageListByCdrom200:
+      description: A list of storage resources
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/storages'
+    attachStorageToServer200:
+      description: Storage resource attached to Cloud Server
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/attachStorageResponse'
+    getStorageImportDetails200:
+      description: Storage import details
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/storageImportResponse'
+    cloneStorage404:
+      description: Storage resource not found
+    resizeStorage200:
+      description: Block storage resize started
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/resizeStorageResponse'
+    getStorageListByTemplate200:
+      description: A list of storage resources
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/storages'
+    getStorageListByCdrom400:
+      description: Invalid query parameter value
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/storageError'
+    deleteStorageDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/storageError'
+    getStorageListByTemplate400:
+      description: Invalid query parameter value
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/storageError'
+    createStorageImportDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/storageError'
+    restoreStorageFromBackupDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/storageError'
+    getStorageList400:
+      description: Invalid query parameter value
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/storageError'
+    getStorageListByTypeAndAccessDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/storageError'
+    attachStorageToServerDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/storageError'
+  parameters:
+    getStorageListByTypeAndAccessLimit:
+      name: limit
+      in: query
+      description: Maximum number of storage resources to return.
+      required: false
+      schema:
+        $ref: '#/components/schemas/storageLimit'
+    getStorageListOrderBy:
+      name: order_by
+      in: query
+      description: Sort direction. Used only when `sort_by` is specified.
+      required: false
+      schema:
+        $ref: '#/components/schemas/storageOrderBy'
+    getStorageImportDetailsUuid:
+      name: uuid
+      in: path
+      description: Storage resource UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/storageUuid'
+    getStorageListByPublicAccessLimit:
+      name: limit
+      in: query
+      description: Maximum number of storage resources to return.
+      required: false
+      schema:
+        $ref: '#/components/schemas/storageLimit'
+    getStorageListByBackupOrderBy:
+      name: order_by
+      in: query
+      description: Sort direction. Used only when `sort_by` is specified.
+      required: false
+      schema:
+        $ref: '#/components/schemas/storageOrderBy'
+    getStorageListByPublicAccessSearch:
+      name: search
+      in: query
+      description: Search storage resource titles and UUIDs by partial match.
+      required: false
+      schema:
+        $ref: '#/components/schemas/storageSearch'
+    removeStorageFromFavoritesUuid:
+      name: uuid
+      in: path
+      description: Storage resource UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/storageUuid'
+    getStorageListByPublicAccessOffset:
+      name: offset
+      in: query
+      description: Number of storage resources to skip before returning results.
+      required: false
+      schema:
+        $ref: '#/components/schemas/storageOffset'
+    deleteStorageBackups:
+      name: backups
+      in: query
+      description: 'Policy for handling backups when deleting a storage resource. Defaults to `keep`. Allowed values: keep, delete, keep_latest'
+      required: false
+      schema:
+        type: string
+        enum:
+        - keep
+        - delete
+        - keep_latest
+    getStorageListByTypeAndAccessSearch:
+      name: search
+      in: query
+      description: Search storage resource titles and UUIDs by partial match.
+      required: false
+      schema:
+        $ref: '#/components/schemas/storageSearch'
+    getStorageListSearch:
+      name: search
+      in: query
+      description: Search storage resource titles and UUIDs by partial match.
+      required: false
+      schema:
+        $ref: '#/components/schemas/storageSearch'
+    cancelStorageOperationUuid:
+      name: uuid
+      in: path
+      description: Block storage UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/storageUuid'
+    getStorageListByNormalLabel:
+      name: label
+      in: query
+      description: Filter by label key or key-value pair. Repeat the parameter to require multiple labels; label keys are matched case-insensitively.
+      required: false
+      schema:
+        $ref: '#/components/schemas/storageLabelFilter'
+    getStorageListByTypeAndAccessAccess:
+      name: access
+      in: path
+      description: Storage resource access type to return.
+      required: true
+      schema:
+        $ref: '#/components/schemas/storageAccessFilter'
+    getStorageListByTypeAndAccessOffset:
+      name: offset
+      in: query
+      description: Number of storage resources to skip before returning results.
+      required: false
+      schema:
+        $ref: '#/components/schemas/storageOffset'
+    getStorageListByTemplateOffset:
+      name: offset
+      in: query
+      description: Number of storage resources to skip before returning results.
+      required: false
+      schema:
+        $ref: '#/components/schemas/storageOffset'
+    getStorageListByCdromOffset:
+      name: offset
+      in: query
+      description: Number of storage resources to skip before returning results.
+      required: false
+      schema:
+        $ref: '#/components/schemas/storageOffset'
+    getStorageListByTemplateSearch:
+      name: search
+      in: query
+      description: Search storage resource titles and UUIDs by partial match.
+      required: false
+      schema:
+        $ref: '#/components/schemas/storageSearch'
+    getStorageListByPublicAccessSortBy:
+      name: sort_by
+      in: query
+      description: Field by which to sort the results.
+      required: false
+      schema:
+        $ref: '#/components/schemas/storageSortBy'
+    modifyStorageUuid:
+      name: uuid
+      in: path
+      description: Block storage UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/storageUuid'
+    createTemplateFromStorageUuid:
+      name: uuid
+      in: path
+      description: Block storage UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/storageUuid'
+    getStorageListByTypeAndAccessSortBy:
+      name: sort_by
+      in: query
+      description: Field by which to sort the results.
+      required: false
+      schema:
+        $ref: '#/components/schemas/storageSortBy'
+    getStorageListByBackupOffset:
+      name: offset
+      in: query
+      description: Number of storage resources to skip before returning results.
+      required: false
+      schema:
+        $ref: '#/components/schemas/storageOffset'
+    getStorageListByTypeAndAccessLabel:
+      name: label
+      in: query
+      description: Filter by label key or key-value pair. Repeat the parameter to require multiple labels; label keys are matched case-insensitively.
+      required: false
+      schema:
+        $ref: '#/components/schemas/storageLabelFilter'
+    getStorageListByCdromSortBy:
+      name: sort_by
+      in: query
+      description: Field by which to sort the results.
+      required: false
+      schema:
+        $ref: '#/components/schemas/storageSortBy'
+    getStorageListByPrivateAccessOffset:
+      name: offset
+      in: query
+      description: Number of storage resources to skip before returning results.
+      required: false
+      schema:
+        $ref: '#/components/schemas/storageOffset'
+    getStorageListByNormalLimit:
+      name: limit
+      in: query
+      description: Maximum number of storage resources to return.
+      required: false
+      schema:
+        $ref: '#/components/schemas/storageLimit'
+    getStorageListByCdromLabel:
+      name: label
+      in: query
+      description: Filter by label key or key-value pair. Repeat the parameter to require multiple labels; label keys are matched case-insensitively.
+      required: false
+      schema:
+        $ref: '#/components/schemas/storageLabelFilter'
+    getStorageListLabel:
+      name: label
+      in: query
+      description: Filter by label key or key-value pair. Repeat the parameter to require multiple labels; label keys are matched case-insensitively.
+      required: false
+      schema:
+        $ref: '#/components/schemas/storageLabelFilter'
+    getStorageListByTemplateLabel:
+      name: label
+      in: query
+      description: Filter by label key or key-value pair. Repeat the parameter to require multiple labels; label keys are matched case-insensitively.
+      required: false
+      schema:
+        $ref: '#/components/schemas/storageLabelFilter'
+    resizeStorageUuid:
+      name: uuid
+      in: path
+      description: Block storage UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/storageUuid'
+    cloneStorageUuid:
+      name: uuid
+      in: path
+      description: Storage resource UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/storageUuid'
+    deleteStorageUuid:
+      name: uuid
+      in: path
+      description: Storage resource UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/storageUuid'
+    getStorageListByBackupLabel:
+      name: label
+      in: query
+      description: Filter by label key or key-value pair. Repeat the parameter to require multiple labels; label keys are matched case-insensitively.
+      required: false
+      schema:
+        $ref: '#/components/schemas/storageLabelFilter'
+    getStorageListOffset:
+      name: offset
+      in: query
+      description: Number of storage resources to skip before returning results.
+      required: false
+      schema:
+        $ref: '#/components/schemas/storageOffset'
+    detachStorageFromServerUuid:
+      name: uuid
+      in: path
+      description: Storage resource UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/storageUuid'
+    getStorageListByTemplateLimit:
+      name: limit
+      in: query
+      description: Maximum number of storage resources to return.
+      required: false
+      schema:
+        $ref: '#/components/schemas/storageLimit'
+    getStorageListByCdromLimit:
+      name: limit
+      in: query
+      description: Maximum number of storage resources to return.
+      required: false
+      schema:
+        $ref: '#/components/schemas/storageLimit'
+    cancelStorageImportUuid:
+      name: uuid
+      in: path
+      description: Storage resource UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/storageUuid'
+    getStorageListByCdromSearch:
+      name: search
+      in: query
+      description: Search storage resource titles and UUIDs by partial match.
+      required: false
+      schema:
+        $ref: '#/components/schemas/storageSearch'
+    getStorageListByPublicAccessOrderBy:
+      name: order_by
+      in: query
+      description: Sort direction. Used only when `sort_by` is specified.
+      required: false
+      schema:
+        $ref: '#/components/schemas/storageOrderBy'
+    storageCreateOnDemandBackupUuid:
+      name: uuid
+      in: path
+      description: Block storage UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/storageUuid'
+    getStorageListByNormalSearch:
+      name: search
+      in: query
+      description: Search storage resource titles and UUIDs by partial match.
+      required: false
+      schema:
+        $ref: '#/components/schemas/storageSearch'
+    getStorageListLimit:
+      name: limit
+      in: query
+      description: Maximum number of storage resources to return.
+      required: false
+      schema:
+        $ref: '#/components/schemas/storageLimit'
+    getStorageListByTemplateSortBy:
+      name: sort_by
+      in: query
+      description: Field by which to sort the results.
+      required: false
+      schema:
+        $ref: '#/components/schemas/storageSortBy'
+    getStorageListByNormalOrderBy:
+      name: order_by
+      in: query
+      description: Sort direction. Used only when `sort_by` is specified.
+      required: false
+      schema:
+        $ref: '#/components/schemas/storageOrderBy'
+    getStorageListSortBy:
+      name: sort_by
+      in: query
+      description: Field by which to sort the results.
+      required: false
+      schema:
+        $ref: '#/components/schemas/storageSortBy'
+    getStorageListByTemplateOrderBy:
+      name: order_by
+      in: query
+      description: Sort direction. Used only when `sort_by` is specified.
+      required: false
+      schema:
+        $ref: '#/components/schemas/storageOrderBy'
+    getStorageListByPrivateAccessOrderBy:
+      name: order_by
+      in: query
+      description: Sort direction. Used only when `sort_by` is specified.
+      required: false
+      schema:
+        $ref: '#/components/schemas/storageOrderBy'
+    getStorageListByCdromOrderBy:
+      name: order_by
+      in: query
+      description: Sort direction. Used only when `sort_by` is specified.
+      required: false
+      schema:
+        $ref: '#/components/schemas/storageOrderBy'
+    createStorageImportUuid:
+      name: uuid
+      in: path
+      description: Storage resource UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/storageUuid'
+    getStorageListByPrivateAccessLabel:
+      name: label
+      in: query
+      description: Filter by label key or key-value pair. Repeat the parameter to require multiple labels; label keys are matched case-insensitively.
+      required: false
+      schema:
+        $ref: '#/components/schemas/storageLabelFilter'
+    attachStorageToServerUuid:
+      name: uuid
+      in: path
+      description: Storage resource UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/storageUuid'
+    getStorageListByPrivateAccessSortBy:
+      name: sort_by
+      in: query
+      description: Field by which to sort the results.
+      required: false
+      schema:
+        $ref: '#/components/schemas/storageSortBy'
+    addStorageToFavoritesUuid:
+      name: uuid
+      in: path
+      description: Storage resource UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/storageUuid'
+    getStorageListByTypeAndAccessOrderBy:
+      name: order_by
+      in: query
+      description: Sort direction. Used only when `sort_by` is specified.
+      required: false
+      schema:
+        $ref: '#/components/schemas/storageOrderBy'
+    getStorageListByBackupSortBy:
+      name: sort_by
+      in: query
+      description: Field by which to sort the results.
+      required: false
+      schema:
+        $ref: '#/components/schemas/storageSortBy'
+    restoreStorageFromBackupUuid:
+      name: uuid
+      in: path
+      description: Backup UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/storageUuid'
+    getStorageListByPrivateAccessSearch:
+      name: search
+      in: query
+      description: Search storage resource titles and UUIDs by partial match.
+      required: false
+      schema:
+        $ref: '#/components/schemas/storageSearch'
+    getStorageListByNormalSortBy:
+      name: sort_by
+      in: query
+      description: Field by which to sort the results.
+      required: false
+      schema:
+        $ref: '#/components/schemas/storageSortBy'
+    getStorageListByNormalOffset:
+      name: offset
+      in: query
+      description: Number of storage resources to skip before returning results.
+      required: false
+      schema:
+        $ref: '#/components/schemas/storageOffset'
+    getStorageInfoUuid:
+      name: uuid
+      in: path
+      description: Storage resource UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/storageUuid'
+    getStorageListByTypeAndAccessType:
+      name: type
+      in: path
+      description: Storage resource type to return.
+      required: true
+      schema:
+        $ref: '#/components/schemas/storageType'
+    getStorageListByPublicAccessLabel:
+      name: label
+      in: query
+      description: Filter by label key or key-value pair. Repeat the parameter to require multiple labels; label keys are matched case-insensitively.
+      required: false
+      schema:
+        $ref: '#/components/schemas/storageLabelFilter'
+    getStorageListByBackupLimit:
+      name: limit
+      in: query
+      description: Maximum number of storage resources to return.
+      required: false
+      schema:
+        $ref: '#/components/schemas/storageLimit'
+    getStorageListByPrivateAccessLimit:
+      name: limit
+      in: query
+      description: Maximum number of storage resources to return.
+      required: false
+      schema:
+        $ref: '#/components/schemas/storageLimit'
+    getStorageListByBackupSearch:
+      name: search
+      in: query
+      description: Search storage resource titles and UUIDs by partial match.
+      required: false
+      schema:
+        $ref: '#/components/schemas/storageSearch'
+  schemas:
+    detachStorageResponse:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        storage:
+          $ref: '#/components/schemas/storageDetails'
+      required:
+      - storage
+      additionalProperties: false
+      description: Response containing the detached storage resource.
+      example:
+        storage:
+          access: private
+          backup_rule: {}
+          backups:
+            backup: []
+          created: '2026-08-26T09:15:00Z'
+          encrypted: 'yes'
+          labels:
+          - key: environment
+            value: production
+          license: 0
+          servers:
+            server: []
+          size: 50
+          state: online
+          tier: maxiops
+          title: Production data
+          type: normal
+          uuid: 01d4fcd4-e446-433b-8a9c-551a1284952e
+          zone: fi-hel1
+    storageUuid:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+      format: uuid
+      description: Universally unique identifier
+      example: 0414e0d7-4436-4037-9dd8-6eaf47dce599
+    storage:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        storage:
+          $ref: '#/components/schemas/storageDetails'
+      required:
+      - storage
+      additionalProperties: false
+      description: Response schema containing a single storage resource.
+      example:
+        storage:
+          access: private
+          backup_rule: {}
+          backups:
+            backup: []
+          created: '2026-08-26T09:15:00Z'
+          encrypted: 'no'
+          labels: []
+          license: 0
+          servers:
+            server: []
+          size: 50
+          state: online
+          tier: maxiops
+          title: Production data
+          type: normal
+          uuid: 01d4fcd4-e446-433b-8a9c-551a1284952e
+          zone: fi-hel1
+    storageOffset:
+      type: integer
+      examples:
+      - 0
+      - 25
+      - 50
+      - 100
+      minimum: 0
+      description: Number of items to skip before starting to return results. Default is 0.
+    attachStorageResponse:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        storage:
+          $ref: '#/components/schemas/storageDetails'
+      required:
+      - storage
+      additionalProperties: false
+      description: Response containing the attached storage resource and its Cloud Server attachment.
+      example:
+        storage:
+          access: private
+          backup_rule: {}
+          backups:
+            backup: []
+          created: '2026-08-26T09:15:00Z'
+          encrypted: 'yes'
+          labels:
+          - key: environment
+            value: production
+          license: 0
+          servers:
+            server:
+            - 009d64ef-31d1-4684-a26b-c86c955cbf46
+          size: 50
+          state: online
+          tier: maxiops
+          title: Production data
+          type: normal
+          uuid: 01d4fcd4-e446-433b-8a9c-551a1284952e
+          zone: fi-hel1
+    modifyStorageResponse:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        storage:
+          $ref: '#/components/schemas/storageDetails'
+        resize_backup:
+          $ref: '#/components/schemas/storageDetails'
+      required:
+      - storage
+      additionalProperties: false
+      description: Response schema for block storage modification operations.
+      example:
+        storage:
+          access: private
+          backup_rule: {}
+          backups:
+            backup: []
+          created: '2026-08-26T09:15:00Z'
+          encrypted: 'no'
+          labels: []
+          license: 0
+          servers:
+            server: []
+          size: 60
+          state: online
+          tier: maxiops
+          title: Production data expanded
+          type: normal
+          uuid: 011d671f-e803-484d-920a-c25b4bb05c01
+          zone: fi-hel1
+    storageAccess:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      enum:
+      - public
+      - private
+      - utility
+      description: Network access level
+      example: public
+    storages:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      properties:
+        storages:
+          type: object
+          properties:
+            storage:
+              type: array
+              items:
+                $ref: '#/components/schemas/storageListItem'
+          required:
+          - storage
+          additionalProperties: false
+      required:
+      - storages
+      additionalProperties: false
+      description: A list of storage resources accessible to the account.
+      example:
+        storages:
+          storage:
+          - access: private
+            encrypted: 'no'
+            created: '2025-02-27T05:50:50Z'
+            labels:
+            - key: environment
+              value: production
+            license: 0
+            size: 50
+            state: online
+            tier: maxiops
+            title: Production database
+            type: normal
+            uuid: 01f3286c-a5ea-4670-8121-d0b9767d625b
+            zone: fi-hel1
+    storageSearch:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      examples:
+      - database
+      - 01f3286c
+      maxLength: 255
+      minLength: 1
+      pattern: ^[^<>]+$
+      description: Partial match against the storage resource title or UUID.
+    storageError:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            error_code:
+              type: string
+              examples:
+              - GENERAL_FAILURE
+            error_message:
+              type: string
+              examples:
+              - Your request could not be fulfilled due to a technical issue.
+          required:
+          - error_code
+          - error_message
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+      description: A general error response indicating that the request could not be fulfilled due to a technical issue.
+    cloneStorageRequest:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        storage:
+          type: object
+          properties:
+            encrypted:
+              $ref: '#/components/schemas/storageEncrypted'
+            tier:
+              $ref: '#/components/schemas/storageTier'
+            title:
+              $ref: '#/components/schemas/storageTitle'
+            zone:
+              $ref: '#/components/schemas/storageZone'
+          required:
+          - zone
+          - title
+          additionalProperties: false
+          description: Parameters for the cloned block storage.
+      required:
+      - storage
+      additionalProperties: false
+      description: Request schema for cloning a block storage resource.
+      example:
+        storage:
+          encrypted: 'yes'
+          tier: maxiops
+          title: Cloned Block Storage
+          zone: fi-hel1
+    storageSortBy:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      examples:
+      - title
+      enum:
+      - created
+      - size
+      - tier
+      - title
+      - type
+      - zone
+      description: Storage resource field by which to sort the results.
+    storageLabel:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        key:
+          type: string
+          description: Label key used to classify the resource
+        value:
+          type: string
+          description: Value associated with the label key
+      required:
+      - key
+      - value
+      additionalProperties: false
+      description: A key/value pair to label and categorize resources
+      example:
+        key: env
+        value: production
+    createStorageResponse:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        storage:
+          $ref: '#/components/schemas/storageDetails'
+      required:
+      - storage
+      additionalProperties: false
+      description: Response containing the created block storage resource.
+      example:
+        storage:
+          access: private
+          backup_rule:
+            interval: daily
+            retention: '7'
+            time: '0400'
+          backups:
+            backup: []
+          created: '2026-08-26T09:15:00Z'
+          encrypted: 'yes'
+          labels:
+          - key: environment
+            value: production
+          license: 0
+          servers:
+            server: []
+          size: 50
+          state: online
+          tier: maxiops
+          title: Production data
+          type: normal
+          uuid: 01d4fcd4-e446-433b-8a9c-551a1284952e
+          zone: fi-hel1
+    createStorageTemplateResponse:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        storage:
+          $ref: '#/components/schemas/storageDetails'
+      required:
+      - storage
+      additionalProperties: false
+      description: Response containing the private template being created.
+      example:
+        storage:
+          access: private
+          created: '2026-08-26T09:25:00Z'
+          encrypted: 'yes'
+          labels:
+          - key: environment
+            value: production
+          license: 0
+          servers:
+            server: []
+          size: 50
+          state: maintenance
+          tier: maxiops
+          title: My server template
+          type: template
+          uuid: 01be94b8-8f9f-44f7-99df-3d61051173c2
+          zone: fi-hel1
+    storageLabelFilter:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      examples:
+      - environment
+      - environment=production
+      pattern: ^(?!_)[\x20-\x3C\x3E-\x7E]{2,32}(?:=.*)?$
+      description: Label key or key-value pair to match. A key-only filter matches any value. Repeat the query parameter to require all specified labels; keys are matched case-insensitively.
+    storageListItem:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        access:
+          $ref: '#/components/schemas/storageAccess'
+        encrypted:
+          $ref: '#/components/schemas/storageEncrypted'
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/storageLabel'
+          description: Labels describing and classifying the storage resource.
+        license:
+          type: number
+          format: double
+          description: Hourly license fee in credits. The value is `0` when the storage resource has no license fee.
+        part_of_plan:
+          type: string
+          description: Present with value `yes` when the storage resource is included in the Cloud Server plan.
+          const: 'yes'
+        progress:
+          type: string
+          description: Progress of an active storage operation.
+        created:
+          type: string
+          format: date-time
+          description: Time when the private storage resource or backup was created.
+        origin:
+          $ref: '#/components/schemas/storageUuid'
+        size:
+          type: integer
+          minimum: 1
+          format: int64
+          description: Size of the storage resource in gigabytes.
+        state:
+          $ref: '#/components/schemas/storageState'
+        tier:
+          $ref: '#/components/schemas/storageTier'
+        title:
+          type: string
+          description: A short, informational description of the storage resource.
+        type:
+          $ref: '#/components/schemas/storageType'
+        template_type:
+          $ref: '#/components/schemas/storageTemplateType'
+        uuid:
+          $ref: '#/components/schemas/storageUuid'
+        zone:
+          $ref: '#/components/schemas/storageZone'
+      required:
+      - access
+      - license
+      - size
+      - state
+      - title
+      - type
+      - uuid
+      - encrypted
+      - labels
+      additionalProperties: false
+      description: Storage resource summary returned by public list operations.
+      example:
+        access: private
+        created: '2025-02-27T05:50:50Z'
+        encrypted: 'no'
+        labels: []
+        license: 0
+        size: 50
+        state: online
+        tier: maxiops
+        title: Databases
+        type: normal
+        uuid: 01f3286c-a5ea-4670-8121-d0b9767d625b
+        zone: fi-hel1
+    storageTier:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      examples:
+      - hdd
+      - standard
+      - maxiops
+      enum:
+      - hdd
+      - standard
+      - maxiops
+      description: Block storage performance and pricing tier. `maxiops` is high-performance block storage, `standard` is general-purpose block storage, and `hdd` is the API name for the high-capacity Archive tier.
+    storageType:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      examples:
+      - normal
+      enum:
+      - normal
+      - template
+      - cdrom
+      - backup
+      description: Storage resource type to return.
+    createStorageBackupResponse:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        storage:
+          $ref: '#/components/schemas/storageDetails'
+      required:
+      - storage
+      additionalProperties: false
+      description: Response containing the on-demand backup being created.
+      example:
+        storage:
+          access: private
+          created: '2026-08-26T09:20:00Z'
+          encrypted: 'yes'
+          labels:
+          - key: environment
+            value: production
+          license: 0
+          origin: 01d4fcd4-e446-433b-8a9c-551a1284952e
+          progress: '0'
+          servers:
+            server: []
+          size: 50
+          state: maintenance
+          title: Manually created backup
+          type: backup
+          uuid: 016d343b-14de-4b61-91ca-433dd1ea6c47
+          zone: fi-hel1
+    storageDetails:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        access:
+          $ref: '#/components/schemas/storageAccess'
+        encrypted:
+          $ref: '#/components/schemas/storageEncrypted'
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/storageLabel'
+          description: Labels describing and classifying the storage resource.
+        license:
+          type: number
+          format: double
+          description: Hourly license cost in credits when the storage resource contains a licensed operating system.
+        backup_rule:
+          oneOf:
+          - $ref: '#/components/schemas/storageBackupRule'
+          - type: object
+          description: Schedule for automatic backups of the storage resource. An empty object indicates that no automatic backup schedule is configured.
+        backups:
+          type: object
+          properties:
+            backup:
+              type: array
+              items:
+                $ref: '#/components/schemas/storageUuid'
+              description: UUIDs of backups associated with this storage resource.
+          required:
+          - backup
+          additionalProperties: false
+          description: Backups associated with this storage resource.
+        created:
+          type: string
+          format: date-time
+          description: Time when the private storage resource was created.
+        origin:
+          $ref: '#/components/schemas/storageUuid'
+        part_of_plan:
+          type: string
+          description: Present with the value `yes` when the storage resource is included in a Cloud Server plan.
+          const: 'yes'
+        progress:
+          type: string
+          description: Progress of an ongoing storage operation when available.
+        servers:
+          type: object
+          properties:
+            server:
+              type: array
+              items:
+                $ref: '#/components/schemas/storageUuid'
+              description: UUIDs of Cloud Servers to which the storage resource is attached.
+          required:
+          - server
+          additionalProperties: false
+          description: Cloud Servers to which the storage resource is attached.
+        size:
+          type: integer
+          minimum: 1
+          format: int64
+          description: Size of the storage resource in gigabytes.
+        state:
+          $ref: '#/components/schemas/storageState'
+        tier:
+          $ref: '#/components/schemas/storageTier'
+        title:
+          type: string
+          description: A short, informational description of the storage resource.
+        type:
+          $ref: '#/components/schemas/storageType'
+        template_type:
+          $ref: '#/components/schemas/storageTemplateType'
+        uuid:
+          $ref: '#/components/schemas/storageUuid'
+        zone:
+          $ref: '#/components/schemas/storageZone'
+      required:
+      - access
+      - encrypted
+      - labels
+      - license
+      - servers
+      - size
+      - state
+      - title
+      - type
+      - uuid
+      additionalProperties: false
+      description: Detailed information about a storage resource.
+      example:
+        access: private
+        backup_rule: {}
+        backups:
+          backup: []
+        created: '2026-08-26T09:15:00Z'
+        encrypted: 'no'
+        labels: []
+        license: 0
+        servers:
+          server: []
+        size: 50
+        state: online
+        tier: maxiops
+        title: Production data
+        type: normal
+        uuid: 01d4fcd4-e446-433b-8a9c-551a1284952e
+        zone: fi-hel1
+    createStorageRequest:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        storage:
+          type: object
+          properties:
+            backup_rule:
+              oneOf:
+              - $ref: '#/components/schemas/storageBackupRule'
+              - type: object
+              description: Schedule for automatic backups. An empty object disables automatic         backups.
+            encrypted:
+              $ref: '#/components/schemas/storageEncrypted'
+            labels:
+              type: array
+              items:
+                $ref: '#/components/schemas/storageLabel'
+              description: Labels describing and classifying the block storage. Each label contains a key and a value.
+            size:
+              oneOf:
+              - type: integer
+                maximum: 4096
+                minimum: 1
+              - type: string
+                pattern: ^(?:[1-9]|[1-9][0-9]{1,2}|[1-3][0-9]{3}|40(?:[0-8][0-9]|9[0-6]))$
+              examples:
+              - 100
+              - '100'
+              description: Size of the block storage in gigabytes, from 1 through 4096 subject to the account's block storage limits.
+            tier:
+              $ref: '#/components/schemas/storageTier'
+            title:
+              type: string
+              maxLength: 255
+              minLength: 1
+              pattern: ^[^<>]*$
+              description: A short, informational description of the block storage.
+            zone:
+              $ref: '#/components/schemas/storageZone'
+          required:
+          - zone
+          - size
+          - title
+          additionalProperties: false
+          description: Block storage creation parameters.
+      required:
+      - storage
+      additionalProperties: false
+      description: Request schema for creating block storage.
+      example:
+        storage:
+          backup_rule:
+            interval: daily
+            retention: '7'
+            time: '0400'
+          encrypted: 'yes'
+          labels:
+          - key: environment
+            value: production
+          size: 50
+          tier: maxiops
+          title: Block Storage 1
+          zone: fi-hel1
+    storageImportResponse:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        storage_import:
+          $ref: '#/components/schemas/storageImport'
+      required:
+      - storage_import
+      additionalProperties: false
+      description: Response containing a storage import task.
+      example:
+        storage_import:
+          client_content_length: 0
+          client_content_type: ''
+          completed: ''
+          created: '2020-06-26T08:51:07Z'
+          direct_upload_url: https://fi-hel1.img.upcloud.com/uploader/session/07a6c9a3-300e-4d0e-b935-624f3dbdff3f
+          error_code: ''
+          error_message: ''
+          md5sum: ''
+          read_bytes: 0
+          sha256sum: ''
+          source: direct_upload
+          state: prepared
+          uuid: 07a6c9a3-300e-4d0e-b935-624f3dbdff3f
+          written_bytes: 0
+    createStorageTemplateRequest:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        storage:
+          type: object
+          properties:
+            title:
+              type: string
+              maxLength: 255
+              minLength: 1
+              pattern: ^[^<>]*$
+              description: A short, informational description of the template.
+          required:
+          - title
+          additionalProperties: false
+          description: Parameters for creating a template from the block storage.
+      required:
+      - storage
+      additionalProperties: false
+      description: Request schema for creating a template from a block storage resource.
+      example:
+        storage:
+          title: My server template
+    storageEncrypted:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      examples:
+      - 'yes'
+      - 'no'
+      enum:
+      - 'yes'
+      - 'no'
+      description: Indicates whether the resource is encrypted.
+    storageZone:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      examples:
+      - fi-hel1
+      - de-fra1
+      - us-nyc1
+      maxLength: 15
+      minLength: 2
+      pattern: ^[a-z][a-z0-9-]{0,14}[a-z0-9]$
+      description: Zone identifier
+    storageLimit:
+      type: integer
+      examples:
+      - 25
+      - 50
+      - 100
+      maximum: 100
+      minimum: 1
+      description: Maximum number of storage resources to return. Default is 25.
+    storageTemplateType:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      examples:
+      - cloud-init
+      enum:
+      - cloud-init
+      - native
+      description: Template initialization mechanism. `cloud-init` templates support cloud-init metadata, while `native` templates use the operating system's native initialization.
+    createStorageImportRequest:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        storage_import:
+          type: object
+          allOf:
+          - {}
+          properties:
+            source:
+              type: string
+              enum:
+              - http_import
+              - direct_upload
+              description: Import mode. Use `http_import` to download an image or `direct_upload` to receive a temporary upload URL.
+            source_location:
+              type: string
+              maxLength: 2000
+              pattern: ^https?://
+              format: uri
+              description: Publicly reachable HTTP or HTTPS URL of the image. Required for `http_import`.
+          required:
+          - source
+          additionalProperties: false
+          description: Storage import parameters.
+      required:
+      - storage_import
+      additionalProperties: false
+      description: Request schema for creating a storage import task.
+      example:
+        storage_import:
+          source: http_import
+          source_location: https://example.com/disk.raw
+    storageState:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      examples:
+      - online
+      enum:
+      - online
+      - maintenance
+      - error
+      - pending_delete
+      - hidden
+      - cloning
+      - backuping
+      - attaching
+      - detaching
+      - syncing
+      description: Current lifecycle state of the storage resource. `online` is ready for use; `maintenance` indicates ongoing maintenance or an update; `cloning`, `backuping`, and `syncing` indicate active storage operations; `error` indicates that the storage resource is inaccessible because an error occurred.
+    storageTitle:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      description: Human-readable title for a resource.
+    storageAccessFilter:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      examples:
+      - private
+      enum:
+      - public
+      - private
+      description: Storage resource access type to return.
+    storageOrderBy:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      examples:
+      - asc
+      enum:
+      - asc
+      - desc
+      description: Sort direction. This parameter is used only when `sort_by` is specified.
+    storageBackupRule:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        interval:
+          type: string
+          enum:
+          - daily
+          - mon
+          - tue
+          - wed
+          - thu
+          - fri
+          - sat
+          - sun
+          description: Weekday when the backup is created, or `daily` to create a backup every day at the same time.
+        time:
+          type: string
+          pattern: ^(?:[01][0-9]|2[0-3])[0-5][0-9]$
+          description: UTC time of day when the backup is created, in `HHMM` format.
+        retention:
+          type: string
+          pattern: ^(?:[1-9]|[1-9][0-9]{1,2}|10[0-8][0-9]|109[0-5])$
+          description: Number of days before the backup is automatically deleted, from 1 through 1095.
+      required:
+      - interval
+      - time
+      - retention
+      additionalProperties: false
+      description: Schedule for automatic block storage backups.
+      example:
+        interval: daily
+        retention: '7'
+        time: '0400'
+    attachStorageRequest:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        storage_device:
+          type: object
+          properties:
+            server:
+              $ref: '#/components/schemas/storageUuid'
+            address:
+              type: string
+              examples:
+              - scsi
+              - scsi:0:0
+              - virtio:0
+              - ide:0:0
+              pattern: ^(?:ide(?::[01]:[01])?|scsi(?::0:(?:[0-9]|1[0-5]))?|virtio(?::(?:[0-9]|1[0-5]))?)$
+              description: Device address on the Cloud Server, or an `ide`, `scsi`, or `virtio` bus name for automatic address selection. Defaults to the next available address on the Cloud Server's default disk bus for disks, or the IDE bus for CD-ROM devices.
+            type:
+              type: string
+              enum:
+              - disk
+              - cdrom
+              description: Type of the attached device. Defaults to `disk`.
+              default: disk
+            boot_disk:
+              type: string
+              enum:
+              - '0'
+              - '1'
+              description: Whether the device is used as the boot disk unless overridden by the Cloud Server boot order. Defaults to `0`.
+              default: '0'
+          required:
+          - server
+          additionalProperties: false
+          description: Parameters for attaching this storage resource to a Cloud Server in the same zone.
+      required:
+      - storage_device
+      additionalProperties: false
+      description: Request schema for attaching this storage resource to a Cloud Server.
+      example:
+        storage_device:
+          server: 00798b85-efdc-41ca-8021-f6ef457b8531
+          type: disk
+    modifyStorageBody:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        storage:
+          type: object
+          properties:
+            backup_rule:
+              oneOf:
+              - $ref: '#/components/schemas/storageBackupRule'
+              - type: object
+              description: Schedule for automatic backups of the block storage. An empty object removes the configured schedule.
+            filesystem_resize:
+              type: string
+              enum:
+              - 'yes'
+              - 'no'
+              description: Set to `yes` when increasing `size` to also resize the last partition and its supported filesystem. The attached Cloud Server, if any, must be stopped.
+            labels:
+              type: array
+              items:
+                $ref: '#/components/schemas/storageLabel'
+              description: Labels describing and classifying the block storage. Each label contains a key and a value.
+            size:
+              oneOf:
+              - type: integer
+                maximum: 4096
+                minimum: 1
+              - type: string
+                pattern: ^(?:[1-9]|[1-9][0-9]{1,2}|[1-3][0-9]{3}|40(?:[0-8][0-9]|9[0-6]))$
+              examples:
+              - 100
+              - '100'
+              description: New block storage size in gigabytes, from 1 through 4096 subject to the account's block storage limits. The new size must be greater than the current size.
+            title:
+              type: string
+              maxLength: 255
+              minLength: 1
+              pattern: ^[^<>]*$
+              description: A short, informational description of the block storage.
+          additionalProperties: false
+          description: Block storage properties to modify.
+      required:
+      - storage
+      additionalProperties: false
+      description: Request schema for modifying block storage properties.
+      example:
+        storage:
+          size: 100
+          title: Production data expanded
+    createStorageBackupRequest:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        storage:
+          type: object
+          properties:
+            title:
+              type: string
+              maxLength: 255
+              minLength: 1
+              pattern: ^[^<>]*$
+              description: A short, informational description of the backup.
+          required:
+          - title
+          additionalProperties: false
+          description: Parameters for the point-in-time backup.
+      required:
+      - storage
+      additionalProperties: false
+      description: Request schema for creating an on-demand block storage backup.
+      example:
+        storage:
+          title: Manually created backup
+    storageImport:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      allOf:
+      - {}
+      properties:
+        client_content_length:
+          type: integer
+          minimum: 0
+          description: Content length reported by the import client, in bytes.
+        client_content_type:
+          type: string
+          description: Content type reported by the import client.
+        completed:
+          oneOf:
+          - const: ''
+          - type: string
+            format: date-time
+          description: Completion time in RFC 3339 format, or an empty string while unfinished.
+        created:
+          type: string
+          format: date-time
+          description: Time when the import task was created.
+        direct_upload_url:
+          type: string
+          format: uri
+          description: Temporary URL to which image data is uploaded in `direct_upload` mode.
+        error_code:
+          type: string
+          enum:
+          - ''
+          - CLIENT_FAILURE
+          - IMPORT_FAILURE
+          - INTERNAL_FAILURE
+          description: Failure category, empty unless the task failed.
+        error_message:
+          type: string
+          description: Failure details, empty unless the task failed.
+        md5sum:
+          type: string
+          description: MD5 checksum of the imported data, available after completion.
+        read_bytes:
+          type: integer
+          minimum: 0
+          description: Number of bytes read from the source.
+        sha256sum:
+          type: string
+          description: SHA-256 checksum of the imported data, available after completion.
+        source:
+          type: string
+          enum:
+          - http_import
+          - direct_upload
+          description: Import mode.
+        source_location:
+          type: string
+          format: uri
+          description: HTTP or HTTPS source URL for an `http_import` task.
+        state:
+          type: string
+          enum:
+          - prepared
+          - pending
+          - importing
+          - failed
+          - cancelling
+          - cancelled
+          - completed
+          description: Current import task state.
+        uuid:
+          $ref: '#/components/schemas/storageUuid'
+        written_bytes:
+          type: integer
+          minimum: 0
+          description: Number of bytes written to the storage resource.
+      required:
+      - client_content_length
+      - client_content_type
+      - completed
+      - created
+      - error_code
+      - error_message
+      - md5sum
+      - read_bytes
+      - sha256sum
+      - source
+      - state
+      - uuid
+      - written_bytes
+      additionalProperties: false
+      description: Details and progress of a storage import task.
+      example:
+        client_content_length: 0
+        client_content_type: ''
+        completed: ''
+        created: '2020-06-26T08:51:07Z'
+        error_code: ''
+        error_message: ''
+        md5sum: ''
+        read_bytes: 0
+        sha256sum: ''
+        source: http_import
+        source_location: https://example.com/disk.raw
+        state: pending
+        uuid: 07a6c9a3-300e-4d0e-b935-624f3dbdff3f
+        written_bytes: 0
+    resizeStorageResponse:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        resize_backup:
+          $ref: '#/components/schemas/storageDetails'
+      required:
+      - resize_backup
+      additionalProperties: false
+      description: Response containing the backup created before resizing the block storage partition and filesystem.
+      example:
+        resize_backup:
+          access: private
+          created: '2021-12-03T06:25:15Z'
+          encrypted: 'no'
+          labels: []
+          license: 0
+          size: 100
+          state: online
+          origin: 017ca4cc-def2-458d-a797-7782959b30a7
+          servers:
+            server: []
+          tier: maxiops
+          title: Resize Backup
+          type: backup
+          uuid: 01beec3a-14ac-4f71-9c63-3338341121c3
+          zone: fi-hel1
+  requestBodies:
+    createStorageImport:
+      description: Storage import parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/createStorageImportRequest'
+    modifyStorage:
+      description: Block storage modification parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/modifyStorageBody'
+    storageCreateOnDemandBackup:
+      description: On-demand backup creation parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/createStorageBackupRequest'
+    createTemplateFromStorage:
+      description: Template creation parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/createStorageTemplateRequest'
+    attachStorageToServer:
+      description: Storage attachment parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/attachStorageRequest'
+    cloneStorage:
+      description: Block storage clone parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/cloneStorageRequest'
+    createStorage:
+      description: Block storage creation parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/createStorageRequest'
+  securitySchemes:
+    apiToken:
+      type: http
+      description: UpCloud API uses HTTP Bearer authentication. An API token is required to authenticate. The API token can be created in the UpCloud control panel. Alternatively, you can create an API token using the API directly, or with upctl. Note that if you want to use HTTP Basic authentication on API or with upctl, you will need to enable API access in the UpCloud control panel first.
+      scheme: bearer
+x-refined-from:
+- upcloud-openapi.json
+- upcloud-openapi.yml
+x-upcloud-visibility: public
+x-tagGroups:
+- name: Server
+  tags:
+  - server
+  - server-group
+  - server_size
+  - plan
+  - device
+  - events
+  - timezone
+  - vnc_keymap
+- name: Network
+  tags:
+  - network
+  - network-peering
+  - ip_address
+  - router
+  - gateway
+  - firewall-ruleset
+- name: Account & Access
+  tags:
+  - account
+  - audit-logs
+  - account-tokens
+  - permission
+  - tag
+- name: Billing
+  tags:
+  - price
+  - currency

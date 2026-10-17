@@ -1,0 +1,709 @@
+openapi: 3.2.0
+info:
+  title: Upcloud Audit Logs API
+  version: '1.3'
+  contact:
+    name: UpCloud
+    url: https://upcloud.com
+    email: hello@upcloud.com
+  license:
+    name: MIT
+    url: https://spdx.org/licenses/MIT.html
+  termsOfService: https://upcloud.com/terms-of-service/
+  description: 'Operations tagged audit-logs across 2 of this provider''s published API definitions: upcloud-openapi.json, upcloud-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.upcloud.com
+security:
+- apiToken: []
+tags:
+- name: Audit Logs
+  description: 'The Audit Log Service API allows customers to query and export their audit logs.
+
+
+    Audit logs track all actions performed on customer accounts, including resource creation, modification, and deletion.
+
+    The API provides filtering, pagination, and export capabilities.
+
+
+    All endpoints require HTTP Basic authentication using UpCloud account credentials.'
+  x-displayName: Audit Logs
+paths:
+  /1.3/audit-logs:
+    get:
+      tags:
+      - Audit Logs
+      summary: List audit logs
+      description: 'Returns a list of audit log rows according to the query parameters. Note that this endpoint is paginated by default and the list is limited in results.
+
+
+        Pagination
+
+        Upcloud-Total-Count header is included in the response to indicate the total number of audit logs available with the current query parameters (excluding limit and offset). The total count can be used for a number of pagination strategies. limit and offset query parameters can be used to finally paginate the results.'
+      operationId: listAuditLogs
+      parameters:
+      - $ref: '#/components/parameters/listAuditLogsQ'
+      - $ref: '#/components/parameters/listAuditLogsLimit'
+      - $ref: '#/components/parameters/listAuditLogsOffset'
+      - $ref: '#/components/parameters/listAuditLogsActions'
+      - $ref: '#/components/parameters/listAuditLogsOrigins'
+      - $ref: '#/components/parameters/listAuditLogsResourceTypes'
+      - $ref: '#/components/parameters/listAuditLogsCreatedAfter'
+      - $ref: '#/components/parameters/listAuditLogsCreatedBefore'
+      responses:
+        '200':
+          $ref: '#/components/responses/listAuditLogs200'
+        default:
+          $ref: '#/components/responses/listAuditLogsDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/audit-logs/export:
+    get:
+      tags:
+      - Audit Logs
+      summary: Export audit logs
+      description: 'Export all audit logs for the authenticated account as CSV or JSON (up to 180 day limit). Note: Use the format parameter to specify output format; only JSON schema is documented here.'
+      operationId: exportAuditLogs
+      parameters:
+      - $ref: '#/components/parameters/exportAuditLogsFormat'
+      responses:
+        '200':
+          $ref: '#/components/responses/exportAuditLogs200'
+        default:
+          $ref: '#/components/responses/exportAuditLogsDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/audit-logs/{cloudEventID}:
+    get:
+      tags:
+      - Audit Logs
+      summary: Get event details
+      description: Returns details of a single audit log event by its cloud event ID.
+      operationId: getAuditLog
+      parameters:
+      - $ref: '#/components/parameters/auditLogsGetAuditLogCloudEventID'
+      responses:
+        '200':
+          $ref: '#/components/responses/auditLogsGetAuditLog200'
+        default:
+          $ref: '#/components/responses/auditLogsGetAuditLogDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/audit-logs/filter-options:
+    get:
+      tags:
+      - Audit Logs
+      summary: Get filter options
+      description: Returns lists of available resource types, actions, and origins for filtering.
+      operationId: getFilterOptions
+      responses:
+        '200':
+          $ref: '#/components/responses/auditLogsGetFilterOptions200'
+        default:
+          $ref: '#/components/responses/auditLogsGetFilterOptionsDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+components:
+  schemas:
+    auditLogsAuditLog:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - time: '2024-03-05T14:30:00Z'
+        auth_type: api
+        cloud_event_id: 01HQXYZ123456789ABCDEFGHJK
+        upcloud_correlation_id: 550e8400-e29b-41d4-a716-446655440000
+        resource_type: server
+        action: start
+        origin: api
+        account_username: john.doe
+        ip_address: 192.168.1.100
+        resource_id: 00798b85-efdc-41ca-8021-f6ef457b8531
+      properties:
+        time:
+          type: string
+          examples:
+          - '2024-03-05T14:30:00Z'
+          format: date-time
+          description: Timestamp of the event
+        auth_type:
+          type: string
+          examples:
+          - api
+          - gui
+          - basic_auth
+          description: Authentication type used (e.g., 'gui', 'api', 'basic_auth')
+        cloud_event_id:
+          type: string
+          examples:
+          - 01HQXYZ123456789ABCDEFGHJK
+          pattern: ^[0-9A-HJKMNP-TV-Z]{26}$
+          description: Cloud event ID in ULID format
+        upcloud_correlation_id:
+          type: string
+          examples:
+          - 550e8400-e29b-41d4-a716-446655440000
+          description: UpCloud correlation ID for request tracing
+        resource_type:
+          type: string
+          examples:
+          - server
+          - storage
+          - network-gateway
+          enum:
+          - account
+          - auth
+          - init-script
+          - managed-database
+          - managed-loadbalancer
+          - managed-loadbalancer-certificate-bundle
+          - managed-object-storage
+          - network-gateway
+          - server
+          - storage
+          - uks
+          - ssh-key
+          description: Type of resource affected
+        resource_sub_type:
+          type: string
+          examples:
+          - session-api-token
+          - subaccount-api-token
+          description: Subtype of resource affected (e.g., 'session-api-token')
+        action:
+          type: string
+          examples:
+          - create
+          - update
+          - delete
+          enum:
+          - create
+          - read
+          - update
+          - delete
+          - access-granted
+          - access-granted-kubeconfig
+          - access-modified
+          - access-update
+          - maintenance-start
+          - writes-enable
+          - attach
+          - clone
+          - detach
+          - login
+          - logout
+          - start
+          - stop
+          - owner-change
+          description: Action performed
+        origin:
+          type: string
+          examples:
+          - api
+          - gui
+          enum:
+          - api
+          - gui
+          - upcloud_internal
+          description: Origin of the request
+        account_username:
+          type: string
+          examples:
+          - john.doe
+          description: Username that performed the action
+        ip_address:
+          type: string
+          examples:
+          - 192.168.1.100
+          - 2001:0db8:85a3:0000:0000:8a2e:0370:7334
+          description: IP address of the request origin (IPv4 or IPv6). May be masked for internal UpCloud services.
+        resource_id:
+          type: string
+          examples:
+          - 00000000-0000-4000-8000-000000000000
+          - '12345'
+          description: ID of the affected resource. May be hidden for sensitive resources like auth and account.
+        current_state:
+          type: object
+          additionalProperties: true
+          description: Current state of the resource after the action (only present for create/update actions). Structure varies by resource_type.
+        previous_state:
+          type: object
+          additionalProperties: true
+          description: Previous state of the resource before the action (only present for update/delete actions). Structure varies by resource_type.
+      title: Audit Log
+      required:
+      - time
+      - auth_type
+      - cloud_event_id
+      - upcloud_correlation_id
+      - resource_type
+      - action
+      - origin
+      - account_username
+      description: A single audit log event
+    auditLogsResponse:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - audit_logs: []
+      properties:
+        audit_logs:
+          type: array
+          items:
+            $ref: '#/components/schemas/auditLogsAuditLog'
+          description: List of audit log events
+      title: Audit Logs Response
+      required:
+      - audit_logs
+      description: Response schema for a list of audit logs
+    auditLogsOffsetParameter:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: integer
+      examples:
+      - 0
+      - 50
+      - 100
+      title: OffsetParameter
+      minimum: 0
+      format: int32
+      description: 'Page for retrieved results. Note: 0 and 1 retrieve the same first page results. (default 0)'
+      default: 0
+    auditLogsCreatedAfterParameter:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      examples:
+      - '2024-01-01T00:00:00Z'
+      title: CreatedAfterParameter
+      format: date-time
+      description: 'List audit logs created after the given timestamp (including the time of timestamp). Format: ISO timestamp eg. 2024-01-01T23:45:56Z'
+    auditLogsQueryParameter:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      examples:
+      - my_account
+      - 192.168.1.1
+      - 00798b85-efdc-41ca-8021-f6ef457b8531
+      title: QueryParameter
+      description: Search string
+    auditLogsFilterOptionsResponse:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - resource_types:
+        - server
+        - storage
+        - network
+        - auth
+        actions:
+        - create
+        - read
+        - update
+        - delete
+        origins:
+        - api
+        - gui
+        - upcloud_internal
+      properties:
+        resource_types:
+          type: array
+          examples:
+          - - server
+            - storage
+            - network-gateway
+          items:
+            type: string
+            enum:
+            - account
+            - auth
+            - init-script
+            - managed-database
+            - managed-loadbalancer
+            - managed-loadbalancer-certificate-bundle
+            - managed-object-storage
+            - network-gateway
+            - server
+            - storage
+            - uks
+            - ssh-key
+          description: List of available resource types
+        actions:
+          type: array
+          examples:
+          - - create
+            - update
+            - delete
+          items:
+            type: string
+            enum:
+            - create
+            - read
+            - update
+            - delete
+            - access-granted
+            - access-granted-kubeconfig
+            - access-modified
+            - access-update
+            - maintenance-start
+            - writes-enable
+            - attach
+            - clone
+            - detach
+            - login
+            - logout
+            - start
+            - stop
+            - owner-change
+          description: List of available actions
+        origins:
+          type: array
+          examples:
+          - - api
+            - gui
+            - upcloud_internal
+          items:
+            type: string
+            enum:
+            - api
+            - gui
+            - upcloud_internal
+          description: List of available origins
+      title: Filter Options Response
+      required:
+      - resource_types
+      - actions
+      - origins
+      description: Available filter options for audit logs
+    auditLogsLimitParameter:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: integer
+      examples:
+      - 50
+      - 100
+      title: LimitParameter
+      maximum: 200
+      minimum: 1
+      format: int32
+      description: Number of results to return
+      default: 50
+    auditLogsOriginsParameter:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: array
+      examples:
+      - - api
+        - gui
+      items:
+        type: string
+        enum:
+        - api
+        - gui
+        - upcloud_internal
+      title: OriginsParameter
+      description: List of origins to filter by
+    auditLogsCloudEventIDParameter:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      examples:
+      - 01HQXYZ123456789ABCDEFGHJK
+      title: CloudEventIDParameter
+      pattern: ^[0-9A-HJKMNP-TV-Z]{26}$
+      description: Cloud event ID (ULID format)
+    auditLogsFormatParameter:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      examples:
+      - csv
+      - json
+      title: FormatParameter
+      enum:
+      - csv
+      - json
+      description: Export format
+      default: csv
+    auditLogsActionsParameter:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: array
+      examples:
+      - - create
+        - update
+        - delete
+      items:
+        type: string
+        enum:
+        - create
+        - read
+        - update
+        - delete
+        - access-granted
+        - access-granted-kubeconfig
+        - access-modified
+        - access-update
+        - maintenance-start
+        - writes-enable
+        - attach
+        - clone
+        - detach
+        - login
+        - logout
+        - start
+        - stop
+        - owner-change
+      title: ActionsParameter
+      description: List of actions to filter by
+    auditLogsErrorResponse:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - type: https://developers.upcloud.com/1.3/errors#ERROR_INVALID_CREDENTIALS
+        title: Invalid user type.
+        correlation_id: 01KV86B1B4ETX8WJD05P4HF412
+        status: 401
+      properties:
+        type:
+          type: string
+          examples:
+          - https://developers.upcloud.com/1.3/errors#INTERNAL_SERVER_ERROR
+          format: uri
+          description: A URI reference that uniquely identifies the problem type only in the context of the provided API. It is neither recommended to be dereferenceable and point to a human-readable documentation nor globally unique for the problem type.
+        title:
+          type: string
+          examples:
+          - Internal server error.
+          description: A short summary of the problem type. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
+        detail:
+          type: string
+          examples:
+          - Invalid parameters.
+          description: A human readable explanation specific to this occurrence of the problem that is helpful to locate the problem and give advice on how to proceed. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
+        status:
+          type: integer
+          maximum: 599
+          minimum: 200
+          format: int32
+          description: The HTTP status code generated by the origin server for this occurrence of the problem.
+        invalid_params:
+          type: array
+          examples:
+          - - name: expires_at
+              reason: Token expiration time must be in the future.
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              reason:
+                type: string
+            required:
+            - name
+            - reason
+        correlation_id:
+          type: string
+          examples:
+          - 01JQV2ETY2K6HHE1KZFY9E1CYC
+          description: A unique identifier for the request. This identifier is generated by the server and can be used to track the request in the server logs. It is useful for debugging and support purposes.
+      required:
+      - type
+      - title
+      - status
+      additionalProperties: false
+      description: JSON Problem Details for HTTP APIs
+    auditLogsCreatedBeforeParameter:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      examples:
+      - '2024-12-31T23:59:59Z'
+      title: CreatedBeforeParameter
+      format: date-time
+      description: 'List audit logs created before the given timestamp (including the time of timestamp). Format: ISO timestamp eg. 2024-01-01T23:45:56Z'
+    auditLogsResourceTypesParameter:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: array
+      examples:
+      - - server
+        - storage
+        - network
+      items:
+        type: string
+        enum:
+        - account
+        - auth
+        - init-script
+        - managed-database
+        - managed-loadbalancer
+        - managed-loadbalancer-certificate-bundle
+        - managed-object-storage
+        - network-gateway
+        - server
+        - storage
+        - uks
+        - ssh-key
+      title: ResourceTypesParameter
+      description: List of resource types to filter by
+  parameters:
+    listAuditLogsLimit:
+      name: limit
+      in: query
+      description: Number of results to return (max 100, default 50)
+      required: false
+      schema:
+        $ref: '#/components/schemas/auditLogsLimitParameter'
+    listAuditLogsOffset:
+      name: offset
+      in: query
+      description: Offset for retrieved results. (default 0)
+      required: false
+      schema:
+        $ref: '#/components/schemas/auditLogsOffsetParameter'
+    exportAuditLogsFormat:
+      name: format
+      in: query
+      description: 'Export format: ''csv'' or ''json'' (default: csv)'
+      required: false
+      schema:
+        $ref: '#/components/schemas/auditLogsFormatParameter'
+    auditLogsGetAuditLogCloudEventID:
+      name: cloudEventID
+      in: path
+      description: Cloud event ID (ULID format)
+      required: true
+      schema:
+        $ref: '#/components/schemas/auditLogsCloudEventIDParameter'
+    listAuditLogsActions:
+      name: actions
+      in: query
+      description: List of actions to filter by
+      required: false
+      schema:
+        $ref: '#/components/schemas/auditLogsActionsParameter'
+    listAuditLogsCreatedAfter:
+      name: created_after
+      in: query
+      description: 'List audit logs created after the given timestamp (including the time of timestamp). Format: ISO timestamp eg. 2024-01-01T23:45:56Z'
+      required: false
+      schema:
+        $ref: '#/components/schemas/auditLogsCreatedAfterParameter'
+    listAuditLogsResourceTypes:
+      name: resource_types
+      in: query
+      description: List of resource types to filter by
+      required: false
+      schema:
+        $ref: '#/components/schemas/auditLogsResourceTypesParameter'
+    listAuditLogsCreatedBefore:
+      name: created_before
+      in: query
+      description: 'List audit logs created before the given timestamp (including the time of timestamp). Format: ISO timestamp eg. 2024-01-01T23:45:56Z'
+      required: false
+      schema:
+        $ref: '#/components/schemas/auditLogsCreatedBeforeParameter'
+    listAuditLogsQ:
+      name: q
+      in: query
+      description: Filter audit logs using a keyword such as account username, resource ID or IP address.
+      required: false
+      schema:
+        $ref: '#/components/schemas/auditLogsQueryParameter'
+    listAuditLogsOrigins:
+      name: origins
+      in: query
+      description: List of origins to filter by
+      required: false
+      schema:
+        $ref: '#/components/schemas/auditLogsOriginsParameter'
+  responses:
+    exportAuditLogs200:
+      description: File download. Returns JSON array of audit logs when format=json, or CSV when format=csv.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/auditLogsResponse'
+    exportAuditLogsDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/auditLogsErrorResponse'
+    auditLogsGetAuditLogDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/auditLogsErrorResponse'
+    auditLogsGetFilterOptions200:
+      description: Successful response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/auditLogsFilterOptionsResponse'
+    listAuditLogs200:
+      description: Successful response
+      headers:
+        UpCloud-Total-Count:
+          description: Total count of items available
+          schema:
+            type: integer
+            format: int64
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/auditLogsResponse'
+    auditLogsGetAuditLog200:
+      description: Successful response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/auditLogsAuditLog'
+    listAuditLogsDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/auditLogsErrorResponse'
+    auditLogsGetFilterOptionsDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/auditLogsErrorResponse'
+  securitySchemes:
+    apiToken:
+      type: http
+      description: UpCloud API uses HTTP Bearer authentication. An API token is required to authenticate. The API token can be created in the UpCloud control panel. Alternatively, you can create an API token using the API directly, or with upctl. Note that if you want to use HTTP Basic authentication on API or with upctl, you will need to enable API access in the UpCloud control panel first.
+      scheme: bearer
+x-refined-from:
+- upcloud-openapi.json
+- upcloud-openapi.yml
+x-upcloud-visibility: public
+x-tagGroups:
+- name: Server
+  tags:
+  - server
+  - server-group
+  - server_size
+  - plan
+  - device
+  - events
+  - timezone
+  - vnc_keymap
+- name: Network
+  tags:
+  - network
+  - network-peering
+  - ip_address
+  - router
+  - gateway
+  - firewall-ruleset
+- name: Account & Access
+  tags:
+  - account
+  - audit-logs
+  - account-tokens
+  - permission
+  - tag
+- name: Billing
+  tags:
+  - price
+  - currency

@@ -1,0 +1,268 @@
+openapi: 3.2.0
+info:
+  title: Upcloud Plan API
+  version: '1.3'
+  contact:
+    name: UpCloud
+    url: https://upcloud.com
+    email: hello@upcloud.com
+  license:
+    name: MIT
+    url: https://spdx.org/licenses/MIT.html
+  termsOfService: https://upcloud.com/terms-of-service/
+  description: 'Operations tagged plan across 2 of this provider''s published API definitions: upcloud-openapi.json, upcloud-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.upcloud.com
+security:
+- apiToken: []
+tags:
+- name: Plan
+  description: Plans are preconfigured server configurations with fixed price.
+  x-displayName: Plan
+paths:
+  /1.3/plan:
+    get:
+      tags:
+      - Plan
+      summary: List available plans
+      description: 'Returns a list of available plans. All plans are available in all zones but pricing may differ. See _List prices_ for how to obtain current price list.
+
+
+        In addition to listed plans, server can be freely configured with "custom" plan which allows freely scalable CPU cores, memory amount and storage resources. __Note!__ Custom plans are available for new customers through contact with sales.'
+      operationId: listPlans
+      responses:
+        '200':
+          $ref: '#/components/responses/listPlans200'
+        default:
+          $ref: '#/components/responses/listPlansDefault'
+    servers:
+    - url: https://api.upcloud.com
+components:
+  schemas:
+    planFamily:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      examples:
+      - general_purpose
+      - cloud_native
+      enum:
+      - general_purpose
+      - developer
+      - cloud_native
+      - gpu
+      - starter
+      - premium
+      description: The plan family identifier. Plan families group plans by their intended use case.
+    planName:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      examples:
+      - 1xCPU-1GB
+      - DEV-1xCPU-4GB
+      - CLOUDNATIVE-1xCPU-8GB
+      - GPU-12xCPU-128GB-2xL40S
+      maxLength: 255
+      minLength: 1
+      description: Server plan identifier
+    planCoreNumber:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: integer
+      format: int64
+      description: The number of CPU cores included in the plan, represented as a positive integer. This value must be greater than zero.
+    plan:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        plans:
+          type: object
+          properties:
+            plan:
+              type: array
+              items:
+                type: object
+                properties:
+                  core_number:
+                    $ref: '#/components/schemas/planCoreNumber'
+                  memory_amount:
+                    $ref: '#/components/schemas/planMemoryAmount'
+                  name:
+                    $ref: '#/components/schemas/planName'
+                  public_traffic_out:
+                    $ref: '#/components/schemas/planPublicTrafficOut'
+                  storage_size:
+                    $ref: '#/components/schemas/planStorageSize'
+                  storage_tier:
+                    $ref: '#/components/schemas/planStorageTier'
+                  gpu_amount:
+                    $ref: '#/components/schemas/planGpuAmount'
+                  gpu_model:
+                    $ref: '#/components/schemas/planGpuModel'
+                  family:
+                    $ref: '#/components/schemas/planFamily'
+                  current_offering:
+                    $ref: '#/components/schemas/planBooleanYesno'
+                required:
+                - core_number
+                - memory_amount
+                - name
+                - family
+                - current_offering
+                additionalProperties: false
+              example:
+              - core_number: 1
+                memory_amount: 1024
+                name: 1xCPU-1GB
+                public_traffic_out: 1024
+                storage_size: 25
+                storage_tier: maxiops
+                family: general_purpose
+                current_offering: 'yes'
+          required:
+          - plan
+          additionalProperties: false
+          example:
+            plan:
+            - core_number: 1
+              memory_amount: 1024
+              name: 1xCPU-1GB
+              public_traffic_out: 1024
+              storage_size: 25
+              storage_tier: maxiops
+              family: general_purpose
+              current_offering: 'yes'
+      required:
+      - plans
+      additionalProperties: false
+      description: List response containing available server plans.
+      example:
+        plans:
+          plan:
+          - core_number: 1
+            memory_amount: 1024
+            name: 1xCPU-1GB
+            public_traffic_out: 1024
+            storage_size: 25
+            storage_tier: maxiops
+            family: general_purpose
+            current_offering: 'yes'
+    planStorageSize:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: integer
+      format: int64
+      description: The block storage size for the plan in gibibytes (GiB). The value is 0 if the plan does not include block storage.
+    planPublicTrafficOut:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: integer
+      minimum: 0
+      format: int64
+      description: The amount of public traffic out included in the plan, measured in gigabytes (GB).
+    planGpuAmount:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: integer
+      format: int64
+      description: The number of GPUs included in the plan.
+    planBooleanYesno:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      enum:
+      - 'yes'
+      - 'no'
+      description: Boolean value represented as yes/no
+      example: 'yes'
+    planMemoryAmount:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: integer
+      format: int64
+      description: The amount of memory included in the plan, measured in mebibytes (MiB).
+    planError:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            error_code:
+              type: string
+              examples:
+              - GENERAL_FAILURE
+            error_message:
+              type: string
+              examples:
+              - Your request could not be fulfilled due to a technical issue.
+          required:
+          - error_code
+          - error_message
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+      description: A general error response indicating that the request could not be fulfilled due to a technical issue.
+    planGpuModel:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      examples:
+      - NVIDIA L40S
+      description: The GPU model included in the plan.
+    planStorageTier:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type:
+      - string
+      - 'null'
+      examples:
+      - hdd
+      - standard
+      - maxiops
+      - null
+      description: Block storage performance and pricing tier. `maxiops` is high-performance block storage, `standard` is general-purpose block storage, and `hdd` is the API name for the high-capacity Archive tier. The value can be null when a plan does not include block storage.
+  responses:
+    listPlans200:
+      description: A list of plans.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/plan'
+    listPlansDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/planError'
+  securitySchemes:
+    apiToken:
+      type: http
+      description: UpCloud API uses HTTP Bearer authentication. An API token is required to authenticate. The API token can be created in the UpCloud control panel. Alternatively, you can create an API token using the API directly, or with upctl. Note that if you want to use HTTP Basic authentication on API or with upctl, you will need to enable API access in the UpCloud control panel first.
+      scheme: bearer
+x-refined-from:
+- upcloud-openapi.json
+- upcloud-openapi.yml
+x-upcloud-visibility: public
+x-tagGroups:
+- name: Server
+  tags:
+  - server
+  - server-group
+  - server_size
+  - plan
+  - device
+  - events
+  - timezone
+  - vnc_keymap
+- name: Network
+  tags:
+  - network
+  - network-peering
+  - ip_address
+  - router
+  - gateway
+  - firewall-ruleset
+- name: Account & Access
+  tags:
+  - account
+  - audit-logs
+  - account-tokens
+  - permission
+  - tag
+- name: Billing
+  tags:
+  - price
+  - currency

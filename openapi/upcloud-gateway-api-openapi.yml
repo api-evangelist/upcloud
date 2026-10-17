@@ -1,0 +1,3632 @@
+openapi: 3.2.0
+info:
+  title: Upcloud Gateway API
+  version: '1.3'
+  contact:
+    name: UpCloud
+    url: https://upcloud.com
+    email: hello@upcloud.com
+  license:
+    name: MIT
+    url: https://spdx.org/licenses/MIT.html
+  termsOfService: https://upcloud.com/terms-of-service/
+  description: 'Operations tagged gateway across 2 of this provider''s published API definitions: upcloud-openapi.json, upcloud-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.upcloud.com
+security:
+- apiToken: []
+tags:
+- name: Gateway
+  description: UpCloud Gateway API. Allows creation, management and deletion of gateways.
+  x-displayName: Gateway
+paths:
+  /1.3/gateway/plans:
+    get:
+      tags:
+      - Gateway
+      summary: List Plans
+      description: List available plans.
+      operationId: listGatewayPlans
+      parameters:
+      - $ref: '#/components/parameters/listGatewayPlansLimit'
+      - $ref: '#/components/parameters/listGatewayPlansOffset'
+      responses:
+        '200':
+          $ref: '#/components/responses/listGatewayPlans200'
+        default:
+          $ref: '#/components/responses/listGatewayPlansDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/gateway/plans/{plan-name}:
+    get:
+      tags:
+      - Gateway
+      summary: Get Plan Details
+      description: Get plan details.
+      operationId: getGatewayPlan
+      parameters:
+      - $ref: '#/components/parameters/getGatewayPlanPlanName'
+      responses:
+        '200':
+          $ref: '#/components/responses/getGatewayPlan200'
+        default:
+          $ref: '#/components/responses/getGatewayPlanDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/gateway:
+    get:
+      tags:
+      - Gateway
+      summary: List Services
+      description: List available services.
+      operationId: listGatewayServices
+      parameters:
+      - $ref: '#/components/parameters/listGatewayServicesLimit'
+      - $ref: '#/components/parameters/listGatewayServicesOffset'
+      - $ref: '#/components/parameters/listGatewayServicesSort'
+      responses:
+        '200':
+          $ref: '#/components/responses/listGatewayServices200'
+        default:
+          $ref: '#/components/responses/listGatewayServicesDefault'
+      x-upcloud-visibility: public
+    post:
+      tags:
+      - Gateway
+      summary: Create Service
+      description: Create a new service.
+      operationId: createGatewayService
+      requestBody:
+        $ref: '#/components/requestBodies/createGatewayService'
+      responses:
+        '200':
+          $ref: '#/components/responses/createGatewayService200'
+        default:
+          $ref: '#/components/responses/createGatewayServiceDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/gateway/{service-uuid}:
+    get:
+      tags:
+      - Gateway
+      summary: Get Service Details
+      description: Get service details.
+      operationId: getGatewayService
+      parameters:
+      - $ref: '#/components/parameters/getGatewayServiceServiceUuid'
+      responses:
+        '200':
+          $ref: '#/components/responses/getGatewayService200'
+        default:
+          $ref: '#/components/responses/getGatewayServiceDefault'
+      x-upcloud-visibility: public
+    put:
+      tags:
+      - Gateway
+      summary: Replace Service
+      description: Replace service configuration.
+      operationId: replaceGatewayService
+      parameters:
+      - $ref: '#/components/parameters/replaceGatewayServiceServiceUuid'
+      requestBody:
+        $ref: '#/components/requestBodies/replaceGatewayService'
+      responses:
+        '200':
+          $ref: '#/components/responses/replaceGatewayService200'
+        default:
+          $ref: '#/components/responses/replaceGatewayServiceDefault'
+      x-upcloud-visibility: public
+    delete:
+      tags:
+      - Gateway
+      summary: Delete Service
+      description: Deletes existing service by given {service-identifier}.
+      operationId: deleteGatewayService
+      parameters:
+      - $ref: '#/components/parameters/deleteGatewayServiceServiceUuid'
+      responses:
+        '204':
+          $ref: '#/components/responses/deleteGatewayService204'
+        default:
+          $ref: '#/components/responses/deleteGatewayServiceDefault'
+      x-upcloud-visibility: public
+    patch:
+      tags:
+      - Gateway
+      summary: Modify Service
+      description: Modify service configuration.
+      operationId: modifyGatewayService
+      parameters:
+      - $ref: '#/components/parameters/modifyGatewayServiceServiceUuid'
+      requestBody:
+        $ref: '#/components/requestBodies/modifyGatewayService'
+      responses:
+        '200':
+          $ref: '#/components/responses/modifyGatewayService200'
+        default:
+          $ref: '#/components/responses/modifyGatewayServiceDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/gateway/{service-uuid}/actions/nat-flush-connections:
+    patch:
+      tags:
+      - Gateway
+      summary: Flush NAT
+      description: Flush NAT rules.
+      operationId: flushGatewayNat
+      parameters:
+      - $ref: '#/components/parameters/flushGatewayNatServiceUuid'
+      responses:
+        '200':
+          $ref: '#/components/responses/flushGatewayNat200'
+        default:
+          $ref: '#/components/responses/flushGatewayNatDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/gateway/{service-uuid}/connections:
+    get:
+      tags:
+      - Gateway
+      summary: List Connections
+      description: List available connections for service.
+      operationId: listGatewayConnections
+      parameters:
+      - $ref: '#/components/parameters/listGatewayConnectionsServiceUuid'
+      responses:
+        '200':
+          $ref: '#/components/responses/listGatewayConnections200'
+        default:
+          $ref: '#/components/responses/listGatewayConnectionsDefault'
+      x-upcloud-visibility: public
+    post:
+      tags:
+      - Gateway
+      summary: Create Connection
+      description: Create a new connection.
+      operationId: createGatewayConnection
+      parameters:
+      - $ref: '#/components/parameters/createGatewayConnectionServiceUuid'
+      requestBody:
+        $ref: '#/components/requestBodies/createGatewayConnection'
+      responses:
+        '200':
+          $ref: '#/components/responses/createGatewayConnection200'
+        default:
+          $ref: '#/components/responses/createGatewayConnectionDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/gateway/{service-uuid}/connections/{connection-uuid}:
+    get:
+      tags:
+      - Gateway
+      summary: Get Connection Details
+      description: Get connection details.
+      operationId: getGatewayConnection
+      parameters:
+      - $ref: '#/components/parameters/getGatewayConnectionServiceUuid'
+      - $ref: '#/components/parameters/getGatewayConnectionConnectionUuid'
+      responses:
+        '200':
+          $ref: '#/components/responses/getGatewayConnection200'
+        default:
+          $ref: '#/components/responses/getGatewayConnectionDefault'
+      x-upcloud-visibility: public
+    delete:
+      tags:
+      - Gateway
+      summary: Delete Connection
+      description: Deletes existing connection by given {connection-identifier}.
+      operationId: deleteGatewayConnection
+      parameters:
+      - $ref: '#/components/parameters/deleteGatewayConnectionServiceUuid'
+      - $ref: '#/components/parameters/deleteGatewayConnectionConnectionUuid'
+      responses:
+        '204':
+          $ref: '#/components/responses/deleteGatewayConnection204'
+        default:
+          $ref: '#/components/responses/deleteGatewayConnectionDefault'
+      x-upcloud-visibility: public
+    patch:
+      tags:
+      - Gateway
+      summary: Modify Connection
+      description: Modify connection configuration.
+      operationId: modifyGatewayConnection
+      parameters:
+      - $ref: '#/components/parameters/modifyGatewayConnectionServiceUuid'
+      - $ref: '#/components/parameters/modifyGatewayConnectionConnectionUuid'
+      requestBody:
+        $ref: '#/components/requestBodies/modifyGatewayConnection'
+      responses:
+        '200':
+          $ref: '#/components/responses/modifyGatewayConnection200'
+        default:
+          $ref: '#/components/responses/modifyGatewayConnectionDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/gateway/{service-uuid}/connections/{connection-uuid}/tunnels:
+    get:
+      tags:
+      - Gateway
+      summary: List Tunnels
+      description: List available tunnels for service.
+      operationId: listGatewayTunnels
+      parameters:
+      - $ref: '#/components/parameters/listGatewayTunnelsServiceUuid'
+      - $ref: '#/components/parameters/listGatewayTunnelsConnectionUuid'
+      responses:
+        '200':
+          $ref: '#/components/responses/listGatewayTunnels200'
+        default:
+          $ref: '#/components/responses/listGatewayTunnelsDefault'
+      x-upcloud-visibility: public
+    post:
+      tags:
+      - Gateway
+      summary: Create Tunnel
+      description: Create a new tunnel.
+      operationId: createGatewayTunnel
+      parameters:
+      - $ref: '#/components/parameters/createGatewayTunnelServiceUuid'
+      - $ref: '#/components/parameters/createGatewayTunnelConnectionUuid'
+      requestBody:
+        $ref: '#/components/requestBodies/createGatewayTunnel'
+      responses:
+        '200':
+          $ref: '#/components/responses/createGatewayTunnel200'
+        default:
+          $ref: '#/components/responses/createGatewayTunnelDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/gateway/{service-uuid}/connections/{connection-uuid}/tunnels/{tunnel-uuid}:
+    get:
+      tags:
+      - Gateway
+      summary: Get Tunnel Details
+      description: Get tunnel details.
+      operationId: getGatewayTunnel
+      parameters:
+      - $ref: '#/components/parameters/getGatewayTunnelServiceUuid'
+      - $ref: '#/components/parameters/getGatewayTunnelConnectionUuid'
+      - $ref: '#/components/parameters/getGatewayTunnelTunnelUuid'
+      responses:
+        '200':
+          $ref: '#/components/responses/getGatewayTunnel200'
+        default:
+          $ref: '#/components/responses/getGatewayTunnelDefault'
+      x-upcloud-visibility: public
+    delete:
+      tags:
+      - Gateway
+      summary: Delete Tunnel
+      description: Deletes existing tunnel by given {tunnel-identifier}.
+      operationId: deleteGatewayTunnel
+      parameters:
+      - $ref: '#/components/parameters/deleteGatewayTunnelServiceUuid'
+      - $ref: '#/components/parameters/deleteGatewayTunnelConnectionUuid'
+      - $ref: '#/components/parameters/deleteGatewayTunnelTunnelUuid'
+      responses:
+        '204':
+          $ref: '#/components/responses/deleteGatewayTunnel204'
+        default:
+          $ref: '#/components/responses/deleteGatewayTunnelDefault'
+      x-upcloud-visibility: public
+    patch:
+      tags:
+      - Gateway
+      summary: Modify Tunnel
+      description: Modify tunnel configuration.
+      operationId: modifyGatewayTunnel
+      parameters:
+      - $ref: '#/components/parameters/modifyGatewayTunnelServiceUuid'
+      - $ref: '#/components/parameters/modifyGatewayTunnelConnectionUuid'
+      - $ref: '#/components/parameters/modifyGatewayTunnelTunnelUuid'
+      requestBody:
+        $ref: '#/components/requestBodies/modifyGatewayTunnel'
+      responses:
+        '200':
+          $ref: '#/components/responses/modifyGatewayTunnel200'
+        default:
+          $ref: '#/components/responses/modifyGatewayTunnelDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/gateway/{service-uuid}/labels:
+    get:
+      tags:
+      - Gateway
+      summary: List Service Labels
+      description: List available service labels for service.
+      operationId: listGatewayServiceLabels
+      parameters:
+      - $ref: '#/components/parameters/listGatewayServiceLabelsServiceUuid'
+      responses:
+        '200':
+          $ref: '#/components/responses/listGatewayServiceLabels200'
+        default:
+          $ref: '#/components/responses/listGatewayServiceLabelsDefault'
+      x-upcloud-visibility: public
+    post:
+      tags:
+      - Gateway
+      summary: Create Service Label
+      description: Create a new service label.
+      operationId: createGatewayServiceLabel
+      parameters:
+      - $ref: '#/components/parameters/createGatewayServiceLabelServiceUuid'
+      requestBody:
+        $ref: '#/components/requestBodies/createGatewayServiceLabel'
+      responses:
+        '201':
+          $ref: '#/components/responses/createGatewayServiceLabel201'
+        default:
+          $ref: '#/components/responses/createGatewayServiceLabelDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/gateway/{service-uuid}/labels/{label-key}:
+    get:
+      tags:
+      - Gateway
+      summary: Get Service Label Details
+      description: Get service label details.
+      operationId: getGatewayServiceLabel
+      parameters:
+      - $ref: '#/components/parameters/getGatewayServiceLabelServiceUuid'
+      - $ref: '#/components/parameters/getGatewayServiceLabelLabelKey'
+      responses:
+        '200':
+          $ref: '#/components/responses/getGatewayServiceLabel200'
+        default:
+          $ref: '#/components/responses/getGatewayServiceLabelDefault'
+      x-upcloud-visibility: public
+    delete:
+      tags:
+      - Gateway
+      summary: Delete Service Label
+      description: Deletes existing service label by given {service-label-identifier}.
+      operationId: deleteGatewayServiceLabel
+      parameters:
+      - $ref: '#/components/parameters/deleteGatewayServiceLabelServiceUuid'
+      - $ref: '#/components/parameters/deleteGatewayServiceLabelLabelKey'
+      responses:
+        '204':
+          $ref: '#/components/responses/deleteGatewayServiceLabel204'
+        default:
+          $ref: '#/components/responses/deleteGatewayServiceLabelDefault'
+      x-upcloud-visibility: public
+    patch:
+      tags:
+      - Gateway
+      summary: Modify Service Label
+      description: Modify service label configuration.
+      operationId: modifyGatewayServiceLabel
+      parameters:
+      - $ref: '#/components/parameters/modifyGatewayServiceLabelServiceUuid'
+      - $ref: '#/components/parameters/modifyGatewayServiceLabelLabelKey'
+      requestBody:
+        $ref: '#/components/requestBodies/modifyGatewayServiceLabel'
+      responses:
+        '200':
+          $ref: '#/components/responses/modifyGatewayServiceLabel200'
+        default:
+          $ref: '#/components/responses/modifyGatewayServiceLabelDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/gateway/{service-uuid}/addresses:
+    get:
+      tags:
+      - Gateway
+      summary: List Service Addresses
+      description: List available service addresses for service.
+      operationId: listGatewayAddresses
+      parameters:
+      - $ref: '#/components/parameters/listGatewayAddressesServiceUuid'
+      responses:
+        '200':
+          $ref: '#/components/responses/listGatewayAddresses200'
+        default:
+          $ref: '#/components/responses/listGatewayAddressesDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/gateway/{service-uuid}/addresses/{address-name}:
+    get:
+      tags:
+      - Gateway
+      summary: Get Service Address Details
+      description: Get service address details.
+      operationId: getGatewayAddress
+      parameters:
+      - $ref: '#/components/parameters/getGatewayAddressServiceUuid'
+      - $ref: '#/components/parameters/getGatewayAddressAddressName'
+      responses:
+        '200':
+          $ref: '#/components/responses/getGatewayAddress200'
+        default:
+          $ref: '#/components/responses/getGatewayAddressDefault'
+      x-upcloud-visibility: public
+    patch:
+      tags:
+      - Gateway
+      summary: Modify Service Address
+      description: Modify existing service address by given {service-address-identifier}.
+      operationId: modifyGatewayAddress
+      parameters:
+      - $ref: '#/components/parameters/modifyGatewayAddressServiceUuid'
+      - $ref: '#/components/parameters/modifyGatewayAddressAddressName'
+      requestBody:
+        $ref: '#/components/requestBodies/modifyGatewayAddress'
+      responses:
+        '200':
+          $ref: '#/components/responses/modifyGatewayAddress200'
+        default:
+          $ref: '#/components/responses/modifyGatewayAddressDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/gateway/{service-uuid}/addresses/{address-name}/release:
+    post:
+      tags:
+      - Gateway
+      summary: Release Gateway Floating IP
+      description: Release the user-provisioned Floating IP of an existing service address by given {service-address-identifier}, reverting it to a service-provisioned address while keeping the same name.
+      operationId: releaseGatewayFloatingIp
+      parameters:
+      - $ref: '#/components/parameters/releaseGatewayFloatingIpServiceUuid'
+      - $ref: '#/components/parameters/releaseGatewayFloatingIpAddressName'
+      responses:
+        '202':
+          $ref: '#/components/responses/releaseGatewayFloatingIp202'
+        default:
+          $ref: '#/components/responses/releaseGatewayFloatingIpDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/gateway/{service-uuid}/metrics:
+    get:
+      tags:
+      - Gateway
+      summary: Get Service Metrics
+      description: List available service metrics for service.
+      operationId: getGatewayMetrics
+      parameters:
+      - $ref: '#/components/parameters/getGatewayMetricsServiceUuid'
+      responses:
+        '200':
+          $ref: '#/components/responses/getGatewayMetrics200'
+        default:
+          $ref: '#/components/responses/getGatewayMetricsDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/gateway/{service-uuid}/logs:
+    post:
+      tags:
+      - Gateway
+      summary: Create Service Log Session
+      description: Create a new service log session.
+      operationId: createGatewayServiceLogSession
+      parameters:
+      - $ref: '#/components/parameters/createGatewayServiceLogSessionServiceUuid'
+      requestBody:
+        $ref: '#/components/requestBodies/createGatewayServiceLogSession'
+      responses:
+        '200':
+          $ref: '#/components/responses/createGatewayServiceLogSession200'
+        default:
+          $ref: '#/components/responses/createGatewayServiceLogSessionDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+components:
+  schemas:
+    gatewayServiceFeatures:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      examples:
+      - nat
+      title: Service features
+      enum:
+      - nat
+      - vpn
+      description: Service features
+    gatewayLocalPeerAddressDetailsResponse:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - name: gateway-service
+      properties:
+        name:
+          type: string
+          examples:
+          - gateway-service
+          - vpn-tunnel-1
+          maxLength: 64
+          minLength: 1
+          description: Name of the local peer
+      title: Local peer address details response
+      description: Response schema for local peer address details.
+    gatewayErrorResponse:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - type: example
+        title: Validation error.
+        correlation_id: 01K1K2TKEASWRJ6VFP9ZV5P2H4
+        status: 400
+        invalid_params: []
+      properties:
+        type:
+          type: string
+          examples:
+          - example
+          description: Error code string.
+        title:
+          type: string
+          examples:
+          - Validation error.
+          - The resource you requested does not exist.
+          - Your request could not be fulfilled due to a technical issue.
+          description: Short description of the error.
+        correlation_id:
+          type: string
+          examples:
+          - 01K1K2TKEASWRJ6VFP9ZV5P2H4
+          description: Unique identifier for the request, useful for debugging.
+        status:
+          type: integer
+          examples:
+          - 400
+          - 404
+          - 402
+          - 500
+          format: int32
+          description: HTTP status code associated with the error.
+        invalid_params:
+          type: array
+          examples:
+          - []
+          title: InvalidParameters
+          description: List of invalid parameters in the request.
+          items:
+            type: object
+      title: Error response
+      required:
+      - type
+      - title
+      - correlation_id
+      - status
+      additionalProperties: false
+      description: Schema for error responses from the API.
+    gatewayRouterCreateRequest:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - uuid: 01234567-89ab-cdef-0123-456789abcdef
+      properties:
+        uuid:
+          $ref: '#/components/schemas/gatewayUuid'
+      title: Router create request
+      required:
+      - uuid
+      additionalProperties: false
+      description: Network gateway router
+    gatewayQueryParamSortServices:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      examples:
+      - -created_at
+      - name
+      - -uuid
+      title: Query param sort services
+      enum:
+      - created_at
+      - -created_at
+      - name
+      - -name
+      - uuid
+      - -uuid
+      description: Sort services by field. Prefix with '-' for descending order.
+    gatewayIpsecDetailsResponse:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - ike_lifetime: 30
+        rekey_time: 30
+        child_rekey_time: 60
+        dpd_delay: 40
+        dpd_timeout: 20
+        authentication:
+          authentication: psk
+          psk: '{your PSK}'
+      properties:
+        authentication:
+          $ref: '#/components/schemas/gatewayAuthenticationDetailsResponse'
+        phase1_algorithms:
+          type: array
+          examples:
+          - - aes128
+            - aes256
+            - aes128gcm128
+            - aes256gcm128
+          items:
+            $ref: '#/components/schemas/gatewaySupportedProposalAlgorithms'
+          uniqueItems: true
+          description: Phase 1 proposal algorithms
+          default:
+          - aes128
+          - aes256
+          - aes128gcm128
+          - aes256gcm128
+        phase2_algorithms:
+          type: array
+          examples:
+          - - aes128
+            - aes256
+            - aes128gcm128
+            - aes256gcm128
+          items:
+            $ref: '#/components/schemas/gatewaySupportedProposalAlgorithms'
+          uniqueItems: true
+          description: Phase 2 security association algorithms
+          default:
+          - aes128
+          - aes256
+          - aes128gcm128
+          - aes256gcm128
+        phase1_integrity_algorithms:
+          type: array
+          examples:
+          - - sha256
+            - sha384
+            - sha512
+          items:
+            $ref: '#/components/schemas/gatewaySupportedIntegrityAlgorithms'
+          uniqueItems: true
+          description: Phase 1 integrity algorithms
+          default:
+          - sha256
+          - sha384
+          - sha512
+        phase2_integrity_algorithms:
+          type: array
+          examples:
+          - - sha256
+            - sha384
+            - sha512
+          items:
+            $ref: '#/components/schemas/gatewaySupportedIntegrityAlgorithms'
+          uniqueItems: true
+          description: Phase 2 integrity algorithms
+          default:
+          - sha256
+          - sha384
+          - sha512
+        ike_lifetime:
+          type: integer
+          examples:
+          - 86400
+          maximum: 2147483647
+          minimum: 0
+          format: int32
+          description: Maximum IKE SA lifetime in seconds
+          default: 86400
+        rekey_time:
+          type: integer
+          examples:
+          - 14400
+          maximum: 2147483647
+          minimum: 0
+          format: int32
+          description: IKE SA rekey time in seconds
+          default: 14400
+        child_rekey_time:
+          type: integer
+          examples:
+          - 1440
+          maximum: 2147483647
+          minimum: 0
+          format: int32
+          description: IKE child SA rekey time in seconds
+          default: 1440
+        dpd_delay:
+          type: integer
+          examples:
+          - 30
+          maximum: 2147483647
+          minimum: 0
+          format: int32
+          description: Delay before sending Dead Peer Detection packets if no traffic is detected, in seconds
+          default: 30
+        dpd_timeout:
+          type: integer
+          examples:
+          - 120
+          maximum: 2147483647
+          minimum: 0
+          format: int32
+          description: Timeout period for DPD reply before considering the peer to be dead, in seconds
+          default: 120
+        phase1_dh_group_numbers:
+          type: array
+          examples:
+          - - 16
+            - 18
+            - 19
+          items:
+            $ref: '#/components/schemas/gatewayDiffieHellmanGroupNumber'
+          uniqueItems: true
+          description: Phase 1 Diffie-Hellman group numbers
+          default:
+          - 14
+          - 16
+          - 18
+          - 19
+          - 20
+          - 21
+        phase2_dh_group_numbers:
+          type: array
+          examples:
+          - - 14
+            - 16
+            - 18
+            - 19
+          items:
+            $ref: '#/components/schemas/gatewayDiffieHellmanGroupNumber'
+          uniqueItems: true
+          description: Phase 2 Diffie-Hellman group numbers
+          default:
+          - 14
+          - 16
+          - 18
+          - 19
+          - 20
+          - 21
+      title: IPsec details response
+      description: Response schema for IPsec configuration details.
+    gatewayLabelKey:
+      type: string
+      examples:
+      - environment
+      - team
+      - project
+      - purpose
+      - cost-center
+      title: Label key
+      maxLength: 32
+      minLength: 2
+      pattern: ^[\x20-\x5E\x60-\x7E][\x20-\x7E]+$
+      description: The key of a label.
+    gatewayLabelDetailsResponse:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - key: environment
+        value: production
+      properties:
+        key:
+          type: string
+          examples:
+          - environment
+          - team
+          maxLength: 32
+          minLength: 2
+          pattern: ^[\x20-\x5E\x60-\x7E][\x20-\x7E]+$
+          description: Key
+        value:
+          type: string
+          examples:
+          - production
+          - dev-1
+          maxLength: 255
+          pattern: \A[\p{L}\p{N}\p{P}\p{S}\p{Z}]*\z
+          description: Value
+      title: Label details response
+      required:
+      - key
+      - value
+      additionalProperties: false
+      description: Gateway label
+    gatewayServiceLogSessionCreateRequest:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - session_type: vpn
+      properties:
+        session_type:
+          $ref: '#/components/schemas/gatewayServiceLogSessionTypes'
+      title: Service log session create request
+      required:
+      - session_type
+      additionalProperties: false
+      description: Request to create a new log session for a service.
+    gatewayAddress:
+      type: object
+      examples:
+      - addr: 0
+      properties:
+        addr:
+          type: integer
+          examples:
+          - 0
+          format: int64
+          description: Address
+      title: Address
+    gatewayConnectionRouteRequest:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - name: gateway-service
+        type: static
+        static_network: 10.0.0.0/24
+      properties:
+        name:
+          type: string
+          examples:
+          - gateway-service
+          - vpn-tunnel-1
+          maxLength: 64
+          minLength: 1
+          pattern: ^[a-zA-Z0-9_-]+$
+          description: Route name
+        type:
+          $ref: '#/components/schemas/gatewayConnectionRouteType'
+        static_network:
+          type: string
+          examples:
+          - 10.0.0.0/24
+          description: Static network subnet
+      title: Connection route request
+      required:
+      - name
+      - type
+      - static_network
+      additionalProperties: false
+      description: Network gateway VPN connection route
+    gatewayPlanDetailsResponse:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - name: gateway-service
+        server_number: 4
+        per_gateway_max_connections: 5005000
+        supported_features: []
+        vpn_tunnel_amount: 50
+        per_gateway_bandwidth_mbps: 5005
+        per_gateway_maximum_vpn_bandwidth_mbps: 5005
+      properties:
+        name:
+          type: string
+          examples:
+          - gateway-service
+          - vpn-tunnel-1
+          maxLength: 64
+          minLength: 1
+          pattern: ^[a-zA-Z0-9_-]+$
+          description: Name of the plan
+        server_number:
+          type: integer
+          examples:
+          - 4
+          maximum: 8
+          minimum: 1
+          format: int64
+          description: Number of nodes
+        per_gateway_max_connections:
+          type: integer
+          examples:
+          - 5005000
+          maximum: 10000000
+          minimum: 10000
+          format: int64
+          description: Per gateway (agent node server) maximum conntrack connections
+        supported_features:
+          type: array
+          examples:
+          - - vpn
+          items:
+            $ref: '#/components/schemas/gatewayServiceFeatures'
+          minItems: 1
+        vpn_tunnel_amount:
+          type: integer
+          examples:
+          - 50
+          maximum: 100
+          minimum: 0
+          format: int64
+          description: Number of VPN tunnels this plan allows.
+        per_gateway_bandwidth_mbps:
+          type: integer
+          examples:
+          - 5005
+          maximum: 10000
+          minimum: 10
+          format: int64
+          description: Per gateway (agent node server) bandwidth in megabits per second.
+        per_gateway_maximum_vpn_bandwidth_mbps:
+          type: integer
+          examples:
+          - 5005
+          maximum: 10000
+          minimum: 10
+          format: int64
+          description: Per gateway (agent node server) maximum vpn bandwidth in megabits per second.
+      title: Plan details response
+      description: Response schema for gateway plan details.
+    gatewayTunnelListResponse:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: array
+      examples:
+      - []
+      items:
+        $ref: '#/components/schemas/gatewayTunnelDetailsResponse'
+      title: Tunnel list response
+      description: Response schema for a list of gateway tunnels.
+    gatewayServiceLabelListResponse:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: array
+      examples:
+      - []
+      items:
+        $ref: '#/components/schemas/gatewayLabelDetailsResponse'
+      title: Service label list response
+      description: Response schema for a list of service labels.
+    gatewayTunnelInternalIpDetailsResponse:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - hasParseError: true
+      properties:
+        ip:
+          $ref: '#/components/schemas/gatewayAddress'
+        hasParseError:
+          type: boolean
+          examples:
+          - true
+          - false
+          description: Indicates if there is a parse error with the tunnel internal IP
+      title: Tunnel internal IP details response
+      description: Response schema for gateway tunnel internal IP details.
+    gatewayServiceModifyRequest:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - name: gateway-service
+        features: []
+        plan: development-gwaas-1c2g
+        configured_status: started
+        connections: []
+        labels: []
+        automatic_tunnel_internal_ip_allocation: true
+      properties:
+        name:
+          type: string
+          examples:
+          - gateway-service
+          - vpn-tunnel-1
+          maxLength: 64
+          minLength: 1
+          pattern: ^[a-zA-Z0-9_-]+$
+          description: Name of the service
+        features:
+          type: array
+          examples:
+          - []
+          items:
+            $ref: '#/components/schemas/gatewayServiceFeatures'
+          minItems: 1
+          description: Active features
+        plan:
+          type: string
+          examples:
+          - development-gwaas-1c2g
+          description: Plan
+        configured_status:
+          $ref: '#/components/schemas/gatewayServiceConfiguredStatus'
+        connections:
+          type: array
+          examples:
+          - []
+          items:
+            $ref: '#/components/schemas/gatewayConnectionModifyRequest'
+          description: Service connections
+        labels:
+          type: array
+          examples:
+          - []
+          items:
+            $ref: '#/components/schemas/gatewayLabelCreateRequest'
+          maxItems: 255
+          description: Labels
+        automatic_tunnel_internal_ip_allocation:
+          type: boolean
+          examples:
+          - true
+          - false
+          description: Allocate and use tunnel internal IPs automatically
+      title: Service modify request
+      additionalProperties: false
+      description: Request to modify a gateway service
+    gatewayIpsecMetricsDetailsResponse:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - ike_sas: []
+      properties:
+        ike_sas:
+          type:
+          - array
+          - 'null'
+          examples:
+          - []
+          items:
+            $ref: '#/components/schemas/gatewayIpsecIkeSaMetricsDetailsResponse'
+          description: List of IKE SAs
+      title: IPsec metrics details response
+      description: Response schema for IPsec IKE SA metrics details.
+    gatewayTunnelOperationalState:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      examples:
+      - idle
+      title: Tunnel operational state
+      enum:
+      - idle
+      - connecting
+      - established
+      - destroying
+      - unknown
+      description: Tunnel operational state
+    gatewayMetricsDetailsResponse:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - name: gateway-service
+        active_connections: 0
+        created_at: '2025-03-26T12:34:56Z'
+        updated_at: '2025-03-26T12:34:56Z'
+        total_accepted_connections: 0
+        total_rejected_sessions: 0
+      properties:
+        name:
+          type: string
+          examples:
+          - gateway-service
+          - vpn-tunnel-1
+          maxLength: 64
+          minLength: 1
+          pattern: ^[a-zA-Z0-9_-]+$
+          description: Name of the gateway
+        active_connections:
+          type: integer
+          examples:
+          - 0
+          format: int64
+          description: Number of active connections
+        created_at:
+          type: string
+          examples:
+          - '2025-03-26T12:34:56Z'
+          format: date-time
+          description: Timestamp of when the metrics was created.
+        updated_at:
+          type: string
+          examples:
+          - '2025-03-26T12:34:56Z'
+          format: date-time
+          description: Timestamp of when the metrics was last updated.
+        total_accepted_connections:
+          type: integer
+          examples:
+          - 0
+          format: int64
+          description: Number of accepted connections
+        total_rejected_sessions:
+          type: integer
+          examples:
+          - 0
+          format: int64
+          description: Number of rejected sessions
+      title: Gateway metrics details response
+      description: Response schema for gateway metrics details.
+    gatewayIpsecIkeSaMetricsDetailsResponse:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - name: gateway-service
+        tunnel_id: 0
+        unique_id: gateway-service
+        version: 0
+        operational_state: idle
+        internal_state: uninitialized
+        initator: true
+        established: 0
+        rekey_time: 0
+        reauth_time: 0
+        child_sas: []
+        local_host: 203.0.113.10
+        remote_host: 203.0.113.10
+        local_id: 203.0.113.10
+        remote_id: 203.0.113.10
+        heuristic_state: none
+        created_at: '2025-03-26T12:34:56Z'
+        updated_at: '2025-03-26T12:34:56Z'
+      properties:
+        name:
+          type: string
+          examples:
+          - gateway-service
+          - vpn-tunnel-1
+          maxLength: 64
+          minLength: 1
+          pattern: ^[a-zA-Z0-9_-]+$
+          description: Name of the gateway
+        tunnel_id:
+          type: integer
+          examples:
+          - 0
+          format: int64
+          description: ID of the tunnel
+        unique_id:
+          type: string
+          examples:
+          - gateway-service
+          - vpn-tunnel-1
+          maxLength: 64
+          minLength: 1
+          pattern: ^[a-zA-Z0-9_-]+$
+          description: Unique ID of the IKE SA
+        version:
+          type: integer
+          examples:
+          - 0
+          format: int64
+          description: Version of the IKE SA
+        operational_state:
+          type: string
+          examples:
+          - idle
+          enum:
+          - idle
+          - connecting
+          - established
+          - destroying
+          - unknown
+          description: Operational state of the IKE SA
+        internal_state:
+          type: string
+          examples:
+          - uninitialized
+          enum:
+          - uninitialized
+          - created
+          - connecting
+          - established
+          - passive
+          - rekeying
+          - rekeyed
+          - deleting
+          - destroying
+          - unavailable
+          - unknown
+          description: Internal state of the IKE SA
+        initator:
+          type: boolean
+          examples:
+          - true
+          - false
+          description: Whether the local gateway is the initiator of the IKE SA
+        established:
+          type: integer
+          examples:
+          - 0
+          format: int64
+        rekey_time:
+          type: integer
+          examples:
+          - 0
+          format: int64
+        reauth_time:
+          type: integer
+          examples:
+          - 0
+          format: int64
+        child_sas:
+          type: array
+          examples:
+          - []
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                maxLength: 64
+                minLength: 1
+                pattern: ^[a-zA-Z0-9_-]+$
+                description: Name of the child SA
+              tunnel_id:
+                type: integer
+                format: int64
+              unique_id:
+                type: string
+                maxLength: 64
+                minLength: 1
+                pattern: ^[a-zA-Z0-9_-]+$
+                description: Unique ID of the child SA
+              state:
+                type: string
+                enum:
+                - created
+                - routed
+                - installing
+                - installed
+                - updating
+                - rekeyed
+                - rekeying
+                - retrying
+                - deleting
+                - deleted
+                - destroying
+                - unavailable
+                - unknown
+                description: Operational state of the child SA
+              spi_in:
+                type: string
+              spi_out:
+                type: string
+              bytes_in:
+                type: integer
+                format: int64
+              bytes_out:
+                type: integer
+                format: int64
+              packets_in:
+                type: integer
+                format: int64
+              packets_out:
+                type: integer
+                format: int64
+              rekey_time:
+                type: integer
+                format: int64
+              life_time:
+                type: integer
+                format: int64
+              install_time:
+                type: integer
+                format: int64
+              local_traffic_selector:
+                type: array
+                items:
+                  type: string
+              remote_traffic_selector:
+                type: array
+                items:
+                  type: string
+              created_at:
+                type: string
+                examples:
+                - '2025-03-26T12:34:56Z'
+                format: date-time
+                description: Timestamp of when the child SA was created.
+              updated_at:
+                type: string
+                examples:
+                - '2025-03-26T12:34:56Z'
+                format: date-time
+                description: Timestamp of when the child SA was last updated.
+        local_host:
+          type: string
+          examples:
+          - 203.0.113.10
+          format: ip-address
+          description: Local host IP address
+        remote_host:
+          type: string
+          examples:
+          - 203.0.113.10
+          format: ip-address
+          description: Remote host IP address
+        local_id:
+          type: string
+          examples:
+          - 203.0.113.10
+          format: ip-address
+          description: Local IKE identity
+        remote_id:
+          type: string
+          examples:
+          - 203.0.113.10
+          format: ip-address
+          description: Remote IKE identity
+        heuristic_state:
+          type: object
+          properties:
+            tunnel_up:
+              type: boolean
+              examples:
+              - true
+              - false
+            tunnel_healthy:
+              type: boolean
+              examples:
+              - true
+              - false
+            last_down_message:
+              type: string
+              examples:
+              - IKE SA is down due to network issues
+            updated_at:
+              type: string
+              examples:
+              - '2025-03-26T12:34:56Z'
+              format: date-time
+              description: Timestamp of when the heuristic state was last updated.
+            last_down_message_updated_at:
+              type: string
+              examples:
+              - '2025-03-26T12:34:56Z'
+              format: date-time
+              description: Timestamp of when the last down message was updated.
+            up_events:
+              type: integer
+              examples:
+              - 0
+              format: int64
+              description: Number of times the IKE SA has transitioned to up state
+            down_events:
+              type: integer
+              examples:
+              - 0
+              format: int64
+              description: Number of times the IKE SA has transitioned to down state
+            log_message_bad_events:
+              type: integer
+              examples:
+              - 0
+              format: int64
+              description: Number of times the IKE SA has logged a bad message
+          description: Heuristic state of the IKE SA
+        created_at:
+          type: string
+          examples:
+          - '2025-03-26T12:34:56Z'
+          format: date-time
+          description: Timestamp of when the IKE SA was created.
+        updated_at:
+          type: string
+          examples:
+          - '2025-03-26T12:34:56Z'
+          format: date-time
+          description: Timestamp of when the IKE SA was last updated.
+      title: IPsec IKE SA metrics details response
+      description: Response schema for IPsec IKE SA metrics details.
+    gatewayServiceLogSessionDetailsResponse:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - sessions:
+        - session_id: 01234567-89ab-cdef-0123-456789abcdef
+          token: 01234567-89ab-cdef-0123-456789abcdef
+      properties:
+        session_id:
+          $ref: '#/components/schemas/gatewayUuid'
+        token:
+          $ref: '#/components/schemas/gatewayUuid'
+      title: Service log session details response
+      required:
+      - session_id
+      - token
+      additionalProperties: false
+      description: Response schema for details of a service log session.
+    gatewayAddressListResponse:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: array
+      examples:
+      - []
+      items:
+        $ref: '#/components/schemas/gatewayAddressDetailsResponse'
+      title: Address list response
+      description: Response schema for a list of gateway addresses.
+    gatewayConnectionRouteType:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      examples:
+      - static
+      title: Connection route type
+      enum:
+      - static
+      description: Connection route type
+    gatewayPlanListResponse:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: array
+      examples:
+      - []
+      items:
+        $ref: '#/components/schemas/gatewayPlanDetailsResponse'
+      title: Plan list response
+      description: Response schema for a list of gateway plans.
+    gatewaySupportedIntegrityAlgorithms:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      examples:
+      - sha1
+      title: Supported integrity algorithms
+      enum:
+      - aes128gmac
+      - aes256gmac
+      - sha1
+      - sha256
+      - sha384
+      - sha512
+      description: List of supported IPsec integrity algorithms
+    gatewayLabelCreateRequest:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - key: environment
+        value: production
+      properties:
+        key:
+          $ref: '#/components/schemas/gatewayLabelKey'
+        value:
+          $ref: '#/components/schemas/gatewayLabelValue'
+      title: Label create request
+      required:
+      - key
+      - value
+      additionalProperties: false
+      description: Gateway label
+    gatewayServiceListResponse:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: array
+      examples:
+      - []
+      items:
+        $ref: '#/components/schemas/gatewayServiceDetailsResponse'
+      title: Service list response
+      description: Response schema for a list of gateway services.
+    gatewayConnectionListResponse:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: array
+      examples:
+      - []
+      items:
+        $ref: '#/components/schemas/gatewayConnectionDetailsResponse'
+      title: Connection list response
+      description: Response schema for a list of gateway connections.
+    gatewayServiceReplaceRequest:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - name: gateway-service
+        plan: development-gwaas-1c2g
+        configured_status: started
+        labels: []
+        automatic_tunnel_internal_ip_allocation: true
+      properties:
+        name:
+          type: string
+          examples:
+          - gateway-service
+          - vpn-tunnel-1
+          maxLength: 64
+          minLength: 1
+          pattern: ^[a-zA-Z0-9_-]+$
+          description: Name of the service
+        plan:
+          type: string
+          examples:
+          - development-gwaas-1c2g
+          description: Plan
+        configured_status:
+          $ref: '#/components/schemas/gatewayServiceConfiguredStatus'
+        connections:
+          description: Service connections
+        labels:
+          type: array
+          examples:
+          - []
+          items:
+            $ref: '#/components/schemas/gatewayLabelCreateRequest'
+          maxItems: 255
+          description: Labels
+        automatic_tunnel_internal_ip_allocation:
+          type: boolean
+          examples:
+          - true
+          - false
+          description: Allocate and use tunnel internal IPs automatically
+      title: Service replace request
+      required:
+      - name
+      - configured_status
+      additionalProperties: false
+      description: Request to replace a gateway service
+    gatewayConnectionDetailsResponse:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - uuid: 01234567-89ab-cdef-0123-456789abcdef
+        name: gateway-service
+        type: ipsec
+        local_routes: []
+        remote_routes: []
+        tunnels: []
+        created_at: '2025-03-26T12:34:56Z'
+        updated_at: '2025-03-26T12:34:56Z'
+      properties:
+        uuid:
+          $ref: '#/components/schemas/gatewayUuid'
+        name:
+          type: string
+          examples:
+          - gateway-service
+          - vpn-tunnel-1
+          maxLength: 64
+          minLength: 1
+          pattern: ^[a-zA-Z0-9_-]+$
+          description: Name of the connection
+        type:
+          $ref: '#/components/schemas/gatewayConnectionType'
+        local_routes:
+          type: array
+          examples:
+          - []
+          items:
+            $ref: '#/components/schemas/gatewayConnectionRouteDetailsResponse'
+          description: Local routes for the connection
+        remote_routes:
+          type: array
+          examples:
+          - []
+          items:
+            $ref: '#/components/schemas/gatewayConnectionRouteDetailsResponse'
+          description: Remote routes for the connection
+        tunnels:
+          type: array
+          examples:
+          - []
+          items:
+            $ref: '#/components/schemas/gatewayTunnelDetailsResponse'
+        created_at:
+          type: string
+          examples:
+          - '2025-03-26T12:34:56Z'
+          format: date-time
+          description: Timestamp of when the connection was created.
+        updated_at:
+          type: string
+          examples:
+          - '2025-03-26T12:34:56Z'
+          format: date-time
+          description: Timestamp of when the connection was last updated.
+      title: Connection details response
+      description: Response schema for gateway connection details.
+    gatewayRemotePeerAddressDetailsResponse:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - address: 203.0.113.10
+      properties:
+        address:
+          type: string
+          examples:
+          - 203.0.113.10
+          format: ip-address
+          description: Remote peer address
+      title: Remote peer address details response
+      description: Response schema for remote peer address details.
+    gatewayConnectionType:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      examples:
+      - ipsec
+      title: Connection type
+      enum:
+      - ipsec
+      description: Connection type
+    gatewayTunnelDetailsResponse:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - uuid: 01234567-89ab-cdef-0123-456789abcdef
+        name: gateway-service
+        internal_peer_ping_interval: 0
+        operational_state: established
+        created_at: '2025-03-26T12:34:56Z'
+        updated_at: '2025-03-26T12:34:56Z'
+        tunnel_up: true
+        tunnel_healthy: true
+      properties:
+        uuid:
+          $ref: '#/components/schemas/gatewayUuid'
+        name:
+          type: string
+          examples:
+          - gateway-service
+          - vpn-tunnel-1
+          maxLength: 64
+          minLength: 1
+          pattern: ^[a-zA-Z0-9_-]+$
+          description: Name of the tunnel
+        local_address:
+          $ref: '#/components/schemas/gatewayLocalPeerAddressDetailsResponse'
+        remote_address:
+          $ref: '#/components/schemas/gatewayRemotePeerAddressDetailsResponse'
+        ipsec:
+          $ref: '#/components/schemas/gatewayIpsecDetailsResponse'
+        tunnel_internal_ip:
+          $ref: '#/components/schemas/gatewayTunnelInternalIpDetailsResponse'
+        internal_peer_ping_interval:
+          type: integer
+          examples:
+          - 0
+          minimum: 0
+          format: int64
+          description: Internal peer ping interval in seconds
+        operational_state:
+          $ref: '#/components/schemas/gatewayTunnelOperationalState'
+        created_at:
+          type: string
+          examples:
+          - '2025-03-26T12:34:56Z'
+          format: date-time
+          description: Timestamp of when the tunnel was created.
+        updated_at:
+          type: string
+          examples:
+          - '2025-03-26T12:34:56Z'
+          format: date-time
+          description: Timestamp of when the tunnel was last updated.
+        tunnel_up:
+          type: boolean
+          examples:
+          - true
+          - false
+          description: Indicates whether the tunnel is up
+        tunnel_healthy:
+          type: boolean
+          examples:
+          - true
+          - false
+          description: Indicates whether the tunnel is healthy
+      title: Tunnel details response
+      additionalProperties: false
+      description: Response schema for gateway tunnel details.
+    gatewayServiceOperationalState:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      examples:
+      - pending
+      title: Service operational state
+      enum:
+      - pending
+      - setup-agent
+      - setup-link-network
+      - setup-service
+      - setup-network
+      - setup-gw
+      - checkup
+      - setup-dns
+      - running
+      - stopped
+      - delete-dns
+      - delete-gw
+      - delete-network
+      - delete-server
+      - delete-link-network
+      - delete-service
+      - detach-link-network
+      description: Service operational state
+    gatewayAddressDetailsResponse:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - name: gateway-service
+        address: 203.0.113.10
+        provisioned_by: service
+      properties:
+        name:
+          type: string
+          examples:
+          - gateway-service
+          - vpn-tunnel-1
+          maxLength: 64
+          minLength: 1
+          pattern: ^[a-zA-Z0-9_-]+$
+          description: Name of the address
+        address:
+          type: string
+          examples:
+          - 203.0.113.10
+          format: ip-address
+          description: VPN address
+        provisioned_by:
+          type: string
+          examples:
+          - service
+          - user
+          description: Provisioner of the address
+      title: Address details response
+      additionalProperties: false
+      description: Response schema for gateway address details.
+    gatewayServiceDetailsResponse:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - uuid: 01234567-89ab-cdef-0123-456789abcdef
+        name: gateway-service
+        zone: fi-hel1
+        plan: development-gwaas-1c2g
+        features: []
+        addresses: []
+        connections: []
+        configured_status: started
+        automatic_tunnel_internal_ip_allocation: true
+        labels: []
+        created_at: '2025-03-26T12:34:56Z'
+        updated_at: '2025-03-26T12:34:56Z'
+      properties:
+        uuid:
+          $ref: '#/components/schemas/gatewayUuid'
+        name:
+          type: string
+          examples:
+          - gateway-service
+          - vpn-tunnel-1
+          maxLength: 64
+          minLength: 1
+          pattern: ^[a-zA-Z0-9_-]+$
+          description: Name of the service
+        zone:
+          type: string
+          examples:
+          - fi-hel1
+          maxLength: 64
+          minLength: 1
+          pattern: ^[a-zA-Z0-9_-]+$
+          description: Zone of the service
+        plan:
+          type: string
+          examples:
+          - development-gwaas-1c2g
+          maxLength: 64
+          minLength: 1
+          pattern: ^[a-zA-Z0-9_-]+$
+          description: Plan
+        features:
+          type: array
+          examples:
+          - - vpn
+          items:
+            $ref: '#/components/schemas/gatewayServiceFeatures'
+          minItems: 1
+          description: Active features
+        routers:
+          $ref: '#/components/schemas/gatewayRouterDetailsResponse'
+        addresses:
+          type: array
+          examples:
+          - []
+          items:
+            $ref: '#/components/schemas/gatewayAddressDetailsResponse'
+        connections:
+          type: array
+          examples:
+          - []
+          items:
+            $ref: '#/components/schemas/gatewayConnectionDetailsResponse'
+        configured_status:
+          $ref: '#/components/schemas/gatewayServiceConfiguredStatus'
+        operational_state:
+          $ref: '#/components/schemas/gatewayServiceOperationalState'
+        automatic_tunnel_internal_ip_allocation:
+          type: boolean
+          examples:
+          - true
+          - false
+          description: Allocate and use tunnel internal IPs automatically
+        labels:
+          type: array
+          examples:
+          - []
+          items:
+            $ref: '#/components/schemas/gatewayLabelDetailsResponse'
+          maxItems: 255
+          description: Labels
+        created_at:
+          type: string
+          examples:
+          - '2025-03-26T12:34:56Z'
+          format: date-time
+          description: Timestamp of when the service was created.
+        updated_at:
+          type: string
+          examples:
+          - '2025-03-26T12:34:56Z'
+          format: date-time
+          description: Timestamp of when the service was last updated.
+      title: Service details response
+      description: Gateway service
+    gatewayServiceLogSessionCreateResponse:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - sessions:
+        - vpn
+      properties:
+        sessions:
+          type: array
+          items:
+            $ref: '#/components/schemas/gatewayServiceLogSessionDetailsResponse'
+          description: List of service sessions created.
+      title: Service log session create response
+      required:
+      - sessions
+      additionalProperties: false
+      description: Response schema for service log session creation.
+    gatewaySupportedProposalAlgorithms:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      examples:
+      - aes128gcm16
+      title: Supported proposal algorithms
+      enum:
+      - aes128gcm16
+      - aes128gcm128
+      - aes192gcm16
+      - aes192gcm128
+      - aes256gcm16
+      - aes256gcm128
+      - aes128
+      - aes192
+      - aes256
+      description: List of supported IPsec proposal algorithms
+    gatewayServiceMetricsResponse:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - gateways: []
+      properties:
+        gateways:
+          type: array
+          examples:
+          - []
+          items:
+            $ref: '#/components/schemas/gatewayMetricsDetailsResponse'
+        ipsec_metrics:
+          $ref: '#/components/schemas/gatewayIpsecMetricsDetailsResponse'
+      title: Service metrics response
+      description: Response schema for service metrics.
+    gatewayConnectionModifyRequest:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - uuid: 01234567-89ab-cdef-0123-456789abcdef
+        name: gateway-service
+        type: ipsec
+        local_routes:
+        - name: modified-routes
+          type: static
+          static_network: 10.0.22.0/24
+      properties:
+        uuid:
+          $ref: '#/components/schemas/gatewayUuid'
+        name:
+          type: string
+          examples:
+          - gateway-service
+          - vpn-tunnel-1
+          maxLength: 64
+          minLength: 1
+          pattern: ^[a-zA-Z0-9_-]+$
+          description: Name of the connection
+        type:
+          $ref: '#/components/schemas/gatewayConnectionType'
+        local_routes:
+          type: array
+          examples:
+          - []
+          items:
+            $ref: '#/components/schemas/gatewayConnectionRouteRequest'
+          description: Connection local routes
+        remote_routes:
+          type: array
+          examples:
+          - []
+          items:
+            $ref: '#/components/schemas/gatewayConnectionRouteRequest'
+          description: Connection remote routes
+        tunnels:
+          type: array
+          examples:
+          - []
+          items:
+            $ref: '#/components/schemas/gatewayTunnelModifyRequest'
+          description: Tunnels
+      title: Connection modify request
+      additionalProperties: false
+      description: Network gateway VPN connection
+    gatewayConnectionRouteDetailsResponse:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - name: gateway-service
+        type: static
+        static_network: 10.0.0.0/24
+      properties:
+        name:
+          type: string
+          examples:
+          - gateway-service
+          - vpn-tunnel-1
+          maxLength: 64
+          minLength: 1
+          pattern: ^[a-zA-Z0-9_-]+$
+          description: Name of the connection
+        type:
+          $ref: '#/components/schemas/gatewayConnectionRouteType'
+        static_network:
+          type: string
+          examples:
+          - 10.0.0.0/24
+          format: ip-network
+          description: Static network for the connection route
+      title: Connection route details response
+      description: Response schema for gateway connection route details.
+    gatewayTunnelModifyRequest:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - uuid: 01234567-89ab-cdef-0123-456789abcdef
+        name: gateway-service
+        local_address:
+          name: gateway-service
+        remote_address:
+          address: 203.0.113.10
+        ipsec:
+          authentication:
+            type: psk
+            psk: MySecretPsk123
+          phase1_algorithms: []
+          phase2_algorithms: []
+          phase1_integrity_algorithms: []
+          phase2_integrity_algorithms: []
+          phase1_dh_group_numbers: []
+          phase2_dh_group_numbers: []
+        tunnel_internal_ip: 10.0.0.1
+        internal_peer_ping_interval: 0
+      properties:
+        uuid:
+          $ref: '#/components/schemas/gatewayUuid'
+        name:
+          type: string
+          examples:
+          - gateway-service
+          - vpn-tunnel-1
+          maxLength: 64
+          minLength: 1
+          pattern: ^[a-zA-Z0-9_-]+$
+          description: Name of the tunnel
+        local_address:
+          type: object
+          properties:
+            name:
+              type: string
+              examples:
+              - gateway-service
+              - vpn-tunnel-1
+              maxLength: 64
+              minLength: 1
+              pattern: ^[a-zA-Z0-9_-]+$
+              description: Name of the local peer address
+          description: Local peer address
+        remote_address:
+          type: object
+          properties:
+            address:
+              type: string
+              examples:
+              - 203.0.113.10
+              maxLength: 64
+              minLength: 1
+              description: Remote peer address
+          description: Remote peer address
+        ipsec:
+          type: object
+          properties:
+            authentication:
+              type: object
+              properties:
+                authentication:
+                  $ref: '#/components/schemas/gatewayIpsecAuthenticationType'
+                psk:
+                  type: string
+                  examples:
+                  - MySecretPsk123
+                  maxLength: 64
+                  minLength: 8
+                  pattern: ^[a-zA-Z1-9_.][a-zA-Z0-9_.]+$
+                  description: IPsec PSK
+              required:
+              - authentication
+              additionalProperties: false
+              description: IPsec authentication configuration
+            phase1_algorithms:
+              type: array
+              examples:
+              - []
+              items:
+                $ref: '#/components/schemas/gatewaySupportedProposalAlgorithms'
+              uniqueItems: true
+              description: Phase 1 algorithms
+            phase2_algorithms:
+              type: array
+              examples:
+              - []
+              items:
+                $ref: '#/components/schemas/gatewaySupportedProposalAlgorithms'
+              uniqueItems: true
+              description: Phase 2 algorithms
+            phase1_integrity_algorithms:
+              type: array
+              examples:
+              - - sha256
+                - sha384
+                - sha512
+              items:
+                $ref: '#/components/schemas/gatewaySupportedIntegrityAlgorithms'
+              uniqueItems: true
+              description: Phase 1 integrity algorithms
+              default:
+              - sha256
+              - sha384
+              - sha512
+            phase2_integrity_algorithms:
+              type: array
+              examples:
+              - - sha256
+                - sha384
+                - sha512
+              items:
+                $ref: '#/components/schemas/gatewaySupportedIntegrityAlgorithms'
+              uniqueItems: true
+              description: Phase 2 integrity algorithms
+              default:
+              - sha256
+              - sha384
+              - sha512
+            phase1_dh_group_numbers:
+              type: array
+              examples:
+              - - 16
+                - 18
+                - 19
+              items:
+                $ref: '#/components/schemas/gatewayDiffieHellmanGroupNumber'
+              uniqueItems: true
+              description: Phase 1 Diffie-Hellman group numbers
+              default:
+              - 14
+              - 16
+              - 18
+              - 19
+              - 20
+              - 21
+            phase2_dh_group_numbers:
+              type: array
+              examples:
+              - - 14
+                - 16
+                - 18
+                - 19
+              items:
+                $ref: '#/components/schemas/gatewayDiffieHellmanGroupNumber'
+              uniqueItems: true
+              description: Phase 2 Diffie-Hellman group numbers
+              default:
+              - 14
+              - 16
+              - 18
+              - 19
+              - 20
+              - 21
+            ike_lifetime:
+              type: integer
+              examples:
+              - 86400
+              maximum: 2147483647
+              minimum: 0
+              format: int32
+              description: Maximum IKE SA lifetime in seconds
+              default: 86400
+            rekey_time:
+              type: integer
+              examples:
+              - 14400
+              maximum: 2147483647
+              minimum: 0
+              format: int32
+              description: IKE SA rekey time in seconds
+              default: 14400
+            child_rekey_time:
+              type: integer
+              examples:
+              - 1440
+              maximum: 2147483647
+              minimum: 0
+              format: int32
+              description: IKE child SA rekey time in seconds
+              default: 1440
+            dpd_delay:
+              type: integer
+              examples:
+              - 30
+              maximum: 2147483647
+              minimum: 0
+              format: int32
+              description: Delay before sending Dead Peer Detection packets if no traffic is detected, in seconds
+              default: 30
+            dpd_timeout:
+              type: integer
+              examples:
+              - 120
+              maximum: 2147483647
+              minimum: 0
+              format: int32
+              description: Timeout period for DPD reply before considering the peer to be dead, in seconds
+              default: 120
+          required:
+          - authentication
+          additionalProperties: false
+          description: IPsec configuration
+        tunnel_internal_ip:
+          type: string
+          examples:
+          - 10.0.0.1
+          - ''
+          maxLength: 64
+          description: Tunnel internal IP address, "" if disabled
+        internal_peer_ping_interval:
+          type: integer
+          examples:
+          - 0
+          format: int64
+          description: Internal peer ping interval in seconds, or zero if disabled
+      title: Tunnel modify request
+      additionalProperties: false
+      description: Request to modify a VPN tunnel
+    gatewayAddressModifyRequest:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - address: 203.0.113.10
+      properties:
+        address:
+          type: string
+          examples:
+          - 203.0.113.10
+          format: ipv4
+          description: Floating IP address to assign to the service address.
+      title: Address modify request
+      required:
+      - address
+      additionalProperties: false
+      description: Gateway service address modify request
+    gatewayName:
+      type: string
+      examples:
+      - advanced
+      - development
+      title: Name
+      maxLength: 64
+      minLength: 1
+      pattern: ^[a-zA-Z0-9_-]+$
+      description: The name for the resource.
+    gatewayAuthenticationDetailsResponse:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - authentication: psk
+      properties:
+        authentication:
+          $ref: '#/components/schemas/gatewayIpsecAuthenticationType'
+      title: Authentication details response
+      additionalProperties: false
+      description: Response schema for authentication details.
+    gatewayLabelModifyRequest:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - key: environment
+        value: production
+      properties:
+        key:
+          $ref: '#/components/schemas/gatewayLabelKey'
+        value:
+          $ref: '#/components/schemas/gatewayLabelValue'
+      title: Label modify request
+      additionalProperties: false
+      description: Gateway label
+    gatewayConnectionCreateRequest:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - name: gateway-service
+        type: ipsec
+        local_routes: []
+        remote_routes: []
+        tunnels: []
+      properties:
+        uuid:
+          $ref: '#/components/schemas/gatewayUuid'
+        name:
+          type: string
+          examples:
+          - gateway-service
+          - vpn-tunnel-1
+          maxLength: 64
+          minLength: 1
+          pattern: ^[a-zA-Z0-9_-]+$
+          description: Name of the connection
+        type:
+          $ref: '#/components/schemas/gatewayConnectionType'
+        local_routes:
+          type: array
+          examples:
+          - - name: upcloud-example-route
+              type: static
+              static_network: 10.0.0.0/24
+          items:
+            $ref: '#/components/schemas/gatewayConnectionRouteRequest'
+          description: Connection local routes
+        remote_routes:
+          type: array
+          examples:
+          - - name: remote-example-route
+              type: static
+              static_network: 10.0.1.0/24
+          items:
+            $ref: '#/components/schemas/gatewayConnectionRouteRequest'
+          description: Connection remote routes
+        tunnels:
+          type: array
+          examples:
+          - - name: example-tunnel-1
+              local_address:
+                name: public-ip-1
+              remote_address:
+                address: 100.10.0.111
+              ipsec:
+                authentication:
+                  authentication: psk
+                  psk: '{your PSK}'
+              tunnel_internal_ip: 169.254.17.1
+              internal_peer_ping_interval: 0
+          items:
+            $ref: '#/components/schemas/gatewayTunnelCreateRequest'
+          description: Connection tunnels
+      title: Connection create request
+      required:
+      - name
+      - type
+      additionalProperties: false
+      description: Network gateway VPN connection
+    gatewayTunnelCreateRequest:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - name: gateway-service
+        local_address:
+          name: gateway-service
+        remote_address:
+          address: 203.0.113.10
+        ipsec:
+          authentication:
+            type: psk
+            psk: MySecretPsk123
+          phase1_algorithms: []
+          phase2_algorithms: []
+          phase1_integrity_algorithms: []
+          phase2_integrity_algorithms: []
+          phase1_dh_group_numbers: []
+          phase2_dh_group_numbers: []
+        tunnel_internal_ip: 10.0.0.1
+        internal_peer_ping_interval: 0
+      properties:
+        uuid:
+          $ref: '#/components/schemas/gatewayUuid'
+        name:
+          type: string
+          examples:
+          - gateway-service
+          - vpn-tunnel-1
+          maxLength: 64
+          minLength: 1
+          pattern: ^[a-zA-Z0-9_-]+$
+          description: Name of the tunnel
+        local_address:
+          type: object
+          properties:
+            name:
+              type: string
+              examples:
+              - gateway-service
+              - vpn-tunnel-1
+              maxLength: 64
+              minLength: 1
+              pattern: ^[a-zA-Z0-9_-]+$
+              description: Name of the local peer address
+          description: Local peer address
+        remote_address:
+          type: object
+          properties:
+            address:
+              type: string
+              examples:
+              - 203.0.113.10
+              maxLength: 64
+              minLength: 1
+              description: Remote peer address
+          description: Remote peer address
+        ipsec:
+          type: object
+          properties:
+            authentication:
+              type: object
+              properties:
+                authentication:
+                  $ref: '#/components/schemas/gatewayIpsecAuthenticationType'
+                psk:
+                  type: string
+                  examples:
+                  - MySecretPsk123
+                  maxLength: 64
+                  minLength: 8
+                  pattern: ^[a-zA-Z1-9_.][a-zA-Z0-9_.]+$
+                  description: IPsec PSK
+              required:
+              - authentication
+              - psk
+              additionalProperties: false
+              description: IPsec authentication configuration
+            phase1_algorithms:
+              type: array
+              examples:
+              - - aes128
+                - aes256
+                - aes128gcm128
+                - aes256gcm128
+              items:
+                $ref: '#/components/schemas/gatewaySupportedProposalAlgorithms'
+              uniqueItems: true
+              description: Phase 1 proposal algorithms
+              default:
+              - aes128
+              - aes256
+              - aes128gcm128
+              - aes256gcm128
+            phase2_algorithms:
+              type: array
+              examples:
+              - - aes128
+                - aes256
+                - aes128gcm128
+                - aes256gcm128
+              items:
+                $ref: '#/components/schemas/gatewaySupportedProposalAlgorithms'
+              uniqueItems: true
+              description: Phase 2 security association algorithms
+              default:
+              - aes128
+              - aes256
+              - aes128gcm128
+              - aes256gcm128
+            phase1_integrity_algorithms:
+              type: array
+              examples:
+              - - sha256
+                - sha384
+                - sha512
+              items:
+                $ref: '#/components/schemas/gatewaySupportedIntegrityAlgorithms'
+              uniqueItems: true
+              description: Phase 1 integrity algorithms
+              default:
+              - sha256
+              - sha384
+              - sha512
+            phase2_integrity_algorithms:
+              type: array
+              examples:
+              - - sha256
+                - sha384
+                - sha512
+              items:
+                $ref: '#/components/schemas/gatewaySupportedIntegrityAlgorithms'
+              uniqueItems: true
+              description: Phase 2 integrity algorithms
+              default:
+              - sha256
+              - sha384
+              - sha512
+            phase1_dh_group_numbers:
+              type: array
+              examples:
+              - - 16
+                - 18
+                - 19
+              items:
+                $ref: '#/components/schemas/gatewayDiffieHellmanGroupNumber'
+              uniqueItems: true
+              description: Phase 1 Diffie-Hellman group numbers
+              default:
+              - 14
+              - 16
+              - 18
+              - 19
+              - 20
+              - 21
+            phase2_dh_group_numbers:
+              type: array
+              examples:
+              - - 14
+                - 16
+                - 18
+                - 19
+              items:
+                $ref: '#/components/schemas/gatewayDiffieHellmanGroupNumber'
+              uniqueItems: true
+              description: Phase 2 Diffie-Hellman group numbers
+              default:
+              - 14
+              - 16
+              - 18
+              - 19
+              - 20
+              - 21
+            ike_lifetime:
+              type: integer
+              examples:
+              - 86400
+              maximum: 2147483647
+              minimum: 0
+              format: int32
+              description: Maximum IKE SA lifetime in seconds
+              default: 86400
+            rekey_time:
+              type: integer
+              examples:
+              - 14400
+              maximum: 2147483647
+              minimum: 0
+              format: int32
+              description: IKE SA rekey time in seconds
+              default: 14400
+            child_rekey_time:
+              type: integer
+              examples:
+              - 1440
+              maximum: 2147483647
+              minimum: 0
+              format: int32
+              description: IKE child SA rekey time in seconds
+              default: 1440
+            dpd_delay:
+              type: integer
+              examples:
+              - 30
+              maximum: 2147483647
+              minimum: 0
+              format: int32
+              description: Delay before sending Dead Peer Detection packets if no traffic is detected, in seconds
+              default: 30
+            dpd_timeout:
+              type: integer
+              examples:
+              - 120
+              maximum: 2147483647
+              minimum: 0
+              format: int32
+              description: Timeout period for DPD reply before considering the peer to be dead, in seconds
+              default: 120
+          required:
+          - authentication
+          additionalProperties: false
+          description: IPsec configuration
+        tunnel_internal_ip:
+          type: string
+          examples:
+          - 169.254.17.1
+          - ''
+          maxLength: 64
+          description: Tunnel internal IP address, "" if disabled
+          default: ''
+        internal_peer_ping_interval:
+          type: integer
+          examples:
+          - 0
+          format: int64
+          description: Internal peer ping interval in seconds, or zero if disabled
+          default: 0
+      title: Tunnel create request
+      required:
+      - name
+      - ipsec
+      - local_address
+      - remote_address
+      additionalProperties: false
+      description: Network gateway VPN connection tunnel
+    gatewayQueryParamOffset:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: integer
+      examples:
+      - 0
+      - 10
+      - 20
+      - 50
+      title: Query param offset
+      minimum: 0
+      format: int64
+      description: Schema for a query parameter specifying the offset for pagination.
+      default: 0
+    gatewayServiceConfiguredStatus:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      examples:
+      - started
+      title: Service configured status
+      enum:
+      - started
+      - stopped
+      description: Service configured status
+    gatewayLabelValue:
+      type:
+      - string
+      - 'null'
+      examples:
+      - production
+      - backend
+      - web-app
+      - backup
+      - engineering
+      title: Label value
+      maxLength: 255
+      pattern: \A[\p{L}\p{N}\p{P}\p{S}\p{M}\p{Z}]*\z
+      description: The value of a label.
+      nullable: true
+    gatewayRouterDetailsResponse:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - uuid: 01234567-89ab-cdef-0123-456789abcdef
+        created_at: '2025-03-26T12:34:56Z'
+        updated_at: '2025-03-26T12:34:56Z'
+      properties:
+        uuid:
+          type: string
+          examples:
+          - 01234567-89ab-cdef-0123-456789abcdef
+          format: uuid
+          description: Router UUID
+        created_at:
+          type: string
+          examples:
+          - '2025-03-26T12:34:56Z'
+          format: date-time
+          description: Timestamp of when the router was created.
+        updated_at:
+          type: string
+          examples:
+          - '2025-03-26T12:34:56Z'
+          format: date-time
+          description: Timestamp of when the router was last updated.
+      title: Router details response
+      description: Response schema for gateway router details.
+    gatewayDiffieHellmanGroupNumber:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: integer
+      examples:
+      - 2
+      - 5
+      - 14
+      title: Diffie-Hellman group number
+      format: int64
+      enum:
+      - 2
+      - 5
+      - 14
+      - 15
+      - 16
+      - 18
+      - 19
+      - 20
+      - 21
+      - 24
+      description: Diffie-Hellman group number
+    gatewayIpsecAuthenticationType:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      examples:
+      - psk
+      title: IPsec authentication type
+      enum:
+      - psk
+      description: IPsec authentication type
+    gatewayServiceCreateRequest:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - name: gateway-service
+        plan: development-gwaas-1c2g
+        zone: fi-hel1
+        features: []
+        routers: []
+        addresses: []
+        connections: []
+        labels: []
+        configured_status: started
+        automatic_tunnel_internal_ip_allocation: true
+      properties:
+        name:
+          type: string
+          examples:
+          - gateway-service
+          - vpn-tunnel-1
+          maxLength: 64
+          minLength: 1
+          pattern: ^[a-zA-Z0-9_-]+$
+          description: Name of the service
+        plan:
+          type: string
+          examples:
+          - development-gwaas-1c2g
+          description: Plan
+        zone:
+          type: string
+          examples:
+          - fi-hel1
+          pattern: ^[a-z]{2}-[a-z]{3}\d$
+          description: Zone
+        features:
+          type: array
+          examples:
+          - - nat
+          items:
+            $ref: '#/components/schemas/gatewayServiceFeatures'
+          minItems: 1
+          description: Active features
+        routers:
+          type: array
+          examples:
+          - - uuid: fedcba98-7654-3210-fedc-ba9876543210
+          items:
+            $ref: '#/components/schemas/gatewayRouterCreateRequest'
+          maxItems: 1
+          minItems: 1
+          description: Service routers
+        addresses:
+          type: array
+          examples:
+          - []
+          items:
+            $ref: '#/components/schemas/gatewayAddressCreateRequest'
+          maxItems: 2
+          description: Service addresses
+        connections:
+          type: array
+          examples:
+          - []
+          items:
+            $ref: '#/components/schemas/gatewayConnectionCreateRequest'
+          description: Service connections
+        labels:
+          type: array
+          examples:
+          - []
+          items:
+            $ref: '#/components/schemas/gatewayLabelCreateRequest'
+          maxItems: 255
+          description: Labels
+        configured_status:
+          $ref: '#/components/schemas/gatewayServiceConfiguredStatus'
+        automatic_tunnel_internal_ip_allocation:
+          type: boolean
+          examples:
+          - true
+          - false
+          description: Allocate and use tunnel internal IPs automatically
+          default: true
+      title: Service create request
+      required:
+      - name
+      - plan
+      - zone
+      - features
+      - routers
+      - configured_status
+      additionalProperties: false
+      description: Gateway service
+    gatewayAddressCreateRequest:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - name: gateway-service
+      properties:
+        name:
+          type: string
+          examples:
+          - gateway-service
+          - vpn-tunnel-1
+          maxLength: 64
+          minLength: 1
+          pattern: ^[a-zA-Z0-9_-]+$
+          description: Name of the address
+        address:
+          type: string
+          examples:
+          - 203.0.113.10
+          format: ipv4
+          description: Floating IP address
+      title: Address create request
+      required:
+      - name
+      additionalProperties: false
+      description: Gateway address
+    gatewayUuid:
+      type: string
+      examples:
+      - 01234567-89ab-cdef-0123-456789abcdef
+      - fedcba98-7654-3210-fedc-ba9876543210
+      title: UUID
+      format: uuid
+      description: The unique identifier for the resource.
+    gatewayQueryParamLimit:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: integer
+      examples:
+      - 10
+      - 25
+      - 50
+      - 100
+      title: Query param limit
+      maximum: 100
+      minimum: 0
+      format: int64
+      description: Schema for a query parameter specifying the maximum number of entries to return (limit).
+      default: 10
+    gatewayServiceLogSessionTypes:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      examples:
+      - vpn
+      title: Service log session types
+      enum:
+      - vpn
+      description: Service log session types
+  parameters:
+    createGatewayTunnelServiceUuid:
+      name: service-uuid
+      in: path
+      description: Service UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/gatewayUuid'
+    getGatewayAddressServiceUuid:
+      name: service-uuid
+      in: path
+      description: Service UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/gatewayUuid'
+    listGatewayTunnelsServiceUuid:
+      name: service-uuid
+      in: path
+      description: Service UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/gatewayUuid'
+    modifyGatewayConnectionServiceUuid:
+      name: service-uuid
+      in: path
+      description: Service UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/gatewayUuid'
+    getGatewayServiceLabelLabelKey:
+      name: label-key
+      in: path
+      description: Label identifier
+      required: true
+      schema:
+        $ref: '#/components/schemas/gatewayLabelKey'
+    modifyGatewayConnectionConnectionUuid:
+      name: connection-uuid
+      in: path
+      description: Connection UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/gatewayUuid'
+    getGatewayServiceLabelServiceUuid:
+      name: service-uuid
+      in: path
+      description: Service UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/gatewayUuid'
+    listGatewayServicesOffset:
+      name: offset
+      in: query
+      description: Offset for retrieved results.
+      required: false
+      schema:
+        $ref: '#/components/schemas/gatewayQueryParamOffset'
+    createGatewayConnectionServiceUuid:
+      name: service-uuid
+      in: path
+      description: Service UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/gatewayUuid'
+    listGatewayServicesLimit:
+      name: limit
+      in: query
+      description: Number of entries to receive at most.
+      required: false
+      schema:
+        $ref: '#/components/schemas/gatewayQueryParamLimit'
+    getGatewayAddressAddressName:
+      name: address-name
+      in: path
+      description: Address identifier
+      required: true
+      schema:
+        $ref: '#/components/schemas/gatewayName'
+    modifyGatewayServiceLabelLabelKey:
+      name: label-key
+      in: path
+      description: Label identifier
+      required: true
+      schema:
+        $ref: '#/components/schemas/gatewayLabelKey'
+    deleteGatewayServiceLabelServiceUuid:
+      name: service-uuid
+      in: path
+      description: Service UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/gatewayUuid'
+    getGatewayConnectionServiceUuid:
+      name: service-uuid
+      in: path
+      description: Service UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/gatewayUuid'
+    modifyGatewayTunnelServiceUuid:
+      name: service-uuid
+      in: path
+      description: Service UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/gatewayUuid'
+    listGatewayTunnelsConnectionUuid:
+      name: connection-uuid
+      in: path
+      description: Connection UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/gatewayUuid'
+    getGatewayTunnelConnectionUuid:
+      name: connection-uuid
+      in: path
+      description: Connection UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/gatewayUuid'
+    deleteGatewayConnectionConnectionUuid:
+      name: connection-uuid
+      in: path
+      description: Connection UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/gatewayUuid'
+    modifyGatewayTunnelTunnelUuid:
+      name: tunnel-uuid
+      in: path
+      description: Tunnel UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/gatewayUuid'
+    deleteGatewayTunnelTunnelUuid:
+      name: tunnel-uuid
+      in: path
+      description: Tunnel UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/gatewayUuid'
+    modifyGatewayServiceLabelServiceUuid:
+      name: service-uuid
+      in: path
+      description: Service UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/gatewayUuid'
+    deleteGatewayConnectionServiceUuid:
+      name: service-uuid
+      in: path
+      description: Service UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/gatewayUuid'
+    createGatewayTunnelConnectionUuid:
+      name: connection-uuid
+      in: path
+      description: Connection UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/gatewayUuid'
+    listGatewayServicesSort:
+      name: sort
+      in: query
+      description: Sort resources by field. Prefix with '-' for descending order.
+      required: false
+      schema:
+        $ref: '#/components/schemas/gatewayQueryParamSortServices'
+    listGatewayConnectionsServiceUuid:
+      name: service-uuid
+      in: path
+      description: Service UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/gatewayUuid'
+    getGatewayServiceServiceUuid:
+      name: service-uuid
+      in: path
+      description: Service UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/gatewayUuid'
+    getGatewayTunnelServiceUuid:
+      name: service-uuid
+      in: path
+      description: Service UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/gatewayUuid'
+    deleteGatewayTunnelConnectionUuid:
+      name: connection-uuid
+      in: path
+      description: Connection UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/gatewayUuid'
+    getGatewayMetricsServiceUuid:
+      name: service-uuid
+      in: path
+      description: Service UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/gatewayUuid'
+    modifyGatewayAddressAddressName:
+      name: address-name
+      in: path
+      description: Address identifier
+      required: true
+      schema:
+        $ref: '#/components/schemas/gatewayName'
+    deleteGatewayTunnelServiceUuid:
+      name: service-uuid
+      in: path
+      description: Service UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/gatewayUuid'
+    modifyGatewayTunnelConnectionUuid:
+      name: connection-uuid
+      in: path
+      description: Connection UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/gatewayUuid'
+    releaseGatewayFloatingIpAddressName:
+      name: address-name
+      in: path
+      description: Address identifier
+      required: true
+      schema:
+        $ref: '#/components/schemas/gatewayName'
+    modifyGatewayServiceServiceUuid:
+      name: service-uuid
+      in: path
+      description: Service UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/gatewayUuid'
+    releaseGatewayFloatingIpServiceUuid:
+      name: service-uuid
+      in: path
+      description: Service UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/gatewayUuid'
+    replaceGatewayServiceServiceUuid:
+      name: service-uuid
+      in: path
+      description: Service UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/gatewayUuid'
+    getGatewayTunnelTunnelUuid:
+      name: tunnel-uuid
+      in: path
+      description: Tunnel UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/gatewayUuid'
+    flushGatewayNatServiceUuid:
+      name: service-uuid
+      in: path
+      description: Service UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/gatewayUuid'
+    listGatewayPlansLimit:
+      name: limit
+      in: query
+      description: Number of entries to receive at most.
+      required: false
+      schema:
+        $ref: '#/components/schemas/gatewayQueryParamLimit'
+    getGatewayPlanPlanName:
+      name: plan-name
+      in: path
+      description: Plan identifier
+      required: true
+      schema:
+        $ref: '#/components/schemas/gatewayName'
+    listGatewayAddressesServiceUuid:
+      name: service-uuid
+      in: path
+      description: Service UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/gatewayUuid'
+    createGatewayServiceLabelServiceUuid:
+      name: service-uuid
+      in: path
+      description: Service UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/gatewayUuid'
+    getGatewayConnectionConnectionUuid:
+      name: connection-uuid
+      in: path
+      description: Connection UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/gatewayUuid'
+    createGatewayServiceLogSessionServiceUuid:
+      name: service-uuid
+      in: path
+      description: Service UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/gatewayUuid'
+    listGatewayServiceLabelsServiceUuid:
+      name: service-uuid
+      in: path
+      description: Service UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/gatewayUuid'
+    listGatewayPlansOffset:
+      name: offset
+      in: query
+      description: Offset for retrieved results.
+      required: false
+      schema:
+        $ref: '#/components/schemas/gatewayQueryParamOffset'
+    deleteGatewayServiceServiceUuid:
+      name: service-uuid
+      in: path
+      description: Service UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/gatewayUuid'
+    deleteGatewayServiceLabelLabelKey:
+      name: label-key
+      in: path
+      description: Label identifier
+      required: true
+      schema:
+        $ref: '#/components/schemas/gatewayLabelKey'
+    modifyGatewayAddressServiceUuid:
+      name: service-uuid
+      in: path
+      description: Service UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/gatewayUuid'
+  responses:
+    modifyGatewayService200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/gatewayServiceDetailsResponse'
+    replaceGatewayServiceDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/gatewayErrorResponse'
+    getGatewayService200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/gatewayServiceDetailsResponse'
+    listGatewayAddressesDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/gatewayErrorResponse'
+    deleteGatewayConnectionDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/gatewayErrorResponse'
+    createGatewayServiceLogSessionDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/gatewayErrorResponse'
+    getGatewayPlan200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/gatewayPlanDetailsResponse'
+    modifyGatewayServiceLabelDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/gatewayErrorResponse'
+    modifyGatewayServiceDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/gatewayErrorResponse'
+    modifyGatewayConnectionDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/gatewayErrorResponse'
+    getGatewayServiceLabelDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/gatewayErrorResponse'
+    createGatewayServiceLabelDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/gatewayErrorResponse'
+    modifyGatewayConnection200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/gatewayConnectionDetailsResponse'
+    listGatewayConnections200:
+      description: OK
+      headers:
+        UpCloud-Total-Count:
+          description: Total count of items available
+          schema:
+            type: integer
+            format: int32
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/gatewayConnectionListResponse'
+    listGatewayPlans200:
+      description: OK
+      headers:
+        UpCloud-Total-Count:
+          description: Total count of items available
+          schema:
+            type: integer
+            format: int32
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/gatewayPlanListResponse'
+    deleteGatewayServiceLabelDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/gatewayErrorResponse'
+    modifyGatewayTunnelDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/gatewayErrorResponse'
+    getGatewayMetrics200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/gatewayServiceMetricsResponse'
+    createGatewayService200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/gatewayServiceDetailsResponse'
+    getGatewayMetricsDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/gatewayErrorResponse'
+    getGatewayConnectionDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/gatewayErrorResponse'
+    deleteGatewayTunnel204:
+      description: No Content
+    modifyGatewayAddressDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/gatewayErrorResponse'
+    listGatewayTunnelsDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/gatewayErrorResponse'
+    createGatewayConnection200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/gatewayConnectionDetailsResponse'
+    listGatewayTunnels200:
+      description: OK
+      headers:
+        UpCloud-Total-Count:
+          description: Total count of items available
+          schema:
+            type: integer
+            format: int32
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/gatewayTunnelListResponse'
+    getGatewayServiceDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/gatewayErrorResponse'
+    modifyGatewayServiceLabel200:
+      description: OK
+    deleteGatewayServiceLabel204:
+      description: No Content
+    getGatewayAddress200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/gatewayAddressDetailsResponse'
+    getGatewayServiceLabel200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/gatewayLabelDetailsResponse'
+    listGatewayServices200:
+      description: OK
+      headers:
+        UpCloud-Total-Count:
+          description: Total count of items available
+          schema:
+            type: integer
+            format: int32
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/gatewayServiceListResponse'
+    deleteGatewayConnection204:
+      description: No Content
+    releaseGatewayFloatingIpDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/gatewayErrorResponse'
+    replaceGatewayService200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/gatewayServiceDetailsResponse'
+    createGatewayTunnel200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/gatewayTunnelDetailsResponse'
+    releaseGatewayFloatingIp202:
+      description: Accepted
+    listGatewayServiceLabels200:
+      description: OK
+      headers:
+        UpCloud-Total-Count:
+          description: Total count of items available
+          schema:
+            type: integer
+            format: int32
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/gatewayServiceLabelListResponse'
+    getGatewayConnection200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/gatewayConnectionDetailsResponse'
+    createGatewayTunnelDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/gatewayErrorResponse'
+    createGatewayServiceDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/gatewayErrorResponse'
+    deleteGatewayServiceDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/gatewayErrorResponse'
+    listGatewayServiceLabelsDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/gatewayErrorResponse'
+    createGatewayServiceLabel201:
+      description: Created
+    deleteGatewayTunnelDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/gatewayErrorResponse'
+    deleteGatewayService204:
+      description: No Content
+    getGatewayTunnelDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/gatewayErrorResponse'
+    createGatewayConnectionDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/gatewayErrorResponse'
+    createGatewayServiceLogSession200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/gatewayServiceLogSessionCreateResponse'
+    listGatewayConnectionsDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/gatewayErrorResponse'
+    modifyGatewayTunnel200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/gatewayTunnelDetailsResponse'
+    modifyGatewayAddress200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/gatewayAddressDetailsResponse'
+    getGatewayTunnel200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/gatewayTunnelDetailsResponse'
+    flushGatewayNatDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/gatewayErrorResponse'
+    getGatewayAddressDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/gatewayErrorResponse'
+    getGatewayPlanDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/gatewayErrorResponse'
+    flushGatewayNat200:
+      description: No Content
+    listGatewayPlansDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/gatewayErrorResponse'
+    listGatewayAddresses200:
+      description: OK
+      headers:
+        UpCloud-Total-Count:
+          description: Total count of items available
+          schema:
+            type: integer
+            format: int32
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/gatewayAddressListResponse'
+    listGatewayServicesDefault:
+      description: Unexpected error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/gatewayErrorResponse'
+  requestBodies:
+    modifyGatewayAddress:
+      description: Modify existing service address by given {service-address-identifier}.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/gatewayAddressModifyRequest'
+    modifyGatewayServiceLabel:
+      description: Modify service label configuration.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/gatewayLabelModifyRequest'
+    createGatewayTunnel:
+      description: Create a new tunnel.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/gatewayTunnelCreateRequest'
+    modifyGatewayService:
+      description: Modify service configuration.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/gatewayServiceModifyRequest'
+    replaceGatewayService:
+      description: Replace service configuration.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/gatewayServiceReplaceRequest'
+    createGatewayConnection:
+      description: Create a new connection.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/gatewayConnectionCreateRequest'
+    createGatewayServiceLabel:
+      description: Create a new service label.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/gatewayLabelCreateRequest'
+    modifyGatewayTunnel:
+      description: Modify tunnel configuration.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/gatewayTunnelModifyRequest'
+    createGatewayService:
+      description: Create a new service.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/gatewayServiceCreateRequest'
+    createGatewayServiceLogSession:
+      description: Create a new service log session.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/gatewayServiceLogSessionCreateRequest'
+    modifyGatewayConnection:
+      description: Modify connection configuration.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/gatewayConnectionModifyRequest'
+  securitySchemes:
+    apiToken:
+      type: http
+      description: UpCloud API uses HTTP Bearer authentication. An API token is required to authenticate. The API token can be created in the UpCloud control panel. Alternatively, you can create an API token using the API directly, or with upctl. Note that if you want to use HTTP Basic authentication on API or with upctl, you will need to enable API access in the UpCloud control panel first.
+      scheme: bearer
+x-refined-from:
+- upcloud-openapi.json
+- upcloud-openapi.yml
+x-upcloud-visibility: public
+x-tagGroups:
+- name: Server
+  tags:
+  - server
+  - server-group
+  - server_size
+  - plan
+  - device
+  - events
+  - timezone
+  - vnc_keymap
+- name: Network
+  tags:
+  - network
+  - network-peering
+  - ip_address
+  - router
+  - gateway
+  - firewall-ruleset
+- name: Account & Access
+  tags:
+  - account
+  - audit-logs
+  - account-tokens
+  - permission
+  - tag
+- name: Billing
+  tags:
+  - price
+  - currency

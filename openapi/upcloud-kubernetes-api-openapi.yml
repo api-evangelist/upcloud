@@ -1,0 +1,1916 @@
+openapi: 3.2.0
+info:
+  title: Upcloud Kubernetes API
+  version: '1.3'
+  contact:
+    name: UpCloud
+    url: https://upcloud.com
+    email: hello@upcloud.com
+  license:
+    name: MIT
+    url: https://spdx.org/licenses/MIT.html
+  termsOfService: https://upcloud.com/terms-of-service/
+  description: 'Operations tagged kubernetes across 2 of this provider''s published API definitions: upcloud-openapi.json, upcloud-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.upcloud.com
+security:
+- apiToken: []
+tags:
+- name: Kubernetes
+  description: 'Kubernetes is a container orchestration system for automating, managing and scaling software deployment.
+
+    Managed Kubernetes allows you to easily create Kubernetes clusters without having to take care about low level details.'
+  x-displayName: Kubernetes
+paths:
+  /1.3/kubernetes:
+    get:
+      tags:
+      - Kubernetes
+      summary: List clusters
+      description: Returns a list of Kubernetes clusters.
+      operationId: listKubernetesClusters
+      responses:
+        '200':
+          $ref: '#/components/responses/kubernetesGetClusters'
+        '400':
+          $ref: '#/components/responses/kubernetesBadRequest'
+        '401':
+          $ref: '#/components/responses/kubernetesUnAuthorized'
+        default:
+          $ref: '#/components/responses/kubernetesInternalServerError'
+    post:
+      tags:
+      - Kubernetes
+      summary: Create cluster
+      description: Creates a new Kubernetes cluster.
+      operationId: createKubernetesCluster
+      requestBody:
+        $ref: '#/components/requestBodies/kubernetesPostCluster'
+      responses:
+        '201':
+          $ref: '#/components/responses/kubernetesPostCluster'
+        '400':
+          $ref: '#/components/responses/kubernetesBadRequest'
+        '401':
+          $ref: '#/components/responses/kubernetesUnAuthorized'
+        '404':
+          $ref: '#/components/responses/kubernetesNotFound'
+        '422':
+          $ref: '#/components/responses/kubernetesUnProcessableEntity'
+        default:
+          $ref: '#/components/responses/kubernetesInternalServerError'
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/kubernetes/{uuid}:
+    parameters:
+    - $ref: '#/components/parameters/kubernetesUuid'
+    get:
+      tags:
+      - Kubernetes
+      summary: Get cluster details
+      description: Returns Kubernetes cluster details by given `uuid`.
+      operationId: getKubernetesCluster
+      responses:
+        '200':
+          $ref: '#/components/responses/kubernetesGetCluster'
+        '400':
+          $ref: '#/components/responses/kubernetesBadRequest'
+        '401':
+          $ref: '#/components/responses/kubernetesUnAuthorized'
+        '404':
+          $ref: '#/components/responses/kubernetesNotFound'
+        default:
+          $ref: '#/components/responses/kubernetesInternalServerError'
+    delete:
+      tags:
+      - Kubernetes
+      summary: Delete cluster
+      description: Deletes an existing Kubernetes cluster by given `uuid`.
+      operationId: deleteKubernetesCluster
+      responses:
+        '202':
+          $ref: '#/components/responses/kubernetesDeleteCluster'
+        '401':
+          $ref: '#/components/responses/kubernetesUnAuthorized'
+        '404':
+          $ref: '#/components/responses/kubernetesNotFound'
+        default:
+          $ref: '#/components/responses/kubernetesInternalServerError'
+    patch:
+      tags:
+      - Kubernetes
+      summary: Modify cluster
+      description: Modifies an existing Kubernetes cluster by given `{uuid}`.
+      operationId: modifyKubernetesCluster
+      requestBody:
+        $ref: '#/components/requestBodies/kubernetesPatchCluster'
+      responses:
+        '200':
+          $ref: '#/components/responses/kubernetesPatchCluster'
+        '400':
+          $ref: '#/components/responses/kubernetesBadRequest'
+        '401':
+          $ref: '#/components/responses/kubernetesUnAuthorized'
+        '404':
+          $ref: '#/components/responses/kubernetesNotFound'
+        default:
+          $ref: '#/components/responses/kubernetesInternalServerError'
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/kubernetes/{uuid}/kubeconfig:
+    parameters:
+    - $ref: '#/components/parameters/kubernetesUuid'
+    get:
+      tags:
+      - Kubernetes
+      summary: Get kubeconfig
+      description: Returns kubeconfig for Kubernetes cluster by given `{uuid}`.
+      operationId: getKubernetesClusterKubeconfig
+      responses:
+        '200':
+          $ref: '#/components/responses/kubernetesGetClusterKubeconfig'
+        '401':
+          $ref: '#/components/responses/kubernetesUnAuthorized'
+        '404':
+          $ref: '#/components/responses/kubernetesNotFound'
+        default:
+          $ref: '#/components/responses/kubernetesInternalServerError'
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/kubernetes/{uuid}/available-upgrades:
+    parameters:
+    - $ref: '#/components/parameters/kubernetesUuid'
+    get:
+      tags:
+      - Kubernetes
+      summary: Get available upgrades
+      description: Returns a list of available versions that can be used to upgrade the cluster.
+      operationId: getKubernetesClusterAvailableUpgrades
+      responses:
+        '200':
+          $ref: '#/components/responses/kubernetesGetAvailableUpgrades'
+        '401':
+          $ref: '#/components/responses/kubernetesUnAuthorized'
+        '404':
+          $ref: '#/components/responses/kubernetesNotFound'
+        default:
+          $ref: '#/components/responses/kubernetesInternalServerError'
+    post:
+      tags:
+      - Kubernetes
+      summary: Upgrade cluster
+      description: Upgrades an existing Kubernetes cluster to specific version.
+      operationId: upgradeKubernetesCluster
+      requestBody:
+        $ref: '#/components/requestBodies/kubernetesPostUpgrade'
+      responses:
+        '201':
+          $ref: '#/components/responses/kubernetesPostUpgrade'
+        '401':
+          $ref: '#/components/responses/kubernetesUnAuthorized'
+        '404':
+          $ref: '#/components/responses/kubernetesNotFound'
+        '422':
+          $ref: '#/components/responses/kubernetesUnProcessableEntity'
+        default:
+          $ref: '#/components/responses/kubernetesInternalServerError'
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/kubernetes/{uuid}/node-groups:
+    parameters:
+    - $ref: '#/components/parameters/kubernetesUuid'
+    get:
+      tags:
+      - Kubernetes
+      summary: List node groups
+      description: 'Returns a list of available node groups of an existing Kubernetes cluster. Cluster is identified by given `{uuid}`.
+
+
+        A node group is a uniform set of worker nodes attached to a cluster.'
+      operationId: listKubernetesClusterNodeGroups
+      responses:
+        '200':
+          $ref: '#/components/responses/kubernetesGetNodeGroups'
+        '401':
+          $ref: '#/components/responses/kubernetesUnAuthorized'
+        '404':
+          $ref: '#/components/responses/kubernetesNotFound'
+        default:
+          $ref: '#/components/responses/kubernetesInternalServerError'
+    post:
+      tags:
+      - Kubernetes
+      summary: Create node group
+      description: Creates a new node group to an existing Kubernetes cluster. Cluster is identified by given `{uuid}`.
+      operationId: createKubernetesClusterNodeGroup
+      requestBody:
+        $ref: '#/components/requestBodies/kubernetesPostNodeGroup'
+      responses:
+        '201':
+          $ref: '#/components/responses/kubernetesPostNodeGroup'
+        '401':
+          $ref: '#/components/responses/kubernetesUnAuthorized'
+        '404':
+          $ref: '#/components/responses/kubernetesNotFound'
+        '422':
+          $ref: '#/components/responses/kubernetesUnProcessableEntity'
+        default:
+          $ref: '#/components/responses/kubernetesInternalServerError'
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/kubernetes/{uuid}/node-groups/{name}:
+    parameters:
+    - $ref: '#/components/parameters/kubernetesUuid'
+    - $ref: '#/components/parameters/kubernetesName'
+    get:
+      tags:
+      - Kubernetes
+      summary: Get node group details
+      description: Returns node group details by given `{node_group_name}`. Cluster is identified by given `{uuid}`.
+      operationId: getKubernetesClusterNodeGroup
+      responses:
+        '200':
+          $ref: '#/components/responses/kubernetesGetNodeGroupDetails'
+        '401':
+          $ref: '#/components/responses/kubernetesUnAuthorized'
+        '404':
+          $ref: '#/components/responses/kubernetesNotFound'
+        default:
+          $ref: '#/components/responses/kubernetesInternalServerError'
+    delete:
+      tags:
+      - Kubernetes
+      summary: Delete node group
+      description: Deletes an existing node group by given Kubernetes cluster `{uuid}` and `{node_group_name}`.
+      operationId: deleteKubernetesClusterNodeGroup
+      responses:
+        '202':
+          $ref: '#/components/responses/kubernetesDeleteNodeGroup'
+        '401':
+          $ref: '#/components/responses/kubernetesUnAuthorized'
+        '404':
+          $ref: '#/components/responses/kubernetesNotFound'
+        default:
+          $ref: '#/components/responses/kubernetesInternalServerError'
+    patch:
+      tags:
+      - Kubernetes
+      summary: Modify node group
+      description: Modifies an existing node group of a cluster. Cluster is identified by given `{uuid}` and node group by `{node_group_name}`.
+      operationId: modifyKubernetesClusterNodeGroup
+      requestBody:
+        $ref: '#/components/requestBodies/kubernetesPatchNodeGroup'
+      responses:
+        '200':
+          $ref: '#/components/responses/kubernetesPatchNodeGroup'
+        '401':
+          $ref: '#/components/responses/kubernetesUnAuthorized'
+        '404':
+          $ref: '#/components/responses/kubernetesNotFound'
+        '422':
+          $ref: '#/components/responses/kubernetesUnProcessableEntity'
+        default:
+          $ref: '#/components/responses/kubernetesInternalServerError'
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/kubernetes/{uuid}/node-groups/{name}/{node-name}:
+    parameters:
+    - $ref: '#/components/parameters/kubernetesUuid'
+    - $ref: '#/components/parameters/kubernetesName'
+    - $ref: '#/components/parameters/kubernetesNodeName'
+    delete:
+      tags:
+      - Kubernetes
+      summary: Delete node group node
+      description: Deletes a node group node from a cluster (experimental). Cluster is identified by given `{uuid}`, node group by `{name}`, and node by `{node-name}`.
+      operationId: deleteKubernetesClusterNodeGroupNode
+      responses:
+        '202':
+          $ref: '#/components/responses/kubernetesDeleteNodeGroupNode'
+        '401':
+          $ref: '#/components/responses/kubernetesUnAuthorized'
+        '404':
+          $ref: '#/components/responses/kubernetesNotFound'
+        default:
+          $ref: '#/components/responses/kubernetesInternalServerError'
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/kubernetes/plans:
+    get:
+      tags:
+      - Kubernetes
+      summary: List plans
+      description: Returns a list of available Kubernetes cluster plans.
+      operationId: listKubernetesPlans
+      responses:
+        '200':
+          $ref: '#/components/responses/kubernetesGetPlan'
+        '401':
+          $ref: '#/components/responses/kubernetesUnAuthorized'
+        default:
+          $ref: '#/components/responses/kubernetesInternalServerError'
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/kubernetes/versions:
+    get:
+      tags:
+      - Kubernetes
+      summary: List versions
+      description: Returns a list of available Kubernetes cluster versions.
+      operationId: listKubernetesVersions
+      responses:
+        '200':
+          $ref: '#/components/responses/kubernetesGetVersion'
+        '401':
+          $ref: '#/components/responses/kubernetesUnAuthorized'
+        default:
+          $ref: '#/components/responses/kubernetesInternalServerError'
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/kubernetes/{uuid}/authentication:
+    get:
+      tags:
+      - Kubernetes
+      summary: List cluster authentication entries
+      description: Returns all OIDC authentication issuer configurations for a cluster.
+      operationId: listClusterAuthentication
+      parameters:
+      - $ref: '#/components/parameters/kubernetesUuid'
+      responses:
+        '200':
+          $ref: '#/components/responses/kubernetesListClusterAuthentication200'
+        '401':
+          $ref: '#/components/responses/kubernetesUnAuthorized'
+        '404':
+          $ref: '#/components/responses/kubernetesNotFound'
+        default:
+          $ref: '#/components/responses/kubernetesInternalServerError'
+    put:
+      tags:
+      - Kubernetes
+      summary: Replace the full cluster authentication configuration
+      description: Replaces the entire set of OIDC authentication issuer configurations for a cluster with the supplied JSON list of issuers. The full set is validated before being applied. An empty list clears all issuers.
+      operationId: setClusterAuthentication
+      parameters:
+      - $ref: '#/components/parameters/kubernetesUuid'
+      requestBody:
+        $ref: '#/components/requestBodies/kubernetesSetClusterAuthentication'
+      responses:
+        '200':
+          $ref: '#/components/responses/kubernetesSetClusterAuthentication200'
+        '400':
+          $ref: '#/components/responses/kubernetesBadRequest'
+        '401':
+          $ref: '#/components/responses/kubernetesUnAuthorized'
+        '404':
+          $ref: '#/components/responses/kubernetesNotFound'
+        default:
+          $ref: '#/components/responses/kubernetesInternalServerError'
+    post:
+      tags:
+      - Kubernetes
+      summary: Create a cluster authentication entry
+      description: Creates a new OIDC authentication issuer configuration. The new entry is validated together with the cluster's existing entries before being applied. Fails if an entry with the same name already exists.
+      operationId: createClusterAuthentication
+      parameters:
+      - $ref: '#/components/parameters/kubernetesUuid'
+      requestBody:
+        $ref: '#/components/requestBodies/kubernetesCreateClusterAuthentication'
+      responses:
+        '201':
+          $ref: '#/components/responses/kubernetesCreateClusterAuthentication201'
+        '400':
+          $ref: '#/components/responses/kubernetesBadRequest'
+        '401':
+          $ref: '#/components/responses/kubernetesUnAuthorized'
+        '404':
+          $ref: '#/components/responses/kubernetesNotFound'
+        '409':
+          $ref: '#/components/responses/kubernetesConflict'
+        default:
+          $ref: '#/components/responses/kubernetesInternalServerError'
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/kubernetes/{uuid}/authentication/import:
+    put:
+      tags:
+      - Kubernetes
+      summary: Import a full cluster authentication configuration
+      description: Replaces the entire set of OIDC authentication issuer configurations for a cluster with the supplied native kube-apiserver v1 AuthenticationConfiguration YAML document. Issuers are named deterministically from their issuer URL host. The top-level `anonymous` field is not supported and any configuration that would drop data is rejected.
+      operationId: importClusterAuthentication
+      parameters:
+      - $ref: '#/components/parameters/kubernetesUuid'
+      requestBody:
+        $ref: '#/components/requestBodies/kubernetesImportClusterAuthentication'
+      responses:
+        '200':
+          $ref: '#/components/responses/kubernetesImportClusterAuthentication200'
+        '400':
+          $ref: '#/components/responses/kubernetesBadRequest'
+        '401':
+          $ref: '#/components/responses/kubernetesUnAuthorized'
+        '404':
+          $ref: '#/components/responses/kubernetesNotFound'
+        default:
+          $ref: '#/components/responses/kubernetesInternalServerError'
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/kubernetes/{uuid}/authentication/{name}:
+    get:
+      tags:
+      - Kubernetes
+      summary: Get a cluster authentication entry
+      operationId: getClusterAuthentication
+      parameters:
+      - $ref: '#/components/parameters/kubernetesUuid'
+      - $ref: '#/components/parameters/kubernetesName'
+      responses:
+        '200':
+          $ref: '#/components/responses/kubernetesGetClusterAuthentication200'
+        '401':
+          $ref: '#/components/responses/kubernetesUnAuthorized'
+        '404':
+          $ref: '#/components/responses/kubernetesNotFound'
+        default:
+          $ref: '#/components/responses/kubernetesInternalServerError'
+    put:
+      tags:
+      - Kubernetes
+      summary: Update a cluster authentication entry
+      description: Updates an existing OIDC authentication issuer configuration. The name in the path is authoritative. The updated entry is validated together with the cluster's other entries before being applied.
+      operationId: updateClusterAuthentication
+      parameters:
+      - $ref: '#/components/parameters/kubernetesUuid'
+      - $ref: '#/components/parameters/kubernetesName'
+      requestBody:
+        $ref: '#/components/requestBodies/kubernetesUpdateClusterAuthentication'
+      responses:
+        '200':
+          $ref: '#/components/responses/kubernetesUpdateClusterAuthentication200'
+        '400':
+          $ref: '#/components/responses/kubernetesBadRequest'
+        '401':
+          $ref: '#/components/responses/kubernetesUnAuthorized'
+        '404':
+          $ref: '#/components/responses/kubernetesNotFound'
+        default:
+          $ref: '#/components/responses/kubernetesInternalServerError'
+    delete:
+      tags:
+      - Kubernetes
+      summary: Delete a cluster authentication entry
+      description: Removes an OIDC authentication issuer configuration by name.
+      operationId: deleteClusterAuthentication
+      parameters:
+      - $ref: '#/components/parameters/kubernetesUuid'
+      - $ref: '#/components/parameters/kubernetesName'
+      responses:
+        '204':
+          $ref: '#/components/responses/kubernetesDeleteClusterAuthentication204'
+        '401':
+          $ref: '#/components/responses/kubernetesUnAuthorized'
+        '404':
+          $ref: '#/components/responses/kubernetesNotFound'
+        default:
+          $ref: '#/components/responses/kubernetesInternalServerError'
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/kubernetes/{uuid}/authentication/{name}/kubeconfig:
+    get:
+      tags:
+      - Kubernetes
+      summary: Get OIDC kubeconfig
+      description: Returns a kubeconfig for the cluster whose user authenticates via the kubelogin (`kubectl oidc-login`) exec credential plugin, using the cluster's configured OIDC issuer identified by the `name` path parameter. The plugin (kubelogin) must be installed on the client. No long-lived credential is embedded. The OIDC client secret and any provider-specific kubelogin flags are not injected by the server; the returned kubeconfig includes comments describing how to add them.
+      operationId: getKubernetesClusterOIDCKubeconfig
+      parameters:
+      - $ref: '#/components/parameters/kubernetesUuid'
+      - $ref: '#/components/parameters/kubernetesName'
+      - $ref: '#/components/parameters/getKubernetesClusterOIDCKubeconfigAudience'
+      responses:
+        '200':
+          $ref: '#/components/responses/kubernetesGetClusterKubeconfig'
+        '400':
+          $ref: '#/components/responses/kubernetesBadRequest'
+        '401':
+          $ref: '#/components/responses/kubernetesUnAuthorized'
+        '404':
+          $ref: '#/components/responses/kubernetesNotFound'
+        default:
+          $ref: '#/components/responses/kubernetesInternalServerError'
+    servers:
+    - url: https://api.upcloud.com
+components:
+  responses:
+    kubernetesGetCluster:
+      description: 200 getCluster response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/kubernetesCluster'
+          example:
+            control_plane_ip_filter:
+            - 1.2.3.4/24
+            - 1.1.1.1
+            name: example-cluster
+            network: 33333333-3333-3333-333333333333
+            network_cidr: 172.16.0.0/24
+            node_groups:
+            - count: 4
+              kubelet_args:
+              - key: log-flush-frequency
+                value: 5s
+              labels:
+              - key: managedBy
+                value: exampleDevelopmentTeam
+              - key: environment
+                value: development
+              name: small
+              plan: K8S-2xCPU-4GB
+              ssh_keys:
+              - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCDxPPyWRTVHYOOaCE/gqDzcdJFZdo1mD8k+BBvZ4an/khT+rzJGT/K1kvxs1vS1AMzaVbuWH1bLVk8XVDVJ3J7Rf76E50O1mj3+SWW81bjneVlAxw7DRoxZInFio7TMFTt6eSRkOGQ2GVpvkePgunVZsk+XE13fSnthqS1TiiivnmaNXsaVIOSZICzTWVKqRz1XVR4fdyKJxEpFhHCIu0ui9SeB887IdcS3KshvNqJo3Jm0LmBLL1vzcbucc7T02wiqvdDSPO7TO8Wlc7sJXwmMImEDBkPYQTHmeOqsKbW0OiGuJniwg93pBt0BqNhn3gxtYLrmjha+PqO9gVR6XkV
+              state: running
+              storage: 01000000-0000-4000-8000-000160010100
+              taints:
+              - effect: NoSchedule
+                key: environment
+                value: development
+            - count: 8
+              kubelet_args:
+              - key: log-flush-frequency
+                value: 15s
+              labels:
+              - key: managedBy
+                value: exampleStagingTeam
+              - key: environment
+                value: staging
+              name: medium
+              plan: K8S-4xCPU-8GB
+              ssh_keys:
+              - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCDxPPyWRTVHYOOaCE/gqDzcdJFZdo1mD8k+BBvZ4an/khT+rzJGT/K1kvxs1vS1AMzaVbuWH1bLVk8XVDVJ3J7Rf76E50O1mj3+SWW81bjneVlAxw7DRoxZInFio7TMFTt6eSRkOGQ2GVpvkePgunVZsk+XE13fSnthqS1TiiivnmaNXsaVIOSZICzTWVKqRz1XVR4fdyKJxEpFhHCIu0ui9SeB887IdcS3KshvNqJo3Jm0LmBLL1vzcbucc7T02wiqvdDSPO7TO8Wlc7sJXwmMImEDBkPYQTHmeOqsKbW0OiGuJniwg93pBt0BqNhn3gxtYLrmjha+PqO9gVR6XkV
+              state: pending
+              storage: 01000000-0000-4000-8000-000160010100
+              taints:
+              - effect: NoSchedule
+                key: environment
+                value: staging
+            uuid: 11111111-1111-1111-1111-111111111111
+            state: running
+            zone: de-fra1
+    kubernetesPostNodeGroup:
+      description: 201 postNodeGroup response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/kubernetesNodeGroup'
+          example:
+            count: 4
+            kubelet_args:
+            - key: log-flush-frequency
+              value: 5s
+            labels:
+            - key: managedBy
+              value: exampleDevelopmentTeam
+            - key: environment
+              value: development
+            name: small
+            plan: K8S-2xCPU-4GB
+            ssh_keys:
+            - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCDxPPyWRTVHYOOaCE/gqDzcdJFZdo1mD8k+BBvZ4an/khT+rzJGT/K1kvxs1vS1AMzaVbuWH1bLVk8XVDVJ3J7Rf76E50O1mj3+SWW81bjneVlAxw7DRoxZInFio7TMFTt6eSRkOGQ2GVpvkePgunVZsk+XE13fSnthqS1TiiivnmaNXsaVIOSZICzTWVKqRz1XVR4fdyKJxEpFhHCIu0ui9SeB887IdcS3KshvNqJo3Jm0LmBLL1vzcbucc7T02wiqvdDSPO7TO8Wlc7sJXwmMImEDBkPYQTHmeOqsKbW0OiGuJniwg93pBt0BqNhn3gxtYLrmjha+PqO9gVR6XkV
+            state: pending
+            storage: 01000000-0000-4000-8000-000160010100
+            taints:
+            - effect: NoSchedule
+              key: environment
+              value: development
+    kubernetesGetClusters:
+      description: 200 getClusters response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/kubernetesClusters'
+          example:
+          - control_plane_ip_filter:
+            - 1.2.3.4/24
+            - 1.1.1.1
+            name: example-cluster
+            network: 33333333-3333-3333-333333333333
+            network_cidr: 172.16.0.0/24
+            node_groups:
+            - count: 4
+              kubelet_args:
+              - key: log-flush-frequency
+                value: 5s
+              labels:
+              - key: managedBy
+                value: exampleDevelopmentTeam
+              - key: environment
+                value: development
+              name: small
+              plan: K8S-2xCPU-4GB
+              ssh_keys:
+              - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCDxPPyWRTVHYOOaCE/gqDzcdJFZdo1mD8k+BBvZ4an/khT+rzJGT/K1kvxs1vS1AMzaVbuWH1bLVk8XVDVJ3J7Rf76E50O1mj3+SWW81bjneVlAxw7DRoxZInFio7TMFTt6eSRkOGQ2GVpvkePgunVZsk+XE13fSnthqS1TiiivnmaNXsaVIOSZICzTWVKqRz1XVR4fdyKJxEpFhHCIu0ui9SeB887IdcS3KshvNqJo3Jm0LmBLL1vzcbucc7T02wiqvdDSPO7TO8Wlc7sJXwmMImEDBkPYQTHmeOqsKbW0OiGuJniwg93pBt0BqNhn3gxtYLrmjha+PqO9gVR6XkV
+              state: running
+              storage: 01000000-0000-4000-8000-000160010100
+              taints:
+              - effect: NoSchedule
+                key: environment
+                value: development
+            - count: 8
+              kubelet_args:
+              - key: log-flush-frequency
+                value: 15s
+              labels:
+              - key: managedBy
+                value: exampleStagingTeam
+              - key: environment
+                value: staging
+              name: medium
+              plan: K8S-4xCPU-8GB
+              ssh_keys:
+              - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCDxPPyWRTVHYOOaCE/gqDzcdJFZdo1mD8k+BBvZ4an/khT+rzJGT/K1kvxs1vS1AMzaVbuWH1bLVk8XVDVJ3J7Rf76E50O1mj3+SWW81bjneVlAxw7DRoxZInFio7TMFTt6eSRkOGQ2GVpvkePgunVZsk+XE13fSnthqS1TiiivnmaNXsaVIOSZICzTWVKqRz1XVR4fdyKJxEpFhHCIu0ui9SeB887IdcS3KshvNqJo3Jm0LmBLL1vzcbucc7T02wiqvdDSPO7TO8Wlc7sJXwmMImEDBkPYQTHmeOqsKbW0OiGuJniwg93pBt0BqNhn3gxtYLrmjha+PqO9gVR6XkV
+              state: pending
+              storage: 01000000-0000-4000-8000-000160010100
+              taints:
+              - effect: NoSchedule
+                key: environment
+                value: staging
+            uuid: 11111111-1111-1111-1111-111111111111
+            state: running
+            zone: de-fra1
+          - name: another-example-cluster
+            network: another33333333-3333-3333-333333333333
+            network_cidr: 172.16.0.0/24
+            node_groups:
+            - count: 4
+              name: large
+              plan: K8S-8xCPU-32GB
+              ssh_keys:
+              - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCDxPPyWRTVHYOOaCE/gqDzcdJFZdo1mD8k+BBvZ4an/khT+rzJGT/K1kvxs1vS1AMzaVbuWH1bLVk8XVDVJ3J7Rf76E50O1mj3+SWW81bjneVlAxw7DRoxZInFio7TMFTt6eSRkOGQ2GVpvkePgunVZsk+XE13fSnthqS1TiiivnmaNXsaVIOSZICzTWVKqRz1XVR4fdyKJxEpFhHCIu0ui9SeB887IdcS3KshvNqJo3Jm0LmBLL1vzcbucc7T02wiqvdDSPO7TO8Wlc7sJXwmMImEDBkPYQTHmeOqsKbW0OiGuJniwg93pBt0BqNhn3gxtYLrmjha+PqO9gVR6XkV
+              state: running
+              storage: 01000000-0000-4000-8000-000160010100
+            uuid: 22222222-2222-2222-2222-222222222222
+            state: pending
+            zone: de-fra1
+    kubernetesCreateClusterAuthentication201:
+      description: Authentication entry created.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/kubernetesAuthenticationIssuerConfig'
+    kubernetesPostCluster:
+      description: 201 postCluster response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/kubernetesCluster'
+          example:
+            control_plane_ip_filter:
+            - 1.2.3.0/24
+            - 1.1.1.1
+            name: example-cluster
+            network: 33333333-3333-3333-333333333333
+            network_cidr: 172.16.0.0/24
+            node_groups:
+            - count: 4
+              kubelet_args:
+              - key: log-flush-frequency
+                value: 5s
+              labels:
+              - key: managedBy
+                value: exampleDevelopmentTeam
+              - key: environment
+                value: development
+              name: example-node-group-small
+              plan: K8S-2xCPU-4GB
+              ssh_keys:
+              - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCDxPPyWRTVHYOOaCE/gqDzcdJFZdo1mD8k+BBvZ4an/khT+rzJGT/K1kvxs1vS1AMzaVbuWH1bLVk8XVDVJ3J7Rf76E50O1mj3+SWW81bjneVlAxw7DRoxZInFio7TMFTt6eSRkOGQ2GVpvkePgunVZsk+XE13fSnthqS1TiiivnmaNXsaVIOSZICzTWVKqRz1XVR4fdyKJxEpFhHCIu0ui9SeB887IdcS3KshvNqJo3Jm0LmBLL1vzcbucc7T02wiqvdDSPO7TO8Wlc7sJXwmMImEDBkPYQTHmeOqsKbW0OiGuJniwg93pBt0BqNhn3gxtYLrmjha+PqO9gVR6XkV
+              state: pending
+              storage: 01000000-0000-4000-8000-000160010100
+              taints:
+              - effect: NoSchedule
+                key: environment
+                value: development
+            - count: 8
+              kubelet_args:
+              - key: log-flush-frequency
+                value: 15s
+              labels:
+              - key: managedBy
+                value: exampleStagingTeam
+              - key: environment
+                value: staging
+              name: example-node-group-medium
+              plan: K8S-4xCPU-8GB
+              ssh_keys:
+              - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCDxPPyWRTVHYOOaCE/gqDzcdJFZdo1mD8k+BBvZ4an/khT+rzJGT/K1kvxs1vS1AMzaVbuWH1bLVk8XVDVJ3J7Rf76E50O1mj3+SWW81bjneVlAxw7DRoxZInFio7TMFTt6eSRkOGQ2GVpvkePgunVZsk+XE13fSnthqS1TiiivnmaNXsaVIOSZICzTWVKqRz1XVR4fdyKJxEpFhHCIu0ui9SeB887IdcS3KshvNqJo3Jm0LmBLL1vzcbucc7T02wiqvdDSPO7TO8Wlc7sJXwmMImEDBkPYQTHmeOqsKbW0OiGuJniwg93pBt0BqNhn3gxtYLrmjha+PqO9gVR6XkV
+              state: pending
+              storage: 01000000-0000-4000-8000-000160010100
+              taints:
+              - effect: NoSchedule
+                key: environment
+                value: staging
+            uuid: 11111111-1111-1111-1111-111111111111
+            state: pending
+            zone: de-fra1
+    kubernetesDeleteClusterAuthentication204:
+      description: Authentication entry deleted.
+    kubernetesGetAvailableUpgrades:
+      description: 200 upgrades response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/kubernetesClusterAvailableUpgrades'
+          example:
+          - versions:
+            - 1.31.8
+            - 1.32.0
+    kubernetesPatchCluster:
+      description: 202 patchCluster response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/kubernetesCluster'
+          example:
+            control_plane_ip_filter:
+            - 1.2.3.0/24
+            - 1.1.1.1
+            name: example-cluster
+            network: 33333333-3333-3333-333333333333
+            network_cidr: 172.16.0.0/24
+            node_groups:
+            - count: 4
+              kubelet_args:
+              - key: log-flush-frequency
+                value: 5s
+              labels:
+              - key: managedBy
+                value: exampleDevelopmentTeam
+              - key: environment
+                value: development
+              name: example-node-group-small
+              plan: K8S-2xCPU-4GB
+              ssh_keys:
+              - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCDxPPyWRTVHYOOaCE/gqDzcdJFZdo1mD8k+BBvZ4an/khT+rzJGT/K1kvxs1vS1AMzaVbuWH1bLVk8XVDVJ3J7Rf76E50O1mj3+SWW81bjneVlAxw7DRoxZInFio7TMFTt6eSRkOGQ2GVpvkePgunVZsk+XE13fSnthqS1TiiivnmaNXsaVIOSZICzTWVKqRz1XVR4fdyKJxEpFhHCIu0ui9SeB887IdcS3KshvNqJo3Jm0LmBLL1vzcbucc7T02wiqvdDSPO7TO8Wlc7sJXwmMImEDBkPYQTHmeOqsKbW0OiGuJniwg93pBt0BqNhn3gxtYLrmjha+PqO9gVR6XkV
+              state: pending
+              storage: 01000000-0000-4000-8000-000160010100
+              taints:
+              - effect: NoSchedule
+                key: environment
+                value: development
+            - count: 8
+              kubelet_args:
+              - key: log-flush-frequency
+                value: 15s
+              labels:
+              - key: managedBy
+                value: exampleStagingTeam
+              - key: environment
+                value: staging
+              name: example-node-group-medium
+              plan: K8S-4xCPU-8GB
+              ssh_keys:
+              - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCDxPPyWRTVHYOOaCE/gqDzcdJFZdo1mD8k+BBvZ4an/khT+rzJGT/K1kvxs1vS1AMzaVbuWH1bLVk8XVDVJ3J7Rf76E50O1mj3+SWW81bjneVlAxw7DRoxZInFio7TMFTt6eSRkOGQ2GVpvkePgunVZsk+XE13fSnthqS1TiiivnmaNXsaVIOSZICzTWVKqRz1XVR4fdyKJxEpFhHCIu0ui9SeB887IdcS3KshvNqJo3Jm0LmBLL1vzcbucc7T02wiqvdDSPO7TO8Wlc7sJXwmMImEDBkPYQTHmeOqsKbW0OiGuJniwg93pBt0BqNhn3gxtYLrmjha+PqO9gVR6XkV
+              state: running
+              storage: 01000000-0000-4000-8000-000160010100
+              taints:
+              - effect: NoSchedule
+                key: environment
+                value: staging
+            uuid: 11111111-1111-1111-1111-111111111111
+            state: running
+            zone: de-fra1
+    kubernetesUnProcessableEntity:
+      description: 422 Unprocessable entity
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/kubernetesError'
+          example:
+            type: https://developers.upcloud.com/1.3/errors#INVALID_REQUEST
+            title: zone is not valid
+            correlation_id: 01GSCRT0RDS9EB2HMMMP5550ZR
+            status: 422
+    kubernetesBadRequest:
+      description: 400 Bad request
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/kubernetesError'
+          example:
+            type: https://developers.upcloud.com/1.3/errors#INVALID_REQUEST
+            title: payload validation failed
+            correlation_id: 01GSCRT0RDS9EB2HMMMP5550ZR
+            status: 400
+    kubernetesGetNodeGroupDetails:
+      description: 200 getNodeGroupDetails response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/kubernetesNodeGroupDetails'
+    kubernetesDeleteNodeGroupNode:
+      description: 202 deleteNodeGroup response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/kubernetesAccepted'
+          example:
+            message: deletion started for node group node 'small/node-xyz'
+    kubernetesDeleteNodeGroup:
+      description: 202 deleteNodeGroup response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/kubernetesAccepted'
+          example:
+            message: deletion started for node group 'small'
+    kubernetesImportClusterAuthentication200:
+      description: Authentication configuration imported.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/kubernetesAuthenticationConfiguration'
+    kubernetesUnAuthorized:
+      description: 401 Unauthorized
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/kubernetesError'
+          example:
+            type: https://developers.upcloud.com/1.3/errors#AUTHENTICATION_FAILED
+            title: Authentication failed using the given username and password.
+            correlation_id: 01GSCRT0RDS9EB2HMMMP5550ZR
+            status: 401
+    kubernetesUpdateClusterAuthentication200:
+      description: Authentication entry updated.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/kubernetesAuthenticationIssuerConfig'
+    kubernetesPatchNodeGroup:
+      description: 200 patchNodeGroup response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/kubernetesNodeGroup'
+          example:
+            count: 16
+            kubelet_args:
+            - key: log-flush-frequency
+              value: 5s
+            labels:
+            - key: managedBy
+              value: exampleDevelopmentTeam
+            - key: environment
+              value: development
+            name: small
+            plan: K8S-2xCPU-4GB
+            ssh_keys:
+            - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCDxPPyWRTVHYOOaCE/gqDzcdJFZdo1mD8k+BBvZ4an/khT+rzJGT/K1kvxs1vS1AMzaVbuWH1bLVk8XVDVJ3J7Rf76E50O1mj3+SWW81bjneVlAxw7DRoxZInFio7TMFTt6eSRkOGQ2GVpvkePgunVZsk+XE13fSnthqS1TiiivnmaNXsaVIOSZICzTWVKqRz1XVR4fdyKJxEpFhHCIu0ui9SeB887IdcS3KshvNqJo3Jm0LmBLL1vzcbucc7T02wiqvdDSPO7TO8Wlc7sJXwmMImEDBkPYQTHmeOqsKbW0OiGuJniwg93pBt0BqNhn3gxtYLrmjha+PqO9gVR6XkV
+            state: running
+            storage: 01000000-0000-4000-8000-000160010100
+            taints:
+            - effect: NoSchedule
+              key: environment
+              value: development
+    kubernetesConflict:
+      description: 409 Conflict
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/kubernetesError'
+          example:
+            type: https://developers.upcloud.com/1.3/errors#CONFLICT
+            title: an authentication entry with this name already exists.
+            correlation_id: 01GSCRT0RDS9EB2HMMMP5550ZR
+            status: 409
+    kubernetesGetVersion:
+      description: 200 getVersions response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/kubernetesVersions'
+          example:
+          - id: '1.26'
+            version: 1.26.4
+          - id: '1.27'
+            version: 1.27.2
+    kubernetesPostUpgrade:
+      description: 200 upgrades response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/kubernetesClusterAvailableUpgradesPost'
+          example:
+            version: '1.31'
+            strategy:
+              type: manual
+    kubernetesGetPlan:
+      description: 200 getPlans response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/kubernetesPlans'
+          example:
+          - description: K8S-2xCPU-4GB
+            name: small
+          - description: K8S-4xCPU-8GB
+            name: medium
+          - description: K8S-8xCPU-32GB
+            name: large
+    kubernetesListClusterAuthentication200:
+      description: List of authentication entries.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/kubernetesAuthenticationConfiguration'
+    kubernetesNotFound:
+      description: 404 Not found
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/kubernetesError'
+          example:
+            type: https://developers.upcloud.com/1.3/errors#ERROR_NOT_FOUND
+            title: cluster not found.
+            correlation_id: 01GSCRT0RDS9EB2HMMMP5550ZR
+            status: 404
+    kubernetesGetClusterAuthentication200:
+      description: Authentication entry details.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/kubernetesAuthenticationIssuerConfig'
+    kubernetesGetNodeGroups:
+      description: 200 getNodeGroups response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/kubernetesNodeGroups'
+          example:
+          - count: 4
+            kubelet_args:
+            - key: log-flush-frequency
+              value: 5s
+            labels:
+            - key: managedBy
+              value: exampleDevelopmentTeam
+            - key: environment
+              value: development
+            name: small
+            plan: K8S-2xCPU-4GB
+            ssh_keys:
+            - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCDxPPyWRTVHYOOaCE/gqDzcdJFZdo1mD8k+BBvZ4an/khT+rzJGT/K1kvxs1vS1AMzaVbuWH1bLVk8XVDVJ3J7Rf76E50O1mj3+SWW81bjneVlAxw7DRoxZInFio7TMFTt6eSRkOGQ2GVpvkePgunVZsk+XE13fSnthqS1TiiivnmaNXsaVIOSZICzTWVKqRz1XVR4fdyKJxEpFhHCIu0ui9SeB887IdcS3KshvNqJo3Jm0LmBLL1vzcbucc7T02wiqvdDSPO7TO8Wlc7sJXwmMImEDBkPYQTHmeOqsKbW0OiGuJniwg93pBt0BqNhn3gxtYLrmjha+PqO9gVR6XkV
+            state: running
+            storage: 01000000-0000-4000-8000-000160010100
+            taints:
+            - effect: NoSchedule
+              key: environment
+              value: development
+          - count: 8
+            kubelet_args:
+            - key: log-flush-frequency
+              value: 15s
+            labels:
+            - key: managedBy
+              value: exampleStagingTeam
+            - key: environment
+              value: staging
+            name: medium
+            plan: K8S-4xCPU-8GB
+            ssh_keys:
+            - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCDxPPyWRTVHYOOaCE/gqDzcdJFZdo1mD8k+BBvZ4an/khT+rzJGT/K1kvxs1vS1AMzaVbuWH1bLVk8XVDVJ3J7Rf76E50O1mj3+SWW81bjneVlAxw7DRoxZInFio7TMFTt6eSRkOGQ2GVpvkePgunVZsk+XE13fSnthqS1TiiivnmaNXsaVIOSZICzTWVKqRz1XVR4fdyKJxEpFhHCIu0ui9SeB887IdcS3KshvNqJo3Jm0LmBLL1vzcbucc7T02wiqvdDSPO7TO8Wlc7sJXwmMImEDBkPYQTHmeOqsKbW0OiGuJniwg93pBt0BqNhn3gxtYLrmjha+PqO9gVR6XkV
+            state: pending
+            storage: 01000000-0000-4000-8000-000160010100
+            taints:
+            - effect: NoSchedule
+              key: environment
+              value: staging
+    kubernetesDeleteCluster:
+      description: 202 deleteCluster response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/kubernetesAccepted'
+          example:
+            message: deletion started for cluster 11111111-1111-1111-1111-1111
+    kubernetesSetClusterAuthentication200:
+      description: Authentication configuration replaced.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/kubernetesAuthenticationConfiguration'
+    kubernetesInternalServerError:
+      description: 500 Internal server error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/kubernetesError'
+          example:
+            type: https://developers.upcloud.com/1.3/errors#ERROR_GENERIC_ERROR
+            title: failed to get version.
+            correlation_id: 01GSCRT0RDS9EB2HMMMP5550ZR
+            status: 500
+    kubernetesGetClusterKubeconfig:
+      description: 200 getClusterKubeconfig response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/kubernetesClusterKubeconfig'
+          example:
+            kubeconfig: "apiVersion: v1\nclusters:\n- cluster:\n    certificate-authority-data: FAKEBASE64=\n    server: https://server\n  name: example-cluster\ncontexts:\n- context:\n    cluster: example-cluster\n    user: example-cluster-admin\n  name: example-cluster-admin@example-cluster\ncurrent-context: example-cluster-admin@example-cluster\nkind: Config\npreferences: {}\nusers:\n- name: example-cluster-admin\n  user:\n    client-certificate-data: FAKEBASE64=\n    client-key-data: FAKEBASE64=\n"
+  requestBodies:
+    kubernetesPostNodeGroup:
+      description: postNodeGroup requestBody
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/kubernetesNodeGroup'
+          example:
+            count: 4
+            kubelet_args:
+            - key: log-flush-frequency
+              value: 5s
+            labels:
+            - key: managedBy
+              value: exampleDevelopmentTeam
+            - key: environment
+              value: development
+            name: small
+            plan: K8S-2xCPU-4GB
+            ssh_keys:
+            - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCDxPPyWRTVHYOOaCE/gqDzcdJFZdo1mD8k+BBvZ4an/khT+rzJGT/K1kvxs1vS1AMzaVbuWH1bLVk8XVDVJ3J7Rf76E50O1mj3+SWW81bjneVlAxw7DRoxZInFio7TMFTt6eSRkOGQ2GVpvkePgunVZsk+XE13fSnthqS1TiiivnmaNXsaVIOSZICzTWVKqRz1XVR4fdyKJxEpFhHCIu0ui9SeB887IdcS3KshvNqJo3Jm0LmBLL1vzcbucc7T02wiqvdDSPO7TO8Wlc7sJXwmMImEDBkPYQTHmeOqsKbW0OiGuJniwg93pBt0BqNhn3gxtYLrmjha+PqO9gVR6XkV
+            storage: 01000000-0000-4000-8000-000160010100
+            taints:
+            - effect: NoSchedule
+              key: environment
+              value: development
+    kubernetesCreateClusterAuthentication:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/kubernetesAuthenticationIssuerConfig'
+      required: true
+    kubernetesPatchCluster:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/kubernetesClusterPatch'
+          example:
+            control_plane_ip_filter:
+            - 1.2.3.0/24
+            - 1.1.1.1
+            labels:
+            - key: env
+              value: prod
+            - key: app
+              value: cats-dating-app
+    kubernetesSetClusterAuthentication:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/kubernetesAuthenticationConfiguration'
+      required: true
+    kubernetesPostUpgrade:
+      description: postUpgrade request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/kubernetesClusterAvailableUpgradesPost'
+          example:
+            version: '1.31'
+    kubernetesPatchNodeGroup:
+      description: patchNodeGroup requestBody
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/kubernetesNodeGroupPatch'
+          example:
+            count: 16
+    kubernetesPostCluster:
+      description: postCluster requestBody
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/kubernetesCluster'
+          example:
+            control_plane_ip_filter:
+            - 1.2.3.0/24
+            - 1.1.1.1
+            name: example-cluster
+            network: 33333333-3333-3333-333333333333
+            network_cidr: 172.16.0.0/24
+            labels:
+            - key: env
+              value: prod
+            - key: app
+              value: cats-dating-app
+            node_groups:
+            - count: 4
+              kubelet_args:
+              - key: log-flush-frequency
+                value: 5s
+              labels:
+              - key: managedBy
+                value: exampleDevelopmentTeam
+              - key: environment
+                value: development
+              name: small
+              plan: K8S-2xCPU-4GB
+              ssh_keys:
+              - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCDxPPyWRTVHYOOaCE/gqDzcdJFZdo1mD8k+BBvZ4an/khT+rzJGT/K1kvxs1vS1AMzaVbuWH1bLVk8XVDVJ3J7Rf76E50O1mj3+SWW81bjneVlAxw7DRoxZInFio7TMFTt6eSRkOGQ2GVpvkePgunVZsk+XE13fSnthqS1TiiivnmaNXsaVIOSZICzTWVKqRz1XVR4fdyKJxEpFhHCIu0ui9SeB887IdcS3KshvNqJo3Jm0LmBLL1vzcbucc7T02wiqvdDSPO7TO8Wlc7sJXwmMImEDBkPYQTHmeOqsKbW0OiGuJniwg93pBt0BqNhn3gxtYLrmjha+PqO9gVR6XkV
+              storage: 01000000-0000-4000-8000-000160010100
+              taints:
+              - effect: NoSchedule
+                key: environment
+                value: development
+            - count: 8
+              kubelet_args:
+              - key: log-flush-frequency
+                value: 15s
+              labels:
+              - key: managedBy
+                value: exampleStagingTeam
+              - key: environment
+                value: staging
+              name: medium
+              plan: K8S-4xCPU-8GB
+              ssh_keys:
+              - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCDxPPyWRTVHYOOaCE/gqDzcdJFZdo1mD8k+BBvZ4an/khT+rzJGT/K1kvxs1vS1AMzaVbuWH1bLVk8XVDVJ3J7Rf76E50O1mj3+SWW81bjneVlAxw7DRoxZInFio7TMFTt6eSRkOGQ2GVpvkePgunVZsk+XE13fSnthqS1TiiivnmaNXsaVIOSZICzTWVKqRz1XVR4fdyKJxEpFhHCIu0ui9SeB887IdcS3KshvNqJo3Jm0LmBLL1vzcbucc7T02wiqvdDSPO7TO8Wlc7sJXwmMImEDBkPYQTHmeOqsKbW0OiGuJniwg93pBt0BqNhn3gxtYLrmjha+PqO9gVR6XkV
+              storage: 01000000-0000-4000-8000-000160010100
+              taints:
+              - effect: NoSchedule
+                key: environment
+                value: staging
+            zone: de-fra1
+    kubernetesImportClusterAuthentication:
+      content:
+        application/yaml:
+          schema:
+            $ref: '#/components/schemas/kubernetesAuthenticationConfigurationYAML'
+      required: true
+    kubernetesUpdateClusterAuthentication:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/kubernetesAuthenticationIssuerConfig'
+      required: true
+  schemas:
+    kubernetesMessage:
+      type: string
+      description: Message text content
+    kubernetesStorage:
+      type: string
+      format: uuid
+      description: Storage UUID to use as a template
+    kubernetesKey:
+      type: string
+      description: Key of a key-value pair
+    kubernetesClusterAvailableUpgrades:
+      type: object
+      properties:
+        versions:
+          type: array
+          items:
+            $ref: '#/components/schemas/kubernetesClusterVersion'
+      required:
+      - versions
+    kubernetesErrorStatus:
+      type: integer
+      format: int32
+      description: HTTP Status code
+    kubernetesClusterPatch:
+      type: object
+      properties:
+        control_plane_ip_filter:
+          $ref: '#/components/schemas/kubernetesIPBlocks'
+        labels: {}
+        plan:
+          $ref: '#/components/schemas/kubernetesClusterPlan'
+      required:
+      - labels
+    kubernetesClusterPlan:
+      type: string
+      enum:
+      - development
+      - production-small
+      - dev-md
+      - prod-md
+      - prod-md-ha
+      description: Cluster plan
+      default: development
+    kubernetesSshKeys:
+      type: array
+      items:
+        $ref: '#/components/schemas/kubernetesSshKey'
+      uniqueItems: true
+      description: List of public SSH keys
+    kubernetesErrorInvalidParams:
+      type: string
+      description: list of parameters describing a specific part(s) of the request that caused the error
+    kubernetesClusterUpgradeStrategyType:
+      type: string
+      enum:
+      - rolling-update
+      - manual
+      description: upgrade strategy type
+      default: manual
+    kubernetesClaimOrExpression:
+      type: object
+      properties:
+        claim:
+          type: string
+          description: JWT claim to use. Mutually exclusive with expression.
+          example: sub
+        expression:
+          type: string
+          description: CEL expression producing the attribute value. Mutually exclusive with claim.
+          example: claims.sub
+      description: 'Maps a user attribute from either a JWT claim or a CEL expression. Claim and expression are mutually exclusive.
+
+        '
+    kubernetesStorageTier:
+      type: string
+      enum:
+      - maxiops
+      - hdd
+      - standard
+      description: The storage tier to use.
+      default: maxiops
+    kubernetesStorageSize:
+      type: integer
+      maximum: 1024
+      minimum: 25
+      format: int32
+      description: The size of the storage device in gigabytes.
+    kubernetesCluster:
+      type: object
+      properties:
+        control_plane_ip_filter:
+          $ref: '#/components/schemas/kubernetesIPBlocks'
+        name:
+          $ref: '#/components/schemas/kubernetesName'
+        network:
+          $ref: '#/components/schemas/kubernetesNetwork'
+        network_cidr:
+          $ref: '#/components/schemas/kubernetesNetworkCIDR'
+        storage_encryption:
+          $ref: '#/components/schemas/kubernetesDefaultStorageEncryption'
+        node_groups:
+          $ref: '#/components/schemas/kubernetesNodeGroups'
+        state:
+          $ref: '#/components/schemas/kubernetesClusterState'
+        uuid:
+          $ref: '#/components/schemas/kubernetesUuid'
+        zone:
+          $ref: '#/components/schemas/kubernetesZone'
+        plan:
+          $ref: '#/components/schemas/kubernetesClusterPlan'
+        private_node_groups:
+          $ref: '#/components/schemas/kubernetesPrivateNodeGroups'
+        version:
+          $ref: '#/components/schemas/kubernetesClusterVersion'
+        authentication:
+          $ref: '#/components/schemas/kubernetesAuthenticationConfiguration'
+        labels: {}
+      required:
+      - name
+      - network
+      - zone
+      - version
+      - labels
+      description: Kubernetes cluster
+    kubernetesErrorTitle:
+      type: string
+      description: human-readable description of the error
+    kubernetesNetwork:
+      type: string
+      minLength: 1
+      description: Network UUID
+    kubernetesNodeGroups:
+      type: array
+      items:
+        $ref: '#/components/schemas/kubernetesNodeGroup'
+      maxItems: 16
+      uniqueItems: true
+      description: List of node groups
+    kubernetesPlan:
+      type: object
+      properties:
+        description:
+          $ref: '#/components/schemas/kubernetesDescription'
+        name:
+          $ref: '#/components/schemas/kubernetesName'
+      required:
+      - description
+      - name
+      description: Plan to assign to a node group
+    kubernetesDescription:
+      type: string
+      description: Plan description
+    kubernetesUtilityNetworkAccess:
+      type: boolean
+      description: Enable utility network access
+      default: true
+    kubernetesDefaultStorageEncryption:
+      allOf:
+      - $ref: '#/components/schemas/kubernetesStorageEncryption'
+      - description: The default storage encryption strategy for all node groups.
+      - {}
+    kubernetesNodeGroupCustomPlan:
+      type: object
+      properties:
+        memory:
+          type: integer
+          maximum: 131072
+          minimum: 1024
+          format: int32
+          description: The amount of memory in megabytes to assign to individual node group node when using custom plan
+        cores:
+          type: integer
+          maximum: 20
+          minimum: 1
+          format: int32
+          description: The number of CPU cores dedicated to individual node group nodes when using custom plan
+        storage_size:
+          $ref: '#/components/schemas/kubernetesStorageSize'
+        storage_tier:
+          $ref: '#/components/schemas/kubernetesStorageTier'
+      required:
+      - cores
+      - memory
+      - storage_size
+      description: Node group custom plan properties
+    kubernetesClusterKubeconfig:
+      type: object
+      properties:
+        kubeconfig:
+          $ref: '#/components/schemas/kubernetesKubeconfig'
+      required:
+      - kubeconfig
+      description: Kubernetes cluster kubeconfig
+    kubernetesNetworkCIDR:
+      type: string
+      description: CIDR of the given network
+    kubernetesNodeGroupPlan:
+      type: string
+      description: Node group plan
+    kubernetesTaint:
+      type: object
+      properties:
+        effect:
+          $ref: '#/components/schemas/kubernetesEffect'
+        key:
+          $ref: '#/components/schemas/kubernetesKey'
+        value:
+          $ref: '#/components/schemas/kubernetesValue'
+      required:
+      - effect
+      - key
+      - value
+      description: Kubernetes taint to assign to nodes in a group
+    kubernetesClusters:
+      type: array
+      items:
+        $ref: '#/components/schemas/kubernetesCluster'
+      description: List of Kubernetes clusters
+    kubernetesNodeGroupDetails:
+      allOf:
+      - $ref: '#/components/schemas/kubernetesNodeGroup'
+      - type: object
+        properties:
+          nodes:
+            type: array
+            items:
+              $ref: '#/components/schemas/kubernetesNode'
+            description: List of node group nodes (experimental)
+        required:
+        - nodes
+      properties:
+        name:
+          $ref: '#/components/schemas/kubernetesName'
+      description: Kubernetes cluster node
+    kubernetesCount:
+      type: integer
+      maximum: 16
+      minimum: 0
+      format: int32
+      description: Amount of nodes in a node group
+    kubernetesUserValidationRule:
+      type: object
+      properties:
+        expression:
+          type: string
+          example: '!user.username.startsWith(''system:'')'
+        message:
+          type: string
+          example: 'Username must not start with the system: prefix.'
+      required:
+      - expression
+      description: CEL expression applied to the final authenticated user.
+    kubernetesStorageEncryption:
+      type: string
+      enum:
+      - data-at-rest
+      - none
+      description: The storage encryption strategy.
+    kubernetesClaimValidationRule:
+      type: object
+      properties:
+        claim:
+          type: string
+          example: hd
+        required_value:
+          type: string
+          example: upcloud.com
+        expression:
+          type: string
+          example: claims.hd == 'upcloud.com'
+        message:
+          type: string
+          example: User must belong to the upcloud.com organization domain.
+      description: CEL expression used to validate a token claim.
+    kubernetesNodeUpdates:
+      properties:
+        kubernetes_patches:
+          type: boolean
+          description: Include Kubernetes package patch updates (kubeadm, kubectl, kubelet)
+          default: false
+        schedule_dow:
+          type: string
+          enum:
+          - Monday
+          - Tuesday
+          - Wednesday
+          - Thursday
+          - Friday
+          - Saturday
+          - Sunday
+          - daily
+          description: The day of the week on which updates will be performed
+        schedule_time:
+          type: string
+          description: The time at which the updates will be applied in UTC (HH:MM).
+          example: 06:00
+      required:
+      - kubernetes_patches
+      - schedule_dow
+      - schedule_time
+      description: Enable periodic package updates on node
+    kubernetesZone:
+      type: string
+      minLength: 1
+      description: UpCloud zone to provision the Kubernetes cluster in
+    kubernetesAuthenticationConfigurationYAML:
+      type: string
+      description: kube-apiserver v1 AuthenticationConfiguration YAML document
+    kubernetesClusterUpgradeStrategy:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/kubernetesClusterUpgradeStrategyType'
+      required:
+      - type
+      description: upgrade strategy for node group upgrades
+    kubernetesTaints:
+      type: array
+      items:
+        $ref: '#/components/schemas/kubernetesTaint'
+      description: List of taints
+    kubernetesPrivateNodeGroups:
+      type: boolean
+      description: Enable private node groups
+      default: false
+    kubernetesKubeletArg:
+      type: object
+      properties:
+        key:
+          $ref: '#/components/schemas/kubernetesKey'
+        value:
+          $ref: '#/components/schemas/kubernetesValue'
+      required:
+      - key
+      - value
+      description: Kubelet argument presented as key-value pair
+    kubernetesNodeState:
+      type: string
+      enum:
+      - pending
+      - failed
+      - running
+      - terminating
+      - unknown
+      description: Node operational state
+    kubernetesExtraMapping:
+      type: object
+      properties:
+        key:
+          type: string
+          description: 'Domain-prefixed, lowercase key for the extra attribute, e.g. example.org/foo.
+
+            '
+          example: example.org/foo
+        value_expression:
+          type: string
+          description: CEL expression producing the extra attribute value (string or string array).
+          example: claims.some_claim
+      required:
+      - key
+      - value_expression
+      description: Maps a token claim to an extra user attribute using a CEL expression.
+    kubernetesNode:
+      properties:
+        uuid:
+          type: string
+          format: uuid
+          description: Node UUID
+        name:
+          $ref: '#/components/schemas/kubernetesName'
+        kubelet_version:
+          $ref: '#/components/schemas/kubernetesClusterVersion'
+        state:
+          $ref: '#/components/schemas/kubernetesNodeState'
+      required:
+      - uuid
+      - name
+      - state
+      - kubelet_version
+      description: Kubernetes cluster node
+    kubernetesPlans:
+      type: array
+      items:
+        $ref: '#/components/schemas/kubernetesPlan'
+      description: List of plans
+    kubernetesClusterVersion:
+      type: string
+      description: Kubernetes version identifier
+      default: '1.26'
+    kubernetesError:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/kubernetesErrorType'
+        title:
+          $ref: '#/components/schemas/kubernetesErrorTitle'
+        status:
+          $ref: '#/components/schemas/kubernetesErrorStatus'
+        invalid_params:
+          $ref: '#/components/schemas/kubernetesErrorInvalidParams'
+        correlation_id:
+          $ref: '#/components/schemas/kubernetesErrorCorrelationID'
+      required:
+      - type
+      - title
+      - status
+      - correlation_id
+      description: Response error
+    kubernetesNodeGroupState:
+      type: string
+      enum:
+      - failed
+      - pending
+      - running
+      - terminating
+      - unknown
+      - scaling-up
+      - scaling-down
+      description: Node group operational state
+    kubernetesErrorCorrelationID:
+      type: string
+      description: unique string that identifies the request that caused the error
+    kubernetesIPBlock:
+      type: string
+      pattern: ^([0-9]{1,3}\.){3}[0-9]{1,3}($|/(0-32))$
+      description: IP prefix of a single IPv4 address or a network CIDR
+    kubernetesAuthenticationConfiguration:
+      type: array
+      items:
+        $ref: '#/components/schemas/kubernetesAuthenticationIssuerConfig'
+      description: List of OIDC issuers and their claim validation rules.
+    kubernetesLabels:
+      type: array
+      items:
+        $ref: '#/components/schemas/kubernetesLabel'
+      uniqueItems: true
+      description: List of labels
+    kubernetesClaimMappings:
+      type: object
+      properties:
+        username:
+          $ref: '#/components/schemas/kubernetesPrefixedClaimOrExpression'
+        groups:
+          $ref: '#/components/schemas/kubernetesPrefixedClaimOrExpression'
+        uid:
+          $ref: '#/components/schemas/kubernetesClaimOrExpression'
+        extra:
+          type: array
+          items:
+            $ref: '#/components/schemas/kubernetesExtraMapping'
+      description: Rules for mapping token claims to Kubernetes user attributes.
+    kubernetesVersions:
+      type: array
+      items:
+        $ref: '#/components/schemas/kubernetesVersion'
+      description: List of Kubernetes versions
+    kubernetesKubeconfig:
+      type: string
+      description: Kubeconfig
+    kubernetesAccepted:
+      type: object
+      properties:
+        message:
+          $ref: '#/components/schemas/kubernetesMessage'
+      description: Message
+    kubernetesPrefixedClaimOrExpression:
+      type: object
+      properties:
+        claim:
+          type: string
+          description: JWT claim to use. Mutually exclusive with expression.
+          example: email
+        prefix:
+          type: string
+          description: 'Prefix prepended to the claim''s value. Must be set (may be empty) when claim is set. Mutually exclusive with expression.
+
+            '
+          nullable: true
+          example: 'oidc:'
+        expression:
+          type: string
+          description: CEL expression producing the attribute value. Mutually exclusive with claim and prefix.
+          example: claims.email
+      description: 'Maps a user attribute from either a JWT claim (optionally prefixed) or a CEL expression. Claim and expression are mutually exclusive.
+
+        '
+    kubernetesValue:
+      type: string
+      maxLength: 255
+      description: Value of a key-value pair
+    kubernetesNodeGroup:
+      type: object
+      properties:
+        count:
+          $ref: '#/components/schemas/kubernetesCount'
+        kubelet_args:
+          $ref: '#/components/schemas/kubernetesKubeletArgs'
+        labels:
+          $ref: '#/components/schemas/kubernetesLabels'
+        name:
+          $ref: '#/components/schemas/kubernetesName'
+        plan:
+          $ref: '#/components/schemas/kubernetesNodeGroupPlan'
+        custom_plan:
+          $ref: '#/components/schemas/kubernetesNodeGroupCustomPlan'
+        cloud_native_plan:
+          $ref: '#/components/schemas/kubernetesNodeGroupCloudNativePlan'
+        gpu_plan:
+          $ref: '#/components/schemas/kubernetesNodeGroupGPUPlan'
+        ssh_keys:
+          $ref: '#/components/schemas/kubernetesSshKeys'
+        state:
+          $ref: '#/components/schemas/kubernetesNodeGroupState'
+        storage:
+          $ref: '#/components/schemas/kubernetesStorage'
+        storage_encryption:
+          $ref: '#/components/schemas/kubernetesStorageEncryption'
+        taints:
+          $ref: '#/components/schemas/kubernetesTaints'
+        anti_affinity:
+          $ref: '#/components/schemas/kubernetesAntiAffinity'
+        utility_network_access:
+          $ref: '#/components/schemas/kubernetesUtilityNetworkAccess'
+        node_updates:
+          $ref: '#/components/schemas/kubernetesNodeUpdates'
+      required:
+      - count
+      - name
+      - plan
+      description: Node group for a Kubernetes cluster
+    kubernetesNodeName:
+      type: string
+      pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
+      description: Node name
+    kubernetesVersion:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/kubernetesClusterVersion'
+        version:
+          type: string
+          description: Kubernetes semantic version
+      required:
+      - id
+      - version
+      description: Kubernetes version
+    kubernetesClusterAvailableUpgradesPost:
+      type: object
+      properties:
+        version:
+          $ref: '#/components/schemas/kubernetesClusterVersion'
+        strategy:
+          $ref: '#/components/schemas/kubernetesClusterUpgradeStrategy'
+      required:
+      - version
+    kubernetesNodeGroupCloudNativePlan:
+      type: object
+      properties:
+        storage_size:
+          $ref: '#/components/schemas/kubernetesStorageSize'
+        storage_tier:
+          $ref: '#/components/schemas/kubernetesStorageTier'
+      required:
+      - storage_size
+      description: Node group cloud native plan properties
+    kubernetesAuthenticationIssuerConfig:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/kubernetesName'
+        issuer_url:
+          type: string
+          format: uri
+          example: https://accounts.myoidcprovider.com
+        discovery_url:
+          type: string
+          format: uri
+          example: https://accounts.myoidcprovider.com/.well-known/openid-configuration
+        audiences:
+          type: array
+          items:
+            type: string
+          description: 'Accepted audiences for tokens from this issuer. The first audience is used as the OIDC client id in generated kubeconfigs by default; the OIDC kubeconfig endpoint''s `audience` query parameter can select a different one.
+
+            '
+          example:
+          - client-id-123
+        audience_match_policy:
+          type: string
+          enum:
+          - MatchAny
+          - ''
+          default: ''
+        certificate_authority:
+          type: string
+          description: Base64-encoded PEM certificate authority bundle.
+        claim_mappings:
+          $ref: '#/components/schemas/kubernetesClaimMappings'
+        claim_validation_rules:
+          type: array
+          items:
+            $ref: '#/components/schemas/kubernetesClaimValidationRule'
+        user_validation_rules:
+          type: array
+          items:
+            $ref: '#/components/schemas/kubernetesUserValidationRule'
+      required:
+      - name
+      - issuer_url
+      - audiences
+    kubernetesNodeGroupPatch:
+      type: object
+      properties:
+        count:
+          $ref: '#/components/schemas/kubernetesCount'
+      required:
+      - count
+    kubernetesEffect:
+      type: string
+      enum:
+      - NoExecute
+      - NoSchedule
+      - PreferNoSchedule
+      description: Taint effect
+    kubernetesAntiAffinity:
+      type: boolean
+      description: Enable anti-affinity policies
+      default: false
+    kubernetesUuid:
+      type: string
+      format: uuid
+      description: UUID
+    kubernetesNodeGroupGPUPlan:
+      type: object
+      properties:
+        storage_size:
+          $ref: '#/components/schemas/kubernetesStorageSize'
+        storage_tier:
+          $ref: '#/components/schemas/kubernetesStorageTier'
+      required:
+      - storage_size
+      description: Node group GPU plan properties
+    kubernetesIPBlocks:
+      type: array
+      items:
+        $ref: '#/components/schemas/kubernetesIPBlock'
+      maxItems: 100
+      uniqueItems: true
+      description: List of IP blocks
+    kubernetesLabel:
+      type: object
+      properties:
+        key:
+          $ref: '#/components/schemas/kubernetesKey'
+        value:
+          $ref: '#/components/schemas/kubernetesValue'
+      required:
+      - key
+      description: Label for identifying node groups, presented as key-value pair
+    kubernetesErrorType:
+      type: string
+      description: URI to a page describing the problem
+    kubernetesClusterState:
+      type: string
+      enum:
+      - failed
+      - pending
+      - running
+      - terminated
+      - terminating
+      - unknown
+      - suspended
+      - upgrading
+      - upgrade-pending
+      - upgrade-failed
+      description: Cluster operational state
+    kubernetesName:
+      type: string
+      pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
+      description: Name
+    kubernetesSshKey:
+      type: string
+      pattern: ^ssh-[0-9A-Za-z]+ AAAA[0-9A-Za-z+/]+[=]{0,3}[ ]?([^@]+@[^@]+)?$
+      description: Public SSH key for accessing the nodes in a group
+    kubernetesKubeletArgs:
+      type: array
+      items:
+        $ref: '#/components/schemas/kubernetesKubeletArg'
+      description: List of Kubelet arguments
+  parameters:
+    kubernetesUuid:
+      name: uuid
+      in: path
+      description: UUID
+      required: true
+      schema:
+        $ref: '#/components/schemas/kubernetesUuid'
+    kubernetesName:
+      name: name
+      in: path
+      description: Name
+      required: true
+      schema:
+        $ref: '#/components/schemas/kubernetesName'
+    kubernetesNodeName:
+      name: node-name
+      in: path
+      description: Node name
+      required: true
+      schema:
+        $ref: '#/components/schemas/kubernetesNodeName'
+    getKubernetesClusterOIDCKubeconfigAudience:
+      name: audience
+      in: query
+      description: 'Which of the issuer''s configured audiences to use as the OIDC client id in the generated kubeconfig. When omitted, the issuer''s first audience is used. Must match one of the issuer''s audiences.
+
+        '
+      required: false
+      schema:
+        type: string
+  securitySchemes:
+    apiToken:
+      type: http
+      description: UpCloud API uses HTTP Bearer authentication. An API token is required to authenticate. The API token can be created in the UpCloud control panel. Alternatively, you can create an API token using the API directly, or with upctl. Note that if you want to use HTTP Basic authentication on API or with upctl, you will need to enable API access in the UpCloud control panel first.
+      scheme: bearer
+x-refined-from:
+- upcloud-openapi.json
+- upcloud-openapi.yml
+x-upcloud-visibility: public
+x-tagGroups:
+- name: Server
+  tags:
+  - server
+  - server-group
+  - server_size
+  - plan
+  - device
+  - events
+  - timezone
+  - vnc_keymap
+- name: Network
+  tags:
+  - network
+  - network-peering
+  - ip_address
+  - router
+  - gateway
+  - firewall-ruleset
+- name: Account & Access
+  tags:
+  - account
+  - audit-logs
+  - account-tokens
+  - permission
+  - tag
+- name: Billing
+  tags:
+  - price
+  - currency

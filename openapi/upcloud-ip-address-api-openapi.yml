@@ -1,0 +1,615 @@
+openapi: 3.2.0
+info:
+  title: Upcloud Ip Address API
+  version: '1.3'
+  contact:
+    name: UpCloud
+    url: https://upcloud.com
+    email: hello@upcloud.com
+  license:
+    name: MIT
+    url: https://spdx.org/licenses/MIT.html
+  termsOfService: https://upcloud.com/terms-of-service/
+  description: 'Operations tagged ip_address across 2 of this provider''s published API definitions: upcloud-openapi.json, upcloud-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.upcloud.com
+security:
+- apiToken: []
+tags:
+- name: ip_address
+  description: The UpCloud network has public and private IP addresses.
+  x-displayName: IP Address
+paths:
+  /1.3/ip_address:
+    get:
+      tags:
+      - ip_address
+      summary: List IP addresses
+      description: Retrieves a list of IP addresses.
+      operationId: listIPAddresses
+      responses:
+        '200':
+          $ref: '#/components/responses/listIPAddresses200'
+        default:
+          $ref: '#/components/responses/listIPAddressesDefault'
+      x-upcloud-visibility: public
+    post:
+      tags:
+      - ip_address
+      summary: Add an IP address
+      description: Adds a new IP address.
+      operationId: addIPAddress
+      requestBody:
+        $ref: '#/components/requestBodies/addIPAddress'
+      responses:
+        '201':
+          $ref: '#/components/responses/addIPAddress201'
+        '409':
+          $ref: '#/components/responses/addIPAddress409'
+        default:
+          $ref: '#/components/responses/addIPAddressDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/ip_address/bulk:
+    patch:
+      tags:
+      - ip_address
+      summary: Bulk modify IP addresses
+      description: Modifies attributes of multiple IP addresses in a single request.
+      operationId: bulkModifyIPAddresses
+      requestBody:
+        $ref: '#/components/requestBodies/bulkModifyIPAddresses'
+      responses:
+        '204':
+          $ref: '#/components/responses/bulkModifyIPAddresses204'
+        default:
+          $ref: '#/components/responses/bulkModifyIPAddressesDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/ip_address/{address}:
+    get:
+      tags:
+      - ip_address
+      summary: Get IP address
+      description: Retrieves details of a specific IP address.
+      operationId: getIPAddressDetails
+      parameters:
+      - $ref: '#/components/parameters/getIPAddressDetailsAddress'
+      responses:
+        '200':
+          $ref: '#/components/responses/getIPAddressDetails200'
+        default:
+          $ref: '#/components/responses/getIPAddressDetailsDefault'
+      x-upcloud-visibility: public
+    put:
+      tags:
+      - ip_address
+      summary: Modify IP address
+      description: Modifies attributes of a specific IP address.
+      operationId: modifyIPAddress
+      parameters:
+      - $ref: '#/components/parameters/modifyIPAddressAddress'
+      requestBody:
+        $ref: '#/components/requestBodies/modifyIPAddress'
+      responses:
+        '202':
+          $ref: '#/components/responses/modifyIPAddress202'
+        default:
+          $ref: '#/components/responses/modifyIPAddressDefault'
+      x-upcloud-visibility: public
+    delete:
+      tags:
+      - ip_address
+      summary: Delete IP address
+      description: Deletes a specific IP address.
+      operationId: deleteIPAddress
+      parameters:
+      - $ref: '#/components/parameters/deleteIPAddressAddress'
+      responses:
+        '204':
+          $ref: '#/components/responses/deleteIPAddress204'
+        default:
+          $ref: '#/components/responses/deleteIPAddressDefault'
+      x-upcloud-visibility: public
+    patch:
+      tags:
+      - ip_address
+      summary: Modify an IP address
+      description: Modifies attributes of a specific IP address.
+      operationId: patchModifyIPAddress
+      parameters:
+      - $ref: '#/components/parameters/patchModifyIPAddressAddress'
+      requestBody:
+        $ref: '#/components/requestBodies/patchModifyIPAddress'
+      responses:
+        '202':
+          $ref: '#/components/responses/patchModifyIPAddress202'
+        default:
+          $ref: '#/components/responses/patchModifyIPAddressDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+components:
+  schemas:
+    ipAddressZone:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      examples:
+      - fi-hel1
+      - de-fra1
+      - us-nyc1
+      maxLength: 15
+      minLength: 2
+      pattern: ^[a-z][a-z0-9-]{0,14}[a-z0-9]$
+      description: Zone identifier
+    patchIpAddressRequestV1.3:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        ip_address:
+          type: object
+          properties:
+            ptr_record:
+              $ref: '#/components/schemas/ipAddressPtrRecord'
+            mac:
+              $ref: '#/components/schemas/ipAddressMacAddress'
+            release_policy:
+              $ref: '#/components/schemas/ipAddressIpReleasePolicy'
+      required:
+      - ip_address
+      description: Request schema for modifying an IP address
+    ipAddress:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      oneOf:
+      - type: string
+        pattern: ^([0-9]{1,3}\.){3}[0-9]{1,3}$
+        description: IPv4 address
+      - type: string
+        pattern: ^[a-fA-F0-9:]+$
+        description: IPv6 address
+      description: IP address
+      example: 10.0.0.20
+    ipAddressError:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            error_code:
+              type: string
+              examples:
+              - GENERAL_FAILURE
+            error_message:
+              type: string
+              examples:
+              - Your request could not be fulfilled due to a technical issue.
+          required:
+          - error_code
+          - error_message
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+      description: A general error response indicating that the request could not be fulfilled due to a technical issue.
+    ipAddressIpReleasePolicy:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      enum:
+      - release
+      - keep
+      description: 'Action taken when the resource using the address is deleted: release deletes the address, while keep preserves it as a detached floating IP address'
+      example: release
+    ipAddressAccountId:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: integer
+      minimum: 1
+      format: int64
+      description: Unique numeric identifier of an account.
+    ipAddressIpFamily:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      enum:
+      - IPv4
+      - IPv6
+      description: IP address family
+      example: IPv4
+    ipAddressMacAddress:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      pattern: ^([0-9A-Fa-f]{2}:){5}([0-9A-Fa-f]{2})$
+      description: MAC address
+      example: de:ff:ff:ff:cc:20
+    ipAddressUuid:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+      format: uuid
+      description: Universally unique identifier
+      example: 0414e0d7-4436-4037-9dd8-6eaf47dce599
+    ipAddressesResponse:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        ip_addresses:
+          type: object
+          properties:
+            ip_address:
+              type: array
+              items:
+                $ref: '#/components/schemas/ipAddressDetails'
+              description: List of IP addresses
+          required:
+          - ip_address
+          example:
+            ip_address:
+            - access: public
+              address: 203.0.113.10
+              family: IPv4
+              ptr_record: host.example.com
+      required:
+      - ip_addresses
+      additionalProperties: false
+      description: Request schema for IP address operations
+      example:
+        ip_addresses:
+          ip_address:
+          - access: public
+            address: 203.0.113.10
+            family: IPv4
+            ptr_record: host.example.com
+    bulkPatchIpAddressesRequestV1.3:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        ip_addresses:
+          type: array
+          items:
+            type: object
+            properties:
+              address:
+                $ref: '#/components/schemas/ipAddress'
+              main_account_id:
+                $ref: '#/components/schemas/ipAddressAccountId'
+              delegated_to_account_id:
+                $ref: '#/components/schemas/ipAddressAccountId'
+              release_policy:
+                $ref: '#/components/schemas/ipAddressIpReleasePolicy'
+            required:
+            - address
+            - main_account_id
+            - delegated_to_account_id
+            - release_policy
+            additionalProperties: false
+      required:
+      - ip_addresses
+      additionalProperties: false
+      description: Request schema for bulk patching IP addresses
+    ipAddressBooleanYesno:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      enum:
+      - 'yes'
+      - 'no'
+      description: Boolean value represented as yes/no
+      example: 'yes'
+    ipAddressRequest:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        ip_addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/ipAddressDetails'
+          description: List of IP addresses to operate on
+          example:
+          - access: public
+            address: 203.0.113.10
+            family: IPv4
+            ptr_record: host.example.com
+      required:
+      - ip_addresses
+      description: Request schema for IP address operations
+      example:
+        ip_addresses:
+        - access: public
+          address: 203.0.113.10
+          family: IPv4
+          ptr_record: host.example.com
+    ipAddressPtrRecord:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+    ipAddressNetworkType:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      enum:
+      - public
+      - utility
+      - private
+      description: Network access type
+      example: public
+    ipAddressDetails:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        access:
+          $ref: '#/components/schemas/ipAddressNetworkType'
+        account_id:
+          $ref: '#/components/schemas/ipAddressAccountId'
+        address:
+          $ref: '#/components/schemas/ipAddress'
+        delegated_to_account_id:
+          $ref: '#/components/schemas/ipAddressDelegatedToAccountId'
+        family:
+          $ref: '#/components/schemas/ipAddressIpFamily'
+        floating:
+          $ref: '#/components/schemas/ipAddressBooleanYesno'
+        mac:
+          $ref: '#/components/schemas/ipAddressMacAddress'
+        part_of_plan:
+          $ref: '#/components/schemas/ipAddressBooleanYesno'
+        ptr_record:
+          type: string
+        release_policy:
+          $ref: '#/components/schemas/ipAddressIpReleasePolicy'
+        server:
+          $ref: '#/components/schemas/ipAddressUuid'
+        zone:
+          $ref: '#/components/schemas/ipAddressZone'
+      required:
+      - access
+      - address
+      additionalProperties: false
+      description: Details of an IP address
+    ipAddressResponse:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        ip_address:
+          $ref: '#/components/schemas/ipAddressDetails'
+      required:
+      - ip_address
+      additionalProperties: false
+      description: Request schema for IP address operations
+    addIpAddressRequest:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        ip_address:
+          type: object
+          properties:
+            access:
+              type: string
+            family:
+              $ref: '#/components/schemas/ipAddressIpFamily'
+            floating:
+              $ref: '#/components/schemas/ipAddressBooleanYesno'
+            mac:
+              $ref: '#/components/schemas/ipAddressMacAddress'
+            prefix:
+              type: string
+            release_policy:
+              $ref: '#/components/schemas/ipAddressIpReleasePolicy'
+            server:
+              $ref: '#/components/schemas/ipAddressUuid'
+            vlan_id:
+              type: string
+            zone:
+              $ref: '#/components/schemas/ipAddressZone'
+          required:
+          - access
+          - family
+      required:
+      - ip_address
+      description: Schema for adding an IP address to a server
+    modifyIpAddressRequestV1.0:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        ip_address:
+          type: object
+          properties:
+            floating:
+              $ref: '#/components/schemas/ipAddressBooleanYesno'
+            ptr_record:
+              type: string
+              example: host.example.com
+            vlan_id:
+              type: string
+          required:
+          - ptr_record
+          example:
+            ptr_record: host.example.com
+      required:
+      - ip_address
+      description: Request schema for modifying an IP address
+      example:
+        ip_address:
+          ptr_record: host.example.com
+    ipAddressDelegatedToAccountId:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type:
+      - integer
+      - 'null'
+      format: int64
+      description: Attached to a resource that is delegated to another account. Null means not delegated.
+  responses:
+    bulkModifyIPAddresses204:
+      description: The IP addresses were successfully modified.
+    listIPAddresses200:
+      description: A list of servers.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ipAddressesResponse'
+    modifyIPAddressDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ipAddressError'
+    addIPAddressDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ipAddressError'
+    deleteIPAddress204:
+      description: IP address successfully deleted.
+    patchModifyIPAddress202:
+      description: The modified IP address.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ipAddressRequest'
+    listIPAddressesDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ipAddressError'
+    getIPAddressDetails200:
+      description: Details of the specified IP address.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ipAddressResponse'
+    addIPAddress409:
+      description: The Cloud Server is not in a valid state, an IP address limit would be exceeded, the requested address, prefix, or VLAN is unavailable, or the maximum network interface index 255 of the Cloud Server is already occupied
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ipAddressError'
+    getIPAddressDetailsDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ipAddressError'
+    deleteIPAddressDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ipAddressError'
+    addIPAddress201:
+      description: The newly created IP address.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ipAddressRequest'
+    bulkModifyIPAddressesDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ipAddressError'
+    patchModifyIPAddressDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ipAddressError'
+    modifyIPAddress202:
+      description: The modified IP address.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ipAddressRequest'
+  requestBodies:
+    patchModifyIPAddress:
+      description: Attributes to modify for the IP address.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/patchIpAddressRequestV1.3'
+    bulkModifyIPAddresses:
+      description: List of IP addresses and their attributes to modify.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/bulkPatchIpAddressesRequestV1.3'
+    addIPAddress:
+      description: Attributes for the new IP address.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/addIpAddressRequest'
+    modifyIPAddress:
+      description: Attributes to modify for the IP address.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/modifyIpAddressRequestV1.0'
+  parameters:
+    modifyIPAddressAddress:
+      name: address
+      in: path
+      description: The IP address to modify.
+      required: true
+      schema:
+        $ref: '#/components/schemas/ipAddress'
+    deleteIPAddressAddress:
+      name: address
+      in: path
+      description: The IP address to delete.
+      required: true
+      schema:
+        $ref: '#/components/schemas/ipAddress'
+    getIPAddressDetailsAddress:
+      name: address
+      in: path
+      description: The IP address to retrieve details for.
+      required: true
+      schema:
+        type: string
+        format: ipv4
+    patchModifyIPAddressAddress:
+      name: address
+      in: path
+      description: The IP address to modify.
+      required: true
+      schema:
+        type: string
+        format: ipv4
+  securitySchemes:
+    apiToken:
+      type: http
+      description: UpCloud API uses HTTP Bearer authentication. An API token is required to authenticate. The API token can be created in the UpCloud control panel. Alternatively, you can create an API token using the API directly, or with upctl. Note that if you want to use HTTP Basic authentication on API or with upctl, you will need to enable API access in the UpCloud control panel first.
+      scheme: bearer
+x-refined-from:
+- upcloud-openapi.json
+- upcloud-openapi.yml
+x-upcloud-visibility: public
+x-tagGroups:
+- name: Server
+  tags:
+  - server
+  - server-group
+  - server_size
+  - plan
+  - device
+  - events
+  - timezone
+  - vnc_keymap
+- name: Network
+  tags:
+  - network
+  - network-peering
+  - ip_address
+  - router
+  - gateway
+  - firewall-ruleset
+- name: Account & Access
+  tags:
+  - account
+  - audit-logs
+  - account-tokens
+  - permission
+  - tag
+- name: Billing
+  tags:
+  - price
+  - currency

@@ -1,0 +1,900 @@
+openapi: 3.2.0
+info:
+  title: Upcloud Account Tokens API
+  version: '1.3'
+  contact:
+    name: UpCloud
+    url: https://upcloud.com
+    email: hello@upcloud.com
+  license:
+    name: MIT
+    url: https://spdx.org/licenses/MIT.html
+  termsOfService: https://upcloud.com/terms-of-service/
+  description: 'Operations tagged account-tokens across 2 of this provider''s published API definitions: upcloud-openapi.json, upcloud-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.upcloud.com
+security:
+- apiToken: []
+tags:
+- name: account-tokens
+  description: 'UpCloud API calls can be authenticated with HTTP Bearer (token) authentication. The token API requests below allow creation, management and deletion of bearer tokens.
+
+
+    The bearer token can be used for authentication by setting the Authorization header of the API request:
+
+
+    `Authorization: Bearer ucat_01DQE3AJDEBFEKECFM558TGH2F`.'
+  x-displayName: API Tokens
+paths:
+  /1.3/account/tokens:
+    get:
+      tags:
+      - account-tokens
+      summary: List API tokens
+      description: 'List all tokens for the currently authorized account.
+
+        The tokens are returned in a paged format, with the default page size being 20.
+
+        The maximum page size is 100.'
+      operationId: listTokens
+      parameters:
+      - $ref: '#/components/parameters/accountTokensListTokensLimit'
+      - $ref: '#/components/parameters/accountTokensListTokensOffset'
+      - $ref: '#/components/parameters/accountTokensListTokensGui'
+      - $ref: '#/components/parameters/accountTokensListTokensSort'
+      responses:
+        '200':
+          $ref: '#/components/responses/accountTokensListTokens200'
+        '401':
+          $ref: '#/components/responses/accountTokensListTokens401'
+        default:
+          $ref: '#/components/responses/accountTokensListTokensDefault'
+    post:
+      tags:
+      - account-tokens
+      summary: Create an API token
+      description: 'Create a new API token. Maximum token validity is 24*365h=8760h (~1 year).
+
+        Attribute allowed_ip_prefixes allows defining a list of CIDR/IP addresses from where the token is accepted.
+
+        Empty list denies access from everywhere. If unset, the default list will be the IP filters of the account. If no IP filters are defined for the account either, the default will be ["0.0.0.0/0", "::0/0"], i.e. allow from any address.'
+      operationId: createToken
+      requestBody:
+        $ref: '#/components/requestBodies/accountTokensCreateToken'
+      responses:
+        '201':
+          $ref: '#/components/responses/accountTokensCreateToken201'
+        '400':
+          $ref: '#/components/responses/accountTokensCreateToken400'
+        '401':
+          $ref: '#/components/responses/accountTokensCreateToken401'
+        '403':
+          $ref: '#/components/responses/accountTokensCreateToken403'
+        '409':
+          $ref: '#/components/responses/accountTokensCreateToken409'
+        default:
+          $ref: '#/components/responses/accountTokensCreateTokenDefault'
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/account/tokens/{token-uuid}:
+    get:
+      tags:
+      - account-tokens
+      summary: Get token details
+      description: Get the details of a specific API token.
+      operationId: getToken
+      parameters:
+      - $ref: '#/components/parameters/accountTokensGetTokenTokenUuid'
+      responses:
+        '200':
+          $ref: '#/components/responses/accountTokensGetToken200'
+        '401':
+          $ref: '#/components/responses/accountTokensGetToken401'
+        '404':
+          $ref: '#/components/responses/accountTokensGetToken404'
+        default:
+          $ref: '#/components/responses/accountTokensGetTokenDefault'
+    delete:
+      tags:
+      - account-tokens
+      summary: Revoke a token
+      description: Revoke a specific API token.
+      operationId: revokeToken
+      parameters:
+      - $ref: '#/components/parameters/accountTokensRevokeTokenTokenUuid'
+      responses:
+        '204':
+          $ref: '#/components/responses/accountTokensRevokeToken204'
+        '401':
+          $ref: '#/components/responses/accountTokensRevokeToken401'
+        '404':
+          $ref: '#/components/responses/accountTokensRevokeToken404'
+        default:
+          $ref: '#/components/responses/accountTokensRevokeTokenDefault'
+    servers:
+    - url: https://api.upcloud.com
+components:
+  responses:
+    accountTokensRevokeToken401:
+      description: Unauthorized user for deleting token
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/accountTokensProblem401'
+    accountTokensRevokeToken204:
+      description: Token was revoked successfully
+    accountTokensCreateToken409:
+      description: A token with the same already exists
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/accountTokensProblem409'
+    accountTokensListTokens401:
+      description: Unauthorized user for listing tokens
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/accountTokensProblem401'
+    accountTokensCreateTokenDefault:
+      description: Unexpected Problem creating token
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/accountTokensProblem'
+    accountTokensCreateToken400:
+      description: Invalid input for token creation
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/accountTokensProblem400'
+    accountTokensGetToken200:
+      description: Details of the token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/accountTokensGetTokenResponse'
+    accountTokensRevokeTokenDefault:
+      description: Unexpected Problem deleting token
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/accountTokensProblem'
+    accountTokensListTokensDefault:
+      description: Unexpected Problem listing tokens
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/accountTokensProblem'
+    accountTokensRevokeToken404:
+      description: 'Token not found, or not accessible to the authorized account
+
+        '
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/accountTokensProblem404'
+    accountTokensCreateToken401:
+      description: Unauthorized user for token creation
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/accountTokensProblem401'
+    accountTokensCreateToken201:
+      description: Token created successfully
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/accountTokensToken'
+    accountTokensGetToken401:
+      description: Unauthorized user for getting token details
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/accountTokensProblem401'
+    accountTokensCreateToken403:
+      description: The token used to authenticate is not allowed to create additional tokens
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/accountTokensProblem403'
+    accountTokensGetTokenDefault:
+      description: Unexpected Problem
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/accountTokensProblem'
+    accountTokensGetToken404:
+      description: 'Token not found, or not accessible to the authorized account.
+
+        '
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/accountTokensProblem404'
+    accountTokensListTokens200:
+      description: A paged array of tokens
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/accountTokensListTokensResponse'
+  schemas:
+    accountTokensProblem401:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - type: https://developers.upcloud.com/1.3/errors#ERROR_UNAUTHORIZED
+        title: Unauthorized.
+        detail: Access denied.
+        correlation_id: 01JQV2ETY2K6HHE1KZFY9E1CYC
+        status: 401
+      properties:
+        type:
+          type: string
+          format: uri
+          description: A URI reference that uniquely identifies the problem type only in the context of the provided API. It is neither recommended to be dereferenceable and point to a human-readable documentation nor globally unique for the problem type.
+          const: https://developers.upcloud.com/1.3/errors#ERROR_UNAUTHORIZED
+        title:
+          type: string
+          examples:
+          - Unauthorized.
+          description: A short summary of the problem type. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
+        detail:
+          type: string
+          examples:
+          - Invalid parameters.
+          description: A human readable explanation specific to this occurrence of the problem that is helpful to locate the problem and give advice on how to proceed. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
+        status:
+          type: integer
+          format: int32
+          enum:
+          - 401
+          description: The HTTP status code generated by the origin server for this occurrence of the problem.
+        invalid_params:
+          type: array
+          examples:
+          - - name: expires_at
+              reason: Token expiration time must be in the future.
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              reason:
+                type: string
+            required:
+            - name
+            - reason
+        correlation_id:
+          type: string
+          examples:
+          - 01JQV2ETY2K6HHE1KZFY9E1CYC
+          description: A unique identifier for the request. This identifier is generated by the server and can be used to track the request in the server logs. It is useful for debugging and support purposes.
+      required:
+      - type
+      - title
+      - status
+      additionalProperties: false
+      description: JSON Problem Details for HTTP APIs
+    accountTokensProblem409:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - type: https://developers.upcloud.com/1.3/errors#ERROR_SERVICE_UNAVAILABLE
+        title: Service unavailable.
+        detail: Try again later.
+        correlation_id: 01JQV2ETY2K6HHE1KZFY9E1CYC
+        status: 409
+      properties:
+        type:
+          type: string
+          format: uri
+          description: A URI reference that uniquely identifies the problem type only in the context of the provided API. It is neither recommended to be dereferenceable and point to a human-readable documentation nor globally unique for the problem type.
+          const: https://developers.upcloud.com/1.3/errors#ERROR_SERVICE_UNAVAILABLE
+        title:
+          type: string
+          examples:
+          - Service unavailable.
+          description: A short summary of the problem type. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
+        detail:
+          type: string
+          examples:
+          - Invalid parameters.
+          description: A human readable explanation specific to this occurrence of the problem that is helpful to locate the problem and give advice on how to proceed. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
+        status:
+          type: integer
+          format: int32
+          enum:
+          - 400
+          description: The HTTP status code generated by the origin server for this occurrence of the problem.
+        invalid_params:
+          type: array
+          examples:
+          - - name: expires_at
+              reason: Token expiration time must be in the future.
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              reason:
+                type: string
+            required:
+            - name
+            - reason
+        correlation_id:
+          type: string
+          examples:
+          - 01JQV2ETY2K6HHE1KZFY9E1CYC
+          description: A unique identifier for the request. This identifier is generated by the server and can be used to track the request in the server logs. It is useful for debugging and support purposes.
+      required:
+      - type
+      - title
+      - status
+      additionalProperties: false
+      description: JSON Problem Details for HTTP APIs
+    accountTokensProblem:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - type: https://developers.upcloud.com/1.3/errors#INTERNAL_SERVER_ERROR
+        title: Internal server error.
+        detail: Internal server error.
+        invalid_params:
+        - name: expires_at
+          reason: Token expiration time must be in the future.
+        correlation_id: 01JQV2ETY2K6HHE1KZFY9E1CYC
+        status: 500
+      properties:
+        type:
+          type: string
+          examples:
+          - https://developers.upcloud.com/1.3/errors#INTERNAL_SERVER_ERROR
+          format: uri
+          description: A URI reference that uniquely identifies the problem type only in the context of the provided API. It is neither recommended to be dereferenceable and point to a human-readable documentation nor globally unique for the problem type.
+        title:
+          type: string
+          examples:
+          - Internal server error.
+          description: A short summary of the problem type. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
+        detail:
+          type: string
+          examples:
+          - Invalid parameters.
+          description: A human readable explanation specific to this occurrence of the problem that is helpful to locate the problem and give advice on how to proceed. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
+        status:
+          type: integer
+          maximum: 599
+          minimum: 200
+          format: int32
+          description: The HTTP status code generated by the origin server for this occurrence of the problem.
+        invalid_params:
+          type: array
+          examples:
+          - - name: expires_at
+              reason: Token expiration time must be in the future.
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              reason:
+                type: string
+            required:
+            - name
+            - reason
+        correlation_id:
+          type: string
+          examples:
+          - 01JQV2ETY2K6HHE1KZFY9E1CYC
+          description: A unique identifier for the request. This identifier is generated by the server and can be used to track the request in the server logs. It is useful for debugging and support purposes.
+      required:
+      - type
+      - title
+      - status
+      additionalProperties: false
+      description: JSON Problem Details for HTTP APIs
+    accountTokensCreateTokenRequest:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      oneOf:
+      - properties:
+          expires_in: {}
+        required:
+        - expires_at
+      - properties:
+          expires_at: {}
+        required:
+        - expires_in
+      examples:
+      - name: token
+        expires_at: '2025-11-30T08:03:15.944Z'
+        can_create_tokens: true
+        gui: false
+        allowed_ip_ranges:
+        - 0.0.0.0/0
+        - ::/0
+      - name: token
+        expires_in: 1h30min
+        can_create_tokens: true
+        gui: false
+        allowed_ip_ranges:
+        - 0.0.0.0/0
+        - ::/0
+      properties:
+        name:
+          type: string
+          examples:
+          - my first token
+          maxLength: 1024
+          minLength: 1
+          description: The name of the token. Does not need to be unique.
+        expires_at:
+          type: string
+          format: date-time
+          description: The requested expiry time of the token, in RFC3339 format (2025-10-12T07:20:50.52Z). Needs to be in the future and maximum of 1 year in the future.
+        expires_in:
+          type: string
+          examples:
+          - 8760h
+          - 720h
+          - 24h
+          - 1h30m
+          - 15m
+          description: The requested duration until expiry of the token, e.g. '1h30min'. Needs to be a positive duration and maximum of 1 year. Can be used instead of `expires_at`. Supported units are 'h' for hours, 'm' for minutes and 's' for seconds.
+        can_create_tokens:
+          type: boolean
+          description: Whether the token can create other tokens.
+          default: false
+        gui:
+          type: boolean
+          description: Token is for internal GUI use. Can not be used externally.
+          default: false
+        allowed_ip_ranges:
+          type: array
+          examples:
+          - - 0.0.0.0/0
+            - ::/0
+          items:
+            $ref: '#/components/schemas/accountTokensIpRange'
+          maxItems: 100
+          uniqueItems: true
+          description: List of IP ranges that are allowed to authenticate with the token. Empty list denies access from everywhere. If unset, the default list will be the IP filters of the account. If no IP filters are defined for the account either, the default will be ["0.0.0.0/0", "::/0"], i.e. allow from any address.
+      required:
+      - name
+      additionalProperties: false
+    accountTokensUuidOfTheToken:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      examples:
+      - e7b3f8a0-4c2d-11ec-bf63-0242ac130002
+      - e7b3f8a0-4c2d-11ec-bf63-0242ac130003
+      - e7b3f8a0-4c2d-11ec-bf63-0242ac130004
+      title: UUID of the token
+      format: uuid
+      description: UUID of the token
+    accountTokensProblem403:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - type: https://developers.upcloud.com/1.3/errors#ERROR_FORBIDDEN
+        title: Bad request.
+        detail: Invalid parameters.
+        correlation_id: 01JQV2ETY2K6HHE1KZFY9E1CYC
+        status: 403
+      properties:
+        type:
+          type: string
+          format: uri
+          description: A URI reference that uniquely identifies the problem type only in the context of the provided API. It is neither recommended to be dereferenceable and point to a human-readable documentation nor globally unique for the problem type.
+          const: https://developers.upcloud.com/1.3/errors#ERROR_FORBIDDEN
+        title:
+          type: string
+          examples:
+          - Bad request.
+          description: A short summary of the problem type. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
+        detail:
+          type: string
+          examples:
+          - Invalid parameters.
+          description: A human readable explanation specific to this occurrence of the problem that is helpful to locate the problem and give advice on how to proceed. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
+        status:
+          type: integer
+          format: int32
+          enum:
+          - 403
+          description: The HTTP status code generated by the origin server for this occurrence of the problem.
+        invalid_params:
+          type: array
+          examples:
+          - - name: expires_at
+              reason: Token expiration time must be in the future.
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              reason:
+                type: string
+            required:
+            - name
+            - reason
+        correlation_id:
+          type: string
+          examples:
+          - 01JQV2ETY2K6HHE1KZFY9E1CYC
+          description: A unique identifier for the request. This identifier is generated by the server and can be used to track the request in the server logs. It is useful for debugging and support purposes.
+      required:
+      - type
+      - title
+      - status
+      additionalProperties: false
+      description: JSON Problem Details for HTTP APIs
+    accountTokensListTokensResponse:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: array
+      items:
+        $ref: '#/components/schemas/accountTokensToken'
+      title: List Tokens Response
+      description: Paged list of tokens.
+      example:
+      - id: 0c848138-2559-4562-9520-b1f22c4ae751
+        name: token
+        created_at: '2025-03-25T13:46:19.502878Z'
+        expires_at: '2025-03-25T14:16:19.502644Z'
+        can_create_tokens: true
+        allowed_ip_ranges:
+        - 1.2.3.4
+        gui: false
+      - id: 0cc50c9d-6a81-494b-af8c-f7271cfd4d22
+        name: token
+        created_at: '2025-03-25T14:12:06.534789Z'
+        expires_at: '2025-03-25T14:42:06.534342Z'
+        last_used_at: '2025-03-25T14:12:33.000692Z'
+        can_create_tokens: true
+        allowed_ip_ranges:
+        - 1.2.3.4
+        gui: false
+    accountTokensProblem404:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - type: https://developers.upcloud.com/1.3/errors#ERROR_NOT_FOUND
+        title: Not found.
+        detail: User not found.
+        correlation_id: 01JQV2ETY2K6HHE1KZFY9E1CYC
+        status: 404
+      properties:
+        type:
+          type: string
+          format: uri
+          description: A URI reference that uniquely identifies the problem type only in the context of the provided API. It is neither recommended to be dereferenceable and point to a human-readable documentation nor globally unique for the problem type.
+          const: https://developers.upcloud.com/1.3/errors#ERROR_NOT_FOUND
+        title:
+          type: string
+          examples:
+          - Not found.
+          description: A short summary of the problem type. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
+        detail:
+          type: string
+          examples:
+          - Invalid parameters.
+          description: A human readable explanation specific to this occurrence of the problem that is helpful to locate the problem and give advice on how to proceed. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
+        status:
+          type: integer
+          format: int32
+          enum:
+          - 404
+          description: The HTTP status code generated by the origin server for this occurrence of the problem.
+        invalid_params:
+          type: array
+          examples:
+          - - name: expires_at
+              reason: Token expiration time must be in the future.
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              reason:
+                type: string
+            required:
+            - name
+            - reason
+        correlation_id:
+          type: string
+          examples:
+          - 01JQV2ETY2K6HHE1KZFY9E1CYC
+          description: A unique identifier for the request. This identifier is generated by the server and can be used to track the request in the server logs. It is useful for debugging and support purposes.
+      required:
+      - type
+      - title
+      - status
+      additionalProperties: false
+      description: JSON Problem Details for HTTP APIs
+    accountTokensProblem400:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      examples:
+      - type: https://developers.upcloud.com/1.3/errors#ERROR_BAD_REQUEST
+        title: Bad request.
+        detail: Invalid parameters.
+        invalid_params:
+        - name: expires_at
+          reason: Token expiration time must be in the future.
+        correlation_id: 01JQV2ETY2K6HHE1KZFY9E1CYC
+        status: 400
+      properties:
+        type:
+          type: string
+          format: uri
+          description: A URI reference that uniquely identifies the problem type only in the context of the provided API. It is neither recommended to be dereferenceable and point to a human-readable documentation nor globally unique for the problem type.
+          const: https://developers.upcloud.com/1.3/errors#ERROR_BAD_REQUEST
+        title:
+          type: string
+          examples:
+          - Bad request.
+          description: A short summary of the problem type. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
+        detail:
+          type: string
+          examples:
+          - Invalid parameters.
+          description: A human readable explanation specific to this occurrence of the problem that is helpful to locate the problem and give advice on how to proceed. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
+        status:
+          type: integer
+          format: int32
+          enum:
+          - 400
+          description: The HTTP status code generated by the origin server for this occurrence of the problem.
+        invalid_params:
+          type: array
+          examples:
+          - - name: expires_at
+              reason: Token expiration time must be in the future.
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              reason:
+                type: string
+            required:
+            - name
+            - reason
+        correlation_id:
+          type: string
+          examples:
+          - 01JQV2ETY2K6HHE1KZFY9E1CYC
+          description: A unique identifier for the request. This identifier is generated by the server and can be used to track the request in the server logs. It is useful for debugging and support purposes.
+      required:
+      - type
+      - title
+      - status
+      additionalProperties: false
+      description: JSON Problem Details for HTTP APIs
+    accountTokensToken:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/accountTokensUuidOfTheToken'
+        name:
+          type: string
+          examples:
+          - my first token
+          maxLength: 1024
+          minLength: 1
+          description: The name of the token. Does not need to be unique.
+        created_at:
+          type: string
+          format: date-time
+          description: Token creation time.
+          example: '2025-11-30T08:03:15.944Z'
+        expires_at:
+          type: string
+          format: date-time
+          description: The requested expiry time of the token, in RFC3339 format (2025-10-12T07:20:50.52Z). Needs to be in the future and maximum of 1 year in the future.
+          example: '2025-11-30T08:03:15.944Z'
+        last_used_at:
+          type: string
+          format: date-time
+          description: The last time the token was used.
+          example: '2025-11-30T08:03:15.944Z'
+        can_create_tokens:
+          type: boolean
+          description: Whether the token can create other tokens.
+          default: false
+          example: false
+        gui:
+          type: boolean
+          description: Token is for internal GUI use. Can not be used externally.
+          default: false
+          example: false
+        allowed_ip_ranges:
+          type: array
+          items:
+            $ref: '#/components/schemas/accountTokensIpRange'
+          maxItems: 100
+          uniqueItems: true
+          description: List of IP ranges that are allowed to authenticate with the token. Empty list denies access from everywhere. If unset, the default list will be the IP filters of the account. If no IP filters are defined for the account either, the default will be ["0.0.0.0/0", "::/0"], i.e. allow from any address.
+          example:
+          - 0.0.0.0/0
+          - ::/0
+      title: Token
+      additionalProperties: false
+      description: A token.
+    accountTokensIpRange:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      examples:
+      - 1.2.3.4
+      - 2001:db8::1
+      - 0.0.0.0/0
+      - ::/0
+      - 0.0.0.0-0.0.0.255
+      - 2001:db8::1-2001:db8::ff
+      title: IP Range
+      description: IP range from where to accept the token
+    accountTokensGetTokenResponse:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      properties:
+        id:
+          $ref: '#/components/schemas/accountTokensUuidOfTheToken'
+        name:
+          type: string
+          examples:
+          - my first token
+          maxLength: 1024
+          minLength: 1
+          description: The name of the token. Does not need to be unique.
+        created_at:
+          type: string
+          format: date-time
+          description: Token creation time.
+          example: '2025-11-30T08:03:15.944Z'
+        expires_at:
+          type: string
+          format: date-time
+          description: The requested expiry time of the token, in RFC3339 format (2025-10-12T07:20:50.52Z). Needs to be in the future and maximum of 1 year in the future.
+          example: '2025-11-30T08:03:15.944Z'
+        last_used_at:
+          type: string
+          format: date-time
+          description: The last time the token was used.
+          example: '2025-11-30T08:03:15.944Z'
+        can_create_tokens:
+          type: boolean
+          description: Whether the token can create other tokens.
+          default: false
+          example: false
+        gui:
+          type: boolean
+          description: Token is for internal GUI use. Can not be used externally.
+          default: false
+          example: false
+        allowed_ip_ranges:
+          type: array
+          items:
+            $ref: '#/components/schemas/accountTokensIpRange'
+          maxItems: 100
+          uniqueItems: true
+          description: List of IP ranges that are allowed to authenticate with the token. Empty list denies access from everywhere. If unset, the default list will be the IP filters of the account. If no IP filters are defined for the account either, the default will be ["0.0.0.0/0", "::/0"], i.e. allow from any address.
+          example:
+          - 0.0.0.0/0
+          - ::/0
+      title: Get Token Response
+      additionalProperties: false
+      description: A token.
+      example:
+        id: 0c848138-2559-4562-9520-b1f22c4ae751
+        name: token
+        token_type: workspace
+        created_at: '2025-03-25T13:46:19.502878Z'
+        expires_at: '2025-03-25T14:16:19.502644Z'
+        can_create_tokens: true
+        allowed_ip_ranges:
+        - 1.2.3.4
+        gui: false
+  requestBodies:
+    accountTokensCreateToken:
+      description: 'Parameters for creating a new token.
+
+        '
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/accountTokensCreateTokenRequest'
+      required: true
+  parameters:
+    accountTokensGetTokenTokenUuid:
+      name: token-uuid
+      in: path
+      description: The uuid of the token to get
+      required: true
+      schema:
+        type: string
+        format: uuid
+    accountTokensRevokeTokenTokenUuid:
+      name: token-uuid
+      in: path
+      description: The uuid of the token to delete
+      required: true
+      schema:
+        type: string
+        format: uuid
+    accountTokensListTokensSort:
+      name: sort
+      in: query
+      description: 'Comma-separated list of fields to sort by. Prefix with ''+'' for ascending or ''-'' for descending order. Supported fields: created_at, expires_at, last_used_at, name. Example: sort=+name,-created_at. If no prefix is given, descending is assumed. Follows OpenAPI collectionFormat ''csv''.
+
+        '
+      required: false
+      schema:
+        type: string
+        example: +name,-created_at
+    accountTokensListTokensLimit:
+      name: limit
+      in: query
+      description: How many tokens to return at per page
+      required: false
+      schema:
+        type: integer
+        maximum: 100
+        minimum: 1
+        format: int32
+        default: 20
+    accountTokensListTokensGui:
+      name: gui
+      in: query
+      description: Filter tokens based on GUI flag (true or false). Default is no value, i.e. no filtering and all tokens are returned.
+      required: false
+      schema:
+        type: boolean
+        example: true
+    accountTokensListTokensOffset:
+      name: offset
+      in: query
+      description: Offset to start listing the tokens from
+      required: false
+      schema:
+        type: integer
+        minimum: 0
+        format: int32
+        default: 0
+  securitySchemes:
+    apiToken:
+      type: http
+      description: UpCloud API uses HTTP Bearer authentication. An API token is required to authenticate. The API token can be created in the UpCloud control panel. Alternatively, you can create an API token using the API directly, or with upctl. Note that if you want to use HTTP Basic authentication on API or with upctl, you will need to enable API access in the UpCloud control panel first.
+      scheme: bearer
+x-refined-from:
+- upcloud-openapi.json
+- upcloud-openapi.yml
+x-upcloud-visibility: public
+x-tagGroups:
+- name: Server
+  tags:
+  - server
+  - server-group
+  - server_size
+  - plan
+  - device
+  - events
+  - timezone
+  - vnc_keymap
+- name: Network
+  tags:
+  - network
+  - network-peering
+  - ip_address
+  - router
+  - gateway
+  - firewall-ruleset
+- name: Account & Access
+  tags:
+  - account
+  - audit-logs
+  - account-tokens
+  - permission
+  - tag
+- name: Billing
+  tags:
+  - price
+  - currency

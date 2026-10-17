@@ -1,0 +1,616 @@
+openapi: 3.2.0
+info:
+  title: Upcloud Server Group API
+  version: '1.3'
+  contact:
+    name: UpCloud
+    url: https://upcloud.com
+    email: hello@upcloud.com
+  license:
+    name: MIT
+    url: https://spdx.org/licenses/MIT.html
+  termsOfService: https://upcloud.com/terms-of-service/
+  description: 'Operations tagged server-group across 2 of this provider''s published API definitions: upcloud-openapi.json, upcloud-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.upcloud.com
+security:
+- apiToken: []
+tags:
+- name: server-group
+  description: Server group management
+  x-displayName: Server Group
+paths:
+  /1.3/server-group:
+    get:
+      tags:
+      - server-group
+      summary: List server groups
+      description: Retrieves a list of server groups.
+      operationId: listServerGroups
+      parameters:
+      - $ref: '#/components/parameters/listServerGroupsLabel'
+      responses:
+        '200':
+          $ref: '#/components/responses/listServerGroups200'
+        default:
+          $ref: '#/components/responses/listServerGroupsDefault'
+      x-upcloud-visibility: public
+    post:
+      tags:
+      - server-group
+      summary: Create server group
+      description: Creates a new server group.
+      operationId: createServerGroup
+      requestBody:
+        $ref: '#/components/requestBodies/createServerGroup'
+      responses:
+        '200':
+          $ref: '#/components/responses/createServerGroup200'
+        default:
+          $ref: '#/components/responses/createServerGroupDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/server-group/{uuid}:
+    get:
+      tags:
+      - server-group
+      summary: Get server group details
+      description: Retrieves details of a specific server group.
+      operationId: getServerGroup
+      parameters:
+      - $ref: '#/components/parameters/getServerGroupUuid'
+      responses:
+        '200':
+          $ref: '#/components/responses/getServerGroup200'
+        default:
+          $ref: '#/components/responses/getServerGroupDefault'
+      x-upcloud-visibility: public
+    delete:
+      tags:
+      - server-group
+      summary: Delete server group
+      description: Deletes a specific server group.
+      operationId: deleteServerGroup
+      parameters:
+      - $ref: '#/components/parameters/deleteServerGroupUuid'
+      responses:
+        '204':
+          $ref: '#/components/responses/deleteServerGroup204'
+        default:
+          $ref: '#/components/responses/deleteServerGroupDefault'
+      x-upcloud-visibility: public
+    patch:
+      tags:
+      - server-group
+      summary: Modify server group
+      description: Modifies an existing server group.
+      operationId: modifyServerGroup
+      parameters:
+      - $ref: '#/components/parameters/modifyServerGroupUuid'
+      requestBody:
+        $ref: '#/components/requestBodies/modifyServerGroup'
+      responses:
+        '200':
+          $ref: '#/components/responses/modifyServerGroup200'
+        default:
+          $ref: '#/components/responses/modifyServerGroupDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/server-group/{uuid}/servers:
+    get:
+      tags:
+      - server-group
+      summary: List server group members
+      description: Retrieves a list of servers that are members of a specific server group.
+      operationId: listServerGroupMembers
+      parameters:
+      - $ref: '#/components/parameters/listServerGroupMembersUuid'
+      responses:
+        '200':
+          $ref: '#/components/responses/listServerGroupMembers200'
+        default:
+          $ref: '#/components/responses/listServerGroupMembersDefault'
+      x-upcloud-visibility: public
+    post:
+      tags:
+      - server-group
+      summary: Add server to group
+      description: Adds a server to a specific server group.
+      operationId: addServerToGroup
+      parameters:
+      - $ref: '#/components/parameters/serverGroupAddServerToGroupUuid'
+      requestBody:
+        $ref: '#/components/requestBodies/serverGroupAddServerToGroup'
+      responses:
+        '204':
+          $ref: '#/components/responses/serverGroupAddServerToGroup204'
+        default:
+          $ref: '#/components/responses/serverGroupAddServerToGroupDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+  /1.3/server-group/{uuid}/servers/{server_uuid}:
+    delete:
+      tags:
+      - server-group
+      summary: Remove server from group
+      description: Removes a server from a specific server group.
+      operationId: removeServerFromGroup
+      parameters:
+      - $ref: '#/components/parameters/serverGroupRemoveServerFromGroupUuid'
+      - $ref: '#/components/parameters/serverGroupRemoveServerFromGroupServerUuid'
+      responses:
+        '204':
+          $ref: '#/components/responses/serverGroupRemoveServerFromGroup204'
+        default:
+          $ref: '#/components/responses/serverGroupRemoveServerFromGroupDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+components:
+  parameters:
+    listServerGroupsLabel:
+      name: label
+      in: query
+      description: 'A label filter to apply. Format: key:value. Multiple labels can be specified by repeating the parameter.'
+      required: false
+      schema:
+        $ref: '#/components/schemas/serverGroupLabel'
+    modifyServerGroupUuid:
+      name: uuid
+      in: path
+      description: The UUID of the server group to modify.
+      required: true
+      schema:
+        $ref: '#/components/schemas/serverGroupUuid'
+    getServerGroupUuid:
+      name: uuid
+      in: path
+      description: The UUID of the server group to retrieve.
+      required: true
+      schema:
+        $ref: '#/components/schemas/serverGroupUuid'
+    deleteServerGroupUuid:
+      name: uuid
+      in: path
+      description: The UUID of the server group to delete.
+      required: true
+      schema:
+        $ref: '#/components/schemas/serverGroupUuid'
+    listServerGroupMembersUuid:
+      name: uuid
+      in: path
+      description: The UUID of the server group whose members are to be listed.
+      required: true
+      schema:
+        $ref: '#/components/schemas/serverGroupUuid'
+    serverGroupAddServerToGroupUuid:
+      name: uuid
+      in: path
+      description: The UUID of the server group to which the server will be added.
+      required: true
+      schema:
+        $ref: '#/components/schemas/serverGroupUuid'
+    serverGroupRemoveServerFromGroupServerUuid:
+      name: server_uuid
+      in: path
+      description: The UUID of the server to remove from the group.
+      required: true
+      schema:
+        $ref: '#/components/schemas/serverGroupUuid'
+    serverGroupRemoveServerFromGroupUuid:
+      name: uuid
+      in: path
+      description: The UUID of the server group from which the server will be removed.
+      required: true
+      schema:
+        $ref: '#/components/schemas/serverGroupUuid'
+  responses:
+    createServerGroup200:
+      description: Details of the created server group.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/serverGroup'
+    listServerGroupMembersDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/serverGroupError'
+    listServerGroupsDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/serverGroupError'
+    deleteServerGroupDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/serverGroupError'
+    modifyServerGroupDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/serverGroupError'
+    listServerGroups200:
+      description: A list of server groups.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/serverGroups'
+    listServerGroupMembers200:
+      description: A list of servers in the server group.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/serverGroupServers'
+    serverGroupAddServerToGroup204:
+      description: The server was successfully added to the group. No content is returned.
+    getServerGroupDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/serverGroupError'
+    serverGroupRemoveServerFromGroup204:
+      description: The server was successfully removed from the group. No content is returned.
+    serverGroupAddServerToGroupDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/serverGroupError'
+    createServerGroupDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/serverGroupError'
+    deleteServerGroup204:
+      description: The server group was successfully deleted. No content is returned.
+    serverGroupRemoveServerFromGroupDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/serverGroupError'
+    modifyServerGroup200:
+      description: Details of the modified server group.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/serverGroup'
+    getServerGroup200:
+      description: Details of the server group.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/serverGroup'
+  requestBodies:
+    createServerGroup:
+      description: The server group to create.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/serverGroupModify'
+    serverGroupAddServerToGroup:
+      description: The server to add to the group.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/serverGroupServerAdd'
+    modifyServerGroup:
+      description: The server group attributes to modify.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/serverGroupModify'
+  schemas:
+    serverGroupModify:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        server_group:
+          type: object
+          properties:
+            title:
+              type: string
+              description: The name of the server group
+              example: edge-cluster-a
+            servers:
+              $ref: '#/components/schemas/serverGroupServers'
+            labels:
+              type: object
+              properties:
+                label:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/serverGroupLabel'
+              description: Labels to categorize the server group
+              example:
+                label:
+                - key: env
+                  value: prod
+            anti_affinity:
+              $ref: '#/components/schemas/serverGroupAntiAffinity'
+          additionalProperties: false
+          example:
+            title: edge-cluster-a
+            servers:
+              servers:
+              - 00fce2f9-f9f4-46ff-86af-9e60f131f5cb
+            labels:
+              label:
+              - key: env
+                value: prod
+            anti_affinity: 'yes'
+      required:
+      - server_group
+      additionalProperties: false
+      description: A schema for creating/modifying a server group
+      example:
+        server_group:
+          title: edge-cluster-a
+          servers:
+            servers:
+            - 00fce2f9-f9f4-46ff-86af-9e60f131f5cb
+          labels:
+            label:
+            - key: env
+              value: prod
+          anti_affinity: 'yes'
+    serverGroupLabel:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        key:
+          type: string
+          description: Label key used to classify the resource
+        value:
+          type: string
+          description: Value associated with the label key
+      required:
+      - key
+      - value
+      additionalProperties: false
+      description: A key/value pair to label and categorize resources
+      example:
+        key: env
+        value: production
+    serverGroups:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        server_groups:
+          type: object
+          properties:
+            server_group:
+              type: array
+              items:
+                $ref: '#/components/schemas/serverGroupDetails'
+          required:
+          - server_group
+          additionalProperties: false
+          example:
+            server_group:
+            - anti_affinity: 'yes'
+              anti_affinity_status:
+              - uuid: 00fce2f9-f9f4-46ff-86af-9e60f131f5cb
+                status: met
+              labels:
+                label:
+                - key: env
+                  value: prod
+              servers:
+                server:
+                - 00fce2f9-f9f4-46ff-86af-9e60f131f5cb
+              title: edge-cluster-a
+              uuid: 00fce2f9-f9f4-46ff-86af-9e60f131f5cb
+      required:
+      - server_groups
+      additionalProperties: false
+      description: List of server groups
+      example:
+        server_groups:
+          server_group:
+          - anti_affinity: 'yes'
+            anti_affinity_status:
+            - uuid: 00fce2f9-f9f4-46ff-86af-9e60f131f5cb
+              status: met
+            labels:
+              label:
+              - key: env
+                value: prod
+            servers:
+              server:
+              - 00fce2f9-f9f4-46ff-86af-9e60f131f5cb
+            title: edge-cluster-a
+            uuid: 00fce2f9-f9f4-46ff-86af-9e60f131f5cb
+    serverGroupAntiAffinity:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      enum:
+      - strict
+      - 'yes'
+      - 'no'
+      description: Anti-affinity policy for server groups. Possible values are 'strict', 'yes', or 'no'. 'strict' ensures that no two servers in the group are placed on the same physical host. 'yes' indicates a preference for anti-affinity but does not guarantee it. 'no' means there is no anti-affinity requirement.
+      default: 'no'
+    serverGroupServers:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        servers:
+          type: array
+          items:
+            $ref: '#/components/schemas/serverGroupUuid'
+      required:
+      - servers
+      additionalProperties: false
+      description: List of server UUIDs in the server group
+      example:
+        servers:
+        - 00fce2f9-f9f4-46ff-86af-9e60f131f5cb
+        - 0414e0d7-4436-4037-9dd8-6eaf47dce599
+    serverGroupAntiAffinityStatus:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        uuid:
+          $ref: '#/components/schemas/serverGroupUuid'
+        status:
+          type: string
+          enum:
+          - met
+          - unmet
+          description: Indicates whether the anti-affinity policy is currently being met ('met') or not ('unmet')
+      required:
+      - uuid
+      - status
+      additionalProperties: false
+      description: Status of anti-affinity policy
+    serverGroupError:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            error_code:
+              type: string
+              examples:
+              - GENERAL_FAILURE
+            error_message:
+              type: string
+              examples:
+              - Your request could not be fulfilled due to a technical issue.
+          required:
+          - error_code
+          - error_message
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+      description: A general error response indicating that the request could not be fulfilled due to a technical issue.
+    serverGroupDetails:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        anti_affinity:
+          $ref: '#/components/schemas/serverGroupAntiAffinity'
+        anti_affinity_status:
+          type: array
+          items:
+            $ref: '#/components/schemas/serverGroupAntiAffinityStatus'
+        labels:
+          type: object
+          properties:
+            label:
+              type: array
+              items:
+                $ref: '#/components/schemas/serverGroupLabel'
+          required:
+          - label
+          additionalProperties: false
+          description: List of labels associated with the server group.
+        servers:
+          type: object
+          properties:
+            server:
+              type: array
+              items:
+                $ref: '#/components/schemas/serverGroupUuid'
+          required:
+          - server
+          additionalProperties: false
+          description: List of servers associated with the server group.
+        title:
+          type: string
+        uuid:
+          $ref: '#/components/schemas/serverGroupUuid'
+      required:
+      - uuid
+      - title
+      - anti_affinity
+      - anti_affinity_status
+      - labels
+      - servers
+      additionalProperties: false
+      description: Details of a server group
+    serverGroup:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        server_group:
+          $ref: '#/components/schemas/serverGroupDetails'
+      required:
+      - server_group
+      additionalProperties: false
+      description: A single server group
+    serverGroupServerAdd:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        server:
+          type: object
+          properties:
+            uuid:
+              $ref: '#/components/schemas/serverGroupUuid'
+          required:
+          - uuid
+          additionalProperties: false
+      required:
+      - server
+      additionalProperties: false
+      description: Schema for adding a server to a server group
+    serverGroupUuid:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: string
+      pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+      format: uuid
+      description: Universally unique identifier
+      example: 0414e0d7-4436-4037-9dd8-6eaf47dce599
+  securitySchemes:
+    apiToken:
+      type: http
+      description: UpCloud API uses HTTP Bearer authentication. An API token is required to authenticate. The API token can be created in the UpCloud control panel. Alternatively, you can create an API token using the API directly, or with upctl. Note that if you want to use HTTP Basic authentication on API or with upctl, you will need to enable API access in the UpCloud control panel first.
+      scheme: bearer
+x-refined-from:
+- upcloud-openapi.json
+- upcloud-openapi.yml
+x-upcloud-visibility: public
+x-tagGroups:
+- name: Server
+  tags:
+  - server
+  - server-group
+  - server_size
+  - plan
+  - device
+  - events
+  - timezone
+  - vnc_keymap
+- name: Network
+  tags:
+  - network
+  - network-peering
+  - ip_address
+  - router
+  - gateway
+  - firewall-ruleset
+- name: Account & Access
+  tags:
+  - account
+  - audit-logs
+  - account-tokens
+  - permission
+  - tag
+- name: Billing
+  tags:
+  - price
+  - currency

@@ -1,0 +1,146 @@
+openapi: 3.2.0
+info:
+  title: Upcloud Vnc Keymap API
+  version: '1.3'
+  contact:
+    name: UpCloud
+    url: https://upcloud.com
+    email: hello@upcloud.com
+  license:
+    name: MIT
+    url: https://spdx.org/licenses/MIT.html
+  termsOfService: https://upcloud.com/terms-of-service/
+  description: 'Operations tagged vnc_keymap across 2 of this provider''s published API definitions: upcloud-openapi.json, upcloud-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.upcloud.com
+security:
+- apiToken: []
+tags:
+- name: vnc_keymap
+  description: VNC keymap management
+  x-displayName: VNC Keymap
+paths:
+  /1.3/vnc_keymap:
+    get:
+      tags:
+      - vnc_keymap
+      summary: List VNC keymaps
+      description: Retrieves a list of supported VNC keymaps.
+      operationId: listVNCKeymaps
+      responses:
+        '200':
+          $ref: '#/components/responses/listVNCKeymaps200'
+        default:
+          $ref: '#/components/responses/listVNCKeymapsDefault'
+      x-upcloud-visibility: public
+    servers:
+    - url: https://api.upcloud.com
+components:
+  schemas:
+    vncKeymapError:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            error_code:
+              type: string
+              examples:
+              - GENERAL_FAILURE
+            error_message:
+              type: string
+              examples:
+              - Your request could not be fulfilled due to a technical issue.
+          required:
+          - error_code
+          - error_message
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+      description: A general error response indicating that the request could not be fulfilled due to a technical issue.
+    vncKeymapKeymaps:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        keymaps:
+          type: object
+          properties:
+            keymap:
+              type: array
+              items:
+                type: string
+              example:
+              - fi
+              - us
+          required:
+          - keymap
+          additionalProperties: false
+          example:
+            keymap:
+            - fi
+            - us
+            - de
+      required:
+      - keymaps
+      additionalProperties: false
+      description: List of available VNC keymaps
+      example:
+        keymaps:
+          keymap:
+          - fi
+          - us
+          - de
+  responses:
+    listVNCKeymaps200:
+      description: A list of VNC keymaps.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/vncKeymapKeymaps'
+    listVNCKeymapsDefault:
+      description: General failure
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/vncKeymapError'
+  securitySchemes:
+    apiToken:
+      type: http
+      description: UpCloud API uses HTTP Bearer authentication. An API token is required to authenticate. The API token can be created in the UpCloud control panel. Alternatively, you can create an API token using the API directly, or with upctl. Note that if you want to use HTTP Basic authentication on API or with upctl, you will need to enable API access in the UpCloud control panel first.
+      scheme: bearer
+x-refined-from:
+- upcloud-openapi.json
+- upcloud-openapi.yml
+x-upcloud-visibility: public
+x-tagGroups:
+- name: Server
+  tags:
+  - server
+  - server-group
+  - server_size
+  - plan
+  - device
+  - events
+  - timezone
+  - vnc_keymap
+- name: Network
+  tags:
+  - network
+  - network-peering
+  - ip_address
+  - router
+  - gateway
+  - firewall-ruleset
+- name: Account & Access
+  tags:
+  - account
+  - audit-logs
+  - account-tokens
+  - permission
+  - tag
+- name: Billing
+  tags:
+  - price
+  - currency
