@@ -20,6 +20,15 @@ tags:
 - Infrastructure
 - Object Storage
 - Kubernetes
+- Database
+- Servers
+- Networking
+tags_raw:
+- Company
+- Cloud
+- Infrastructure
+- Object Storage
+- Kubernetes
 - Databases
 - Servers
 - Networking
@@ -98,6 +107,8 @@ apis:
   humanURL: https://developers.upcloud.com/api/1.3
   baseURL: https://api.upcloud.com
   tags:
+  - Account
+  tags_raw:
   - account
   properties:
   - type: OpenAPI
@@ -133,6 +144,8 @@ apis:
   humanURL: https://developers.upcloud.com/api/1.3
   baseURL: https://api.upcloud.com
   tags:
+  - Audit Logs
+  tags_raw:
   - audit-logs
   properties:
   - type: OpenAPI
@@ -145,6 +158,8 @@ apis:
   humanURL: https://developers.upcloud.com/api/1.3
   baseURL: https://api.upcloud.com
   tags:
+  - Currency
+  tags_raw:
   - currency
   properties:
   - type: OpenAPI
@@ -165,6 +180,8 @@ apis:
   humanURL: https://developers.upcloud.com/api/1.3
   baseURL: https://api.upcloud.com
   tags:
+  - Database
+  tags_raw:
   - database
   properties:
   - type: OpenAPI
@@ -177,6 +194,8 @@ apis:
   humanURL: https://developers.upcloud.com/api/1.3
   baseURL: https://api.upcloud.com
   tags:
+  - Device
+  tags_raw:
   - device
   properties:
   - type: OpenAPI
@@ -189,6 +208,8 @@ apis:
   humanURL: https://developers.upcloud.com/api/1.3
   baseURL: https://api.upcloud.com
   tags:
+  - Event
+  tags_raw:
   - events
   properties:
   - type: OpenAPI
@@ -212,6 +233,8 @@ apis:
   humanURL: https://developers.upcloud.com/api/1.3
   baseURL: https://api.upcloud.com
   tags:
+  - File Storage
+  tags_raw:
   - file-storage
   properties:
   - type: OpenAPI
@@ -238,6 +261,8 @@ apis:
   humanURL: https://developers.upcloud.com/api/1.3
   baseURL: https://api.upcloud.com
   tags:
+  - Gateways
+  tags_raw:
   - gateway
   properties:
   - type: OpenAPI
@@ -288,6 +313,8 @@ apis:
   humanURL: https://developers.upcloud.com/api/1.3
   baseURL: https://api.upcloud.com
   tags:
+  - IP Address
+  tags_raw:
   - ip_address
   properties:
   - type: OpenAPI
@@ -304,6 +331,8 @@ apis:
   humanURL: https://developers.upcloud.com/api/1.3
   baseURL: https://api.upcloud.com
   tags:
+  - Kubernetes
+  tags_raw:
   - kubernetes
   properties:
   - type: OpenAPI
@@ -335,6 +364,8 @@ apis:
   humanURL: https://developers.upcloud.com/api/1.3
   baseURL: https://api.upcloud.com
   tags:
+  - Load Balancer
+  tags_raw:
   - load-balancer
   properties:
   - type: OpenAPI
@@ -429,6 +460,8 @@ apis:
   humanURL: https://developers.upcloud.com/api/1.3
   baseURL: https://api.upcloud.com
   tags:
+  - Networks
+  tags_raw:
   - network
   properties:
   - type: OpenAPI
@@ -441,6 +474,8 @@ apis:
   humanURL: https://developers.upcloud.com/api/1.3
   baseURL: https://api.upcloud.com
   tags:
+  - Network Peering
+  tags_raw:
   - network-peering
   properties:
   - type: OpenAPI
@@ -485,6 +520,8 @@ apis:
   humanURL: https://developers.upcloud.com/api/1.3
   baseURL: https://api.upcloud.com
   tags:
+  - Partners
+  tags_raw:
   - partner
   properties:
   - type: OpenAPI
@@ -497,6 +534,8 @@ apis:
   humanURL: https://developers.upcloud.com/api/1.3
   baseURL: https://api.upcloud.com
   tags:
+  - Permission
+  tags_raw:
   - permission
   properties:
   - type: OpenAPI
@@ -528,6 +567,8 @@ apis:
   humanURL: https://developers.upcloud.com/api/1.3
   baseURL: https://api.upcloud.com
   tags:
+  - Plan
+  tags_raw:
   - plan
   properties:
   - type: OpenAPI
@@ -540,6 +581,8 @@ apis:
   humanURL: https://developers.upcloud.com/api/1.3
   baseURL: https://api.upcloud.com
   tags:
+  - Price
+  tags_raw:
   - price
   properties:
   - type: OpenAPI
@@ -552,6 +595,8 @@ apis:
   humanURL: https://developers.upcloud.com/api/1.3
   baseURL: https://api.upcloud.com
   tags:
+  - Router
+  tags_raw:
   - router
   properties:
   - type: OpenAPI
@@ -564,6 +609,8 @@ apis:
   humanURL: https://developers.upcloud.com/api/1.3
   baseURL: https://api.upcloud.com
   tags:
+  - Servers
+  tags_raw:
   - server
   properties:
   - type: OpenAPI
@@ -587,7 +634,8 @@ apis:
   description: Server size management
   humanURL: https://developers.upcloud.com/api/1.3
   baseURL: https://api.upcloud.com
-  tags:
+  tags: []
+  tags_raw:
   - server_size
   properties:
   - type: OpenAPI
@@ -614,6 +662,8 @@ apis:
   humanURL: https://developers.upcloud.com/api/1.3
   baseURL: https://api.upcloud.com
   tags:
+  - Storage
+  tags_raw:
   - storage
   properties:
   - type: OpenAPI
@@ -650,6 +700,8 @@ apis:
   humanURL: https://developers.upcloud.com/api/1.3
   baseURL: https://api.upcloud.com
   tags:
+  - Tag
+  tags_raw:
   - tag
   properties:
   - type: OpenAPI
@@ -662,6 +714,8 @@ apis:
   humanURL: https://developers.upcloud.com/api/1.3
   baseURL: https://api.upcloud.com
   tags:
+  - Timezone
+  tags_raw:
   - timezone
   properties:
   - type: OpenAPI
@@ -673,7 +727,8 @@ apis:
   description: VNC keymap management
   humanURL: https://developers.upcloud.com/api/1.3
   baseURL: https://api.upcloud.com
-  tags:
+  tags: []
+  tags_raw:
   - vnc_keymap
   properties:
   - type: OpenAPI
@@ -686,6 +741,8 @@ apis:
   humanURL: https://developers.upcloud.com/api/1.3
   baseURL: https://api.upcloud.com
   tags:
+  - Zone
+  tags_raw:
   - zone
   properties:
   - type: OpenAPI
