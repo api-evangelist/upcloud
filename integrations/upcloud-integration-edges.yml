@@ -6,12 +6,19 @@ source:
 - https://composio.dev/toolkits/upcloud
 - https://monid.ai/tools/upcloud
 checked:
+- https://api.nuget.org/v3
 - https://composio.dev/toolkits/upcloud
+- https://crates.io/api/v1
 - https://focus.finops.org/data-generators/
 - https://github.com/cncf/k8s-conformance
 - https://github.com/cncf/landscape
 - https://monid.ai/tools/upcloud
 - https://n8n.io/integrations/upcloud/
+- https://proxy.golang.org
+- https://pypi.org/pypi
+- https://registry.npmjs.org
+- https://repo1.maven.org/maven2
+- https://rubygems.org/api/v1
 - https://zapier.com/apps/upcloud/integrations
 summary: null
 marketplace_apps: []
@@ -119,4 +126,73 @@ edges:
     detected: '2026-10-15'
   detected_by: sweep-cloud-native.py
   first_seen: '2026-10-15'
+- partner_name: Go module proxy
+  partner: null
+  partner_match: null
+  type: register
+  direction: provider-built
+  category: official SDK (Go)
+  evidence: https://pkg.go.dev/github.com/UpCloudLtd/upcloud-cli/v3
+  channel: package-registry
+  relationship: distribution-channel
+  contract_reference:
+    register: Go module proxy (public registry JSON)
+    spec_file: null
+    language: Go
+    packages:
+    - name: github.com/UpCloudLtd/upcloud-cli/v3
+      version: v3.37.0
+      released: '2026-10-13'
+      released_field: Time
+      lapsed: false
+      page: https://pkg.go.dev/github.com/UpCloudLtd/upcloud-cli/v3
+      repo_leg: github-org:upcloudltd
+      publisher_leg: org:upcloudltd
+      matched_by: github-org
+    - name: github.com/UpCloudLtd/upcloud-go-api/v8
+      version: v8.42.0
+      released: '2026-09-18'
+      released_field: Time
+      lapsed: false
+      page: https://pkg.go.dev/github.com/UpCloudLtd/upcloud-go-api/v8
+      repo_leg: github-org:upcloudltd
+      publisher_leg: org:upcloudltd
+      matched_by: github-org
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  detected_by: sweep-official-sdks.py
+  first_seen: '2026-10-18'
+- partner_name: PyPI
+  partner: pypi
+  partner_match: register
+  type: register
+  direction: provider-built
+  category: official SDK (Python)
+  evidence: https://pypi.org/project/upcloud-api/
+  channel: package-registry
+  relationship: distribution-channel
+  contract_reference:
+    register: PyPI (public registry JSON)
+    spec_file: null
+    language: Python
+    packages:
+    - name: upcloud-api
+      version: 2.9.0
+      released: '2025-09-25'
+      released_field: upload_time
+      lapsed: false
+      page: https://pypi.org/project/upcloud-api/
+      repo_leg: github-org:upcloudltd
+      publisher_leg: email:upcloud.com
+      matched_by: domain
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  detected_by: sweep-official-sdks.py
+  first_seen: '2026-10-18'
 templates: []
