@@ -34,6 +34,10 @@ checked:
 - opentofu/integrations/opentofu-integration-edges.yml
 - pulumi/integrations/pulumi-integration-edges.yml
 - terraform/integrations/terraform-integration-edges.yml
+- ansible/integrations/ansible-integration-edges.yml
+- https://hex.pm/api
+- https://packagist.org/packages
+- https://pub.dev/api
 summary: null
 marketplace_apps: []
 edges:
@@ -358,4 +362,53 @@ edges:
   badges:
   - Verified publisher (Terraform partner tier)
   - Verified publisher (GitHub domain-verified organization)
+- partner_name: Ansible (ansible-galaxy)
+  partner: ansible
+  partner_match: mirror
+  mirror_match: register
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: ansible-galaxy
+  evidence: https://galaxy.ansible.com/ui/repo/published/upcloud/cloud/
+  mirror_of: ansible/integrations/ansible-integration-edges.yml
+  apps:
+  - upcloud.cloud
+  listing_count: 1
+  detected: '2026-10-22'
+  detected_by: mirror-platform-listings.py
+  category: configuration-management content listing (Ansible collection)
+  badges:
+  - Verified publisher (GitHub domain-verified organization)
+- partner_name: Packagist
+  partner: packagist
+  partner_match: register
+  type: register
+  direction: provider-built
+  category: official SDK (PHP)
+  evidence: https://packagist.org/packages/upcloudltd/upcloud-php-api
+  channel: package-registry
+  relationship: distribution-channel
+  contract_reference:
+    register: Packagist (public registry JSON)
+    spec_file: null
+    language: PHP
+    packages:
+    - name: upcloudltd/upcloud-php-api
+      version: v3.0.0
+      released: '2023-12-01'
+      released_field: time
+      lapsed: true
+      page: https://packagist.org/packages/upcloudltd/upcloud-php-api
+      repo_leg: github-org:upcloudltd
+      publisher_leg: org:upcloud
+      matched_by: github-org
+    current: false
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-php-dart-elixir-package-registries.py
+    detected: '2026-10-22'
+  detected_by: sweep-php-dart-elixir-package-registries.py
+  first_seen: '2026-10-22'
 templates: []

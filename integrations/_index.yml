@@ -281,3 +281,47 @@
   relationship: platform-app
   status: not-a-workflow
   arazzo: null
+- slug: upcloud-ansible-ansible-galaxy
+  label: Ansible (ansible-galaxy)
+  partner: ansible
+  partner_name: Ansible (ansible-galaxy)
+  category: configuration-management content listing (Ansible collection)
+  type: marketplace
+  marketplace: ansible-galaxy
+  channel: partner-built
+  evidence: https://galaxy.ansible.com/ui/repo/published/upcloud/cloud/
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
+- slug: upcloud-packagist
+  label: Packagist
+  partner: packagist
+  partner_name: Packagist
+  category: official SDK (PHP)
+  type: register
+  channel: package-registry
+  evidence: https://packagist.org/packages/upcloudltd/upcloud-php-api
+  source: edge
+  relationship: distribution-channel
+  contract_reference:
+    register: Packagist (public registry JSON)
+    spec_file: null
+    language: PHP
+    packages:
+    - name: upcloudltd/upcloud-php-api
+      version: v3.0.0
+      released: '2023-12-01'
+      released_field: time
+      lapsed: true
+      page: https://packagist.org/packages/upcloudltd/upcloud-php-api
+      repo_leg: github-org:upcloudltd
+      publisher_leg: org:upcloud
+      matched_by: github-org
+    current: false
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-php-dart-elixir-package-registries.py
+    detected: '2026-10-22'
+  status: not-a-workflow
+  arazzo: null
