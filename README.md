@@ -64,5 +64,149 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-UpCloud is a company surfaced via the API Evangelist harvest backlog (source: market-gap:object-storage) and added to the network as a stub for full-pipeline profiling.
-- https://upcloud.com
+UpCloud is a Finnish cloud infrastructure provider offering cloud servers, block and object storage, managed databases, managed Kubernetes (UKS), load balancers and private networking from data centres in Europe, North America, Asia and Australia. Its public REST API (version 1.3, api.upcloud.com) is documented at developers.upcloud.com with a published OpenAPI 3.1 contract, and is backed by official Go, Python and PHP clients, the upctl CLI and a Terraform provider.
+
+**Areas:** Company · Cloud · Infrastructure · Object Storage · Kubernetes · Database · Servers · Networking
+
+## UpCloud on APIs.io
+
+Everything profiled for UpCloud is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/upcloud/](https://apis.io/providers/upcloud/)** — or go straight to one of the APIs or properties below.
+
+### APIs (29)
+
+- [UpCloud Account API](https://apis.io/apis/upcloud/upcloud-account-api/) — Account management and authentication
+- [UpCloud Account Tokens API](https://apis.io/apis/upcloud/upcloud-account-tokens-api/) — UpCloud API calls can be authenticated with HTTP Bearer (token) authentication. The token API requests below allow creation, management and deletion of…
+- [UpCloud Audit Logs API](https://apis.io/apis/upcloud/upcloud-audit-logs-api/) — The Audit Log Service API allows customers to query and export their audit logs. Audit logs track all actions performed on customer accounts, including…
+- [UpCloud Currency API](https://apis.io/apis/upcloud/upcloud-currency-api/) — Currency management
+- [UpCloud Database API](https://apis.io/apis/upcloud/upcloud-database-api/) — A Managed Database is a database-as-a-service that lets customers use a database without setting up servers or database software. The service configuration…
+- [UpCloud Device API](https://apis.io/apis/upcloud/upcloud-device-api/) — Device management
+- [UpCloud Events API](https://apis.io/apis/upcloud/upcloud-events-api/) — Event management
+- [UpCloud File Storage API](https://apis.io/apis/upcloud/upcloud-file-storage-api/) — File Storage is a scalable file storage service that provides shared access to files over a network using the NFS protocol. The File Storage API allows the…
+- [UpCloud Firewall Ruleset API](https://apis.io/apis/upcloud/upcloud-firewall-ruleset-api/) — UpCloud SDN Firewall API. Allows creation, management and deletion of Firewall rulesets and Firewall rules.
+- [UpCloud Gateway API](https://apis.io/apis/upcloud/upcloud-gateway-api/) — UpCloud Gateway API. Allows creation, management and deletion of gateways.
+- [UpCloud Ip Address API](https://apis.io/apis/upcloud/upcloud-ip-address-api/) — The UpCloud network has public and private IP addresses. Public IP addresses are used to connect to the server from the Internet. Private Utility network…
+- [UpCloud Kubernetes API](https://apis.io/apis/upcloud/upcloud-kubernetes-api/) — Kubernetes is a container orchestration system for automating, managing and scaling software deployment. Managed Kubernetes allows you to easily create…
+- [UpCloud Load Balancer API](https://apis.io/apis/upcloud/upcloud-load-balancer-api/) — A Managed load balancer works as the network level frontend of customer application by directing connections to the backend servers. The Managed load…
+- [UpCloud Network API](https://apis.io/apis/upcloud/upcloud-network-api/) — The network API calls present the different networks attached to cloud servers and allow the configuration of SDN private networks. Networks define a secure…
+- [UpCloud Network Peering API](https://apis.io/apis/upcloud/upcloud-network-peering-api/) — Network peering management
+- [UpCloud Object Storage 2 API](https://apis.io/apis/upcloud/upcloud-object-storage-2-api/) — Object Storage is a computer data storage architecture that manages data as objects as opposed to block storage which manages data as blocks within sectors…
+- [UpCloud Partner API](https://apis.io/apis/upcloud/upcloud-partner-api/) — Partner API gives UpCloud partners the ability manage accounts for their customers. Note that use of this API is available only to accounts provisioned as…
+- [UpCloud Permission API](https://apis.io/apis/upcloud/upcloud-permission-api/) — Manage permissions for sub-accounts to access resources owned by the main account.
+- [UpCloud Plan API](https://apis.io/apis/upcloud/upcloud-plan-api/) — Plans are preconfigured server configurations with fixed price. Each plan includes certain number of CPU cores, memory amount, storage and transfer quota.…
+- [UpCloud Price API](https://apis.io/apis/upcloud/upcloud-price-api/) — Retrieve pricing information for UpCloud resources and services.
+- [UpCloud Router API](https://apis.io/apis/upcloud/upcloud-router-api/) — Router management
+- [UpCloud Server API](https://apis.io/apis/upcloud/upcloud-server-api/) — Manages Cloud Servers
+- [UpCloud Server Group API](https://apis.io/apis/upcloud/upcloud-server-group-api/) — Server group management
+- [UpCloud Server Size API](https://apis.io/apis/upcloud/upcloud-server-size-api/) — Server size management
+- [UpCloud Storage API](https://apis.io/apis/upcloud/upcloud-storage-api/) — Block Storage is similar to a physical hard disk. It can be used to install an operating system or hold another filesystem for a Cloud Server. Writable…
+- [UpCloud Tag API](https://apis.io/apis/upcloud/upcloud-tag-api/) — User can define a set of free-form tags to group and identify a subset of their servers. Tags can be for example _webserver_, _database_, _PROD_, _QA_,…
+- [UpCloud Timezone API](https://apis.io/apis/upcloud/upcloud-timezone-api/) — Timezone management
+- [UpCloud Vnc Keymap API](https://apis.io/apis/upcloud/upcloud-vnc-keymap-api/) — VNC keymap management
+- [UpCloud Zone API](https://apis.io/apis/upcloud/upcloud-zone-api/) — Operations for managing zones.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [upcloud-mcp.yml](https://apis.io/servers/upcloud/upcloud-mcp-yml/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Upcloud Agentic Access](https://apis.io/agentic-access/upcloud/upcloud-agentic-access/)
+
+#### JSON-LD (1)
+
+Linked-data contexts for the provider's vocabulary.
+
+- [Upcloud Context](https://apis.io/jsonld/upcloud/upcloud-context/)
+
+#### Governance rules (1)
+
+Spectral rulesets for the provider's contracts.
+
+- [UpCloud API Rules](https://apis.io/rules/upcloud/upcloud-rules/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Upcloud Authentication](https://apis.io/security/upcloud/upcloud-authentication/)
+- [Upcloud Domain Security](https://apis.io/security/upcloud/upcloud-domain-security/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://upcloud.com)
+- [Documentation](https://upcloud.com/docs/)
+- [Getting started](https://developers.upcloud.com/api/1.3/getting-started)
+- [Pricing](https://upcloud.com/pricing/)
+- [Sign up](https://signup.upcloud.com/?promo=goupcloud)
+- [Support](https://upcloud.com/support/)
+- [Changelog](https://upcloud.com/docs/changelog/)
+- [Blog](https://upcloud.com/blog/)
+- [Terms of service](https://upcloud.com/terms-of-service/)
+- [Privacy policy](https://upcloud.com/privacy-notice/)
+- [GitHub](https://github.com/UpCloudLtd)
+- [Status](https://status.upcloud.com/)
+
+## API Evangelist rating
+
+**Kin Score 53.8** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 69.6 |
+| Contract quality | 62.1 |
+| Contract governance | 22.0 |
+| Operational transparency | 47.4 |
+| Developer ergonomics | 64.3 |
+| Access clarity | 44.7 |
+
+**Agent readiness 31.9** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | documented (partial credit) |
+| MCP Server | — |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | derived (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | — |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | verified |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | — |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 24.5** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/upcloud/](https://apis.io/providers/upcloud/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for UpCloud: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/upcloud/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
